@@ -122,7 +122,6 @@ namespace TV_show_Renamer
                 }//end of loop                               
                 q = 0;
 
-
             }//end of if
 
         }//end of file button
