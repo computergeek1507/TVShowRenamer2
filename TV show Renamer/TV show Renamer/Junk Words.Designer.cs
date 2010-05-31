@@ -1,6 +1,6 @@
 ﻿namespace TV_show_Renamer
 {
-    partial class Junk_Words
+    partial class Move_folder2
     {
         /// <summary>
         /// Required designer variable.

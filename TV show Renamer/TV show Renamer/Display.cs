@@ -25,6 +25,17 @@ namespace TV_show_Renamer
             }
 
         }
+        public Display(List<string> display5,string start)
+        {
+
+            InitializeComponent();
+            label1.Text = start+"\n";
+            for (int i = 0; i < display5.Count(); i++)
+            {
+                label1.Text += (display5[i] + "\n");
+            }
+
+        }
         public Display(List<string> display3,int test)
         {
 
