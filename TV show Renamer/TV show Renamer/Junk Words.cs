@@ -10,13 +10,13 @@ using System.IO;
 
 namespace TV_show_Renamer
 {
-    public partial class Junk_Words : Form
+    public partial class Move_folder2 : Form
     {
         List<string> junkwords = new List<string>();
         List<string> userwords = new List<string>();
         string commonAppData = null;
 
-        public Junk_Words()
+        public Move_folder2()
         {
             InitializeComponent();
         }

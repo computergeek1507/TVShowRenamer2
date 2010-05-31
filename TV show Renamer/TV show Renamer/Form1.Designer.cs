@@ -71,7 +71,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
@@ -347,7 +346,7 @@
             // 
             this.addTitleToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.addTitleToolStripMenuItem.Name = "addTitleToolStripMenuItem";
-            this.addTitleToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.addTitleToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.addTitleToolStripMenuItem.Text = "Add Title...";
             this.addTitleToolStripMenuItem.ToolTipText = "Add Title After Season/Episode Data";
             this.addTitleToolStripMenuItem.Click += new System.EventHandler(this.addTitleToolStripMenuItem_Click);
@@ -356,7 +355,7 @@
             // 
             this.textConverterToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.textConverterToolStripMenuItem.Name = "textConverterToolStripMenuItem";
-            this.textConverterToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.textConverterToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.textConverterToolStripMenuItem.Text = "Text Converter...";
             this.textConverterToolStripMenuItem.ToolTipText = "Convert Text to other Text";
             this.textConverterToolStripMenuItem.Click += new System.EventHandler(this.textConverterToolStripMenuItem_Click);
@@ -364,7 +363,7 @@
             // addJunkWordsToolStripMenuItem
             // 
             this.addJunkWordsToolStripMenuItem.Name = "addJunkWordsToolStripMenuItem";
-            this.addJunkWordsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.addJunkWordsToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.addJunkWordsToolStripMenuItem.Text = "Add Junk Words...";
             this.addJunkWordsToolStripMenuItem.ToolTipText = "Make List of Junk Words";
             this.addJunkWordsToolStripMenuItem.Click += new System.EventHandler(this.addJunkWordsToolStripMenuItem_Click);
@@ -372,12 +371,12 @@
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(196, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(198, 6);
             // 
             // defaultSettingsToolStripMenuItem
             // 
             this.defaultSettingsToolStripMenuItem.Name = "defaultSettingsToolStripMenuItem";
-            this.defaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.defaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.defaultSettingsToolStripMenuItem.Text = "Restore Default Settings";
             this.defaultSettingsToolStripMenuItem.ToolTipText = "Restore Default Settings of Form";
             this.defaultSettingsToolStripMenuItem.Click += new System.EventHandler(this.defaultSettingsToolStripMenuItem_Click);
@@ -385,8 +384,8 @@
             // setTVFolderLocationToolStripMenuItem
             // 
             this.setTVFolderLocationToolStripMenuItem.Name = "setTVFolderLocationToolStripMenuItem";
-            this.setTVFolderLocationToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.setTVFolderLocationToolStripMenuItem.Text = "Set TV Folder Location";
+            this.setTVFolderLocationToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.setTVFolderLocationToolStripMenuItem.Text = "Set TV Folder Location...";
             this.setTVFolderLocationToolStripMenuItem.ToolTipText = "Set Folder For Files to be Copied To";
             this.setTVFolderLocationToolStripMenuItem.Click += new System.EventHandler(this.setTVFolderLocationToolStripMenuItem_Click);
             // 
@@ -437,7 +436,7 @@
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(573, 406);
-            this.richTextBox1.TabIndex = 4;
+            this.richTextBox1.TabIndex = 5;
             this.richTextBox1.Text = "";
             this.richTextBox1.WordWrap = false;
             // 
@@ -449,11 +448,6 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 28;
-            // 
-            // folderBrowserDialog2
-            // 
-            this.folderBrowserDialog2.Description = "Select Folder For TV Shows to Be Copied To";
-            this.folderBrowserDialog2.RootFolder = System.Environment.SpecialFolder.DesktopDirectory;
             // 
             // button1
             // 
@@ -468,10 +462,11 @@
             // 
             // button2
             // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button2.Location = new System.Drawing.Point(255, 445);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 29;
+            this.button2.TabIndex = 4;
             this.button2.Text = "Copy To";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -548,7 +543,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem removeYearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setTVFolderLocationToolStripMenuItem;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
     }

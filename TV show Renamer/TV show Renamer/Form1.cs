@@ -23,13 +23,13 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles        
-        string multfile = null;
-        string movefolder = null;
+        string multfile = null;        
         const int HowDeepToScan = 4;
         bool addfile = false;
         bool shownb4 = false;
 
-        const int appVersion = 213;//2.1Beta
+        const int appVersion = 214;//2.1Beta
+        List<string> movefolder = new List<string>();
         List<string> oldnames = new List<string>();
         List<string> newnames = new List<string>();
         List<string> multselct = new List<string>();
@@ -39,7 +39,7 @@ namespace TV_show_Renamer
         List<string> displayOld = new List<string>();
         int q = 0;
         //create other forms
-        Junk_Words userJunk = new Junk_Words();
+        Move_folder2 userJunk = new Move_folder2();
         Addtitle titles = new Addtitle();
         Text_Converter textConvert = new Text_Converter();
         LogWrite Log = new LogWrite();
@@ -57,7 +57,7 @@ namespace TV_show_Renamer
                 System.IO.Directory.CreateDirectory(commonAppData);
                 
             }
-            movefolder = "0000";
+            //movefolder = "0000";
             this.preferenceXmlRead();
             this.junkRemover();
             this.fileChecker();
@@ -66,7 +66,6 @@ namespace TV_show_Renamer
             
             //MessageBox.Show(movefolder);
             
-
         }//end of load command
         
         //create preference file when program closes and close log
@@ -85,12 +84,19 @@ namespace TV_show_Renamer
             pw.WriteLine(s01E01ToolStripMenuItem1.Checked);
             pw.WriteLine(dateToolStripMenuItem.Checked);
             pw.WriteLine(removeYearToolStripMenuItem.Checked);
-            pw.WriteLine(movefolder);
-
-
+            //pw.WriteLine(movefolder);
             pw.Close();//close writer stream
 
+            //write tv folder locations
+            StreamWriter tv = new StreamWriter(commonAppData + "//TVFolder.seh");
+            tv.WriteLine(movefolder.Count());
+            for (int i = 0; i < movefolder.Count(); i++) {
+            tv.WriteLine(movefolder[i]);
+            }
+            tv.Close();
+            //write log
             Log.closeLog();
+            
 
         }
 
@@ -248,7 +254,7 @@ namespace TV_show_Renamer
                 this.s01E01ToolStripMenuItem1.Checked = false;
                 this.dateToolStripMenuItem.Checked = false;
                 this.removeYearToolStripMenuItem.Checked = true;
-                movefolder = "0000";
+                movefolder.Clear();
 
             }
 
@@ -259,11 +265,8 @@ namespace TV_show_Renamer
         private void setTVFolderLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //folderBrowserDialog2 = Environment.RootDirectory.DeskTopDirectory();
-            if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
-            {
-                movefolder = folderBrowserDialog2.SelectedPath;
-
-            }
+            move_folder tvshow = new move_folder(this,movefolder);
+            tvshow.Show();
         }
 
         //check for updates
@@ -543,9 +546,9 @@ namespace TV_show_Renamer
         //Move Button
         private void button1_Click(object sender, EventArgs e)
         {
-            if (multfile != null) //if multiple fills are selected
+            if (multfile != null) //if files are selected
             {
-                if (movefolder != "0000")
+                if (movefolder.Count() != 0)
                 {
                     //move crap goes here
                     List<string> folderlist = folderFinder(movefolder);
@@ -645,7 +648,7 @@ namespace TV_show_Renamer
         {
             if (multfile != null) //if multiple fills are selected
             {
-                if (movefolder != "0000")
+                if (movefolder.Count() != 0)
                 {
                     //move crap goes here
                     List<string> folderlist = folderFinder(movefolder);
@@ -729,7 +732,7 @@ namespace TV_show_Renamer
                 }
                 else
                 {
-                    MessageBox.Show("No Folder Selected For Videos to Be Moved To");
+                    MessageBox.Show("No Folder Selected For Videos to Be Copied To");
                 }
             }
             else
@@ -890,14 +893,26 @@ namespace TV_show_Renamer
                     this.s01E01ToolStripMenuItem1.Checked = bool.Parse(tr3.ReadLine());
                     this.dateToolStripMenuItem.Checked = bool.Parse(tr3.ReadLine());
                     this.removeYearToolStripMenuItem.Checked = bool.Parse(tr3.ReadLine());
-                    movefolder = tr3.ReadLine();
+                    //movefolder = tr3.ReadLine();
                     tr3.Close();//close reader stream    
                 }//end of if. 
+                if (File.Exists(commonAppData + "//TVFolder.seh"))
+                { 
+                    StreamReader tv2 = new StreamReader(commonAppData + "//TVFolder.seh");
+                    int length = Int32.Parse(tv2.ReadLine());
+                    for (int i = 0; i < length; i++) {
+                        if(length==0){
+                            break;
+                        }
+                        movefolder.Add( tv2.ReadLine());
+                    }//end of for loop               
+                }//end of if
             }
             catch (Exception e)
             {
                 Log.WriteLog("Writing Preference Error" + e.ToString());
             }
+            
         }//end of preferenceXMLReader Method
                 
         //returns string list of info
@@ -998,15 +1013,22 @@ namespace TV_show_Renamer
         }
         
         //get list of folders
-        private List<string> folderFinder(string folderwatch)
+        private List<string> folderFinder(List<String> folderwatch)
         {
             List<String> foldersIn = new List<String>();
             List<String> revFoldersIn = new List<String>();
-            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch);
-            foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
-            {
-                foldersIn.Add(fi.Name);
+            for (int u = 0; u < folderwatch.Count(); u++) { 
+            
+            
+            
+            
+                System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch[u]);
+                foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
+                {
+                    foldersIn.Add(fi.Name);
+                }
             }
+            //Sort folders
             foldersIn.Sort();
             for (int y = foldersIn.Count(); y >0;y-- )
             {
@@ -1695,8 +1717,11 @@ namespace TV_show_Renamer
             }//end of if-else       
 
         }
-        
-        
+
+        //function to return list
+        public void tvFolderChanger(List<string> sentlist) {
+            movefolder = sentlist;
+        }
         
 
 /*public void XmlRead()
