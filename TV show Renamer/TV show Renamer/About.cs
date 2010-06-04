@@ -25,17 +25,16 @@ namespace TV_show_Renamer
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
            System.Diagnostics.Process.Start("http://scottnation.com");
-           //System.Diagnostics.Process.Start("scott@scottnation.com");
         }
-        //hidden button
-        private void button2_Click(object sender, EventArgs e)
+        
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("http://armorgames.com/play/4703/miami-shark");
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://armorgames.com/play/4703/miami-shark");
+            //System.Diagnostics.Process.Start("scott@scottnation.com");
         }
     }
 }
