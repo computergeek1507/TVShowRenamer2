@@ -28,7 +28,7 @@ namespace TV_show_Renamer
         bool addfile = false;
         bool shownb4 = false;
 
-        const int appVersion = 214;//2.1Beta
+        const int appVersion = 215;//2.1Beta
         List<string> movefolder = new List<string>();
         List<string> oldnames = new List<string>();
         List<string> newnames = new List<string>();
@@ -39,7 +39,7 @@ namespace TV_show_Renamer
         List<string> displayOld = new List<string>();
         int q = 0;
         //create other forms
-        Move_folder2 userJunk = new Move_folder2();
+        junk_words userJunk = new junk_words();
         Addtitle titles = new Addtitle();
         Text_Converter textConvert = new Text_Converter();
         LogWrite Log = new LogWrite();
@@ -905,7 +905,8 @@ namespace TV_show_Renamer
                             break;
                         }
                         movefolder.Add( tv2.ReadLine());
-                    }//end of for loop               
+                    }//end of for loop  
+                    tv2.Close();
                 }//end of if
             }
             catch (Exception e)
