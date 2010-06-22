@@ -28,7 +28,7 @@ namespace TV_show_Renamer
         bool addfile = false;
         bool shownb4 = false;
 
-        const int appVersion = 215;//2.1Beta
+        const int appVersion = 216;//2.1Beta
         List<string> movefolder = new List<string>();
         List<string> oldnames = new List<string>();
         List<string> newnames = new List<string>();
@@ -556,20 +556,25 @@ namespace TV_show_Renamer
 
                     for (int z = 0; z < multselct.Count; z++)
                     {
-                        info = infoFinder(multselct[z], folderlist);
+                        info = infoFinder(multselct[z], folderlist,movefolder);
+                        int index = Convert.ToInt32(info[2]);
+                        if (index == -1) {
+                            MessageBox.Show("Folder List is Wrong");
+                            return;                        
+                        }
                         if (info[0] != "no folder")
                         {
                             if (info[1] != "0")
                             {
-                                if (!(File.Exists(movefolder + "\\" + info[0] + "\\Season " + info[1])))
+                                if (!(File.Exists(movefolder[index] + "\\" + info[0] + "\\Season " + info[1])))
                                 {
-                                    System.IO.Directory.CreateDirectory(movefolder + "\\" + info[0] + "\\Season " + info[1]);
+                                    System.IO.Directory.CreateDirectory(movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
                                     //MessageBox.Show((movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));
                                     try
                                     {
-                                        //System.IO.File.Move(multselct[z], (movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));                                        
-                                        FileSystem.MoveFile(multselct[z], (movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]), UIOption.AllDialogs);
-                                        Log.moveWriteLog(multselct2[z], (movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\"));
+                                        //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));                                        
+                                        FileSystem.MoveFile(multselct[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]), UIOption.AllDialogs);
+                                        Log.moveWriteLog(multselct2[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\"));
                                         //clear stuff
                                         multselct[z] = (movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]);
 
@@ -598,10 +603,10 @@ namespace TV_show_Renamer
                             {
                                 try
                                 {
-                                    //System.IO.File.Move(multselct[z], (movefolder + "\\" + info[0] + "\\" + multselct2[z]));
-                                    FileSystem.MoveFile(multselct[z], (movefolder + "\\" + info[0] + "\\" + multselct2[z]), UIOption.AllDialogs);
-                                    Log.moveWriteLog(multselct2[z], (movefolder + "\\" + info[0]));
-                                    multselct[z] = (movefolder + "\\" + info[0] + "\\" + multselct2[z]);
+                                    //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\" + multselct2[z]));
+                                    FileSystem.MoveFile(multselct[z], (movefolder[index] + "\\" + info[0] + "\\" + multselct2[z]), UIOption.AllDialogs);
+                                    Log.moveWriteLog(multselct2[z], (movefolder[index] + "\\" + info[0]));
+                                    multselct[z] = (movefolder[index] + "\\" + info[0] + "\\" + multselct2[z]);
                                 }
                                 catch (FileNotFoundException r)
                                 {
@@ -656,20 +661,26 @@ namespace TV_show_Renamer
 
                     for (int z = 0; z < multselct.Count; z++)
                     {
-                        info = infoFinder(multselct[z], folderlist);
+                        info = infoFinder(multselct[z], folderlist,movefolder);
+                        int index = Convert.ToInt32(info[2]);
+                        if (index == -1)
+                        {
+                            MessageBox.Show("Folder List is Wrong");
+                            return;
+                        }
                         if (info[0] != "no folder")
                         {
                             if (info[1] != "0")
                             {
-                                if (!(File.Exists(movefolder + "\\" + info[0] + "\\Season " + info[1])))
+                                if (!(File.Exists(movefolder[index] + "\\" + info[0] + "\\Season " + info[1])))
                                 {
-                                    System.IO.Directory.CreateDirectory(movefolder + "\\" + info[0] + "\\Season " + info[1]);
-                                    //MessageBox.Show((movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));
+                                    System.IO.Directory.CreateDirectory(movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
+                                    //MessageBox.Show((movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));
                                     try
                                     {
-                                        //System.IO.File.Copy(multselct[z], (movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]),false);
-                                        FileSystem.CopyFile(multselct[z], (movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]), UIOption.AllDialogs);
-                                        Log.moveWriteLog(multselct2[z], (movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\"));
+                                        //System.IO.File.Copy(multselct[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]),false);
+                                        FileSystem.CopyFile(multselct[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]), UIOption.AllDialogs);
+                                        Log.moveWriteLog(multselct2[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\"));
 
                                     }
                                     catch (FileNotFoundException r)
@@ -696,9 +707,9 @@ namespace TV_show_Renamer
                             {
                                 try
                                 {
-                                    //System.IO.File.Copy(multselct[z], (movefolder + "\\" + info[0] + "\\" + multselct2[z]),false);
-                                    FileSystem.CopyFile(multselct[z], (movefolder + "\\" + info[0] + "\\" + multselct2[z]), UIOption.AllDialogs);
-                                    Log.moveWriteLog(multselct2[z], (movefolder + "\\" + info[0]));
+                                    //System.IO.File.Copy(multselct[z], (movefolder[index] + "\\" + info[0] + "\\" + multselct2[z]),false);
+                                    FileSystem.CopyFile(multselct[z], (movefolder[index] + "\\" + info[0] + "\\" + multselct2[z]), UIOption.AllDialogs);
+                                    Log.moveWriteLog(multselct2[z], (movefolder[index] + "\\" + info[0]));
 
                                 }
                                 catch (FileNotFoundException r)
@@ -917,15 +928,19 @@ namespace TV_show_Renamer
         }//end of preferenceXMLReader Method
                 
         //returns string list of info
-        private List<string> infoFinder(string oldfile,List<string> folderlist) {
+        private List<string> infoFinder(string oldfile, List<string> folderlist, List<string> rootfolderlist)
+        {
 
             string fileName = lowering(oldfile);
             List<string> stuff = new List<string>();
 
             string infoChanged = fileName;
+            int indexof = 0;
             stuff.Add("no folder");
             stuff.Add("0");
-
+            stuff.Add("-1");
+            
+            //infoChanged = fileName;
 
             for (int i = 0; i < folderlist.Count(); i++) {
 
@@ -934,10 +949,26 @@ namespace TV_show_Renamer
                 infoChanged = fileName.Replace(newFolderEdited, "0000");
                 if (infoChanged != fileName) {
                     stuff[0]=folderlist[i];
+                    indexof = i;
                     break;
                 }                       
             }//end of for loop
-            
+
+
+            //find folder
+            string filenameraw = folderlist[indexof-1];
+            infoChanged = filenameraw;
+
+            for (int i = 0; i < rootfolderlist.Count(); i++)
+            {
+                //string newRootFolder = lowering(rootfolderlist[i]);
+                infoChanged = filenameraw.Replace(rootfolderlist[i], "0000");
+                if (infoChanged != filenameraw)
+                {
+                    stuff[2] = i.ToString();
+                    break;
+                }
+            }//end of for loop                      
 
             //loop for seasons
             for (int i = 1; i < 40; i++)
@@ -998,11 +1029,6 @@ namespace TV_show_Renamer
                 }
 
             }//end of season loop
-            
-            
-
-
-
             return stuff;
         
         }
@@ -1027,6 +1053,8 @@ namespace TV_show_Renamer
                 foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
                 {
                     foldersIn.Add(fi.Name);
+                    foldersIn.Add(fi.Name+fi.FullName);
+
                 }
             }
             //Sort folders
@@ -1038,7 +1066,8 @@ namespace TV_show_Renamer
             //Display box7 = new Display(revFoldersIn);
             //box7.Show();
 
-
+            //Display test55 = new Display(revFoldersIn);
+            //test55.Show();
             return revFoldersIn;
 
         }
