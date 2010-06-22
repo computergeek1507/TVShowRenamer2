@@ -219,7 +219,7 @@
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.1.5"
+        "ProductVersion" = "8:2.1.6"
         "Manufacturer" = "8:Scott"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://scottnation.com"
