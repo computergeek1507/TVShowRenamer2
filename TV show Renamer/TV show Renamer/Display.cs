@@ -23,7 +23,7 @@ namespace TV_show_Renamer
             {
                 label1.Text+=(display2[i]+"\n");
             }
-
+            this.Show();
         }
         public Display(List<string> display5,string start)
         {
@@ -34,6 +34,7 @@ namespace TV_show_Renamer
             {
                 label1.Text += (display5[i] + "\n");
             }
+            this.Show();
 
         }
         public Display(List<string> display3,int test)
@@ -45,6 +46,7 @@ namespace TV_show_Renamer
             {
                 label1.Text += (display3[i] + " to "+display3[i+1]+ "\n");
             }//end of for
+            this.Show();
 
         }
         public Display(List<string> display2,bool test)
@@ -62,13 +64,13 @@ namespace TV_show_Renamer
                 
                 label1.Text += (display2[i] + "\n");
             }
-
+            this.Show();
         }
         public Display(string displayOutput)
         {
             InitializeComponent();
-            label1.Text=displayOutput;           
-
+            label1.Text=displayOutput;
+            this.Show();
         }
         public Display(List<string> display4, List<string> display5)
         {
@@ -86,7 +88,7 @@ namespace TV_show_Renamer
                     label1.Text += ("  - "+display4[i]+ "\n");
                 }
             }//end of for
-
+            this.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)

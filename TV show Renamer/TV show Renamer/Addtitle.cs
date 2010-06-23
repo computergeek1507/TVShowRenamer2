@@ -97,7 +97,7 @@ namespace TV_show_Renamer
         private void button4_Click(object sender, EventArgs e)
         {
             Display box = new Display(title, names);
-            box.Show();
+            //box.Show();
         }
         
         //run when form loads

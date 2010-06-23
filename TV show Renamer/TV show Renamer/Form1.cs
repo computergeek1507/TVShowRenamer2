@@ -28,7 +28,7 @@ namespace TV_show_Renamer
         bool addfile = false;
         bool shownb4 = false;
 
-        const int appVersion = 216;//2.1Beta
+        const int appVersion = 217;//2.1Beta
         List<string> movefolder = new List<string>();
         List<string> oldnames = new List<string>();
         List<string> newnames = new List<string>();
@@ -821,7 +821,7 @@ namespace TV_show_Renamer
 
                 Log.convertWriteLog(displayOld, display);
                 Display box2 = new Display(display);
-                box2.Show();
+                //box2.Show();
                 //clear textbox
                 richTextBox1.Text = null;
                 //aa new names to textbox
@@ -869,7 +869,7 @@ namespace TV_show_Renamer
                 q = 0;
                 Log.convertWriteLog(display, displayOld);
                 Display box1 = new Display(displayOld);
-                box1.Show();
+                //box1.Show();
 
                 richTextBox1.Text = null;
                 for (int i = 0; i < display.Count(); i++)
@@ -940,8 +940,7 @@ namespace TV_show_Renamer
             stuff.Add("0");
             stuff.Add("-1");
             
-            //infoChanged = fileName;
-
+            //figure out if tv show is listed
             for (int i = 0; i < folderlist.Count(); i++) {
 
                 string newFolderEdited = lowering(folderlist[i]);
@@ -955,20 +954,11 @@ namespace TV_show_Renamer
             }//end of for loop
 
 
-            //find folder
+            //figure out root folder
             string filenameraw = folderlist[indexof-1];
-            infoChanged = filenameraw;
-
-            for (int i = 0; i < rootfolderlist.Count(); i++)
-            {
-                //string newRootFolder = lowering(rootfolderlist[i]);
-                infoChanged = filenameraw.Replace(rootfolderlist[i], "0000");
-                if (infoChanged != filenameraw)
-                {
-                    stuff[2] = i.ToString();
-                    break;
-                }
-            }//end of for loop                      
+            string index = filenameraw.Replace(folderlist[indexof], "");
+            stuff[2] = index;
+               
 
             //loop for seasons
             for (int i = 1; i < 40; i++)
@@ -1044,17 +1034,13 @@ namespace TV_show_Renamer
         {
             List<String> foldersIn = new List<String>();
             List<String> revFoldersIn = new List<String>();
-            for (int u = 0; u < folderwatch.Count(); u++) { 
-            
-            
-            
+            for (int u = 0; u < folderwatch.Count(); u++) {       
             
                 System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch[u]);
                 foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
                 {
                     foldersIn.Add(fi.Name);
-                    foldersIn.Add(fi.Name+fi.FullName);
-
+                    foldersIn.Add(fi.Name+u.ToString());//add name and folder number so it will be sorted correctly                    
                 }
             }
             //Sort folders
@@ -1065,9 +1051,7 @@ namespace TV_show_Renamer
             }
             //Display box7 = new Display(revFoldersIn);
             //box7.Show();
-
-            //Display test55 = new Display(revFoldersIn);
-            //test55.Show();
+                 
             return revFoldersIn;
 
         }
