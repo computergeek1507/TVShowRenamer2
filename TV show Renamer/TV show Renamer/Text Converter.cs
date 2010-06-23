@@ -18,17 +18,19 @@ namespace TV_show_Renamer
             InitializeComponent();
         }
 
-
+        //get text list
         public List<string> getText()
         {
             return textConvert;
         }
 
+        //"close" window
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
         }
 
+        //add text to be converted
         private void button2_Click(object sender, EventArgs e)
         {
             if ((textBox1.Text != "") || (textBox1.Text != "0000"))
@@ -42,12 +44,14 @@ namespace TV_show_Renamer
             //newbox.Show();
         }
 
+        //view list
         private void button3_Click(object sender, EventArgs e)
         {
             Display newbox = new Display(textConvert, 1);                
-            newbox.Show();
+            //newbox.Show();
         }
 
+        //clear list
         private void button4_Click(object sender, EventArgs e)
         {
             textConvert.Clear();

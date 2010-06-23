@@ -99,7 +99,7 @@ namespace TV_show_Renamer
         private void button2_Click(object sender, EventArgs e)
         {
             Display box = new Display(userwords, true);
-            box.Show();
+            //box.Show();
         }
 
         //"close" form and save new words to file

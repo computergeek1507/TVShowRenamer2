@@ -57,34 +57,55 @@ namespace TV_show_Renamer
         //runs when download completes
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
-            
+
             try
             {
                 if (File.Exists(commonAppData + "//library.seh"))
                 {
                     File.Delete(commonAppData + "//library.seh");
                 }
+            }
+            catch (Exception q)
+            {
+                window.writeLog("Error when deleting files before update" + q.ToString());
+            }
+            try
+            {
                 if (File.Exists(commonAppData + "//version.xml"))
                 {
                     File.Delete(commonAppData + "//version.xml");
                 }
+            }
+            catch (Exception q)
+            {
+                window.writeLog("Error when deleting files before update" + q.ToString());
+            }
+            try
+            {
                 if (File.Exists(commonAppData + "//webversion.xml"))
                 {
                     File.Delete(commonAppData + "//webversion.xml");
                 }
+            }
+            catch (Exception q)
+            {
+                window.writeLog("Error when deleting files before update" + q.ToString());
+            }
+            try
+            {
                 if (File.Exists(commonAppData + "//preferences.seh"))
                 {
                     File.Delete(commonAppData + "//preferences.seh");
                 }
             }
-            catch (Exception q )
+            catch (Exception q)
             {
                 window.writeLog("Error when deleting files before update" + q.ToString());
             }
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = label1.Text;
             Process.Start(startInfo);
-            
+
             //System.Environment.Exit(0);
             Application.Exit();
             //window.Close();
