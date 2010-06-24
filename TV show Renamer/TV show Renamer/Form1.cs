@@ -956,7 +956,7 @@ namespace TV_show_Renamer
 
             //figure out root folder
             string filenameraw = folderlist[indexof-1];
-            string index = filenameraw.Replace(folderlist[indexof], "");
+            string index = filenameraw.Replace(folderlist[indexof] + " ", "");
             stuff[2] = index;
                
 
@@ -1040,7 +1040,7 @@ namespace TV_show_Renamer
                 foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
                 {
                     foldersIn.Add(fi.Name);
-                    foldersIn.Add(fi.Name+u.ToString());//add name and folder number so it will be sorted correctly                    
+                    foldersIn.Add(fi.Name+" "+u.ToString());//add name and folder number so it will be sorted correctly                    
                 }
             }
             //Sort folders
@@ -1049,7 +1049,7 @@ namespace TV_show_Renamer
             {
                 revFoldersIn.Add(foldersIn[y-1]);
             }
-            //Display box7 = new Display(revFoldersIn);
+            Display box7 = new Display(revFoldersIn);
             //box7.Show();
                  
             return revFoldersIn;
@@ -1368,7 +1368,7 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj, output);//Season 1 Episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString(), output);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
-                        newfilename = newfilename.Replace(i.ToString() + "x" + newj, output + tempTitle);//1x01 add title
+                        newfilename = newfilename.Replace(output, output + tempTitle);//1x01 add title
                     }
                     //0101 format
                     if (toolStripMenuItem3.Checked)
@@ -1382,7 +1382,7 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj, output);//Season 1 Episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString(), output);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
-                        newfilename = newfilename.Replace(newi + newj, output + tempTitle);//0101 add title
+                        newfilename = newfilename.Replace(output, output + tempTitle);//0101 add title
                     }
                     //S01E01 format
                     if (s01E01ToolStripMenuItem1.Checked)
