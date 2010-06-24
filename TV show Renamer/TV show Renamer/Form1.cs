@@ -1049,7 +1049,7 @@ namespace TV_show_Renamer
             {
                 revFoldersIn.Add(foldersIn[y-1]);
             }
-            Display box7 = new Display(revFoldersIn);
+            //Display box7 = new Display(revFoldersIn);
             //box7.Show();
                  
             return revFoldersIn;
