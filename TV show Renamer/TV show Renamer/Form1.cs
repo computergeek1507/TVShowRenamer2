@@ -28,7 +28,7 @@ namespace TV_show_Renamer
         bool addfile = false;
         bool shownb4 = false;
 
-        const int appVersion = 217;//2.1Beta
+        const int appVersion = 218;//2.1Beta
         List<string> movefolder = new List<string>();
         List<string> oldnames = new List<string>();
         List<string> newnames = new List<string>();
