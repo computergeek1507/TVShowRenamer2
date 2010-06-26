@@ -48,6 +48,7 @@ namespace TV_show_Renamer
         string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer";
         
         #endregion
+
         //loads when starts
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -590,6 +591,10 @@ namespace TV_show_Renamer
                                         MessageBox.Show("File already exists or is in use\n" + multselct[z]);
                                         Log.WriteLog(g.ToString());
                                         continue;
+                                    }                                    
+                                    catch (OperationCanceledException t)
+                                    {
+                                        continue;
                                     }
                                     catch (Exception t)
                                     {
@@ -618,6 +623,10 @@ namespace TV_show_Renamer
                                 {
                                     MessageBox.Show("File already exists or is in use\n" + multselct[z]);
                                     Log.WriteLog(g.ToString());
+                                    continue;
+                                }
+                                catch (OperationCanceledException t)
+                                {
                                     continue;
                                 }
                                 catch (Exception t)
@@ -695,6 +704,10 @@ namespace TV_show_Renamer
                                         Log.WriteLog(g.ToString());
                                         continue;
                                     }
+                                    catch (OperationCanceledException t)
+                                    {
+                                        continue;
+                                    }
                                     catch (Exception t)
                                     {
                                         MessageBox.Show("Broken" + t.ToString());
@@ -722,6 +735,10 @@ namespace TV_show_Renamer
                                 {
                                     MessageBox.Show("File already exists or is in use\n" + multselct[z]);
                                     Log.WriteLog(g.ToString());
+                                    continue;
+                                }
+                                catch (OperationCanceledException t)
+                                {
                                     continue;
                                 }
                                 catch (Exception t)
