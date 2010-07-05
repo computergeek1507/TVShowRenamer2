@@ -11,6 +11,8 @@ using System.Xml;
 using System.Net;
 using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
+using System.Threading;
+
 
 namespace TV_show_Renamer
 {
@@ -273,44 +275,12 @@ namespace TV_show_Renamer
         //check for updates
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.ConnectionExists())
-            {
-                if (this.websiteExists())
-                {
-                    try
-                    {
-                        WebRequest request = WebRequest.Create(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"));
-                        request.Method = "HEAD";
-
-                        WebResponse response = request.GetResponse();
-                        Console.WriteLine("{0} {1}", response.ContentLength, response.ContentType);
-                    }
-                    catch (Exception)
-                    {
-                        Log.WriteLog("webversion.xml file doownload failed");
-                        MessageBox.Show("Problem with Server\nPlease Contact Admin");
-                        return;
-                    }
-
-
-                    WebClient webClient = new WebClient();
-                    webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-                    webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), commonAppData + "\\webversion.xml");
-
-                }
-                else
-                {
-                    Log.WriteLog("Server is unavalible Please try again later");
-                    MessageBox.Show("Server is unavalible\nPlease try again later");
-                }
-            }
-            else
-            {
-                Log.WriteLog("No internet connection avalible Please check connection");
-                MessageBox.Show("No internet connection avalible\nPlease check connection");
-            }
+            this.checkForUpdate();
+            //new thread for update
+            //Thread t = new Thread(new ThreadStart(checkForUpdate));
+            //t.Start();
         }
-
+        
         //about display
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -385,6 +355,45 @@ namespace TV_show_Renamer
                 return false;
             }
         }//end of ConnectionExists class
+
+        //check for updates
+        private void checkForUpdate() {
+            if (this.ConnectionExists())
+            {
+                if (this.websiteExists())
+                {
+                    try
+                    {
+                        WebRequest request = WebRequest.Create(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"));
+                        request.Method = "HEAD";
+
+                        WebResponse response = request.GetResponse();
+                    }
+                    catch (Exception)
+                    {
+                        Log.WriteLog("webversion.xml file doownload failed");
+                        MessageBox.Show("Problem with Server\nPlease Contact Admin");
+                        return;
+                    }
+
+
+                    WebClient webClient = new WebClient();
+                    webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+                    webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), commonAppData + "\\webversion.xml");
+
+                }
+                else
+                {
+                    Log.WriteLog("Server is unavalible Please try again later");
+                    MessageBox.Show("Server is unavalible\nPlease try again later");
+                }
+            }
+            else
+            {
+                Log.WriteLog("No internet connection avalible Please check connection");
+                MessageBox.Show("No internet connection avalible\nPlease check connection");
+            }       
+        }
         
         //runs when xml file is done downloading
         private void Completed(object sender, AsyncCompletedEventArgs e)
@@ -537,6 +546,7 @@ namespace TV_show_Renamer
         {
             download update = new download(commonAppData, this);
             update.Show();
+
             this.Hide();
         }
 
@@ -1212,21 +1222,20 @@ namespace TV_show_Renamer
             //replace periods(".") with spaces 
             if (convertToolStripMenuItem.Checked)
             {
-                //fix for file extention periods
-                newfilename = newfilename.Replace(".", " ");
+                newfilename = newfilename.Replace(".", temp);
             }
 
             //Replace "_" with spaces
             if (convertToToolStripMenuItem.Checked)
             {
-                newfilename = newfilename.Replace("_", " ");
+                newfilename = newfilename.Replace("_", temp);
             }
 
             //Replace "-" with spaces
             if (removeToolStripMenuItem.Checked)
             {
-                newfilename = newfilename.Replace("-", " ");
-            }
+                newfilename = newfilename.Replace("-", temp);
+            }           
 
             //make every thing lowercase for crap remover to work
             StringBuilder s = new StringBuilder(newfilename);
@@ -1279,7 +1288,6 @@ namespace TV_show_Renamer
                     }
                 }//emd of for loop
             }//end of remove year function
-
 
             //Removes extra Spaces and periods
             string[] tempspace = new string[newfilename.Length];
@@ -1508,6 +1516,7 @@ namespace TV_show_Renamer
             //newfilename = newfilename.Replace("-.", ".");
             newfilename = newfilename.Replace(" .", ".");
             newfilename = newfilename.Replace("- -", "-");
+            newfilename = newfilename.Replace(".-.", ".");
             newfilename = newfilename.Replace("-.", ".");
             newfilename = newfilename.Replace(" .", ".");
             newfilename = newfilename.Replace("Vs", "vs");
