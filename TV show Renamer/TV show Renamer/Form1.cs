@@ -592,7 +592,7 @@ namespace TV_show_Renamer
                                         Log.WriteLog(g.ToString());
                                         continue;
                                     }                                    
-                                    catch (OperationCanceledException t)
+                                    catch (OperationCanceledException)
                                     {
                                         continue;
                                     }
@@ -625,7 +625,7 @@ namespace TV_show_Renamer
                                     Log.WriteLog(g.ToString());
                                     continue;
                                 }
-                                catch (OperationCanceledException t)
+                                catch (OperationCanceledException )
                                 {
                                     continue;
                                 }
@@ -704,7 +704,7 @@ namespace TV_show_Renamer
                                         Log.WriteLog(g.ToString());
                                         continue;
                                     }
-                                    catch (OperationCanceledException t)
+                                    catch (OperationCanceledException )
                                     {
                                         continue;
                                     }
@@ -737,7 +737,7 @@ namespace TV_show_Renamer
                                     Log.WriteLog(g.ToString());
                                     continue;
                                 }
-                                catch (OperationCanceledException t)
+                                catch (OperationCanceledException )
                                 {
                                     continue;
                                 }
@@ -1170,8 +1170,19 @@ namespace TV_show_Renamer
         //rename method
         private string fileRenamer(string newfilename, int index, string extend)
         {
+            //make temp function
+            string temp = null;
+            if (convertToolStripMenuItem.Checked)
+            {
+                temp = " ";
+            }
+            else
+            {
+                temp = ".";
+            }//end of if-else
+
             //remove extention
-            newfilename = newfilename.Replace(extend, " 0000");
+            newfilename = newfilename.Replace(extend, temp+"&&&&");
 
             //Text converter
             List<string> testConverter = new List<string>();
@@ -1217,13 +1228,13 @@ namespace TV_show_Renamer
                 newfilename = newfilename.Replace("-", " ");
             }
 
-
             //make every thing lowercase for crap remover to work
             StringBuilder s = new StringBuilder(newfilename);
             for (int l = 0; l < newfilename.Length; l++)
             {
                 s[l] = char.ToLower(s[l]);
             }
+
             //reassign edited name 
             newfilename = s.ToString();
 
@@ -1247,9 +1258,10 @@ namespace TV_show_Renamer
                     space[p] = space[p + 1];
                 }
             }
+
             //reassign edited name 
             newfilename = space.ToString();
-            newfilename = newfilename.Replace("00000", "0000");//fix that i hope works
+            newfilename = newfilename.Replace("&&&&&", "&&&&");//fix that i hope works
 
 
             //remove year function
@@ -1306,7 +1318,6 @@ namespace TV_show_Renamer
                         char strTemp2 = char.ToUpper(s2[i + 1]);
                         s2[i + 1] = strTemp2;
                     }
-
                 }//end of for loop
 
                 //adds changes to newfilename
@@ -1314,16 +1325,7 @@ namespace TV_show_Renamer
 
             }//end of capilization
 
-            //make temp function
-            string temp = null;
-            if (convertToolStripMenuItem.Checked)
-            {
-                temp = " ";
-            }
-            else
-            {
-                temp = ".";
-            }//end of if-else
+            
 
 
             //add dash if the title exists or add one 
@@ -1382,9 +1384,10 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(newi + newj, output);//0101
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj, output);//Season 1 Episode 01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString(), output);//Season 1 Episode 1
+                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output);//Season 1 Episode 01
+                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
+                        newfilename = newfilename.Replace("0"+output, output);//01x01 fix might be unnessitarry
                         newfilename = newfilename.Replace(output, output + tempTitle);//1x01 add title
                     }
                     //0101 format
@@ -1396,8 +1399,8 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj, output);//Season 1 Episode 01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString(), output);//Season 1 Episode 1
+                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output);//Season 1 Episode 01
+                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
                         newfilename = newfilename.Replace(output, output + tempTitle);//0101 add title
                     }
@@ -1410,8 +1413,8 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
                         newfilename = newfilename.Replace(newi + newj, output);//0101
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1   
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj, output);//Season 1 Episode 01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString(), output);//Season 1 Episode 1
+                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output);//Season 1 Episode 01
+                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
                         newfilename = newfilename.Replace("S" + newi + "E" + newj, output + tempTitle);//S01E01 add title
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output + tempTitle);//S01E01 add title if second time
@@ -1495,7 +1498,7 @@ namespace TV_show_Renamer
             }//end of if for date check box
 
             //add file extention back on 
-            newfilename = newfilename.Replace(" 0000", extend);
+            newfilename = newfilename.Replace(temp + "&&&&", extend);
 
             //Random fixes
 
