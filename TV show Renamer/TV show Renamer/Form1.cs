@@ -1384,6 +1384,7 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(newi + newj, output);//0101
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
+                        newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output);//Season 1 Episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
@@ -1398,6 +1399,7 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101 
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
+                        newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output);//Season 1 Episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output);//Season 1 Episode 1
@@ -1412,7 +1414,8 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
                         newfilename = newfilename.Replace(newi + newj, output);//0101
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1   
+                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1 
+                        newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output);//Season 1 Episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
