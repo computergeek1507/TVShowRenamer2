@@ -973,7 +973,7 @@ namespace TV_show_Renamer
 
             //figure out root folder
             string filenameraw = folderlist[indexof-1];
-            string index = filenameraw.Replace(folderlist[indexof] + " ", "");
+            string index = filenameraw.Replace(folderlist[indexof] + "  ", "");
             stuff[2] = index;
                
 
@@ -1057,7 +1057,7 @@ namespace TV_show_Renamer
                 foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
                 {
                     foldersIn.Add(fi.Name);
-                    foldersIn.Add(fi.Name+" "+u.ToString());//add name and folder number so it will be sorted correctly                    
+                    foldersIn.Add(fi.Name+"  "+u.ToString());//add name and folder number so it will be sorted correctly                    
                 }
             }
             //Sort folders
