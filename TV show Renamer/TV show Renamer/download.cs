@@ -127,7 +127,8 @@ namespace TV_show_Renamer
             {
                 string name = saveFileDialog1.FileName;
                 this.downloadUpdate(name);
-            }
+            }         
+            
         }
 
         //cancel button
@@ -135,7 +136,7 @@ namespace TV_show_Renamer
         {
             window.Show();            
             this.Close();
-        }
+        }       
 
         //run when form closes
         private void download_FormClosed(object sender, FormClosedEventArgs e)

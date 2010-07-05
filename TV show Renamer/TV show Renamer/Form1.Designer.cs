@@ -168,6 +168,7 @@
             // 
             // addFolderToolStripMenuItem
             // 
+            this.addFolderToolStripMenuItem.AutoToolTip = true;
             this.addFolderToolStripMenuItem.Name = "addFolderToolStripMenuItem";
             this.addFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.addFolderToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
@@ -177,6 +178,7 @@
             // 
             // clearListToolStripMenuItem
             // 
+            this.clearListToolStripMenuItem.AutoToolTip = true;
             this.clearListToolStripMenuItem.Name = "clearListToolStripMenuItem";
             this.clearListToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
             this.clearListToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
@@ -222,6 +224,7 @@
             // 
             // convertToToolStripMenuItem
             // 
+            this.convertToToolStripMenuItem.AutoToolTip = true;
             this.convertToToolStripMenuItem.Checked = true;
             this.convertToToolStripMenuItem.CheckOnClick = true;
             this.convertToToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -232,6 +235,7 @@
             // 
             // removeToolStripMenuItem
             // 
+            this.removeToolStripMenuItem.AutoToolTip = true;
             this.removeToolStripMenuItem.Checked = true;
             this.removeToolStripMenuItem.CheckOnClick = true;
             this.removeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -242,16 +246,18 @@
             // 
             // capitalizeToolStripMenuItem
             // 
+            this.capitalizeToolStripMenuItem.AutoToolTip = true;
             this.capitalizeToolStripMenuItem.Checked = true;
             this.capitalizeToolStripMenuItem.CheckOnClick = true;
             this.capitalizeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.capitalizeToolStripMenuItem.Name = "capitalizeToolStripMenuItem";
             this.capitalizeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.capitalizeToolStripMenuItem.Text = "Capitalize";
-            this.capitalizeToolStripMenuItem.ToolTipText = "Capitalize First Letter After Spaces";
+            this.capitalizeToolStripMenuItem.ToolTipText = "Capitalize First Letter After Spaces/Period";
             // 
             // removeExtraCrapToolStripMenuItem
             // 
+            this.removeExtraCrapToolStripMenuItem.AutoToolTip = true;
             this.removeExtraCrapToolStripMenuItem.Checked = true;
             this.removeExtraCrapToolStripMenuItem.CheckOnClick = true;
             this.removeExtraCrapToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -262,6 +268,7 @@
             // 
             // addForTitleToolStripMenuItem
             // 
+            this.addForTitleToolStripMenuItem.AutoToolTip = true;
             this.addForTitleToolStripMenuItem.Checked = true;
             this.addForTitleToolStripMenuItem.CheckOnClick = true;
             this.addForTitleToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -272,7 +279,9 @@
             // 
             // removeYearToolStripMenuItem
             // 
+            this.removeYearToolStripMenuItem.AutoToolTip = true;
             this.removeYearToolStripMenuItem.Checked = true;
+            this.removeYearToolStripMenuItem.CheckOnClick = true;
             this.removeYearToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.removeYearToolStripMenuItem.Name = "removeYearToolStripMenuItem";
             this.removeYearToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
@@ -292,6 +301,7 @@
             // 
             // x01ToolStripMenuItem
             // 
+            this.x01ToolStripMenuItem.AutoToolTip = true;
             this.x01ToolStripMenuItem.Checked = true;
             this.x01ToolStripMenuItem.CheckOnClick = true;
             this.x01ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -304,6 +314,7 @@
             // 
             // toolStripMenuItem3
             // 
+            this.toolStripMenuItem3.AutoToolTip = true;
             this.toolStripMenuItem3.CheckOnClick = true;
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(155, 22);
@@ -313,6 +324,7 @@
             // 
             // s01E01ToolStripMenuItem1
             // 
+            this.s01E01ToolStripMenuItem1.AutoToolTip = true;
             this.s01E01ToolStripMenuItem1.CheckOnClick = true;
             this.s01E01ToolStripMenuItem1.Name = "s01E01ToolStripMenuItem1";
             this.s01E01ToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
@@ -322,6 +334,7 @@
             // 
             // dateToolStripMenuItem
             // 
+            this.dateToolStripMenuItem.AutoToolTip = true;
             this.dateToolStripMenuItem.CheckOnClick = true;
             this.dateToolStripMenuItem.Name = "dateToolStripMenuItem";
             this.dateToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
@@ -344,6 +357,7 @@
             // 
             // addTitleToolStripMenuItem
             // 
+            this.addTitleToolStripMenuItem.AutoToolTip = true;
             this.addTitleToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.addTitleToolStripMenuItem.Name = "addTitleToolStripMenuItem";
             this.addTitleToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
@@ -353,6 +367,7 @@
             // 
             // textConverterToolStripMenuItem
             // 
+            this.textConverterToolStripMenuItem.CheckOnClick = true;
             this.textConverterToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.textConverterToolStripMenuItem.Name = "textConverterToolStripMenuItem";
             this.textConverterToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
@@ -362,6 +377,7 @@
             // 
             // addJunkWordsToolStripMenuItem
             // 
+            this.addJunkWordsToolStripMenuItem.AutoToolTip = true;
             this.addJunkWordsToolStripMenuItem.Name = "addJunkWordsToolStripMenuItem";
             this.addJunkWordsToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.addJunkWordsToolStripMenuItem.Text = "Add Junk Words...";
@@ -375,6 +391,7 @@
             // 
             // defaultSettingsToolStripMenuItem
             // 
+            this.defaultSettingsToolStripMenuItem.AutoToolTip = true;
             this.defaultSettingsToolStripMenuItem.Name = "defaultSettingsToolStripMenuItem";
             this.defaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.defaultSettingsToolStripMenuItem.Text = "Restore Default Settings";
@@ -383,6 +400,7 @@
             // 
             // setTVFolderLocationToolStripMenuItem
             // 
+            this.setTVFolderLocationToolStripMenuItem.AutoToolTip = true;
             this.setTVFolderLocationToolStripMenuItem.Name = "setTVFolderLocationToolStripMenuItem";
             this.setTVFolderLocationToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.setTVFolderLocationToolStripMenuItem.Text = "Set TV Folder Location...";
@@ -401,6 +419,7 @@
             // 
             // checkForUpdatesToolStripMenuItem
             // 
+            this.checkForUpdatesToolStripMenuItem.AutoToolTip = true;
             this.checkForUpdatesToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
             this.checkForUpdatesToolStripMenuItem.ShowShortcutKeys = false;
@@ -416,6 +435,7 @@
             // 
             // aboutToolStripMenuItem
             // 
+            this.aboutToolStripMenuItem.AutoToolTip = true;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.aboutToolStripMenuItem.Text = "About...";
