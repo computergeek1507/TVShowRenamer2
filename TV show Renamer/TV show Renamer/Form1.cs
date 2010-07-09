@@ -108,7 +108,7 @@ namespace TV_show_Renamer
         private void addFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog2.Title = "Select Media files";
-            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.mpg)|*.avi;*.mkv;*.mp4;*.mpg|Video (*.avi;)|*.avi;|Video (*.mp4;)|*.mp4;|Video (*.mkv;)|*.mkv;|Video (*.mpg;)|*.mpg;|All Files (*.*)|*.*";
+            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|Video (*.avi;)|*.avi;|Video (*.mp4;)|*.mp4;|Video (*.mkv;)|*.mkv;|Video (*.m4v;)|*.m4v;|Video (*.mpg;)|*.mpg;|All Files (*.*)|*.*";
             openFileDialog2.FileName = "";
             openFileDialog2.FilterIndex = 0;
             openFileDialog2.InitialDirectory = "Documents";
@@ -143,7 +143,7 @@ namespace TV_show_Renamer
                 string folder = null;
                 folder = folderBrowserDialog1.SelectedPath;
                 ProcessDir(folder, 0);
-                #region Old
+                #region Old folder stuff
                 /*
                 bool addfile = false;
                 bool shownb4 = false;
@@ -1120,7 +1120,7 @@ namespace TV_show_Renamer
                         continue;
                     }
                     //check if its a legal file type
-                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg"))
+                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v"))
                     {
                         //if dialog was shown b4 dont show again
                         if (!shownb4)
