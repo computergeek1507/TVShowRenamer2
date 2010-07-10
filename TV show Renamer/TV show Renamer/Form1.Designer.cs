@@ -367,7 +367,7 @@
             // 
             // textConverterToolStripMenuItem
             // 
-            this.textConverterToolStripMenuItem.CheckOnClick = true;
+            this.textConverterToolStripMenuItem.AutoToolTip = true;
             this.textConverterToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.textConverterToolStripMenuItem.Name = "textConverterToolStripMenuItem";
             this.textConverterToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
