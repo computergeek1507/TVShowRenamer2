@@ -73,6 +73,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -118,9 +119,9 @@
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button4.Location = new System.Drawing.Point(93, 445);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(81, 23);
             this.button4.TabIndex = 2;
-            this.button4.Text = "Undo";
+            this.button4.Text = "Undo Convert";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -349,8 +350,9 @@
             this.textConverterToolStripMenuItem,
             this.addJunkWordsToolStripMenuItem,
             this.toolStripSeparator3,
-            this.defaultSettingsToolStripMenuItem,
-            this.setTVFolderLocationToolStripMenuItem});
+            this.setTVFolderLocationToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.defaultSettingsToolStripMenuItem});
             this.otherOptionsToolStripMenuItem.Name = "otherOptionsToolStripMenuItem";
             this.otherOptionsToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
             this.otherOptionsToolStripMenuItem.Text = "Other Options";
@@ -472,7 +474,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(174, 445);
+            this.button1.Location = new System.Drawing.Point(180, 445);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 3;
@@ -483,13 +485,18 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Location = new System.Drawing.Point(255, 445);
+            this.button2.Location = new System.Drawing.Point(261, 445);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 4;
             this.button2.Text = "Copy To";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(198, 6);
             // 
             // Form1
             // 
@@ -565,6 +572,7 @@
         private System.Windows.Forms.ToolStripMenuItem setTVFolderLocationToolStripMenuItem;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 
