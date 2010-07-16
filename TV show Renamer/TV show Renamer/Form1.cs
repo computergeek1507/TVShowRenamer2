@@ -587,7 +587,7 @@ namespace TV_show_Renamer
                                         FileSystem.MoveFile(multselct[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]), UIOption.AllDialogs);
                                         Log.moveWriteLog(multselct2[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\"));
                                         //clear stuff
-                                        multselct[z] = (movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]);
+                                        multselct[z] = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]);
 
                                     }
                                     catch (FileNotFoundException r)
