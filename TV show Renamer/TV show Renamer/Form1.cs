@@ -569,12 +569,14 @@ namespace TV_show_Renamer
                     {
                         info = infoFinder(multselct[z], folderlist,movefolder);
                         int index = Convert.ToInt32(info[2]);
-                        if (index == -1) {
-                            MessageBox.Show("Folder List is Wrong");
-                            return;                        
-                        }
+                        
                         if (info[0] != "no folder")
                         {
+                            if (index == -1)
+                            {
+                                MessageBox.Show("Folder List is Wrong");
+                                return;
+                            }
                             if (info[1] != "0")
                             {
                                 if (!(File.Exists(movefolder[index] + "\\" + info[0] + "\\Season " + info[1])))
@@ -682,13 +684,14 @@ namespace TV_show_Renamer
                     {
                         info = infoFinder(multselct[z], folderlist,movefolder);
                         int index = Convert.ToInt32(info[2]);
-                        if (index == -1)
-                        {
-                            MessageBox.Show("Folder List is Wrong");
-                            return;
-                        }
+                        
                         if (info[0] != "no folder")
                         {
+                            if (index == -1)
+                            {
+                                MessageBox.Show("Folder List is Wrong");
+                                return;
+                            }
                             if (info[1] != "0")
                             {
                                 if (!(File.Exists(movefolder[index] + "\\" + info[0] + "\\Season " + info[1])))
@@ -976,15 +979,18 @@ namespace TV_show_Renamer
                 if (infoChanged != fileName) {
                     stuff[0]=folderlist[i];
                     indexof = i;
+
+                    //figure out root folder
+                    string filenameraw = folderlist[indexof - 1];
+                    string index = filenameraw.Replace(folderlist[indexof] + "  ", "");
+                    stuff[2] = index;
+
                     break;
                 }                       
             }//end of for loop
 
 
-            //figure out root folder
-            string filenameraw = folderlist[indexof-1];
-            string index = filenameraw.Replace(folderlist[indexof] + "  ", "");
-            stuff[2] = index;
+            
                
 
             //loop for seasons
