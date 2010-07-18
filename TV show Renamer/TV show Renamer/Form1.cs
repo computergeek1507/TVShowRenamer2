@@ -1259,7 +1259,7 @@ namespace TV_show_Renamer
                 //new way with file input
                 for (int x = 0; x < junklist.Count(); x++)
                 {
-                    newfilename = newfilename.Replace(junklist[x], "");
+                    newfilename = newfilename.Replace( junklist[x],  "");
                 }//end of for
             }//end of removeExtraCrapToolStripMenuItem if
 
