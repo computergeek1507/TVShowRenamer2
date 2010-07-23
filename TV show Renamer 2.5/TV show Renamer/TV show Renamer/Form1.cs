@@ -129,9 +129,15 @@ namespace TV_show_Renamer
                     fileFolder.Add(fi3.DirectoryName);
                     //add file extension
                     fileExtention.Add(fi3.Extension);
+                    
 
                 }//end of loop                               
-                
+                for (int i = 0; i < fileName.Count(); i++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = fileName[i];
+                    dataGridView1.Rows[i].Cells[1].Value = fileName[i];
+                }
 
             }//end of if
 
@@ -145,6 +151,14 @@ namespace TV_show_Renamer
                 string folder = null;
                 folder = folderBrowserDialog1.SelectedPath;
                 ProcessDir(folder, 0);
+
+                for (int i = 0; i < fileName.Count(); i++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = fileName[i];
+                    dataGridView1.Rows[i].Cells[1].Value = fileName[i];
+                }
+
                 #region Old folder stuff
                 /*
                 bool addfile = false;
@@ -206,8 +220,8 @@ namespace TV_show_Renamer
             fileFolder.Clear();
             fileName.Clear();
             fileExtention.Clear();
-            newFileName.Clear(); 
-
+            newFileName.Clear();
+            dataGridView1.Rows.Clear();
             titles.clearTitles();
         }
 
@@ -798,6 +812,8 @@ namespace TV_show_Renamer
             {
                 System.IO.File.Move((fileFolder[y] + "\\" + fileName[y]), (fileFolder[y] + "\\" + newFileName[y]));
                 fileName[y] = newFileName[y];
+                dataGridView1.Rows[y].Cells[0].Value = fileName[y];
+                
             }
             catch (FileNotFoundException)
             {
@@ -827,7 +843,7 @@ namespace TV_show_Renamer
                 {                    
                     //call fileRenamer methoid
                     newFileName[z] = this.fileRenamer(fileName[z], z, fileExtention[z]);
-                    
+                    dataGridView1.Rows[z].Cells[1].Value = newFileName[z];
                 }//end of for loop 
                 //show what has been converted
             }
@@ -847,6 +863,7 @@ namespace TV_show_Renamer
                 {
                     //call fileRenamer methoid
                     newFileName[z] = fileName[z];
+                    dataGridView1.Rows[z].Cells[1].Value = fileName[z];
 
                 }//end of for loop 
                 //show what has been converted
@@ -1105,6 +1122,7 @@ namespace TV_show_Renamer
                     fileFolder.Add(fi.DirectoryName);
                     //add file extension
                     fileExtention.Add(exten);
+                    
                 }
 
                 // Recurse into subdirectories of this directory.
