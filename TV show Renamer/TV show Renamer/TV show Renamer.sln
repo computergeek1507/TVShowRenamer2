@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TV show Renamer", "TV show Renamer\TV show Renamer.csproj", "{007EA710-B01C-4A2F-9A14-C1A13D012D65}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TV Show Renamer Setup", "TV Show Renamer Setup\TV Show Renamer Setup.vdproj", "{A9D5E8F9-8A9D-465C-96CD-E234843DA07D}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs02.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = TV\u0020Show\u0020Renamer\u0020Setup\\TV\u0020Show\u0020Renamer\u0020Setup.vdproj
+		SccProjectName1 = TV\u0020Show\u0020Renamer\u0020Setup
+		SccLocalPath1 = TV\u0020Show\u0020Renamer\u0020Setup
+		SccProjectUniqueName2 = TV\u0020show\u0020Renamer\\TV\u0020show\u0020Renamer.csproj
+		SccProjectName2 = TV\u0020show\u0020Renamer
+		SccLocalPath2 = TV\u0020show\u0020Renamer
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{007EA710-B01C-4A2F-9A14-C1A13D012D65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007EA710-B01C-4A2F-9A14-C1A13D012D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007EA710-B01C-4A2F-9A14-C1A13D012D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007EA710-B01C-4A2F-9A14-C1A13D012D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9D5E8F9-8A9D-465C-96CD-E234843DA07D}.Debug|Any CPU.ActiveCfg = Debug
+		{A9D5E8F9-8A9D-465C-96CD-E234843DA07D}.Release|Any CPU.ActiveCfg = Release
+		{A9D5E8F9-8A9D-465C-96CD-E234843DA07D}.Release|Any CPU.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
