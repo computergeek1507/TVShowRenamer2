@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 
 namespace TV_show_Renamer
 {
@@ -15,6 +16,7 @@ namespace TV_show_Renamer
         List<string> junkwords = new List<string>();
         List<string> userwords = new List<string>();
         string commonAppData = null;
+        Form1 Main;
 
         public junk_words()
         {
@@ -22,8 +24,9 @@ namespace TV_show_Renamer
         }
 
         //get info from the main form
-        public void junk_adder(List<string> junkwords2, string commonAppData2)
+        public void junk_adder(List<string> junkwords2, string commonAppData2,Form1 test)
         {
+            Main = test;
             junkwords = junkwords2;
             commonAppData = commonAppData2;
             //MessageBox.Show(commonAppData2);
@@ -113,7 +116,16 @@ namespace TV_show_Renamer
             }//end of for
             sw.Close();//close writer stream
             this.Hide();
+            
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
+            
         }//end of button method
+
+        private void convert()
+        {
+            Main.autoConvert();
+        }
 
         //return junk words
         public List<string> getjunk() {

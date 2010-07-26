@@ -61,9 +61,7 @@ namespace TV_show_Renamer
         //move function calls
         public void moveWriteLog(string oldName, string directory)
         {
-
-            log.WriteLine(DateTime.Now + " - " + oldName + " Moved to " + directory);
-            
+            log.WriteLine(DateTime.Now + " - " + oldName + " Moved to " + directory);            
         }
         
         //write string

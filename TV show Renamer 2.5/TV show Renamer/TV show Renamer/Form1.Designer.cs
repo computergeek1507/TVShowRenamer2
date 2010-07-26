@@ -228,6 +228,7 @@
             this.convertToolStripMenuItem.Name = "convertToolStripMenuItem";
             this.convertToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.convertToolStripMenuItem.Text = "Convert \".\" to \" \"";
+            this.convertToolStripMenuItem.Click += new System.EventHandler(this.convertToolStripMenuItem_Click);
             // 
             // convertToToolStripMenuItem
             // 
@@ -239,6 +240,7 @@
             this.convertToToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.convertToToolStripMenuItem.Text = "Convert \"_\" to \" \"";
             this.convertToToolStripMenuItem.ToolTipText = "Convert \"_\" to \" \"";
+            this.convertToToolStripMenuItem.Click += new System.EventHandler(this.convertToToolStripMenuItem_Click);
             // 
             // removeToolStripMenuItem
             // 
@@ -250,6 +252,7 @@
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.removeToolStripMenuItem.Text = "Remove \"-\"";
             this.removeToolStripMenuItem.ToolTipText = "Remove all Dashes";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // capitalizeToolStripMenuItem
             // 
@@ -261,6 +264,7 @@
             this.capitalizeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.capitalizeToolStripMenuItem.Text = "Capitalize";
             this.capitalizeToolStripMenuItem.ToolTipText = "Capitalize First Letter After Spaces/Period";
+            this.capitalizeToolStripMenuItem.Click += new System.EventHandler(this.capitalizeToolStripMenuItem_Click);
             // 
             // removeExtraCrapToolStripMenuItem
             // 
@@ -272,6 +276,7 @@
             this.removeExtraCrapToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.removeExtraCrapToolStripMenuItem.Text = "Remove Extra Crap";
             this.removeExtraCrapToolStripMenuItem.ToolTipText = "Remove Stuff if in Junk Library";
+            this.removeExtraCrapToolStripMenuItem.Click += new System.EventHandler(this.removeExtraCrapToolStripMenuItem_Click);
             // 
             // addForTitleToolStripMenuItem
             // 
@@ -283,6 +288,7 @@
             this.addForTitleToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.addForTitleToolStripMenuItem.Text = "Add \" - \" for Title";
             this.addForTitleToolStripMenuItem.ToolTipText = "Add Dash if Title Is Added";
+            this.addForTitleToolStripMenuItem.Click += new System.EventHandler(this.addForTitleToolStripMenuItem_Click);
             // 
             // removeYearToolStripMenuItem
             // 
@@ -294,6 +300,7 @@
             this.removeYearToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.removeYearToolStripMenuItem.Text = "Remove Year";
             this.removeYearToolStripMenuItem.ToolTipText = "Remove Year If Exists";
+            this.removeYearToolStripMenuItem.Click += new System.EventHandler(this.removeYearToolStripMenuItem_Click);
             // 
             // seasonEpisodeFormatToolStripMenuItem
             // 

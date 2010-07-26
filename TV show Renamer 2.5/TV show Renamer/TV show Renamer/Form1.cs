@@ -13,7 +13,6 @@ using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 using System.Threading;
 
-
 namespace TV_show_Renamer
 {
     public partial class Form1 : Form
@@ -50,60 +49,9 @@ namespace TV_show_Renamer
         string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer Beta";
         
         #endregion
-
-        //loads when starts
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-            if (!(File.Exists(commonAppData)))
-            {
-                System.IO.Directory.CreateDirectory(commonAppData);
-                
-            }
-            //movefolder = "0000";
-            this.preferenceXmlRead();
-            this.junkRemover();
-            this.fileChecker();
-            Log.startLog(commonAppData);
-            userJunk.junk_adder(junklist,commonAppData);
-            
-            //MessageBox.Show(movefolder);
-            
-        }//end of load command
         
-        //create preference file when program closes and close log
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            StreamWriter pw = new StreamWriter(commonAppData + "//preferences.seh");
-
-            pw.WriteLine(convertToolStripMenuItem.Checked);
-            pw.WriteLine(convertToToolStripMenuItem.Checked);
-            pw.WriteLine(removeToolStripMenuItem.Checked);
-            pw.WriteLine(capitalizeToolStripMenuItem.Checked);
-            pw.WriteLine(removeExtraCrapToolStripMenuItem.Checked);
-            pw.WriteLine(addForTitleToolStripMenuItem.Checked);
-            pw.WriteLine(x01ToolStripMenuItem.Checked);
-            pw.WriteLine(toolStripMenuItem3.Checked);
-            pw.WriteLine(s01E01ToolStripMenuItem1.Checked);
-            pw.WriteLine(dateToolStripMenuItem.Checked);
-            pw.WriteLine(removeYearToolStripMenuItem.Checked);
-            //pw.WriteLine(movefolder);
-            pw.Close();//close writer stream
-
-            //write tv folder locations
-            StreamWriter tv = new StreamWriter(commonAppData + "//TVFolder.seh");
-            tv.WriteLine(movefolder.Count());
-            for (int i = 0; i < movefolder.Count(); i++) {
-            tv.WriteLine(movefolder[i]);
-            }
-            tv.Close();
-            //write log
-            Log.closeLog();
-            
-
-        }
-
         #region Menu Buttons
+
         //add files button
         private void addFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -128,8 +76,7 @@ namespace TV_show_Renamer
                     //add file folder
                     fileFolder.Add(fi3.DirectoryName);
                     //add file extension
-                    fileExtention.Add(fi3.Extension);
-                    
+                    fileExtention.Add(fi3.Extension);                    
 
                 }//end of loop                               
                 for (int i = 0; i < fileName.Count(); i++)
@@ -138,7 +85,11 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i].Cells[0].Value = fileName[i];
                     dataGridView1.Rows[i].Cells[1].Value = fileName[i];
                 }
-
+                if (fileName.Count() != 0)
+                {
+                    Thread t = new Thread(new ThreadStart(autoConvert));
+                    t.Start();
+                }
             }//end of if
 
         }//end of file button
@@ -157,6 +108,12 @@ namespace TV_show_Renamer
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = fileName[i];
                     dataGridView1.Rows[i].Cells[1].Value = fileName[i];
+                }
+
+                if (fileName.Count() != 0)
+                {
+                    Thread t = new Thread(new ThreadStart(autoConvert));
+                    t.Start();
                 }
 
                 #region Old folder stuff
@@ -248,7 +205,7 @@ namespace TV_show_Renamer
         {
             if (fileName.Count!=0)
             {
-                titles.sendTitle(fileName);
+                titles.sendTitle(fileName,this);
                 titles.Show();
             }
             else
@@ -274,16 +231,12 @@ namespace TV_show_Renamer
                 this.dateToolStripMenuItem.Checked = false;
                 this.removeYearToolStripMenuItem.Checked = true;
                 movefolder.Clear();
-
             }
-
-
         }//end of default setting method 
 
         //Set Tv Show Folder Button
         private void setTVFolderLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //folderBrowserDialog2 = Environment.RootDirectory.DeskTopDirectory();
             move_folder tvshow = new move_folder(this,movefolder);
             tvshow.Show();
         }
@@ -310,6 +263,9 @@ namespace TV_show_Renamer
             this.toolStripMenuItem3.Checked = false;
             this.s01E01ToolStripMenuItem1.Checked = false;
             this.dateToolStripMenuItem.Checked = false;
+
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
         }
 
         //when checked change others to unchecked
@@ -318,6 +274,9 @@ namespace TV_show_Renamer
             this.x01ToolStripMenuItem.Checked = false;
             this.s01E01ToolStripMenuItem1.Checked = false;
             this.dateToolStripMenuItem.Checked = false;
+
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
         }
 
         //when checked change others to unchecked
@@ -326,6 +285,9 @@ namespace TV_show_Renamer
             this.toolStripMenuItem3.Checked = false;
             this.x01ToolStripMenuItem.Checked = false;
             this.dateToolStripMenuItem.Checked = false;
+
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
         }
 
         //when checked change others to unchecked
@@ -334,240 +296,63 @@ namespace TV_show_Renamer
             this.toolStripMenuItem3.Checked = false;
             this.s01E01ToolStripMenuItem1.Checked = false;
             this.x01ToolStripMenuItem.Checked = false;
+
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
+        }
+
+        //convert "." to " "
+        private void convertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
+        }
+
+        //convert "_" to " "
+        private void convertToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
+        }
+
+        //remove "-"
+        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
+        }
+
+        //Capitalize
+        private void capitalizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
+        }
+
+        //remove extra crap
+        private void removeExtraCrapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
+        }
+
+        //add "-" for titles
+        private void addForTitleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
+        }
+
+        //remove year
+        private void removeYearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
         }
 
         
         #endregion
 
-        #region Update Stuff
-        //check to see if internet is avilible
-        bool ConnectionExists()
-        {
-            try
-            {
-                System.Net.Sockets.TcpClient clnt = new System.Net.Sockets.TcpClient("www.google.com", 80);
-                clnt.Close();
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
-        }//end of ConnectionExists class
-
-        //check to see if website is avilible
-        bool websiteExists()
-        {
-            try
-            {
-                System.Net.Sockets.TcpClient clnt = new System.Net.Sockets.TcpClient("scottnation.com", 80);
-                clnt.Close();
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
-        }//end of ConnectionExists class
-
-        //check for updates
-        private void checkForUpdate() {
-            if (this.ConnectionExists())
-            {
-                if (this.websiteExists())
-                {
-                    try
-                    {
-                        WebRequest request = WebRequest.Create(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"));
-                        request.Method = "HEAD";
-
-                        WebResponse response = request.GetResponse();
-                    }
-                    catch (Exception)
-                    {
-                        Log.WriteLog("webversion.xml file doownload failed");
-                        MessageBox.Show("Problem with Server\nPlease Contact Admin");
-                        return;
-                    }
-
-
-                    WebClient webClient = new WebClient();
-                    webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-                    webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), commonAppData + "\\webversion.xml");
-
-                }
-                else
-                {
-                    Log.WriteLog("Server is unavalible Please try again later");
-                    MessageBox.Show("Server is unavalible\nPlease try again later");
-                }
-            }
-            else
-            {
-                Log.WriteLog("No internet connection avalible Please check connection");
-                MessageBox.Show("No internet connection avalible\nPlease check connection");
-            }       
-        }
-        
-        //runs when xml file is done downloading
-        private void Completed(object sender, AsyncCompletedEventArgs e)
-        {
-
-            //MessageBox.Show("Download completed!");
-            List<string> webInfo = this.updateXmlRead();//read file
-            List<string> localInfo = this.localXmlRead();
-            if (Convert.ToInt32(webInfo[0]) > Convert.ToInt32(localInfo[0]))
-            {
-                //global update crap
-                //MessageBox.Show("Update available");
-                if (MessageBox.Show("There is an update available, Would you like to update?\nNOTE: This will reinstall the program", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    this.fullUpdate();
-                }
-                else
-                {
-                    if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
-                    {
-                        //libaray update crap
-                        if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            this.libarayUpdate();
-                        }
-                    }
-                }
-            }
-            else if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
-            {
-                //libaray update crap
-                if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    this.libarayUpdate();
-                }
-            }
-            else
-            {
-                //no updats available
-                MessageBox.Show("No updates available");
-            }
-        }
-
-        //get info off internet
-        public List<String> updateXmlRead()
-        {
-            string document = commonAppData + "//webversion.xml";
-            XmlDataDocument myxmlDocument = new XmlDataDocument();
-            myxmlDocument.Load(document);
-            XmlTextReader xmlReader = new XmlTextReader(document);
-            List<string> data = new List<string>();
-
-            while (xmlReader.Read())
-            {
-                switch (xmlReader.NodeType)
-                {
-                    case XmlNodeType.Element:
-                        {
-                            if (xmlReader.Name == "application")
-                            {
-                                data.Add(xmlReader.ReadString());
-                            }
-                            if (xmlReader.Name == "library")
-                            {
-                                data.Add(xmlReader.ReadString());
-                            }
-                            break;
-                        }//end of case 
-                }//end of switch
-            }//end of while loop
-            return data;
-
-        }//end of WebXMLReader Method
-
-        //read local info
-        public List<String> localXmlRead()
-        {
-            string document = commonAppData + "//version.xml";
-            XmlDataDocument myxmlDocument = new XmlDataDocument();
-            myxmlDocument.Load(document);
-            XmlTextReader xmlReader = new XmlTextReader(document);
-            List<string> data = new List<string>();
-
-            while (xmlReader.Read())
-            {
-                switch (xmlReader.NodeType)
-                {
-                    case XmlNodeType.Element:
-                        {
-                            if (xmlReader.Name == "application")
-                            {
-                                data.Add(xmlReader.ReadString());
-                            }
-                            if (xmlReader.Name == "library")
-                            {
-                                data.Add(xmlReader.ReadString());
-                            }
-                            break;
-                        }//end of case 
-                }//end of switch
-            }//end of while loop
-            return data;
-
-        }//end of XMLReader Method
-
-        //libaray Update
-        private void libarayUpdate()
-        {
-
-            if (this.ConnectionExists())
-            {
-                /*check is not working
-                  try
-                {
-                    WebRequest request = WebRequest.Create(new Uri("http://update.scottnation.com/TV_Show_Renamer/library.seh"));
-                    request.Method = "HEAD";
-                    WebResponse response = request.GetResponse();
-                    Console.WriteLine("{0} {1}", response.ContentLength, response.ContentType);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Problem with Server\nPlease Contact Admin");
-                    return;
-                }*/
-
-                if (File.Exists(commonAppData + "//library.seh"))
-                {
-                    File.Delete(commonAppData + "//library.seh");
-                }
-                WebClient webClient2 = new WebClient();
-                webClient2.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed2);
-                webClient2.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/library.seh"), commonAppData + "\\library.seh");
-            }
-            else
-            {
-                Log.WriteLog("No internet connection avalible Please check connection");
-                MessageBox.Show("No internet connection avalible\nPlease check connection");
-            }
-        }
-
-        //finish for library 
-        private void Completed2(object sender, AsyncCompletedEventArgs e)
-        {
-            Log.WriteLog("Libary Update completed");
-            MessageBox.Show("Update completed!");
-        }
-
-        //full Update
-        private void fullUpdate()
-        {
-            download update = new download(commonAppData, this);
-            update.Show();
-
-            this.Hide();
-        }
-
-        #endregion
-                
         #region On the form Buttons
 
         //Move Button
@@ -836,21 +621,19 @@ namespace TV_show_Renamer
         //Convert button pressed
         private void button3_Click(object sender, EventArgs e)
         {
-
-            if (fileName.Count!=0) //if files are selected
-            {
-                for (int z = 0; z < fileName.Count; z++)
-                {                    
-                    //call fileRenamer methoid
-                    newFileName[z] = this.fileRenamer(fileName[z], z, fileExtention[z]);
-                    dataGridView1.Rows[z].Cells[1].Value = newFileName[z];
-                }//end of for loop 
-                //show what has been converted
-            }
-            else
-            {//catch if nothing is selected
+            //run new autoConvert
+            if (fileName.Count() != 0) {
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();            
+            } else {
                 MessageBox.Show("No Files Selected");
+            
             }
+            //bool test = autoConvert();
+            //if (!test) //if files are selected
+            //{//catch if nothing is selected
+             //   MessageBox.Show("No Files Selected");
+           // }
 
         }//end of Convert button pressed
 
@@ -878,6 +661,258 @@ namespace TV_show_Renamer
         
         #endregion
 
+        #region Update Stuff
+        //check to see if internet is avilible
+        bool ConnectionExists()
+        {
+            try
+            {
+                System.Net.Sockets.TcpClient clnt = new System.Net.Sockets.TcpClient("www.google.com", 80);
+                clnt.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }//end of ConnectionExists class
+
+        //check to see if website is avilible
+        bool websiteExists()
+        {
+            try
+            {
+                System.Net.Sockets.TcpClient clnt = new System.Net.Sockets.TcpClient("scottnation.com", 80);
+                clnt.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }//end of ConnectionExists class
+
+        //check for updates
+        private void checkForUpdate()
+        {
+            if (this.ConnectionExists())
+            {
+                if (this.websiteExists())
+                {
+                    try
+                    {
+                        WebRequest request = WebRequest.Create(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"));
+                        request.Method = "HEAD";
+
+                        WebResponse response = request.GetResponse();
+                    }
+                    catch (Exception)
+                    {
+                        Log.WriteLog("webversion.xml file doownload failed");
+                        MessageBox.Show("Problem with Server\nPlease Contact Admin");
+                        return;
+                    }
+
+                    WebClient webClient = new WebClient();
+                    webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+                    webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), commonAppData + "\\webversion.xml");
+
+                }
+                else
+                {
+                    Log.WriteLog("Server is unavalible Please try again later");
+                    MessageBox.Show("Server is unavalible\nPlease try again later");
+                }
+            }
+            else
+            {
+                Log.WriteLog("No Internet Connection Avalible Please check connection");
+                MessageBox.Show("No Internet Connection Avalible\nPlease Check Connection");
+            }
+        }
+
+        //runs when xml file is done downloading
+        private void Completed(object sender, AsyncCompletedEventArgs e)
+        {
+            //MessageBox.Show("Download completed!");
+            List<string> webInfo = this.updateXmlRead();//read file
+            List<string> localInfo = this.localXmlRead();
+            if (Convert.ToInt32(webInfo[0]) > Convert.ToInt32(localInfo[0]))
+            {
+                //global update crap
+                if (MessageBox.Show("There is an update available, Would you like to update?\nNOTE: This will reinstall the program", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    this.fullUpdate();
+                }
+                else
+                {
+                    if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
+                    {
+                        //libaray update crap
+                        if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            this.libarayUpdate();
+                        }
+                    }
+                }
+            }
+            else if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
+            {
+                //libaray update crap
+                if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    this.libarayUpdate();
+                }
+            }
+            else
+            {
+                //no updats available
+                MessageBox.Show("No updates available");
+            }
+        }
+
+        //get info off internet
+        public List<String> updateXmlRead()
+        {
+            string document = commonAppData + "//webversion.xml";
+            XmlDataDocument myxmlDocument = new XmlDataDocument();
+            myxmlDocument.Load(document);
+            XmlTextReader xmlReader = new XmlTextReader(document);
+            List<string> data = new List<string>();
+
+            while (xmlReader.Read())
+            {
+                switch (xmlReader.NodeType)
+                {
+                    case XmlNodeType.Element:
+                        {
+                            if (xmlReader.Name == "application")
+                            {
+                                data.Add(xmlReader.ReadString());
+                            }
+                            if (xmlReader.Name == "library")
+                            {
+                                data.Add(xmlReader.ReadString());
+                            }
+                            break;
+                        }//end of case 
+                }//end of switch
+            }//end of while loop
+            return data;
+
+        }//end of WebXMLReader Method
+
+        //read local info
+        public List<String> localXmlRead()
+        {
+            string document = commonAppData + "//version.xml";
+            XmlDataDocument myxmlDocument = new XmlDataDocument();
+            myxmlDocument.Load(document);
+            XmlTextReader xmlReader = new XmlTextReader(document);
+            List<string> data = new List<string>();
+
+            while (xmlReader.Read())
+            {
+                switch (xmlReader.NodeType)
+                {
+                    case XmlNodeType.Element:
+                        {
+                            if (xmlReader.Name == "application")
+                            {
+                                data.Add(xmlReader.ReadString());
+                            }
+                            if (xmlReader.Name == "library")
+                            {
+                                data.Add(xmlReader.ReadString());
+                            }
+                            break;
+                        }//end of case 
+                }//end of switch
+            }//end of while loop
+            return data;
+
+        }//end of XMLReader Method
+
+        //libaray Update
+        private void libarayUpdate()
+        {
+            if (this.ConnectionExists())
+            {
+                /*check is not working
+                  try
+                {
+                    WebRequest request = WebRequest.Create(new Uri("http://update.scottnation.com/TV_Show_Renamer/library.seh"));
+                    request.Method = "HEAD";
+                    WebResponse response = request.GetResponse();
+                    Console.WriteLine("{0} {1}", response.ContentLength, response.ContentType);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Problem with Server\nPlease Contact Admin");
+                    return;
+                }*/
+
+                if (File.Exists(commonAppData + "//library.seh"))
+                {
+                    File.Delete(commonAppData + "//library.seh");
+                }
+                WebClient webClient2 = new WebClient();
+                webClient2.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed2);
+                webClient2.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/library.seh"), commonAppData + "\\library.seh");
+            }
+            else
+            {
+                Log.WriteLog("No internet connection avalible Please check connection");
+                MessageBox.Show("No internet connection avalible\nPlease check connection");
+            }
+        }
+
+        //finish for library 
+        private void Completed2(object sender, AsyncCompletedEventArgs e)
+        {
+            Log.WriteLog("Libary Update completed");
+            MessageBox.Show("Update completed!");
+        }
+
+        //full Update
+        private void fullUpdate()
+        {
+            download update = new download(commonAppData, this);
+            update.Show();
+
+            this.Hide();
+        }
+
+        #endregion
+
+        #region Other Methods
+
+        //new convert method
+        public void autoConvert()
+        {
+
+            if (fileName.Count != 0) //if files are selected
+            {
+                for (int z = 0; z < fileName.Count; z++)
+                {
+                    //call fileRenamer methoid
+                    newFileName[z] = this.fileRenamer(fileName[z], z, fileExtention[z]);
+                    //dataGridView1.Rows[z].Cells[1].Value = newFileName[z];                    
+                }//end of for loop
+
+                MethodInvoker action = delegate
+                {
+                    for (int z = 0; z < fileName.Count; z++)
+                    {
+                        dataGridView1.Rows[z].Cells[1].Value = newFileName[z];
+                    }
+                };
+                dataGridView1.BeginInvoke(action);
+            }
+        }//end of convert method
+
         //read settings file
         public void preferenceXmlRead()
         {
@@ -901,14 +936,16 @@ namespace TV_show_Renamer
                     tr3.Close();//close reader stream    
                 }//end of if. 
                 if (File.Exists(commonAppData + "//TVFolder.seh"))
-                { 
+                {
                     StreamReader tv2 = new StreamReader(commonAppData + "//TVFolder.seh");
                     int length = Int32.Parse(tv2.ReadLine());
-                    for (int i = 0; i < length; i++) {
-                        if(length==0){
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (length == 0)
+                        {
                             break;
                         }
-                        movefolder.Add( tv2.ReadLine());
+                        movefolder.Add(tv2.ReadLine());
                     }//end of for loop  
                     tv2.Close();
                 }//end of if
@@ -917,13 +954,12 @@ namespace TV_show_Renamer
             {
                 Log.WriteLog("Writing Preference Error" + e.ToString());
             }
-            
+
         }//end of preferenceXMLReader Method
-                
+
         //returns string list of info
         private List<string> infoFinder(string oldfile, List<string> folderlist, List<string> rootfolderlist)
         {
-
             string fileName = lowering(oldfile);
             List<string> stuff = new List<string>();
 
@@ -932,15 +968,17 @@ namespace TV_show_Renamer
             stuff.Add("no folder");
             stuff.Add("0");
             stuff.Add("-1");
-            
+
             //figure out if tv show is listed
-            for (int i = 0; i < folderlist.Count(); i++) {
+            for (int i = 0; i < folderlist.Count(); i++)
+            {
 
                 string newFolderEdited = lowering(folderlist[i]);
 
                 infoChanged = fileName.Replace(newFolderEdited, "0000");
-                if (infoChanged != fileName) {
-                    stuff[0]=folderlist[i];
+                if (infoChanged != fileName)
+                {
+                    stuff[0] = folderlist[i];
                     indexof = i;
 
                     //figure out root folder
@@ -949,12 +987,8 @@ namespace TV_show_Renamer
                     stuff[2] = index;
 
                     break;
-                }                       
-            }//end of for loop
-
-
-            
-               
+                }
+            }//end of for loop              
 
             //loop for seasons
             for (int i = 1; i < 40; i++)
@@ -1002,7 +1036,7 @@ namespace TV_show_Renamer
                     //stop loop when name is change                    
                     if (startnewname != fileName)
                     {
-                        stuff[1]=(i.ToString());
+                        stuff[1] = (i.ToString());
                         end = true;
                         break;
                     }
@@ -1016,44 +1050,44 @@ namespace TV_show_Renamer
 
             }//end of season loop
             return stuff;
-        
-        }
-        
+        }//end of infofinder method
+
         //write log called by download form
         public void writeLog(string error)
         {
             Log.WriteLog(error);
         }
-        
+
         //get list of folders
         private List<string> folderFinder(List<String> folderwatch)
         {
             List<String> foldersIn = new List<String>();
             List<String> revFoldersIn = new List<String>();
-            for (int u = 0; u < folderwatch.Count(); u++) {       
-            
+            for (int u = 0; u < folderwatch.Count(); u++)
+            {
+
                 System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch[u]);
                 foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
                 {
                     foldersIn.Add(fi.Name);
-                    foldersIn.Add(fi.Name+"  "+u.ToString());//add name and folder number so it will be sorted correctly                    
+                    foldersIn.Add(fi.Name + "  " + u.ToString());//add name and folder number so it will be sorted correctly                    
                 }
             }
             //Sort folders
             foldersIn.Sort();
-            for (int y = foldersIn.Count(); y >0;y-- )
+            for (int y = foldersIn.Count(); y > 0; y--)
             {
-                revFoldersIn.Add(foldersIn[y-1]);
+                revFoldersIn.Add(foldersIn[y - 1]);
             }
             //Display box7 = new Display(revFoldersIn);
             //box7.Show();
-                 
-            return revFoldersIn;
 
+            return revFoldersIn;
         }
 
         //lowercase stuff
-        private string lowering(string orig) {
+        private string lowering(string orig)
+        {
             //make every thing lowercase for crap remover to work
             StringBuilder s = new StringBuilder(orig);
             for (int l = 0; l < orig.Length; l++)
@@ -1061,7 +1095,7 @@ namespace TV_show_Renamer
                 s[l] = char.ToLower(s[l]);
             }
             //reassign edited name 
-            return s.ToString();       
+            return s.ToString();
         }
 
         //new way to add files from folder
@@ -1069,7 +1103,6 @@ namespace TV_show_Renamer
         {
             if (recursionLvl <= HowDeepToScan)
             {
-
                 System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(sourceDir);
                 // Process the list of files found in the directory.
                 //string[] fileEntries = Directory.GetFiles(sourceDir);
@@ -1114,7 +1147,6 @@ namespace TV_show_Renamer
                             continue;
                         }
                     }
-                    
                     //add file name
                     fileName.Add(origName);
                     newFileName.Add(origName);
@@ -1122,7 +1154,6 @@ namespace TV_show_Renamer
                     fileFolder.Add(fi.DirectoryName);
                     //add file extension
                     fileExtention.Add(exten);
-                    
                 }
 
                 // Recurse into subdirectories of this directory.
@@ -1137,13 +1168,8 @@ namespace TV_show_Renamer
                     if ((File.GetAttributes(subdir) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint)
                     {
                         ProcessDir(subdir, recursionLvl + 1);
-
                     }
-
                 }
-
-
-
             }
         }
 
@@ -1162,7 +1188,7 @@ namespace TV_show_Renamer
             }//end of if-else
 
             //remove extention
-            newfilename = newfilename.Replace(extend, temp+"&&&&");
+            newfilename = newfilename.Replace(extend, temp + "&&&&");
 
             //Text converter
             List<string> testConverter = new List<string>();
@@ -1205,7 +1231,7 @@ namespace TV_show_Renamer
             if (removeToolStripMenuItem.Checked)
             {
                 newfilename = newfilename.Replace("-", temp);
-            }           
+            }
 
             //make every thing lowercase for crap remover to work
             StringBuilder s = new StringBuilder(newfilename);
@@ -1223,7 +1249,7 @@ namespace TV_show_Renamer
                 //new way with file input
                 for (int x = 0; x < junklist.Count(); x++)
                 {
-                    newfilename = newfilename.Replace( junklist[x],  "");
+                    newfilename = newfilename.Replace(junklist[x], "");
                 }//end of for
             }//end of removeExtraCrapToolStripMenuItem if
 
@@ -1250,7 +1276,7 @@ namespace TV_show_Renamer
                 for (; curyear > 1980; curyear--)
                 {
                     string before = newfilename;
-                    newfilename= newfilename.Replace(curyear.ToString(), "");
+                    newfilename = newfilename.Replace(curyear.ToString(), "");
                     //break if value found
                     if (before != newfilename)
                     {
@@ -1303,9 +1329,6 @@ namespace TV_show_Renamer
 
             }//end of capilization
 
-            
-
-
             //add dash if the title exists or add one 
             string tempTitle = null;
             if (convertToolStripMenuItem.Checked && addForTitleToolStripMenuItem.Checked)
@@ -1325,7 +1348,6 @@ namespace TV_show_Renamer
             {
                 tempTitle = "";
             }//end of if-else
-
 
             //loop for seasons
             for (int i = 1; i < 40; i++)
@@ -1367,7 +1389,7 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output);//Season 1 Episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
-                        newfilename = newfilename.Replace("0"+output, output);//01x01 fix might be unnessitarry
+                        newfilename = newfilename.Replace("0" + output, output);//01x01 fix might be unnessitarry
                         newfilename = newfilename.Replace(output, output + tempTitle);//1x01 add title
                     }
                     //0101 format
@@ -1606,7 +1628,6 @@ namespace TV_show_Renamer
             //if no file exist make a default file
             if (!File.Exists(commonAppData + "//library.seh"))
             {
-
                 StreamWriter sw = new StreamWriter(commonAppData + "//library.seh");
                 sw.WriteLine(startlist.Count());
                 for (int j = 0; j < startlist.Count(); j++)
@@ -1732,18 +1753,71 @@ namespace TV_show_Renamer
                 {
                     this.XmlWrite();
                 }
-
-            }//end of if-else       
-
+            }//end of if-else
         }
 
         //function to return list
-        public void tvFolderChanger(List<string> sentlist) {
+        public void tvFolderChanger(List<string> sentlist)
+        {
             movefolder = sentlist;
-        }
-     
+        } 
 
-/*public void XmlRead()
+        #endregion
+
+        //loads when starts
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+            if (!(File.Exists(commonAppData)))
+            {
+                System.IO.Directory.CreateDirectory(commonAppData);
+            }
+            //movefolder = "0000";
+            this.preferenceXmlRead();
+            this.junkRemover();
+            this.fileChecker();
+            Log.startLog(commonAppData);
+            userJunk.junk_adder(junklist, commonAppData, this);
+            textConvert.setUp(this);
+
+            //MessageBox.Show(movefolder);
+
+        }//end of load command
+
+        //create preference file when program closes and close log
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StreamWriter pw = new StreamWriter(commonAppData + "//preferences.seh");
+
+            pw.WriteLine(convertToolStripMenuItem.Checked);
+            pw.WriteLine(convertToToolStripMenuItem.Checked);
+            pw.WriteLine(removeToolStripMenuItem.Checked);
+            pw.WriteLine(capitalizeToolStripMenuItem.Checked);
+            pw.WriteLine(removeExtraCrapToolStripMenuItem.Checked);
+            pw.WriteLine(addForTitleToolStripMenuItem.Checked);
+            pw.WriteLine(x01ToolStripMenuItem.Checked);
+            pw.WriteLine(toolStripMenuItem3.Checked);
+            pw.WriteLine(s01E01ToolStripMenuItem1.Checked);
+            pw.WriteLine(dateToolStripMenuItem.Checked);
+            pw.WriteLine(removeYearToolStripMenuItem.Checked);
+            //pw.WriteLine(movefolder);
+            pw.Close();//close writer stream
+
+            //write tv folder locations
+            StreamWriter tv = new StreamWriter(commonAppData + "//TVFolder.seh");
+            tv.WriteLine(movefolder.Count());
+            for (int i = 0; i < movefolder.Count(); i++)
+            {
+                tv.WriteLine(movefolder[i]);
+            }
+            tv.Close();
+            //write log
+            Log.closeLog();
+
+
+        }
+
+        /*public void XmlRead()
 {
     string document = commonAppData + "//version.xml";
     XmlDataDocument myxmlDocument = new XmlDataDocument();
@@ -1793,7 +1867,6 @@ namespace TV_show_Renamer
            {
                MessageBox.Show("Well Screw You.");
            }*/
-
 
         /*
         // How much deep to scan. (of course you can also pass it to the method)
