@@ -6,16 +6,27 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace TV_show_Renamer
 {
     public partial class Text_Converter : Form
     {
         List<string> textConvert = new List<string>();
+        Form1 Main;
 
         public Text_Converter()
         {
             InitializeComponent();
+        }
+
+        public void setUp(Form1 test) {
+            Main = test;
+        }
+
+        private void convert()
+        {
+            Main.autoConvert();
         }
 
         //get text list
@@ -28,6 +39,8 @@ namespace TV_show_Renamer
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }
 
         //add text to be converted

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace TV_show_Renamer
 {
@@ -15,16 +16,27 @@ namespace TV_show_Renamer
         List<String> title = new List<String>();
         List<String> names = new List<String>();
         bool open = false;
+        Form1 Main;
          
         public Addtitle()
         {
             InitializeComponent();
+            
         }
 
         //"close" form
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
+            //Main.autoConvert();
+            if (names.Count() != 0)
+            {
+                Thread t = new Thread(new ThreadStart(convert));
+                t.Start();
+            }
+        }
+        private void convert() {
+            Main.autoConvert();
         }
 
         //add title button
@@ -68,8 +80,9 @@ namespace TV_show_Renamer
         }
         
         //send video file names to add title for
-        public void sendTitle( List<String> tvlist)
+        public void sendTitle(List<String> tvlist, Form1 test)
         {
+            Main = test;
             names = tvlist;
             comboBox1.Items.Clear();
             int x = tvlist.Count();
