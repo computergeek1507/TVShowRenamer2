@@ -1817,6 +1817,11 @@ namespace TV_show_Renamer
 
         }
 
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
         /*public void XmlRead()
 {
     string document = commonAppData + "//version.xml";
