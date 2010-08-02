@@ -96,13 +96,16 @@ namespace TV_show_Renamer
             //add word
             userwords.Add(newword);//add junkword
             textBox1.Text = null;//clear box
+
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
                        
          }
+
         //dislpay junk words
         private void button2_Click(object sender, EventArgs e)
         {
-            Display box = new Display(userwords, true);
-            //box.Show();
+            Display box = new Display(userwords, this);
         }
 
         //"close" form and save new words to file
@@ -122,6 +125,7 @@ namespace TV_show_Renamer
             
         }//end of button method
 
+        //autoconvert method 
         private void convert()
         {
             Main.autoConvert();
@@ -139,9 +143,17 @@ namespace TV_show_Renamer
             StreamWriter sw = new StreamWriter(commonAppData + "//userlibrary.seh");
             sw.WriteLine("0");
             sw.Close();//close writer stream
+
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
+        }
+
+        //remove selected 
+        public void removeSelected(int y) {
+            //userwords.RemoveAt(y);
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }
         
-
-
     }//end of partial class 
 }

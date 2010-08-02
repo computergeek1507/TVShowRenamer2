@@ -44,6 +44,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.removeSelectedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,6 +72,8 @@
             this.defaultSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.settingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
@@ -79,6 +83,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.oldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.newname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button6 = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -150,13 +156,16 @@
             this.menuStrip1.Size = new System.Drawing.Size(597, 24);
             this.menuStrip1.TabIndex = 23;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.Checked = true;
+            this.fileToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addFilesToolStripMenuItem,
             this.addFolderToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.removeSelectedMenuItem,
             this.clearListToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
@@ -183,6 +192,18 @@
             this.addFolderToolStripMenuItem.Text = "Add Folder";
             this.addFolderToolStripMenuItem.ToolTipText = "Add a Folder of Files To be Coverted";
             this.addFolderToolStripMenuItem.Click += new System.EventHandler(this.addFolderToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(169, 6);
+            // 
+            // removeSelectedMenuItem
+            // 
+            this.removeSelectedMenuItem.Name = "removeSelectedMenuItem";
+            this.removeSelectedMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.removeSelectedMenuItem.Text = "Remove Selected";
+            this.removeSelectedMenuItem.Click += new System.EventHandler(this.removeSelectedMenuItem_Click);
             // 
             // clearListToolStripMenuItem
             // 
@@ -432,6 +453,8 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.checkForUpdatesToolStripMenuItem,
+            this.toolStripSeparator6,
+            this.settingsMenuItem,
             this.toolStripSeparator2,
             this.aboutToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
@@ -448,6 +471,18 @@
             this.checkForUpdatesToolStripMenuItem.Text = "Check for Updates...";
             this.checkForUpdatesToolStripMenuItem.ToolTipText = "Go Online and See If New Version Is Available";
             this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(170, 6);
+            // 
+            // settingsMenuItem
+            // 
+            this.settingsMenuItem.Name = "settingsMenuItem";
+            this.settingsMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.settingsMenuItem.Text = "Settings...";
+            this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -467,7 +502,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(496, 445);
+            this.label1.Location = new System.Drawing.Point(480, 450);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(24, 13);
             this.label1.TabIndex = 28;
@@ -559,6 +594,20 @@
             this.newname.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.newname.Width = 104;
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(510, 445);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 31;
+            this.button6.Text = "Archive ";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -566,6 +615,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(597, 475);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button2);
@@ -639,6 +689,12 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn oldName;
         private System.Windows.Forms.DataGridViewTextBoxColumn newname;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem removeSelectedMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

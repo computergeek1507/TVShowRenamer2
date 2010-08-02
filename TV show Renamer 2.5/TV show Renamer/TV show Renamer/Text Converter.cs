@@ -24,6 +24,7 @@ namespace TV_show_Renamer
             Main = test;
         }
 
+        //autoconvert method 
         private void convert()
         {
             Main.autoConvert();
@@ -55,19 +56,31 @@ namespace TV_show_Renamer
             textBox2.Text = null;
             //Display newbox = new Display(textConvert, true);                
             //newbox.Show();
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }
 
         //view list
         private void button3_Click(object sender, EventArgs e)
         {
-            Display newbox = new Display(textConvert, 1);                
-            //newbox.Show();
+            Display newbox = new Display(textConvert,this);                
         }
 
         //clear list
         private void button4_Click(object sender, EventArgs e)
         {
             textConvert.Clear();
-        }       
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
+        }
+
+        //remove selected
+        public void removeSelected(int u) {
+            //textConvert.RemoveAt(u+1);
+            //textConvert.RemoveAt(u);
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
+            
+        }
     }
 }

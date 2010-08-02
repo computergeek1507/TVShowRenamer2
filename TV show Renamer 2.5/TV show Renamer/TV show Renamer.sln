@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TV show Renamer", "TV show Renamer\TV show Renamer.csproj", "{007EA710-B01C-4A2F-9A14-C1A13D012D65}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TV Show Renamer Setup", "TV Show Renamer Setup\TV Show Renamer Setup.vdproj", "{A9D5E8F9-8A9D-465C-96CD-E234843DA07D}"

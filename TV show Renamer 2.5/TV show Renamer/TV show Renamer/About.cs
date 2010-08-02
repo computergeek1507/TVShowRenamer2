@@ -36,5 +36,5 @@ namespace TV_show_Renamer
         {
             //System.Diagnostics.Process.Start("scott@scottnation.com");
         }
-    }
-}
+    }//end of about class
+}//end of namespace

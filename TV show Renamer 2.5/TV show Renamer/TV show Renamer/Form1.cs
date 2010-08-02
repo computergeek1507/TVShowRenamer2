@@ -12,6 +12,7 @@ using System.Net;
 using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 using System.Threading;
+using SevenZip;
 
 namespace TV_show_Renamer
 {
@@ -56,7 +57,7 @@ namespace TV_show_Renamer
         private void addFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog2.Title = "Select Media files";
-            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|Video (*.avi;)|*.avi;|Video (*.mp4;)|*.mp4;|Video (*.mkv;)|*.mkv;|Video (*.m4v;)|*.m4v;|Video (*.mpg;)|*.mpg;|All Files (*.*)|*.*";
+            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|All Files (*.*)|*.*";
             openFileDialog2.FileName = "";
             openFileDialog2.FilterIndex = 0;
             openFileDialog2.InitialDirectory = "Documents";
@@ -78,7 +79,8 @@ namespace TV_show_Renamer
                     //add file extension
                     fileExtention.Add(fi3.Extension);                    
 
-                }//end of loop                               
+                }//end of loop 
+                dataGridView1.Rows.Clear();             
                 for (int i = 0; i < fileName.Count(); i++)
                 {
                     dataGridView1.Rows.Add();
@@ -103,6 +105,7 @@ namespace TV_show_Renamer
                 folder = folderBrowserDialog1.SelectedPath;
                 ProcessDir(folder, 0);
 
+                dataGridView1.Rows.Clear();
                 for (int i = 0; i < fileName.Count(); i++)
                 {
                     dataGridView1.Rows.Add();
@@ -171,6 +174,27 @@ namespace TV_show_Renamer
 
         }//end of folder button
 
+        //remove selected
+        private void removeSelectedMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                int u = dataGridView1.CurrentRow.Index;
+
+                fileFolder.RemoveAt(u);
+                fileExtention.RemoveAt(u);
+                fileName.RemoveAt(u);
+                newFileName.RemoveAt(u);
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < fileName.Count(); i++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = fileName[i];
+                    dataGridView1.Rows[i].Cells[1].Value = newFileName[i];
+                }
+            }
+        }
+
         //Clear items from display
         private void clearListToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -205,7 +229,8 @@ namespace TV_show_Renamer
         {
             if (fileName.Count!=0)
             {
-                titles.sendTitle(fileName,this);
+                int r = dataGridView1.CurrentRow.Index;
+                titles.sendTitle(fileName,this,r);
                 titles.Show();
             }
             else
@@ -233,30 +258,7 @@ namespace TV_show_Renamer
                 movefolder.Clear();
             }
         }//end of default setting method 
-
-        //Set Tv Show Folder Button
-        private void setTVFolderLocationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            move_folder tvshow = new move_folder(this,movefolder);
-            tvshow.Show();
-        }
-
-        //check for updates
-        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.checkForUpdate();
-            //new thread for update
-            //Thread t = new Thread(new ThreadStart(checkForUpdate));
-            //t.Start();
-        }
-        
-        //about display
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            About info = new About(appVersion);
-            info.Show();
-        }
-
+                
         //when checked change others to unchecked
         private void x01ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -350,7 +352,35 @@ namespace TV_show_Renamer
             t.Start();
         }
 
-        
+        //Set Tv Show Folder Button
+        private void setTVFolderLocationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            move_folder tvshow = new move_folder(this, movefolder);
+            tvshow.Show();
+        }
+
+        //check for updates
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.checkForUpdate();
+            //new thread for update
+            //Thread t = new Thread(new ThreadStart(checkForUpdate));
+            //t.Start();
+        }
+
+        //about display
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About info = new About(appVersion);
+            info.Show();
+        }
+
+        //settings menu
+        private void settingsMenuItem_Click(object sender, EventArgs e)
+        {
+            Settings MainSettings = new Settings(this);
+        }
+                
         #endregion
 
         #region On the form Buttons
@@ -932,6 +962,11 @@ namespace TV_show_Renamer
                     this.s01E01ToolStripMenuItem1.Checked = bool.Parse(tr3.ReadLine());
                     this.dateToolStripMenuItem.Checked = bool.Parse(tr3.ReadLine());
                     this.removeYearToolStripMenuItem.Checked = bool.Parse(tr3.ReadLine());
+                    this.BackColor=System.Drawing.Color.FromArgb(int.Parse(tr3.ReadLine()), int.Parse(tr3.ReadLine()), int.Parse(tr3.ReadLine()), int.Parse(tr3.ReadLine()));
+                    
+
+                    //this.BackColor.B = int.Parse(tr3.ReadLine());
+                    this.menuStrip1.BackColor = this.BackColor;
                     //movefolder = tr3.ReadLine();
                     tr3.Close();//close reader stream    
                 }//end of if. 
@@ -1773,10 +1808,11 @@ namespace TV_show_Renamer
                 System.IO.Directory.CreateDirectory(commonAppData);
             }
             //movefolder = "0000";
+            Log.startLog(commonAppData);
             this.preferenceXmlRead();
             this.junkRemover();
             this.fileChecker();
-            Log.startLog(commonAppData);
+            
             userJunk.junk_adder(junklist, commonAppData, this);
             textConvert.setUp(this);
 
@@ -1801,6 +1837,10 @@ namespace TV_show_Renamer
             pw.WriteLine(dateToolStripMenuItem.Checked);
             pw.WriteLine(removeYearToolStripMenuItem.Checked);
             //pw.WriteLine(movefolder);
+            pw.WriteLine(this.BackColor.A);
+            pw.WriteLine(this.BackColor.R);
+            pw.WriteLine(this.BackColor.G);
+            pw.WriteLine(this.BackColor.B);
             pw.Close();//close writer stream
 
             //write tv folder locations
@@ -1817,10 +1857,29 @@ namespace TV_show_Renamer
 
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        
+        private void button6_Click(object sender, EventArgs e)
         {
+            
+            openFileDialog1.Title = "Select Archive files";
+            openFileDialog1.Filter = "Archive Files (*.zip;*.rar;*.001;*.r01)|*.zip;*.rar;*.001;*.r01|All Files (*.*)|*.*";
+            openFileDialog1.FileName = "";
+            openFileDialog1.FilterIndex = 0;
+            openFileDialog1.InitialDirectory = "Documents";
+            openFileDialog1.CheckFileExists = true;
+            openFileDialog1.CheckPathExists = true;
 
-        }
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                FileInfo fi7 = new FileInfo(openFileDialog1.FileName);
+                SevenZipExtractor mainExtrector = new SevenZipExtractor(openFileDialog1.FileName);
+                
+                mainExtrector.ExtractArchive(fi7.DirectoryName+"\\scottsfolder");
+                
+               
+            }//end of if
+        }//end of button6 method     
+ 
 
         /*public void XmlRead()
 {
