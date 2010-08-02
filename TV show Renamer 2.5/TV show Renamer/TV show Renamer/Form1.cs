@@ -398,7 +398,7 @@ namespace TV_show_Renamer
 
                     for (int z = 0; z < fileName.Count; z++)
                     {
-                        string fullFileName=fileFolder[z]+fileName[z];
+                        string fullFileName = fileFolder[z] + "\\" + fileName[z];
                         info = infoFinder(fullFileName, folderlist, movefolder);
                         int index = Convert.ToInt32(info[2]);
                         
@@ -514,7 +514,7 @@ namespace TV_show_Renamer
 
                     for (int z = 0; z < fileName.Count; z++)
                     {
-                        string fullFileName = fileFolder[z] + fileName[z];
+                        string fullFileName = fileFolder[z] + "\\" + fileName[z];
                         info = infoFinder(fullFileName, folderlist, movefolder);
                         int index = Convert.ToInt32(info[2]);
 
