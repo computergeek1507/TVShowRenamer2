@@ -225,9 +225,15 @@
   <ItemGroup>
     <None Include="Resources\56.bmp" />
     <None Include="Resources\licence.rtf" />
-    <Content Include="7z.dll" />
-    <Content Include="FolderBrowser.dll" />
-    <Content Include="SevenZipSharp.dll" />
+    <Resource Include="Resources\7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FolderBrowser.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\SevenZipSharp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="tv.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
