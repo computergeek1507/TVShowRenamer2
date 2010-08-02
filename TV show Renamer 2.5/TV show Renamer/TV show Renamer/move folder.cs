@@ -22,33 +22,52 @@ namespace TV_show_Renamer
             InitializeComponent();
             for (int i = 0; i < tempTVshows.Count(); i++)
             {
-                label1.Text += (tempTVshows[i] + "\n");
+                //label1.Text += (tempTVshows[i] + "\n");
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[i].Cells[0].Value = tempTVshows[i];
             }
         }
+
         //close form
         private void button1_Click(object sender, EventArgs e)
         {    
             this.Close();
         }
+
         //send folder list to main form
         private void move_folder_FormClosing(object sender, FormClosingEventArgs e)
         {
             mainform.tvFolderChanger(tvfolderslist);
         }
+
         //add folder to list
         private void button2_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 tvfolderslist.Add(folderBrowserDialog1.SelectedPath);
-                label1.Text += folderBrowserDialog1.SelectedPath+"\n";
+                //label1.Text += folderBrowserDialog1.SelectedPath+"\n";
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[tvfolderslist.Count()-1].Cells[0].Value = folderBrowserDialog1.SelectedPath;
             }
         }
+
         //clear list of folder
         private void button4_Click(object sender, EventArgs e)
         {
-            tvfolderslist.Clear();
-            label1.Text = "";
+            if (dataGridView1.CurrentRow != null)
+            {
+                int u = dataGridView1.CurrentRow.Index;
+                tvfolderslist.RemoveAt(u);
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < tvfolderslist.Count(); i++)
+                {
+                    //label1.Text += (tempTVshows[i] + "\n");
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = tvfolderslist[i];
+                }
+                //newForm.removePlaylist(u);
+            }
         }
     }//end of class
 }

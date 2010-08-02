@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_0951826241C6B83D28E54DAF85B03BDE"
+        "OwnerKey" = "8:_3A5677DD31504340AB3D9A4D294E3E9C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_146EA33D16954168A5178ED6C2C8292B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -29,6 +35,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_3A5677DD31504340AB3D9A4D294E3E9C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0951826241C6B83D28E54DAF85B03BDE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -128,7 +140,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "Version" = "8:3.5.21022"
+                "FrameworkVersion" = "8:3.5.21022"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=76617"
                 }
@@ -136,6 +148,37 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0951826241C6B83D28E54DAF85B03BDE"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:SevenZipSharp, Version=1.0.3537.37869, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_0951826241C6B83D28E54DAF85B03BDE"
+                    {
+                    "Name" = "8:SevenZipSharp.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:SevenZipSharp.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2015FD8047204861BCE52D7462CFB5C7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_146EA33D16954168A5178ED6C2C8292B"
             {
             "SourcePath" = "8:..\\TV show Renamer\\Resources\\licence.rtf"
@@ -213,8 +256,9 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TV Show Renamer"
         "ProductCode" = "8:{D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}"
-        "PackageCode" = "8:{7630FE93-5F41-43B8-8DE3-A8B8F324FC07}"
+        "PackageCode" = "8:{68A73D73-AD06-4F8D-ACDC-F760B80BD004}"
         "UpgradeCode" = "8:{1FF4AD03-4CF8-4C66-8404-DA88C333C778}"
+        "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
