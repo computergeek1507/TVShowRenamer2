@@ -29,8 +29,8 @@ namespace TV_show_Renamer
         const int HowDeepToScan = 4;
         bool addfile = false;
         bool shownb4 = false;
-      
-
+        bool openZIPs = false;
+        
         List<string> fileFolder = new List<string>();//origonal folder
         List<string> fileName = new List<string>();//origonal file name
         List<string> fileExtention = new List<string>();//origonal file Extention
@@ -56,8 +56,9 @@ namespace TV_show_Renamer
         //add files button
         private void addFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             openFileDialog2.Title = "Select Media files";
-            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|All Files (*.*)|*.*";
+            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|Archive Files (*.zip;*.rar;*.r01)|*.zip;*.rar;*.r01|All Files (*.*)|*.*";
             openFileDialog2.FileName = "";
             openFileDialog2.FilterIndex = 0;
             openFileDialog2.InitialDirectory = "Documents";
@@ -66,18 +67,39 @@ namespace TV_show_Renamer
 
             if (openFileDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                Thread h = new Thread(delegate() { getFiles(openFileDialog2.FileNames); });                
+                h.Start();
+                /*      
                 //loop for each file in array
                 foreach (String file3 in openFileDialog2.FileNames)
                 {
                     FileInfo fi3 = new FileInfo(file3);
-                    
-                    //add file name
-                    fileName.Add(fi3.Name);
-                    newFileName.Add(fi3.Name);
-                    //add file folder
-                    fileFolder.Add(fi3.DirectoryName);
-                    //add file extension
-                    fileExtention.Add(fi3.Extension);                    
+                    if (fi3.Extension == ".avi" || fi3.Extension == ".mkv" || fi3.Extension == ".mp4" || fi3.Extension == ".m4v" || fi3.Extension == ".mpg") {
+                        //add file name
+                        fileName.Add(fi3.Name);
+                        newFileName.Add(fi3.Name);
+                        //add file folder
+                        fileFolder.Add(fi3.DirectoryName);
+                        //add file extension
+                        fileExtention.Add(fi3.Extension);                    
+                    }
+
+                    if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01")
+                    {
+                        List<string> info = archiveExtrector(file3);
+
+                        if (info[0] == "0") {
+                            continue;
+                        }
+                        //add file name
+                        fileName.Add(info[0]);
+                        newFileName.Add(info[0]);
+                        //add file folder
+                        fileFolder.Add(info[1]);
+                        //add file extension
+                        fileExtention.Add(info[2]);
+                    }
+                                        
 
                 }//end of loop 
                 dataGridView1.Rows.Clear();             
@@ -91,7 +113,8 @@ namespace TV_show_Renamer
                 {
                     Thread t = new Thread(new ThreadStart(autoConvert));
                     t.Start();
-                }
+                }*/
+
             }//end of if
 
         }//end of file button
@@ -101,6 +124,9 @@ namespace TV_show_Renamer
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
+                Thread u = new Thread(delegate() { getFilesInFolder(folderBrowserDialog1.SelectedPath); });
+                u.Start();
+                /*
                 string folder = null;
                 folder = folderBrowserDialog1.SelectedPath;
                 ProcessDir(folder, 0);
@@ -118,7 +144,7 @@ namespace TV_show_Renamer
                     Thread t = new Thread(new ThreadStart(autoConvert));
                     t.Start();
                 }
-
+                */
                 #region Old folder stuff
                 /*
                 bool addfile = false;
@@ -378,7 +404,7 @@ namespace TV_show_Renamer
         //settings menu
         private void settingsMenuItem_Click(object sender, EventArgs e)
         {
-            Settings MainSettings = new Settings(this);
+            Settings MainSettings = new Settings(this,openZIPs);
         }
                 
         #endregion
@@ -910,7 +936,7 @@ namespace TV_show_Renamer
         private void fullUpdate()
         {
             download update = new download(commonAppData, this);
-            update.Show();
+            //update.Show();
 
             this.Hide();
         }
@@ -962,12 +988,17 @@ namespace TV_show_Renamer
                     this.s01E01ToolStripMenuItem1.Checked = bool.Parse(tr3.ReadLine());
                     this.dateToolStripMenuItem.Checked = bool.Parse(tr3.ReadLine());
                     this.removeYearToolStripMenuItem.Checked = bool.Parse(tr3.ReadLine());
+
                     this.BackColor=System.Drawing.Color.FromArgb(int.Parse(tr3.ReadLine()), int.Parse(tr3.ReadLine()), int.Parse(tr3.ReadLine()), int.Parse(tr3.ReadLine()));
-                    
+
+                    this.ForeColor = System.Drawing.Color.FromArgb(int.Parse(tr3.ReadLine()), int.Parse(tr3.ReadLine()), int.Parse(tr3.ReadLine()), int.Parse(tr3.ReadLine()));
 
                     //this.BackColor.B = int.Parse(tr3.ReadLine());
                     this.menuStrip1.BackColor = this.BackColor;
+                    this.menuStrip1.ForeColor = this.ForeColor;
                     //movefolder = tr3.ReadLine();
+                    openZIPs = bool.Parse(tr3.ReadLine());
+
                     tr3.Close();//close reader stream    
                 }//end of if. 
                 if (File.Exists(commonAppData + "//TVFolder.seh"))
@@ -1156,8 +1187,15 @@ namespace TV_show_Renamer
                     {
                         continue;
                     }
+
+                    //zip fix
+                    if ((exten == ".zip" || exten == ".rar" || exten == ".r01")&&openZIPs)
+                    {
+                        continue;
+                    }
+
                     //check if its a legal file type
-                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v"))
+                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v" ))
                     {
                         //if dialog was shown b4 dont show again
                         if (!shownb4)
@@ -1182,6 +1220,8 @@ namespace TV_show_Renamer
                             continue;
                         }
                     }
+
+                    
                     //add file name
                     fileName.Add(origName);
                     newFileName.Add(origName);
@@ -1208,6 +1248,35 @@ namespace TV_show_Renamer
             }
         }
 
+        public void ProcessDirZIP(string sourceDir)
+        {
+
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(sourceDir);
+            // Process the list of files found in the directory.
+            //string[] fileEntries = Directory.GetFiles(sourceDir);
+            foreach (System.IO.FileInfo fi in di.GetFiles("*"))
+            {
+                string origName = fi.Name;
+                string exten = fi.Extension;
+                string attrib = fi.Attributes.ToString();
+                //MessageBox.Show(fi.FullName);
+
+                
+                //if thumb file dont convert
+                if (origName == "Thumbs.db")
+                {
+                    continue;
+                }
+
+                //check if its a legal file type
+                if (exten == ".zip" || exten == ".rar" || exten == ".r01")
+                {
+                    List<string> test = archiveExtrector(fi.FullName);
+
+                }
+
+            }
+        }
         //rename method
         private string fileRenamer(string newfilename, int index, string extend)
         {
@@ -1577,6 +1646,11 @@ namespace TV_show_Renamer
             List<string> startlist = new List<string>();
 
             // make array in here
+            startlist.Add("dvdscr");
+            startlist.Add("rerip");
+            startlist.Add("2sd");
+            startlist.Add("tvrip");
+            startlist.Add("shotv");
             startlist.Add("thewretched");
             startlist.Add("xvid");
             startlist.Add("tvep");
@@ -1634,7 +1708,6 @@ namespace TV_show_Renamer
             startlist.Add("bajskorv");
             startlist.Add("momentum");
             startlist.Add("yestv");
-            startlist.Add("tv");
             startlist.Add("dcp");
             startlist.Add("dgas");
             startlist.Add("nogrp");
@@ -1653,12 +1726,22 @@ namespace TV_show_Renamer
             startlist.Add("gnarly");
             startlist.Add("krs");
             startlist.Add("[goat]");
+            startlist.Add("[buck]");
+            startlist.Add("[bucktv]");
             startlist.Add("orpheus");
             startlist.Add("720p");
             startlist.Add("x264");
             startlist.Add("dimension");
+            startlist.Add("60fps");
+            startlist.Add("d734");
+            startlist.Add("mspaint");
+            startlist.Add("siso");
+            
             startlist.Add("www.directlinkspot.com");
+            startlist.Add("www directlinkspot com");
             startlist.Add("onelinkmoviez.com");
+            startlist.Add("onelinkmoviez com");
+            startlist.Add("tv");
 
             //if no file exist make a default file
             if (!File.Exists(commonAppData + "//library.seh"))
@@ -1795,8 +1878,155 @@ namespace TV_show_Renamer
         public void tvFolderChanger(List<string> sentlist)
         {
             movefolder = sentlist;
-        } 
+        }
 
+        //opens zip and rar folders
+        private List<string> archiveExtrector(string zipfile) {
+            
+            List<string> info = new List<string>();
+            info.Add("0");
+            info.Add("0");
+            info.Add("0");
+            string archiveName = null;
+            int archiveIndex= -1;
+            FileInfo fi8 = new FileInfo(zipfile);
+            
+            SevenZipExtractor mainExtrector = new SevenZipExtractor(zipfile);
+            int sizeOfArchive = (int)mainExtrector.FilesCount;
+            for (int j = 0; j < sizeOfArchive; j++)
+            {
+                archiveName = mainExtrector.ArchiveFileNames[j];
+                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000");
+                
+                if (testArchiveName != archiveName)
+                {
+                    archiveIndex = j;
+                    break;
+                }
+            }
+
+            if (archiveIndex == -1) {
+                return info;
+            }
+
+            mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
+
+            FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
+            info[0] = fi9.Name;
+            info[1] = fi9.DirectoryName;
+            info[2] = fi9.Extension;
+                   
+            //return info string
+            return info;
+        }
+
+        private void getFiles(string[] fileList) {
+            
+                //loop for each file in array
+            foreach (String file3 in fileList)
+                {
+                    FileInfo fi3 = new FileInfo(file3);
+                    if (fi3.Extension == ".avi" || fi3.Extension == ".mkv" || fi3.Extension == ".mp4" || fi3.Extension == ".m4v" || fi3.Extension == ".mpg")
+                    {
+                        //add file name
+                        fileName.Add(fi3.Name);
+                        newFileName.Add(fi3.Name);
+                        //add file folder
+                        fileFolder.Add(fi3.DirectoryName);
+                        //add file extension
+                        fileExtention.Add(fi3.Extension);
+                    }
+
+                    if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001")
+                    {
+                        List<string> info = archiveExtrector(file3);
+
+                        if (info[0] == "0")
+                        {
+                            continue;
+                        }
+                        //add file name
+                        fileName.Add(info[0]);
+                        newFileName.Add(info[0]);
+                        //add file folder
+                        fileFolder.Add(info[1]);
+                        //add file extension
+                        fileExtention.Add(info[2]);
+                    }
+
+
+                }//end of loop 
+                /*dataGridView1.Rows.Clear();
+                for (int i = 0; i < fileName.Count(); i++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = fileName[i];
+                    dataGridView1.Rows[i].Cells[1].Value = fileName[i];
+                }*/
+
+            MethodInvoker action2 = delegate
+            {
+                dataGridView1.Rows.Clear();
+                for (int z = 0; z < fileName.Count; z++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[z].Cells[0].Value = fileName[z];
+                    dataGridView1.Rows[z].Cells[1].Value = fileName[z];
+                }
+            };
+            dataGridView1.BeginInvoke(action2);
+
+
+                if (fileName.Count() != 0)
+                {
+                    Thread t = new Thread(new ThreadStart(autoConvert));
+                    t.Start();
+                }
+
+            }
+
+        private void getFilesInFolder(string folder) {
+
+            if (openZIPs) {
+                ProcessDirZIP(folder);
+            }
+
+            ProcessDir(folder, 0);
+
+            
+            /*dataGridView1.Rows.Clear();
+               for (int i = 0; i < fileName.Count(); i++)
+               {
+                   dataGridView1.Rows.Add();
+                   dataGridView1.Rows[i].Cells[0].Value = fileName[i];
+                   dataGridView1.Rows[i].Cells[1].Value = fileName[i];
+               }*/
+
+            MethodInvoker action2 = delegate
+            {
+                dataGridView1.Rows.Clear();
+                for (int z = 0; z < fileName.Count; z++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[z].Cells[0].Value = fileName[z];
+                    dataGridView1.Rows[z].Cells[1].Value = fileName[z];
+                }
+            };
+            dataGridView1.BeginInvoke(action2);
+
+            if (fileName.Count() != 0)
+            {
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
+            }
+        
+        
+        }
+
+        public void changeZIPstate(bool localZIP) {
+            openZIPs = localZIP;
+        }
+        
         #endregion
 
         //loads when starts
@@ -1841,6 +2071,11 @@ namespace TV_show_Renamer
             pw.WriteLine(this.BackColor.R);
             pw.WriteLine(this.BackColor.G);
             pw.WriteLine(this.BackColor.B);
+            pw.WriteLine(this.ForeColor.A);
+            pw.WriteLine(this.ForeColor.R);
+            pw.WriteLine(this.ForeColor.G);
+            pw.WriteLine(this.ForeColor.B);
+            pw.WriteLine(openZIPs);
             pw.Close();//close writer stream
 
             //write tv folder locations
@@ -1856,30 +2091,7 @@ namespace TV_show_Renamer
 
 
         }
-
-        
-        private void button6_Click(object sender, EventArgs e)
-        {
-            
-            openFileDialog1.Title = "Select Archive files";
-            openFileDialog1.Filter = "Archive Files (*.zip;*.rar;*.001;*.r01)|*.zip;*.rar;*.001;*.r01|All Files (*.*)|*.*";
-            openFileDialog1.FileName = "";
-            openFileDialog1.FilterIndex = 0;
-            openFileDialog1.InitialDirectory = "Documents";
-            openFileDialog1.CheckFileExists = true;
-            openFileDialog1.CheckPathExists = true;
-
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                FileInfo fi7 = new FileInfo(openFileDialog1.FileName);
-                SevenZipExtractor mainExtrector = new SevenZipExtractor(openFileDialog1.FileName);
-                
-                mainExtrector.ExtractArchive(fi7.DirectoryName+"\\scottsfolder");
-                
-               
-            }//end of if
-        }//end of button6 method     
- 
+         
 
         /*public void XmlRead()
 {

@@ -21,6 +21,7 @@ namespace TV_show_Renamer
         {
             this.window = window;
             commonAppData = location;
+            this.Show();
             InitializeComponent();
         }
 
