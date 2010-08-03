@@ -83,8 +83,6 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.oldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.newname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button6 = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -178,7 +176,7 @@
             this.addFilesToolStripMenuItem.AutoToolTip = true;
             this.addFilesToolStripMenuItem.Name = "addFilesToolStripMenuItem";
             this.addFilesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.addFilesToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.addFilesToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.addFilesToolStripMenuItem.Text = "Add Files";
             this.addFilesToolStripMenuItem.ToolTipText = "Add Files To be Coverted";
             this.addFilesToolStripMenuItem.Click += new System.EventHandler(this.addFilesToolStripMenuItem_Click);
@@ -188,7 +186,7 @@
             this.addFolderToolStripMenuItem.AutoToolTip = true;
             this.addFolderToolStripMenuItem.Name = "addFolderToolStripMenuItem";
             this.addFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.addFolderToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.addFolderToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.addFolderToolStripMenuItem.Text = "Add Folder";
             this.addFolderToolStripMenuItem.ToolTipText = "Add a Folder of Files To be Coverted";
             this.addFolderToolStripMenuItem.Click += new System.EventHandler(this.addFolderToolStripMenuItem_Click);
@@ -196,12 +194,13 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(185, 6);
             // 
             // removeSelectedMenuItem
             // 
             this.removeSelectedMenuItem.Name = "removeSelectedMenuItem";
-            this.removeSelectedMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.removeSelectedMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.removeSelectedMenuItem.Size = new System.Drawing.Size(188, 22);
             this.removeSelectedMenuItem.Text = "Remove Selected";
             this.removeSelectedMenuItem.Click += new System.EventHandler(this.removeSelectedMenuItem_Click);
             // 
@@ -210,7 +209,7 @@
             this.clearListToolStripMenuItem.AutoToolTip = true;
             this.clearListToolStripMenuItem.Name = "clearListToolStripMenuItem";
             this.clearListToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.clearListToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.clearListToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.clearListToolStripMenuItem.Text = "Clear List ";
             this.clearListToolStripMenuItem.ToolTipText = "Clear All Files from List";
             this.clearListToolStripMenuItem.Click += new System.EventHandler(this.clearListToolStripMenuItem_Click);
@@ -218,12 +217,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -594,21 +593,6 @@
             this.newname.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.newname.Width = 104;
             // 
-            // button6
-            // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button6.Location = new System.Drawing.Point(510, 445);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 31;
-            this.button6.Text = "Archive ";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -616,7 +600,6 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(597, 475);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button2);
@@ -694,8 +677,6 @@
         private System.Windows.Forms.ToolStripMenuItem removeSelectedMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
