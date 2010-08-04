@@ -1024,7 +1024,7 @@ namespace TV_show_Renamer
             }
             catch (Exception e)
             {
-                Log.WriteLog("Writing Preference Error" + e.ToString());
+                Log.WriteLog("Writing Preference Error \n" + e.ToString());
             }
 
         }//end of preferenceXMLReader Method
@@ -2107,8 +2107,6 @@ namespace TV_show_Renamer
             tv.Close();
             //write log
             Log.closeLog();
-
-
         }
          
         /*public void XmlRead()
