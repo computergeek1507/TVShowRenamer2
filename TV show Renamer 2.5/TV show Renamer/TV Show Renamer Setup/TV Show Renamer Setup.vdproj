@@ -146,7 +146,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:3.5.21022 "
+                "FrameworkVersion" = "8:.NETFramework,Version=v3.5"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=76617"
                 }
@@ -282,7 +282,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TV Show Renamer"
         "ProductCode" = "8:{D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}"
-        "PackageCode" = "8:{3C3B1E5F-C1DE-4616-93D2-6E1ABA5D17B6}"
+        "PackageCode" = "8:{D51CA813-DB3E-4A88-A605-16B5C627F009}"
         "UpgradeCode" = "8:{1FF4AD03-4CF8-4C66-8404-DA88C333C778}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
