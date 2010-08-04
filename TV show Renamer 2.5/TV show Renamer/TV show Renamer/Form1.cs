@@ -2063,7 +2063,7 @@ namespace TV_show_Renamer
             this.fileChecker();
             
             userJunk.junk_adder(junklist, commonAppData, this);
-            textConvert.setUp(this);
+            textConvert.setUp(this, commonAppData);
 
             //MessageBox.Show(movefolder);
 
