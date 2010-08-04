@@ -25,7 +25,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 250;//2.5Beta
+        const int appVersion = 251;//2.5Beta
         const int HowDeepToScan = 4;
         bool addfile = false;
         bool shownb4 = false;
@@ -936,14 +936,14 @@ namespace TV_show_Renamer
         private void fullUpdate()
         {
             download update = new download(commonAppData, this);
-            //update.Show();
-            /*
-            MethodInvoker action5 = delegate
-            {
-                this.Hide();
-            };
-            this.BeginInvoke(action5);// dataGridView1.BeginInvoke(action5);
-            */
+            update.Show();
+            
+            //MethodInvoker action5 = delegate
+           // {
+            //    this.Hide();
+           // };
+           //this.BeginInvoke(action5);// dataGridView1.BeginInvoke(action5);
+            
             this.Hide();
         }
 

@@ -21,7 +21,7 @@ namespace TV_show_Renamer
         {
             this.window = window;
             commonAppData = location;
-            this.Show();
+            //this.Show();
             InitializeComponent();
         }
 
@@ -115,6 +115,8 @@ namespace TV_show_Renamer
         //loads with form
         private void download_Load(object sender, EventArgs e)
         {
+            
+            this.Show();
             //string name=null;
             saveFileDialog1.Filter = "Installer (*.msi)|*.msi";
             saveFileDialog1.FilterIndex = 0;
