@@ -58,7 +58,7 @@ namespace TV_show_Renamer
         {
             
             openFileDialog2.Title = "Select Media files";
-            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|Archive Files (*.zip;*.rar;*.r01)|*.zip;*.rar;*.r01|All Files (*.*)|*.*";
+            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|Archive Files (*.zip;*.rar;*.r01;*.7z;)|*.zip;*.rar;*.r01;*.7z;|All Files (*.*)|*.*";
             openFileDialog2.FileName = "";
             openFileDialog2.FilterIndex = 0;
             openFileDialog2.InitialDirectory = "Documents";
@@ -1189,7 +1189,7 @@ namespace TV_show_Renamer
                     }
 
                     //zip fix
-                    if ((exten == ".zip" || exten == ".rar" || exten == ".r01")&&openZIPs)
+                    if ((exten == ".zip" || exten == ".rar" || exten == ".r01"||exten == ".7z")&&openZIPs)
                     {
                         continue;
                     }
@@ -1248,6 +1248,7 @@ namespace TV_show_Renamer
             }
         }
 
+        //extract zips and rar in folder
         public void ProcessDirZIP(string sourceDir)
         {
 
@@ -1269,7 +1270,7 @@ namespace TV_show_Renamer
                 }
 
                 //check if its a legal file type
-                if (exten == ".zip" || exten == ".rar" || exten == ".r01")
+                if (exten == ".zip" || exten == ".rar" || exten == ".r01" || exten == ".7z")
                 {
                     List<string> test = archiveExtrector(fi.FullName);
 
@@ -1277,6 +1278,7 @@ namespace TV_show_Renamer
 
             }
         }
+
         //rename method
         private string fileRenamer(string newfilename, int index, string extend)
         {
@@ -1909,17 +1911,26 @@ namespace TV_show_Renamer
                 return info;
             }
 
-            mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
+            try {
+                mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
 
-            FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
-            info[0] = fi9.Name;
-            info[1] = fi9.DirectoryName;
-            info[2] = fi9.Extension;
-                   
+                FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
+                info[0] = fi9.Name;
+                info[1] = fi9.DirectoryName;
+                info[2] = fi9.Extension;
+            }            
+            catch (FileNotFoundException) {
+                return info;
+            }
+            catch (IOException) {
+                return info;
+            }
+            
             //return info string
             return info;
         }
 
+        //add files 
         private void getFiles(string[] fileList) {
             
                 //loop for each file in array
@@ -1937,7 +1948,7 @@ namespace TV_show_Renamer
                         fileExtention.Add(fi3.Extension);
                     }
 
-                    if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001")
+                    if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
                     {
                         List<string> info = archiveExtrector(file3);
 
@@ -1985,6 +1996,7 @@ namespace TV_show_Renamer
 
             }
 
+        //add files from folder
         private void getFilesInFolder(string folder) {
 
             if (openZIPs) {
@@ -2023,6 +2035,7 @@ namespace TV_show_Renamer
         
         }
 
+        //change bool openZIPs
         public void changeZIPstate(bool localZIP) {
             openZIPs = localZIP;
         }
@@ -2092,7 +2105,6 @@ namespace TV_show_Renamer
 
         }
          
-
         /*public void XmlRead()
 {
     string document = commonAppData + "//version.xml";
