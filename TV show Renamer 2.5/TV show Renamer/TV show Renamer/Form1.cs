@@ -937,7 +937,13 @@ namespace TV_show_Renamer
         {
             download update = new download(commonAppData, this);
             //update.Show();
-
+            /*
+            MethodInvoker action5 = delegate
+            {
+                this.Hide();
+            };
+            this.BeginInvoke(action5);// dataGridView1.BeginInvoke(action5);
+            */
             this.Hide();
         }
 

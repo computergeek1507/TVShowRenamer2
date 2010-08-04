@@ -134,7 +134,7 @@ namespace TV_show_Renamer
 
         //cancel button
         private void button1_Click(object sender, EventArgs e)
-        {
+        {            
             window.Show();            
             this.Close();
         }       
