@@ -1898,8 +1898,16 @@ namespace TV_show_Renamer
             string archiveName = null;
             int archiveIndex= -1;
             FileInfo fi8 = new FileInfo(zipfile);
-            
-            SevenZipExtractor mainExtrector = new SevenZipExtractor(zipfile);
+
+            SevenZipExtractor mainExtrector;
+
+            try { 
+                mainExtrector = new SevenZipExtractor(zipfile);
+            }catch(SevenZipLibraryException){
+                MessageBox.Show("Incorrect 7z.dll for your version of Windows");
+                return info;
+            }
+            //SevenZipExtractor mainExtrector = new SevenZipExtractor(zipfile);
             int sizeOfArchive = (int)mainExtrector.FilesCount;
             for (int j = 0; j < sizeOfArchive; j++)
             {
@@ -2108,7 +2116,13 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();
         }
-         
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show((IntPtr.Size * 8).ToString());
+        }
+
+                 
         /*public void XmlRead()
 {
     string document = commonAppData + "//version.xml";
