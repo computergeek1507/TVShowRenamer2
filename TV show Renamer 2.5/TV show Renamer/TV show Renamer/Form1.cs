@@ -2116,6 +2116,15 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo startInfo2 = new ProcessStartInfo("msiexec.exe", "/x {D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}");
+
+            //startInfo2.FileName = label1.Text;
+            //startInfo.Arguments
+            Process.Start(startInfo2);
+        }
                                 
         /*public void XmlRead()
 {
