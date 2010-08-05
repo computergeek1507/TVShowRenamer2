@@ -103,9 +103,17 @@ namespace TV_show_Renamer
             {
                 window.writeLog("Error when deleting files before update" + q.ToString());
             }
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = label1.Text;
-            Process.Start(startInfo);
+            ProcessStartInfo startInfo2 = new ProcessStartInfo("msiexec.exe", "/x {D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}");
+
+            MessageBox.Show("The uninstaller will run and when it is finished you will have to double click the installer you saved to:\n" + label1.Text);
+            //startInfo2.FileName = label1.Text;
+            //startInfo.Arguments
+            Process.Start(startInfo2);
+            //startInfo2.
+            //ProcessStartInfo startInfo = new ProcessStartInfo();
+            //startInfo.FileName = label1.Text;
+            //startInfo.Arguments
+            //Process.Start(startInfo);
 
             //System.Environment.Exit(0);
             Application.Exit();
