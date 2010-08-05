@@ -2116,13 +2116,7 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();
         }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show((IntPtr.Size * 8).ToString());
-        }
-
-                 
+                                
         /*public void XmlRead()
 {
     string document = commonAppData + "//version.xml";
