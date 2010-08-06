@@ -33,7 +33,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DAC6CDD2A319410F9623C57B3B2D6C86"
+        "MsmKey" = "8:_CF32FCBC2E5545EC91CE9A7295EA2F18"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -98,6 +98,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
     }
@@ -179,7 +192,7 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DAC6CDD2A319410F9623C57B3B2D6C86"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CF32FCBC2E5545EC91CE9A7295EA2F18"
             {
             "SourcePath" = "8:..\\TV show Renamer\\Resources\\64-bit\\7z.dll"
             "TargetName" = "8:7z.dll"
@@ -254,9 +267,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:TV Show Renamer Setup 64-bit"
+        "ProductName" = "8:TV Show Renamer"
         "ProductCode" = "8:{D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}"
-        "PackageCode" = "8:{2F7D678B-7C49-4D23-AD0C-881416B7AA82}"
+        "PackageCode" = "8:{0FD2D974-B7F2-4901-AA2B-76F34CA1101C}"
         "UpgradeCode" = "8:{1FF4AD03-4CF8-4C66-8404-DA88C333C778}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
