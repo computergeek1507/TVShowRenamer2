@@ -61,7 +61,7 @@ namespace TV_show_Renamer
             openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|Archive Files (*.zip;*.rar;*.r01;*.7z;)|*.zip;*.rar;*.r01;*.7z;|All Files (*.*)|*.*";
             openFileDialog2.FileName = "";
             openFileDialog2.FilterIndex = 0;
-            openFileDialog2.InitialDirectory = "Documents";
+            //openFileDialog2.InitialDirectory = "Documents";
             openFileDialog2.CheckFileExists = true;
             openFileDialog2.CheckPathExists = true;
 
