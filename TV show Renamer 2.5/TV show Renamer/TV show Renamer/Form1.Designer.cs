@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -84,14 +85,27 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.oldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.newname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.saveNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // folderBrowserDialog1
             // 
             this.folderBrowserDialog1.Description = "Select Folder with videos in it";
-            this.folderBrowserDialog1.SelectedPath = "C:\\Users\\Scott\\Documents";
+            this.folderBrowserDialog1.SelectedPath = "C:\\Users\\Scott\\Desktop";
             this.folderBrowserDialog1.ShowNewFolderButton = false;
             // 
             // button3
@@ -501,18 +515,17 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(480, 450);
+            this.label1.Location = new System.Drawing.Point(265, 450);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(24, 13);
+            this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 28;
-            this.label1.Text = "test";
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(306, 445);
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(314, 445);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
@@ -522,8 +535,8 @@
             // 
             // button2
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Location = new System.Drawing.Point(387, 445);
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(395, 445);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 5;
@@ -558,6 +571,7 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.oldName,
             this.newname});
+            this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -603,6 +617,92 @@
             this.newname.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.newname.Width = 104;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveNameToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.convertSelectedToolStripMenuItem,
+            this.undoSelectedToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.moveSelectedToolStripMenuItem,
+            this.copySelectedToolStripMenuItem,
+            this.toolStripSeparator9,
+            this.removeSelectedToolStripMenuItem,
+            this.toolStripSeparator10,
+            this.viewFolderToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 182);
+            // 
+            // saveNameToolStripMenuItem
+            // 
+            this.saveNameToolStripMenuItem.Name = "saveNameToolStripMenuItem";
+            this.saveNameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveNameToolStripMenuItem.Text = "Save Selected Name";
+            this.saveNameToolStripMenuItem.Click += new System.EventHandler(this.saveNameToolStripMenuItem_Click);
+            // 
+            // convertSelectedToolStripMenuItem
+            // 
+            this.convertSelectedToolStripMenuItem.Name = "convertSelectedToolStripMenuItem";
+            this.convertSelectedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.convertSelectedToolStripMenuItem.Text = "Convert Selected";
+            this.convertSelectedToolStripMenuItem.Click += new System.EventHandler(this.convertSelectedToolStripMenuItem_Click);
+            // 
+            // undoSelectedToolStripMenuItem
+            // 
+            this.undoSelectedToolStripMenuItem.Name = "undoSelectedToolStripMenuItem";
+            this.undoSelectedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.undoSelectedToolStripMenuItem.Text = "Undo Selected";
+            this.undoSelectedToolStripMenuItem.Click += new System.EventHandler(this.undoSelectedToolStripMenuItem_Click);
+            // 
+            // moveSelectedToolStripMenuItem
+            // 
+            this.moveSelectedToolStripMenuItem.Name = "moveSelectedToolStripMenuItem";
+            this.moveSelectedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.moveSelectedToolStripMenuItem.Text = "Move Selected";
+            this.moveSelectedToolStripMenuItem.Click += new System.EventHandler(this.moveSelectedToolStripMenuItem_Click);
+            // 
+            // copySelectedToolStripMenuItem
+            // 
+            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
+            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copySelectedToolStripMenuItem.Text = "Copy Selected";
+            this.copySelectedToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
+            // 
+            // removeSelectedToolStripMenuItem
+            // 
+            this.removeSelectedToolStripMenuItem.Name = "removeSelectedToolStripMenuItem";
+            this.removeSelectedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeSelectedToolStripMenuItem.Text = "Remove Selected";
+            this.removeSelectedToolStripMenuItem.Click += new System.EventHandler(this.removeSelectedToolStripMenuItem_Click);
+            // 
+            // viewFolderToolStripMenuItem
+            // 
+            this.viewFolderToolStripMenuItem.Name = "viewFolderToolStripMenuItem";
+            this.viewFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewFolderToolStripMenuItem.Text = "View Folder";
+            this.viewFolderToolStripMenuItem.Click += new System.EventHandler(this.viewFolderToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(177, 6);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(177, 6);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -612,12 +712,12 @@
             this.ClientSize = new System.Drawing.Size(597, 475);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.button3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(500, 130);
@@ -629,6 +729,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -687,6 +788,18 @@
         private System.Windows.Forms.ToolStripMenuItem removeSelectedMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem saveNameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem convertSelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem undoSelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveSelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copySelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeSelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
     }
 }
 
