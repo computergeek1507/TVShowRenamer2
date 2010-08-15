@@ -27,7 +27,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7BC1126FAD464721832FED6EF483D550"
+        "MsmKey" = "8:_6FCB15A20F85483092394FD9D4543827"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -174,9 +174,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7BC1126FAD464721832FED6EF483D550"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6FCB15A20F85483092394FD9D4543827"
             {
-            "SourcePath" = "8:..\\TV show Renamer\\Resources\\32-bit\\7z.dll"
+            "SourcePath" = "8:..\\TV show Renamer\\Resources\\64-bit\\7z.dll"
             "TargetName" = "8:7z.dll"
             "Tag" = "8:"
             "Folder" = "8:_2015FD8047204861BCE52D7462CFB5C7"
@@ -282,7 +282,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TV Show Renamer"
         "ProductCode" = "8:{D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}"
-        "PackageCode" = "8:{D51CA813-DB3E-4A88-A605-16B5C627F009}"
+        "PackageCode" = "8:{70ED3296-5D55-462B-9AC6-A03FDF0D5DFA}"
         "UpgradeCode" = "8:{1FF4AD03-4CF8-4C66-8404-DA88C333C778}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
