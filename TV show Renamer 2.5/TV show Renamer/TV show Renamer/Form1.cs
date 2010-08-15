@@ -25,12 +25,16 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 251;//2.5Beta
+        const int appVersion = 252;//2.5Beta
         const int HowDeepToScan = 4;
         bool addfile = false;
         bool shownb4 = false;
         bool openZIPs = false;
-        
+        string movieFolder = "0000";
+        string movieFolder2 = "0000";
+        string trailersFolder = "0000";
+        string musicVidFolder = "0000";
+
         List<string> fileFolder = new List<string>();//origonal folder
         List<string> fileName = new List<string>();//origonal file name
         List<string> fileExtention = new List<string>();//origonal file Extention
@@ -281,7 +285,7 @@ namespace TV_show_Renamer
                 this.s01E01ToolStripMenuItem1.Checked = false;
                 this.dateToolStripMenuItem.Checked = false;
                 this.removeYearToolStripMenuItem.Checked = true;
-                movefolder.Clear();
+                //movefolder.Clear();
             }
         }//end of default setting method 
                 
@@ -377,14 +381,7 @@ namespace TV_show_Renamer
             Thread t = new Thread(new ThreadStart(autoConvert));
             t.Start();
         }
-
-        //Set Tv Show Folder Button
-        private void setTVFolderLocationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            move_folder tvshow = new move_folder(this, movefolder);
-            tvshow.Show();
-        }
-
+        
         //check for updates
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -404,7 +401,7 @@ namespace TV_show_Renamer
         //settings menu
         private void settingsMenuItem_Click(object sender, EventArgs e)
         {
-            Settings MainSettings = new Settings(this,openZIPs);
+            Settings MainSettings = new Settings(this, openZIPs, movefolder);
         }
                 
         #endregion
@@ -935,6 +932,11 @@ namespace TV_show_Renamer
         //full Update
         private void fullUpdate()
         {
+            //WebClient webClient = new WebClient();
+            //webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed3);
+            //webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/Intraller.exe"), commonAppData + "\\Intraller.exe");
+
+
             download update = new download(commonAppData, this);
             update.Show();
             
@@ -946,7 +948,13 @@ namespace TV_show_Renamer
             
             this.Hide();
         }
-
+        /*
+        private void Completed3(object sender, AsyncCompletedEventArgs e)
+        {
+            download update = new download(commonAppData, this);
+            update.Show();
+        }
+        */
         #endregion
 
         #region Other Methods
@@ -1004,6 +1012,10 @@ namespace TV_show_Renamer
                     this.menuStrip1.ForeColor = this.ForeColor;
                     //movefolder = tr3.ReadLine();
                     openZIPs = bool.Parse(tr3.ReadLine());
+                    movieFolder = tr3.ReadLine();
+                    movieFolder2 = tr3.ReadLine();
+                    trailersFolder = tr3.ReadLine();
+                    musicVidFolder = tr3.ReadLine();
 
                     tr3.Close();//close reader stream    
                 }//end of if. 
@@ -1888,6 +1900,26 @@ namespace TV_show_Renamer
             movefolder = sentlist;
         }
 
+        //function folders from settings
+        public void FolderChanger(int which,string folder)
+        {
+            switch (which)
+            {
+                case 1:
+                    movieFolder=folder;
+                    break;
+                case 2:
+                    movieFolder2 = folder;
+                    break;
+                case 3:
+                    trailersFolder = folder;
+                    break;
+                case 4:
+                    musicVidFolder = folder;
+                    break;
+             }
+        }
+
         //opens zip and rar folders
         private List<string> archiveExtrector(string zipfile) {
             
@@ -2056,67 +2088,7 @@ namespace TV_show_Renamer
         
         #endregion
 
-        //loads when starts
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-            if (!(File.Exists(commonAppData)))
-            {
-                System.IO.Directory.CreateDirectory(commonAppData);
-            }
-            //movefolder = "0000";
-            Log.startLog(commonAppData);
-            this.preferenceXmlRead();
-            this.junkRemover();
-            this.fileChecker();
-            
-            userJunk.junk_adder(junklist, commonAppData, this);
-            textConvert.setUp(this, commonAppData);
-
-            //MessageBox.Show(movefolder);
-
-        }//end of load command
-
-        //create preference file when program closes and close log
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            StreamWriter pw = new StreamWriter(commonAppData + "//preferences.seh");
-
-            pw.WriteLine(convertToolStripMenuItem.Checked);
-            pw.WriteLine(convertToToolStripMenuItem.Checked);
-            pw.WriteLine(removeToolStripMenuItem.Checked);
-            pw.WriteLine(capitalizeToolStripMenuItem.Checked);
-            pw.WriteLine(removeExtraCrapToolStripMenuItem.Checked);
-            pw.WriteLine(addForTitleToolStripMenuItem.Checked);
-            pw.WriteLine(x01ToolStripMenuItem.Checked);
-            pw.WriteLine(toolStripMenuItem3.Checked);
-            pw.WriteLine(s01E01ToolStripMenuItem1.Checked);
-            pw.WriteLine(dateToolStripMenuItem.Checked);
-            pw.WriteLine(removeYearToolStripMenuItem.Checked);
-            //pw.WriteLine(movefolder);
-            pw.WriteLine(this.BackColor.A);
-            pw.WriteLine(this.BackColor.R);
-            pw.WriteLine(this.BackColor.G);
-            pw.WriteLine(this.BackColor.B);
-            pw.WriteLine(this.ForeColor.A);
-            pw.WriteLine(this.ForeColor.R);
-            pw.WriteLine(this.ForeColor.G);
-            pw.WriteLine(this.ForeColor.B);
-            pw.WriteLine(openZIPs);
-            pw.Close();//close writer stream
-
-            //write tv folder locations
-            StreamWriter tv = new StreamWriter(commonAppData + "//TVFolder.seh");
-            tv.WriteLine(movefolder.Count());
-            for (int i = 0; i < movefolder.Count(); i++)
-            {
-                tv.WriteLine(movefolder[i]);
-            }
-            tv.Close();
-            //write log
-            Log.closeLog();
-        }
-
+        #region Right click menus
         //save selected file
         private void saveNameToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2138,8 +2110,8 @@ namespace TV_show_Renamer
                 {
                     MessageBox.Show("File already exists or is in use\n" + (fileFolder[u] + "\\" + fileName[u]) + "\n" + (fileFolder[u] + "\\" + newFileName[u]));
                 }
-                
-               
+
+
             }
         }
 
@@ -2306,7 +2278,7 @@ namespace TV_show_Renamer
                                 try
                                 {
                                     //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));
-                                    FileSystem.CopyFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileName[z]), UIOption.AllDialogs);    
+                                    FileSystem.CopyFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileName[z]), UIOption.AllDialogs);
                                     Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\"));
                                     //clear stuff
                                     //fileFolder[z] = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
@@ -2412,8 +2384,416 @@ namespace TV_show_Renamer
                 MessageBox.Show(fileFolder[u]);
             }
         }
+
+        //move to movie folder
+        private void movieFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (movieFolder == "" || movieFolder == "0000") {
+                MessageBox.Show("No Movie Folder Selected");
+                return;
+            }
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.MoveFile(fullFileName, (movieFolder + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Moved to " + movieFolder);
+                    //clear stuff
+                    fileFolder[z] = (movieFolder);
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+
+        //move to movie folder2
+        private void movieFolder2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (movieFolder2 == "" || movieFolder2 == "0000")
+            {
+                MessageBox.Show("No Movie Folder 2 Selected");
+                return;
+            }
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.MoveFile(fullFileName, (movieFolder2 + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Moved to " + movieFolder2);
+                    //clear stuff
+                    fileFolder[z] = (movieFolder2);
+
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+
+        //move to movie trailer folder
+        private void movieTrailerFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (trailersFolder == "" || trailersFolder == "0000")
+            {
+                MessageBox.Show("No Movie Trailer Folder Selected");
+                return;
+            }
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.MoveFile(fullFileName, (trailersFolder + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Moved to " + trailersFolder);
+                    //clear stuff
+                    fileFolder[z] = (trailersFolder);
+
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+
+        //move to music video folder
+        private void musicVideoFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (musicVidFolder == "" || musicVidFolder == "0000")
+            {
+                MessageBox.Show("No Music Video Folder Selected");
+                return;
+            }
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.MoveFile(fullFileName, (musicVidFolder + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Moved to " + musicVidFolder);
+                    //clear stuff
+                    fileFolder[z] = (musicVidFolder);
+
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+
+        //copied to movie folder
+        private void movieFolderToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (movieFolder == "" || movieFolder == "0000")
+            {
+                MessageBox.Show("No Movie Folder Selected");
+                return;
+            }
+
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.CopyFile(fullFileName, (movieFolder + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Copied to " + movieFolder);
+                    //clear stuff
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+
+        //copied to movie folder2
+        private void movieFolder2ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (movieFolder2 == "" || movieFolder2 == "0000")
+            {
+                MessageBox.Show("No Movie Folder 2 Selected");
+                return;
+            }
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.CopyFile(fullFileName, (movieFolder2 + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Copied to " + movieFolder2);
+                    //clear stuff
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+
+        //copied to movie trailer folder
+        private void movieTrailerFolderToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (trailersFolder == "" || trailersFolder == "0000")
+            {
+                MessageBox.Show("No Movie Trailer Folder Selected");
+                return;
+            }
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.CopyFile(fullFileName, (trailersFolder + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Copied to " + trailersFolder);
+                    //clear stuff
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+
+        //copied to music video folder
+        private void musicVideoFolderToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (musicVidFolder == "" || musicVidFolder == "0000")
+            {
+                MessageBox.Show("No Music Video Folder Selected");
+                return;
+            }
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.CopyFile(fullFileName, (musicVidFolder + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Copied to " + musicVidFolder);
+                    //clear stuff
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+
+        #endregion
         
-                                
+        //loads when starts
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            if (!(File.Exists(commonAppData)))
+            {
+                System.IO.Directory.CreateDirectory(commonAppData);
+            }
+            //movefolder = "0000";
+            Log.startLog(commonAppData);
+            this.preferenceXmlRead();
+            this.junkRemover();
+            this.fileChecker();
+            
+            userJunk.junk_adder(junklist, commonAppData, this);
+            textConvert.setUp(this, commonAppData);
+
+            //MessageBox.Show(movefolder);
+
+        }//end of load command
+
+        //create preference file when program closes and close log
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StreamWriter pw = new StreamWriter(commonAppData + "//preferences.seh");
+
+            pw.WriteLine(convertToolStripMenuItem.Checked);
+            pw.WriteLine(convertToToolStripMenuItem.Checked);
+            pw.WriteLine(removeToolStripMenuItem.Checked);
+            pw.WriteLine(capitalizeToolStripMenuItem.Checked);
+            pw.WriteLine(removeExtraCrapToolStripMenuItem.Checked);
+            pw.WriteLine(addForTitleToolStripMenuItem.Checked);
+            pw.WriteLine(x01ToolStripMenuItem.Checked);
+            pw.WriteLine(toolStripMenuItem3.Checked);
+            pw.WriteLine(s01E01ToolStripMenuItem1.Checked);
+            pw.WriteLine(dateToolStripMenuItem.Checked);
+            pw.WriteLine(removeYearToolStripMenuItem.Checked);
+            //pw.WriteLine(movefolder);
+            pw.WriteLine(this.BackColor.A);
+            pw.WriteLine(this.BackColor.R);
+            pw.WriteLine(this.BackColor.G);
+            pw.WriteLine(this.BackColor.B);
+            pw.WriteLine(this.ForeColor.A);
+            pw.WriteLine(this.ForeColor.R);
+            pw.WriteLine(this.ForeColor.G);
+            pw.WriteLine(this.ForeColor.B);
+            pw.WriteLine(openZIPs);
+            pw.WriteLine(movieFolder);
+            pw.WriteLine(movieFolder2);
+            pw.WriteLine(trailersFolder);
+            pw.WriteLine(musicVidFolder);
+            pw.Close();//close writer stream
+
+            //write tv folder locations
+            StreamWriter tv = new StreamWriter(commonAppData + "//TVFolder.seh");
+            tv.WriteLine(movefolder.Count());
+            for (int i = 0; i < movefolder.Count(); i++)
+            {
+                tv.WriteLine(movefolder[i]);
+            }
+            tv.Close();
+            //write log
+            Log.closeLog();
+        }
+                
         /*public void XmlRead()
 {
     string document = commonAppData + "//version.xml";
@@ -2493,7 +2873,7 @@ namespace TV_show_Renamer
             }
         }*/
                        
-    }//end of form 1 partial class
+    }//end of form1 partial class
 }//end of namespace
 
 

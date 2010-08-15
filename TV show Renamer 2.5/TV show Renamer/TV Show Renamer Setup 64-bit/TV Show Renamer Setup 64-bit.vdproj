@@ -27,7 +27,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C52EA1B011AA6038AB5E684DD9F26A14"
+        "MsmKey" = "8:_5F7EBB1EB6A88B8D4E6FEAAEC50ADC34"
         "OwnerKey" = "8:_2E4798B3EE034DAA83AC989998EBEBE1"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C52EA1B011AA6038AB5E684DD9F26A14"
+        "OwnerKey" = "8:_5F7EBB1EB6A88B8D4E6FEAAEC50ADC34"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -74,6 +74,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -161,14 +174,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C52EA1B011AA6038AB5E684DD9F26A14"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5F7EBB1EB6A88B8D4E6FEAAEC50ADC34"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:SevenZipSharp, Version=1.0.3537.37869, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_C52EA1B011AA6038AB5E684DD9F26A14"
+                    "_5F7EBB1EB6A88B8D4E6FEAAEC50ADC34"
                     {
                     "Name" = "8:SevenZipSharp.dll"
                     "Attributes" = "3:512"
@@ -276,7 +289,7 @@
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.5.1"
+        "ProductVersion" = "8:2.5.2"
         "Manufacturer" = "8:Scott"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://scottnation.com"
@@ -898,7 +911,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2E4798B3EE034DAA83AC989998EBEBE1"
             {
-            "SourcePath" = "8:..\\TV show Renamer\\obj\\Release\\TV show Renamer.exe"
+            "SourcePath" = "8:..\\TV show Renamer\\obj\\Debug\\TV show Renamer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_EDB6F74B3F9E4730912B4DDCAEAC0980"
