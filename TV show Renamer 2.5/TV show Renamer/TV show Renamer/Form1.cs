@@ -34,6 +34,7 @@ namespace TV_show_Renamer
         string movieFolder2 = "0000";
         string trailersFolder = "0000";
         string musicVidFolder = "0000";
+        string otherVidFolder = "0000";
 
         List<string> fileFolder = new List<string>();//origonal folder
         List<string> fileName = new List<string>();//origonal file name
@@ -295,6 +296,7 @@ namespace TV_show_Renamer
             this.toolStripMenuItem3.Checked = false;
             this.s01E01ToolStripMenuItem1.Checked = false;
             this.dateToolStripMenuItem.Checked = false;
+            this.toolStripMenuItem1.Checked = false;
 
             Thread t = new Thread(new ThreadStart(autoConvert));
             t.Start();
@@ -306,6 +308,7 @@ namespace TV_show_Renamer
             this.x01ToolStripMenuItem.Checked = false;
             this.s01E01ToolStripMenuItem1.Checked = false;
             this.dateToolStripMenuItem.Checked = false;
+            this.toolStripMenuItem1.Checked = false;
 
             Thread t = new Thread(new ThreadStart(autoConvert));
             t.Start();
@@ -317,6 +320,7 @@ namespace TV_show_Renamer
             this.toolStripMenuItem3.Checked = false;
             this.x01ToolStripMenuItem.Checked = false;
             this.dateToolStripMenuItem.Checked = false;
+            this.toolStripMenuItem1.Checked = false;
 
             Thread t = new Thread(new ThreadStart(autoConvert));
             t.Start();
@@ -328,6 +332,19 @@ namespace TV_show_Renamer
             this.toolStripMenuItem3.Checked = false;
             this.s01E01ToolStripMenuItem1.Checked = false;
             this.x01ToolStripMenuItem.Checked = false;
+            this.toolStripMenuItem1.Checked = false;
+
+            Thread t = new Thread(new ThreadStart(autoConvert));
+            t.Start();
+        }
+
+        //when checked change others to unchecked
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.toolStripMenuItem3.Checked = false;
+            this.s01E01ToolStripMenuItem1.Checked = false;
+            this.x01ToolStripMenuItem.Checked = false;
+            this.dateToolStripMenuItem.Checked = false;
 
             Thread t = new Thread(new ThreadStart(autoConvert));
             t.Start();
@@ -1013,9 +1030,17 @@ namespace TV_show_Renamer
                     //movefolder = tr3.ReadLine();
                     openZIPs = bool.Parse(tr3.ReadLine());
                     movieFolder = tr3.ReadLine();
+                    if (movieFolder == "") movieFolder = "0000";
                     movieFolder2 = tr3.ReadLine();
+                    if (movieFolder2 == "") movieFolder2 = "0000";
                     trailersFolder = tr3.ReadLine();
+                    if (trailersFolder == "") trailersFolder = "0000";
                     musicVidFolder = tr3.ReadLine();
+                    if (musicVidFolder == "") musicVidFolder = "0000";
+                    otherVidFolder = tr3.ReadLine();
+                    if (otherVidFolder == "") otherVidFolder = "0000";
+
+                    this.toolStripMenuItem1.Checked = bool.Parse(tr3.ReadLine());
 
                     tr3.Close();//close reader stream    
                 }//end of if. 
@@ -1110,6 +1135,11 @@ namespace TV_show_Renamer
                     {
                         fileName = fileName.Replace(newi + newj, "00000");//0101 add title
                     }
+                    //101 format
+                    if (toolStripMenuItem1.Checked)
+                    {
+                        fileName = fileName.Replace(i.ToString() + newj, "00000");//0101 add title
+                    }
                     //S01E01 format
                     if (s01E01ToolStripMenuItem1.Checked)
                     {
@@ -1149,13 +1179,20 @@ namespace TV_show_Renamer
             List<String> revFoldersIn = new List<String>();
             for (int u = 0; u < folderwatch.Count(); u++)
             {
-
                 System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch[u]);
-                foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
+                try
                 {
-                    foldersIn.Add(fi.Name);
-                    foldersIn.Add(fi.Name + "  " + u.ToString());//add name and folder number so it will be sorted correctly                    
+                    foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
+                    {
+                        foldersIn.Add(fi.Name);
+                        foldersIn.Add(fi.Name + "  " + u.ToString());//add name and folder number so it will be sorted correctly                    
+                    }
                 }
+                catch (IOException)
+                {
+                    continue;
+                }
+
             }
             //Sort folders
             foldersIn.Sort();
@@ -1549,6 +1586,22 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace("S" + newi + "E" + newj, output + tempTitle);//S01E01 add title
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output + tempTitle);//S01E01 add title if second time
                     }
+                    //101 format
+                    if (toolStripMenuItem1.Checked)
+                    {
+                        output = i.ToString() + newj;
+
+                        newfilename = newfilename.Replace(newi + newj, output);//0101
+                        newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
+                        newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
+                        newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
+                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
+                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + newj + temp, output + temp);//S1e01
+                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output + temp);//Season 1 Episode 01
+                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
+                        newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
+                        newfilename = newfilename.Replace(output, output + tempTitle);//0101 add title
+                    }
 
                     //stop loop when name is change                    
                     if (startnewname != newfilename)
@@ -1900,7 +1953,7 @@ namespace TV_show_Renamer
             movefolder = sentlist;
         }
 
-        //function folders from settings
+        //set folders from settings
         public void FolderChanger(int which,string folder)
         {
             switch (which)
@@ -1917,7 +1970,35 @@ namespace TV_show_Renamer
                 case 4:
                     musicVidFolder = folder;
                     break;
+                case 5:
+                    otherVidFolder = folder;
+                    break;
              }
+        }
+
+        //get folders from settings
+        public string FolderGetter(int which)
+        {
+            switch (which)
+            {
+                case 1:
+                    return movieFolder;
+                    
+                case 2:
+                    return movieFolder2;
+                    
+                case 3:
+                    return trailersFolder ;
+                   
+                case 4:
+                    return musicVidFolder;
+                    
+                case 5:
+                    return otherVidFolder;
+                    
+                default:
+                    return "0000";
+            }
         }
 
         //opens zip and rar folders
@@ -1933,9 +2014,17 @@ namespace TV_show_Renamer
 
             SevenZipExtractor mainExtrector;
 
-            try { 
+            try 
+            { 
                 mainExtrector = new SevenZipExtractor(zipfile);
-            }catch(SevenZipLibraryException){
+            }
+            catch(SevenZipArchiveException)
+            {
+                //password crap
+                return info;
+            }
+            catch(SevenZipLibraryException)
+            {
                 MessageBox.Show("Incorrect 7z.dll for your version of Windows");
                 return info;
             }
@@ -1976,16 +2065,95 @@ namespace TV_show_Renamer
             return info;
         }
 
+        //opens zip and rar folders
+        private List<string> archiveExtrector(string zipfile,string password)
+        {
+
+            List<string> info = new List<string>();
+            info.Add("0");
+            info.Add("0");
+            info.Add("0");
+            string archiveName = null;
+            int archiveIndex = -1;
+            FileInfo fi8 = new FileInfo(zipfile);
+
+            SevenZipExtractor mainExtrector;
+
+            try
+            {
+                mainExtrector = new SevenZipExtractor(zipfile);
+            }
+            catch (SevenZipArchiveException)
+            {
+                return info;
+            }
+            catch (SevenZipLibraryException)
+            {
+                MessageBox.Show("Incorrect 7z.dll for your version of Windows");
+                return info;
+            }
+            //SevenZipExtractor mainExtrector = new SevenZipExtractor(zipfile);
+            int sizeOfArchive = (int)mainExtrector.FilesCount;
+            for (int j = 0; j < sizeOfArchive; j++)
+            {
+                archiveName = mainExtrector.ArchiveFileNames[j];
+                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000");
+
+                if (testArchiveName != archiveName)
+                {
+                    archiveIndex = j;
+                    break;
+                }
+            }
+
+            if (archiveIndex == -1)
+            {
+                return info;
+            }
+
+            try
+            {
+                mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
+
+                FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
+                info[0] = fi9.Name;
+                info[1] = fi9.DirectoryName;
+                info[2] = fi9.Extension;
+            }
+            catch (FileNotFoundException)
+            {
+                return info;
+            }
+            catch (IOException)
+            {
+                return info;
+            }
+
+            //return info string
+            return info;
+        }
+
         //add files 
         private void getFiles(string[] fileList) {
             
                 //loop for each file in array
+            //bool stopall = false;
             foreach (String file3 in fileList)
                 {
+                    bool stopall = false;
                     FileInfo fi3 = new FileInfo(file3);
                     if (fi3.Extension == ".avi" || fi3.Extension == ".mkv" || fi3.Extension == ".mp4" || fi3.Extension == ".m4v" || fi3.Extension == ".mpg")
                     {
                         //add file name
+                        for (int i = 0; i < fileName.Count(); i++) {
+                            if (fi3.Name == fileName[i]) {
+                                stopall = true;
+                                break;                               
+                            }
+                        }
+                        if (stopall) {
+                            continue;
+                        }
                         fileName.Add(fi3.Name);
                         newFileName.Add(fi3.Name);
                         //add file folder
@@ -2003,6 +2171,18 @@ namespace TV_show_Renamer
                             continue;
                         }
                         //add file name
+                        for (int i = 0; i < fileName.Count(); i++)
+                        {
+                            if (info[0] == fileName[i])
+                            {
+                                stopall = true;
+                                break;
+                            }
+                        }
+                        if (stopall)
+                        {
+                            continue;
+                        }
                         fileName.Add(info[0]);
                         newFileName.Add(info[0]);
                         //add file folder
@@ -2084,6 +2264,18 @@ namespace TV_show_Renamer
         //change bool openZIPs
         public void changeZIPstate(bool localZIP) {
             openZIPs = localZIP;
+        }
+
+        //drag and drop
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
+                // allow them to continue
+                // (without this, the cursor stays a "NO" symbol
+                e.Effect = DragDropEffects.All;
+
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            this.getFiles(files);
         }
         
         #endregion
@@ -2385,11 +2577,11 @@ namespace TV_show_Renamer
             }
         }
 
-        //move to movie folder
+        //move to movies folder
         private void movieFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (movieFolder == "" || movieFolder == "0000") {
-                MessageBox.Show("No Movie Folder Selected");
+                MessageBox.Show("No Movies Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2427,12 +2619,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //move to movie folder2
+        //move to movies folder2
         private void movieFolder2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (movieFolder2 == "" || movieFolder2 == "0000")
             {
-                MessageBox.Show("No Movie Folder 2 Selected");
+                MessageBox.Show("No Movies Folder 2 Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2471,12 +2663,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //move to movie trailer folder
+        //move to movie trailers folder
         private void movieTrailerFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (trailersFolder == "" || trailersFolder == "0000")
             {
-                MessageBox.Show("No Movie Trailer Folder Selected");
+                MessageBox.Show("No Movie Trailers Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2520,7 +2712,7 @@ namespace TV_show_Renamer
         {
             if (musicVidFolder == "" || musicVidFolder == "0000")
             {
-                MessageBox.Show("No Music Video Folder Selected");
+                MessageBox.Show("No Music Videos Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2559,12 +2751,56 @@ namespace TV_show_Renamer
             }
         }
 
-        //copied to movie folder
+        //move to other videos folder
+        private void moveToOtherVideosFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (otherVidFolder == "" || otherVidFolder == "0000")
+            {
+                MessageBox.Show("No Other Videos Folder Selected");
+                return;
+            }
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.MoveFile(fullFileName, (otherVidFolder + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Moved to " + otherVidFolder);
+                    //clear stuff
+                    fileFolder[z] = (otherVidFolder);
+
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+
+        //copy to movie folders
         private void movieFolderToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (movieFolder == "" || movieFolder == "0000")
             {
-                MessageBox.Show("No Movie Folder Selected");
+                MessageBox.Show("No Movies Folder Selected");
                 return;
             }
 
@@ -2602,12 +2838,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //copied to movie folder2
+        //copy to movie folders2
         private void movieFolder2ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (movieFolder2 == "" || movieFolder2 == "0000")
             {
-                MessageBox.Show("No Movie Folder 2 Selected");
+                MessageBox.Show("No Movies Folder 2 Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2644,12 +2880,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //copied to movie trailer folder
+        //copy to movie trailers folder
         private void movieTrailerFolderToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (trailersFolder == "" || trailersFolder == "0000")
             {
-                MessageBox.Show("No Movie Trailer Folder Selected");
+                MessageBox.Show("No Movie Trailers Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2686,12 +2922,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //copied to music video folder
+        //copy to music videos folder
         private void musicVideoFolderToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (musicVidFolder == "" || musicVidFolder == "0000")
             {
-                MessageBox.Show("No Music Video Folder Selected");
+                MessageBox.Show("No Music Videos Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2701,6 +2937,48 @@ namespace TV_show_Renamer
                 {
                     FileSystem.CopyFile(fullFileName, (musicVidFolder + "\\" + fileName[z]), UIOption.AllDialogs);
                     Log.WriteLog(fullFileName + " Copied to " + musicVidFolder);
+                    //clear stuff
+                }
+                catch (FileNotFoundException r)
+                {
+                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                    Log.WriteLog(r.ToString());
+                    continue;
+                }
+                catch (IOException g)
+                {
+                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                    Log.WriteLog(g.ToString());
+                    continue;
+                }
+                catch (OperationCanceledException)
+                {
+                    continue;
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
+                    continue;
+                }
+            }
+        }
+                
+        //copy to other videos folder
+        private void copyToOtherVideosFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (otherVidFolder == "" || otherVidFolder == "0000")
+            {
+                MessageBox.Show("No Other Videos Folder Selected");
+                return;
+            }
+            for (int z = 0; z < fileName.Count; z++)
+            {
+                string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                try
+                {
+                    FileSystem.CopyFile(fullFileName, (otherVidFolder + "\\" + fileName[z]), UIOption.AllDialogs);
+                    Log.WriteLog(fullFileName + " Copied to " + otherVidFolder);
                     //clear stuff
                 }
                 catch (FileNotFoundException r)
@@ -2780,6 +3058,8 @@ namespace TV_show_Renamer
             pw.WriteLine(movieFolder2);
             pw.WriteLine(trailersFolder);
             pw.WriteLine(musicVidFolder);
+            pw.WriteLine(otherVidFolder);
+            pw.WriteLine(toolStripMenuItem1.Checked);
             pw.Close();//close writer stream
 
             //write tv folder locations
@@ -2793,7 +3073,7 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();
         }
-                
+                              
         /*public void XmlRead()
 {
     string document = commonAppData + "//version.xml";

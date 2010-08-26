@@ -61,6 +61,7 @@
             this.removeYearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.seasonEpisodeFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x01ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.s01E01ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.dateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,7 +79,19 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.movieFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.movieFolder2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.movieTrailerFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.musicVideoFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToOtherVideosFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button2 = new System.Windows.Forms.Button();
+            this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.movieFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.movieFolder2ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.movieTrailerFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.musicVideoFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToOtherVideosFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button5 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.oldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -96,21 +109,11 @@
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.viewFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.movieFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieFolder2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieTrailerFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.musicVideoFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieFolder2ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieTrailerFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.musicVideoFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // folderBrowserDialog1
@@ -354,6 +357,7 @@
             // 
             this.seasonEpisodeFormatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.x01ToolStripMenuItem,
+            this.toolStripMenuItem1,
             this.toolStripMenuItem3,
             this.s01E01ToolStripMenuItem1,
             this.dateToolStripMenuItem});
@@ -373,6 +377,15 @@
             this.x01ToolStripMenuItem.Text = "1x01";
             this.x01ToolStripMenuItem.ToolTipText = "Sample Show 1x01.avi";
             this.x01ToolStripMenuItem.Click += new System.EventHandler(this.x01ToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.CheckOnClick = true;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
+            this.toolStripMenuItem1.Text = "101";
+            this.toolStripMenuItem1.ToolTipText = "Sample Show 101.avi";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -529,6 +542,53 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.movieFolderToolStripMenuItem,
+            this.movieFolder2ToolStripMenuItem,
+            this.movieTrailerFolderToolStripMenuItem,
+            this.musicVideoFolderToolStripMenuItem,
+            this.moveToOtherVideosFolderToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.ShowImageMargin = false;
+            this.contextMenuStrip2.Size = new System.Drawing.Size(207, 114);
+            // 
+            // movieFolderToolStripMenuItem
+            // 
+            this.movieFolderToolStripMenuItem.Name = "movieFolderToolStripMenuItem";
+            this.movieFolderToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.movieFolderToolStripMenuItem.Text = "Move to Movies Folder";
+            this.movieFolderToolStripMenuItem.Click += new System.EventHandler(this.movieFolderToolStripMenuItem_Click);
+            // 
+            // movieFolder2ToolStripMenuItem
+            // 
+            this.movieFolder2ToolStripMenuItem.Name = "movieFolder2ToolStripMenuItem";
+            this.movieFolder2ToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.movieFolder2ToolStripMenuItem.Text = "Move to Movies Folder 2";
+            this.movieFolder2ToolStripMenuItem.Click += new System.EventHandler(this.movieFolder2ToolStripMenuItem_Click);
+            // 
+            // movieTrailerFolderToolStripMenuItem
+            // 
+            this.movieTrailerFolderToolStripMenuItem.Name = "movieTrailerFolderToolStripMenuItem";
+            this.movieTrailerFolderToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.movieTrailerFolderToolStripMenuItem.Text = "Move to Movie Trailers Folder";
+            this.movieTrailerFolderToolStripMenuItem.Click += new System.EventHandler(this.movieTrailerFolderToolStripMenuItem_Click);
+            // 
+            // musicVideoFolderToolStripMenuItem
+            // 
+            this.musicVideoFolderToolStripMenuItem.Name = "musicVideoFolderToolStripMenuItem";
+            this.musicVideoFolderToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.musicVideoFolderToolStripMenuItem.Text = "Move to Music Videos Folder";
+            this.musicVideoFolderToolStripMenuItem.Click += new System.EventHandler(this.musicVideoFolderToolStripMenuItem_Click);
+            // 
+            // moveToOtherVideosFolderToolStripMenuItem
+            // 
+            this.moveToOtherVideosFolderToolStripMenuItem.Name = "moveToOtherVideosFolderToolStripMenuItem";
+            this.moveToOtherVideosFolderToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.moveToOtherVideosFolderToolStripMenuItem.Text = "Move to Other Videos Folder";
+            this.moveToOtherVideosFolderToolStripMenuItem.Click += new System.EventHandler(this.moveToOtherVideosFolderToolStripMenuItem_Click);
+            // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -540,6 +600,53 @@
             this.button2.Text = "Copy To";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // contextMenuStrip3
+            // 
+            this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.movieFolderToolStripMenuItem1,
+            this.movieFolder2ToolStripMenuItem1,
+            this.movieTrailerFolderToolStripMenuItem1,
+            this.musicVideoFolderToolStripMenuItem1,
+            this.copyToOtherVideosFolderToolStripMenuItem});
+            this.contextMenuStrip3.Name = "contextMenuStrip3";
+            this.contextMenuStrip3.ShowImageMargin = false;
+            this.contextMenuStrip3.Size = new System.Drawing.Size(205, 114);
+            // 
+            // movieFolderToolStripMenuItem1
+            // 
+            this.movieFolderToolStripMenuItem1.Name = "movieFolderToolStripMenuItem1";
+            this.movieFolderToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
+            this.movieFolderToolStripMenuItem1.Text = "Copy to Movies Folder";
+            this.movieFolderToolStripMenuItem1.Click += new System.EventHandler(this.movieFolderToolStripMenuItem1_Click);
+            // 
+            // movieFolder2ToolStripMenuItem1
+            // 
+            this.movieFolder2ToolStripMenuItem1.Name = "movieFolder2ToolStripMenuItem1";
+            this.movieFolder2ToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
+            this.movieFolder2ToolStripMenuItem1.Text = "Copy to Movies Folder 2";
+            this.movieFolder2ToolStripMenuItem1.Click += new System.EventHandler(this.movieFolder2ToolStripMenuItem1_Click);
+            // 
+            // movieTrailerFolderToolStripMenuItem1
+            // 
+            this.movieTrailerFolderToolStripMenuItem1.Name = "movieTrailerFolderToolStripMenuItem1";
+            this.movieTrailerFolderToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
+            this.movieTrailerFolderToolStripMenuItem1.Text = "Copy to Movie Trailers Folder";
+            this.movieTrailerFolderToolStripMenuItem1.Click += new System.EventHandler(this.movieTrailerFolderToolStripMenuItem1_Click);
+            // 
+            // musicVideoFolderToolStripMenuItem1
+            // 
+            this.musicVideoFolderToolStripMenuItem1.Name = "musicVideoFolderToolStripMenuItem1";
+            this.musicVideoFolderToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
+            this.musicVideoFolderToolStripMenuItem1.Text = "Copy to Music Videos Folder";
+            this.musicVideoFolderToolStripMenuItem1.Click += new System.EventHandler(this.musicVideoFolderToolStripMenuItem1_Click);
+            // 
+            // copyToOtherVideosFolderToolStripMenuItem
+            // 
+            this.copyToOtherVideosFolderToolStripMenuItem.Name = "copyToOtherVideosFolderToolStripMenuItem";
+            this.copyToOtherVideosFolderToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.copyToOtherVideosFolderToolStripMenuItem.Text = "Copy to Other Videos Folder";
+            this.copyToOtherVideosFolderToolStripMenuItem.Click += new System.EventHandler(this.copyToOtherVideosFolderToolStripMenuItem_Click);
             // 
             // button5
             // 
@@ -705,86 +812,9 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.movieFolderToolStripMenuItem,
-            this.movieFolder2ToolStripMenuItem,
-            this.movieTrailerFolderToolStripMenuItem,
-            this.musicVideoFolderToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.ShowImageMargin = false;
-            this.contextMenuStrip2.Size = new System.Drawing.Size(202, 92);
-            // 
-            // contextMenuStrip3
-            // 
-            this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.movieFolderToolStripMenuItem1,
-            this.movieFolder2ToolStripMenuItem1,
-            this.movieTrailerFolderToolStripMenuItem1,
-            this.musicVideoFolderToolStripMenuItem1});
-            this.contextMenuStrip3.Name = "contextMenuStrip3";
-            this.contextMenuStrip3.ShowImageMargin = false;
-            this.contextMenuStrip3.Size = new System.Drawing.Size(200, 114);
-            // 
-            // movieFolderToolStripMenuItem
-            // 
-            this.movieFolderToolStripMenuItem.Name = "movieFolderToolStripMenuItem";
-            this.movieFolderToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.movieFolderToolStripMenuItem.Text = "Move to Movie Folder";
-            this.movieFolderToolStripMenuItem.Click += new System.EventHandler(this.movieFolderToolStripMenuItem_Click);
-            // 
-            // movieFolder2ToolStripMenuItem
-            // 
-            this.movieFolder2ToolStripMenuItem.Name = "movieFolder2ToolStripMenuItem";
-            this.movieFolder2ToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.movieFolder2ToolStripMenuItem.Text = "Move to Movie Folder 2";
-            this.movieFolder2ToolStripMenuItem.Click += new System.EventHandler(this.movieFolder2ToolStripMenuItem_Click);
-            // 
-            // movieTrailerFolderToolStripMenuItem
-            // 
-            this.movieTrailerFolderToolStripMenuItem.Name = "movieTrailerFolderToolStripMenuItem";
-            this.movieTrailerFolderToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.movieTrailerFolderToolStripMenuItem.Text = "Move to Movie Trailer Folder";
-            this.movieTrailerFolderToolStripMenuItem.Click += new System.EventHandler(this.movieTrailerFolderToolStripMenuItem_Click);
-            // 
-            // musicVideoFolderToolStripMenuItem
-            // 
-            this.musicVideoFolderToolStripMenuItem.Name = "musicVideoFolderToolStripMenuItem";
-            this.musicVideoFolderToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.musicVideoFolderToolStripMenuItem.Text = "Move to Music Video Folder";
-            this.musicVideoFolderToolStripMenuItem.Click += new System.EventHandler(this.musicVideoFolderToolStripMenuItem_Click);
-            // 
-            // movieFolderToolStripMenuItem1
-            // 
-            this.movieFolderToolStripMenuItem1.Name = "movieFolderToolStripMenuItem1";
-            this.movieFolderToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
-            this.movieFolderToolStripMenuItem1.Text = "Copy to Movie Folder";
-            this.movieFolderToolStripMenuItem1.Click += new System.EventHandler(this.movieFolderToolStripMenuItem1_Click);
-            // 
-            // movieFolder2ToolStripMenuItem1
-            // 
-            this.movieFolder2ToolStripMenuItem1.Name = "movieFolder2ToolStripMenuItem1";
-            this.movieFolder2ToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
-            this.movieFolder2ToolStripMenuItem1.Text = "Copy to Movie Folder 2";
-            this.movieFolder2ToolStripMenuItem1.Click += new System.EventHandler(this.movieFolder2ToolStripMenuItem1_Click);
-            // 
-            // movieTrailerFolderToolStripMenuItem1
-            // 
-            this.movieTrailerFolderToolStripMenuItem1.Name = "movieTrailerFolderToolStripMenuItem1";
-            this.movieTrailerFolderToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
-            this.movieTrailerFolderToolStripMenuItem1.Text = "Copy to Movie Trailer Folder";
-            this.movieTrailerFolderToolStripMenuItem1.Click += new System.EventHandler(this.movieTrailerFolderToolStripMenuItem1_Click);
-            // 
-            // musicVideoFolderToolStripMenuItem1
-            // 
-            this.musicVideoFolderToolStripMenuItem1.Name = "musicVideoFolderToolStripMenuItem1";
-            this.musicVideoFolderToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
-            this.musicVideoFolderToolStripMenuItem1.Text = "Copy to Music Video Folder";
-            this.musicVideoFolderToolStripMenuItem1.Click += new System.EventHandler(this.musicVideoFolderToolStripMenuItem1_Click);
-            // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
@@ -806,12 +836,13 @@
             this.Text = "TV Show Renamer 2.5 BETA";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStrip2.ResumeLayout(false);
             this.contextMenuStrip3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -891,6 +922,9 @@
         private System.Windows.Forms.ToolStripMenuItem movieFolder2ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem movieTrailerFolderToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem musicVideoFolderToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem moveToOtherVideosFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToOtherVideosFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
 

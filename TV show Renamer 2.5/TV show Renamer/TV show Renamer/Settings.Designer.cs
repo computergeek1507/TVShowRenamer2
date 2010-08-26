@@ -39,9 +39,7 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
-            this.folderBrowserDialog3 = new System.Windows.Forms.FolderBrowserDialog();
-            this.folderBrowserDialog4 = new System.Windows.Forms.FolderBrowserDialog();
+            this.button9 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -56,7 +54,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 128);
+            this.button2.Location = new System.Drawing.Point(12, 152);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(123, 23);
             this.button2.TabIndex = 4;
@@ -135,11 +133,22 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(198, 158);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(118, 23);
+            this.button9.TabIndex = 9;
+            this.button9.Text = "Other Videos Folder";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 161);
+            this.ClientSize = new System.Drawing.Size(328, 187);
+            this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
@@ -174,8 +183,6 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog3;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog4;
+        private System.Windows.Forms.Button button9;
     }
 }
