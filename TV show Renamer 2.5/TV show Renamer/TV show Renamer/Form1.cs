@@ -2577,11 +2577,11 @@ namespace TV_show_Renamer
             }
         }
 
-        //move to movies folder
+        //move to movie folder
         private void movieFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (movieFolder == "" || movieFolder == "0000") {
-                MessageBox.Show("No Movies Folder Selected");
+                MessageBox.Show("No Movie Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2619,12 +2619,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //move to movies folder2
+        //move to movie folder2
         private void movieFolder2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (movieFolder2 == "" || movieFolder2 == "0000")
             {
-                MessageBox.Show("No Movies Folder 2 Selected");
+                MessageBox.Show("No Movie Folder 2 Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2663,12 +2663,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //move to movie trailers folder
+        //move to movie trailer folder
         private void movieTrailerFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (trailersFolder == "" || trailersFolder == "0000")
             {
-                MessageBox.Show("No Movie Trailers Folder Selected");
+                MessageBox.Show("No Movie Trailer Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2712,7 +2712,7 @@ namespace TV_show_Renamer
         {
             if (musicVidFolder == "" || musicVidFolder == "0000")
             {
-                MessageBox.Show("No Music Videos Folder Selected");
+                MessageBox.Show("No Music Video Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2751,12 +2751,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //move to other videos folder
+        //move to other video folder
         private void moveToOtherVideosFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (otherVidFolder == "" || otherVidFolder == "0000")
             {
-                MessageBox.Show("No Other Videos Folder Selected");
+                MessageBox.Show("No Other Video Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2800,7 +2800,7 @@ namespace TV_show_Renamer
         {
             if (movieFolder == "" || movieFolder == "0000")
             {
-                MessageBox.Show("No Movies Folder Selected");
+                MessageBox.Show("No Movie Folder Selected");
                 return;
             }
 
@@ -2843,7 +2843,7 @@ namespace TV_show_Renamer
         {
             if (movieFolder2 == "" || movieFolder2 == "0000")
             {
-                MessageBox.Show("No Movies Folder 2 Selected");
+                MessageBox.Show("No Movie Folder 2 Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2880,12 +2880,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //copy to movie trailers folder
+        //copy to movie trailer folder
         private void movieTrailerFolderToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (trailersFolder == "" || trailersFolder == "0000")
             {
-                MessageBox.Show("No Movie Trailers Folder Selected");
+                MessageBox.Show("No Movie Trailer Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2922,12 +2922,12 @@ namespace TV_show_Renamer
             }
         }
 
-        //copy to music videos folder
+        //copy to music video folder
         private void musicVideoFolderToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (musicVidFolder == "" || musicVidFolder == "0000")
             {
-                MessageBox.Show("No Music Videos Folder Selected");
+                MessageBox.Show("No Music Video Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
@@ -2964,12 +2964,12 @@ namespace TV_show_Renamer
             }
         }
                 
-        //copy to other videos folder
+        //copy to other video folder
         private void copyToOtherVideosFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (otherVidFolder == "" || otherVidFolder == "0000")
             {
-                MessageBox.Show("No Other Videos Folder Selected");
+                MessageBox.Show("No Other Video Folder Selected");
                 return;
             }
             for (int z = 0; z < fileName.Count; z++)
