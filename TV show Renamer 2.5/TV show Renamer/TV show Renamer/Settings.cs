@@ -61,6 +61,10 @@ namespace TV_show_Renamer
         //movie folder
         private void button4_Click(object sender, EventArgs e)
         {
+            if (Main.FolderGetter(1) != "0000"||Main.FolderGetter(1) != "")
+            {
+                folderBrowserDialog1.SelectedPath = Main.FolderGetter(1);
+            } 
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 Main.FolderChanger(1, folderBrowserDialog1.SelectedPath);
@@ -70,30 +74,56 @@ namespace TV_show_Renamer
         //movie folder2
         private void button8_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
+            if (Main.FolderGetter(2) != "0000" || Main.FolderGetter(2) != "")
             {
-                Main.FolderChanger(2, folderBrowserDialog2.SelectedPath);
+                folderBrowserDialog1.SelectedPath = Main.FolderGetter(2);
+            } 
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Main.FolderChanger(2, folderBrowserDialog1.SelectedPath);
             }
         }
 
         //movie trailer folder
         private void button6_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog3.ShowDialog() == DialogResult.OK)
+            if (Main.FolderGetter(3) != "0000" || Main.FolderGetter(3) != "")
             {
-                Main.FolderChanger(3, folderBrowserDialog3.SelectedPath);
+                folderBrowserDialog1.SelectedPath = Main.FolderGetter(3);
+            } 
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Main.FolderChanger(3, folderBrowserDialog1.SelectedPath);
             }
         }
 
         //music video folder
         private void button7_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog4.ShowDialog() == DialogResult.OK)
+            if (Main.FolderGetter(4) != "0000" || Main.FolderGetter(4) != "")
             {
-                Main.FolderChanger(4, folderBrowserDialog4.SelectedPath);
+                folderBrowserDialog1.SelectedPath = Main.FolderGetter(4);
+            } 
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Main.FolderChanger(4, folderBrowserDialog1.SelectedPath);
+            }
+        }
+        
+        //other videos fulder
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (Main.FolderGetter(5) != "0000" || Main.FolderGetter(5) != "")
+            {
+                folderBrowserDialog1.SelectedPath = Main.FolderGetter(5);
+            }
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Main.FolderChanger(5, folderBrowserDialog1.SelectedPath);
             }
         }
 
+        //TV Folders Button
         private void button5_Click(object sender, EventArgs e)
         {
             move_folder tvshow = new move_folder(Main, tvFolder);
