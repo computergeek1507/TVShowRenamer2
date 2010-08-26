@@ -1040,7 +1040,15 @@ namespace TV_show_Renamer
                     otherVidFolder = tr3.ReadLine();
                     if (otherVidFolder == "") otherVidFolder = "0000";
 
-                    this.toolStripMenuItem1.Checked = bool.Parse(tr3.ReadLine());
+                    string testd =tr3.ReadLine();
+                    if (testd == null)
+                    { 
+                        this.toolStripMenuItem1.Checked = false;
+                    } 
+                    else
+                    {
+                        this.toolStripMenuItem1.Checked = bool.Parse(testd);
+                    }                   
 
                     tr3.Close();//close reader stream    
                 }//end of if. 
