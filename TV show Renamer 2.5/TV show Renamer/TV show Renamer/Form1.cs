@@ -40,6 +40,7 @@ namespace TV_show_Renamer
         List<string> fileName = new List<string>();//origonal file name
         List<string> fileExtention = new List<string>();//origonal file Extention
 
+
         List<string> newFileName = new List<string>();//new file name
 
         List<string> movefolder = new List<string>();
@@ -49,6 +50,7 @@ namespace TV_show_Renamer
         junk_words userJunk = new junk_words();
         Addtitle titles = new Addtitle();
         Text_Converter textConvert = new Text_Converter();
+        
         LogWrite Log = new LogWrite();
 
         //get working directory
@@ -1335,7 +1337,7 @@ namespace TV_show_Renamer
                 //check if its a legal file type
                 if (exten == ".zip" || exten == ".rar" || exten == ".r01" || exten == ".7z")
                 {
-                    List<string> test = archiveExtrector(fi.FullName);
+                    archiveExtrector(fi.FullName, fi.Name);
 
                 }
 
@@ -1701,6 +1703,7 @@ namespace TV_show_Renamer
             newfilename = newfilename.Replace(" .", ".");
             newfilename = newfilename.Replace("Vs", "vs");
             newfilename = newfilename.Replace("O C ", "O.C. ");
+            newfilename = newfilename.Replace("T O ", "T.O. ");
             newfilename = newfilename.Replace("Csi", "CSI");
             newfilename = newfilename.Replace("Wwii", "WWII");
             newfilename = newfilename.Replace("Hd", "HD");
@@ -2009,13 +2012,14 @@ namespace TV_show_Renamer
             }
         }
 
-        //opens zip and rar folders
-        private List<string> archiveExtrector(string zipfile) {
+        /// <summary>
+        /// extract contents of zip/rar file
+        /// </summary>
+        /// <param name="zipfile">full file path</param>
+        /// <param name="zipName">just file name</param>
+        private void archiveExtrector(string zipfile,string zipName) {
             
             List<string> info = new List<string>();
-            info.Add("0");
-            info.Add("0");
-            info.Add("0");
             string archiveName = null;
             int archiveIndex= -1;
             FileInfo fi8 = new FileInfo(zipfile);
@@ -2028,16 +2032,47 @@ namespace TV_show_Renamer
             }
             catch(SevenZipArchiveException)
             {
-                //password crap
-                return info;
+                password passwordYou = new password(this, zipfile, zipName);
+
+                if (passwordYou.ShowDialog() == DialogResult.OK)
+                {
+                    this.archiveExtrector(zipfile, zipName, passwordYou.Password);
+                    //passwordYou.Password
+                    passwordYou.Close();
+                }
+                
+                //passwordyou.Show();
+                return ;
             }
             catch(SevenZipLibraryException)
             {
                 MessageBox.Show("Incorrect 7z.dll for your version of Windows");
-                return info;
+                return ;
             }
             //SevenZipExtractor mainExtrector = new SevenZipExtractor(zipfile);
-            int sizeOfArchive = (int)mainExtrector.FilesCount;
+            int sizeOfArchive = 0;
+            try
+            {
+                sizeOfArchive = (int)mainExtrector.FilesCount;
+            }
+            catch (SevenZipArchiveException)
+            {
+                //password shit
+                password passwordYou = new password(this, zipfile, zipName);
+
+                if (passwordYou.ShowDialog() == DialogResult.OK)
+                {
+                    this.archiveExtrector(zipfile, zipName,passwordYou.Password);
+                    //passwordYou.Password
+                    passwordYou.Close();
+                
+                }
+                
+                return;
+            }
+            //int sizeOfArchive = (int)mainExtrector.FilesCount;
+
+
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
@@ -2051,36 +2086,49 @@ namespace TV_show_Renamer
             }
 
             if (archiveIndex == -1) {
-                return info;
+                return ;
             }
 
             try {
                 mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
 
                 FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
-                info[0] = fi9.Name;
-                info[1] = fi9.DirectoryName;
-                info[2] = fi9.Extension;
+                //add file name
+                for (int i = 0; i < fileName.Count(); i++)
+                {
+                    if (fi9.Name == fileName[i])
+                    {
+                        return;
+                    }
+                }               
+                fileName.Add(fi9.Name);
+                newFileName.Add(fi9.Name);
+                //add file folder
+                fileFolder.Add(fi9.DirectoryName);
+                //add file extension
+                fileExtention.Add(fi9.Extension);
+                
+
             }            
             catch (FileNotFoundException) {
-                return info;
+                return ;
             }
             catch (IOException) {
-                return info;
+                return ;
             }
+            Thread p = new Thread(new ThreadStart(addPendingFiles));
+            p.Start();
             
-            //return info string
-            return info;
         }
 
-        //opens zip and rar folders
-        private List<string> archiveExtrector(string zipfile,string password)
+        //opens zip and rar files with passwords
+        public void archiveExtrector(string zipfile,string zipName,string password)
         {
 
             List<string> info = new List<string>();
-            info.Add("0");
-            info.Add("0");
-            info.Add("0");
+            //info.Add("0");
+            //info.Add("0");
+            //info.Add("0");
             string archiveName = null;
             int archiveIndex = -1;
             FileInfo fi8 = new FileInfo(zipfile);
@@ -2089,19 +2137,50 @@ namespace TV_show_Renamer
 
             try
             {
-                mainExtrector = new SevenZipExtractor(zipfile);
+                mainExtrector = new SevenZipExtractor(zipfile, password);
             }
             catch (SevenZipArchiveException)
             {
-                return info;
+                password passwordYou = new password(this, zipfile, zipName);
+
+                if (passwordYou.ShowDialog() == DialogResult.OK)
+                {
+                    this.archiveExtrector(zipfile, zipName, passwordYou.Password);
+                    //passwordYou.Password
+                    passwordYou.Close();
+
+                }
+                return;
             }
             catch (SevenZipLibraryException)
             {
                 MessageBox.Show("Incorrect 7z.dll for your version of Windows");
-                return info;
+                return;
             }
+
             //SevenZipExtractor mainExtrector = new SevenZipExtractor(zipfile);
-            int sizeOfArchive = (int)mainExtrector.FilesCount;
+            int sizeOfArchive = 0;
+            try
+            {
+                sizeOfArchive = (int)mainExtrector.FilesCount;
+            }
+            catch (SevenZipArchiveException)
+            {    
+                //add password
+                password passwordYou = new password(this, zipfile, zipName);
+
+                if (passwordYou.ShowDialog() == DialogResult.OK)
+                {
+                    this.archiveExtrector(zipfile, zipName, passwordYou.Password);
+                    //passwordYou.Password
+                    passwordYou.Close();
+
+                }
+                return;
+            }
+            //int sizeOfArchive = (int)mainExtrector.FilesCount;
+
+
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
@@ -2116,7 +2195,7 @@ namespace TV_show_Renamer
 
             if (archiveIndex == -1)
             {
-                return info;
+                return;
             }
 
             try
@@ -2124,21 +2203,33 @@ namespace TV_show_Renamer
                 mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
 
                 FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
-                info[0] = fi9.Name;
-                info[1] = fi9.DirectoryName;
-                info[2] = fi9.Extension;
+                //add file name
+                for (int i = 0; i < fileName.Count(); i++)
+                {
+                    if (fi9.Name == fileName[i])
+                    {
+                        return;
+                    }
+                }
+                fileName.Add(fi9.Name);
+                newFileName.Add(fi9.Name);
+                //add file folder
+                fileFolder.Add(fi9.DirectoryName);
+                //add file extension
+                fileExtention.Add(fi9.Extension);
+                
             }
             catch (FileNotFoundException)
             {
-                return info;
+                return;
             }
             catch (IOException)
             {
-                return info;
+                return;
             }
+            Thread p = new Thread(new ThreadStart(addPendingFiles));
+            p.Start();
 
-            //return info string
-            return info;
         }
 
         //add files 
@@ -2172,31 +2263,8 @@ namespace TV_show_Renamer
 
                     if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
                     {
-                        List<string> info = archiveExtrector(file3);
-
-                        if (info[0] == "0")
-                        {
-                            continue;
-                        }
-                        //add file name
-                        for (int i = 0; i < fileName.Count(); i++)
-                        {
-                            if (info[0] == fileName[i])
-                            {
-                                stopall = true;
-                                break;
-                            }
-                        }
-                        if (stopall)
-                        {
-                            continue;
-                        }
-                        fileName.Add(info[0]);
-                        newFileName.Add(info[0]);
-                        //add file folder
-                        fileFolder.Add(info[1]);
-                        //add file extension
-                        fileExtention.Add(info[2]);
+                        archiveExtrector(file3, fi3.Name);
+                                                
                     }
 
 
@@ -2208,7 +2276,7 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i].Cells[0].Value = fileName[i];
                     dataGridView1.Rows[i].Cells[1].Value = fileName[i];
                 }*/
-
+            /*
             MethodInvoker action2 = delegate
             {
                 dataGridView1.Rows.Clear();
@@ -2226,10 +2294,34 @@ namespace TV_show_Renamer
                 {
                     Thread t = new Thread(new ThreadStart(autoConvert));
                     t.Start();
-                }
-
+                }*/
+            Thread p = new Thread(new ThreadStart(addPendingFiles));
+            p.Start();
             }
 
+        //add files in array lists to grid
+        public void addPendingFiles() {
+            MethodInvoker action2 = delegate
+            {
+                dataGridView1.Rows.Clear();
+                for (int z = 0; z < fileName.Count; z++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[z].Cells[0].Value = fileName[z];
+                    dataGridView1.Rows[z].Cells[1].Value = fileName[z];
+                }
+            };
+            dataGridView1.BeginInvoke(action2);
+
+
+            if (fileName.Count() != 0)
+            {
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
+            }
+        
+        }
+        
         //add files from folder
         private void getFilesInFolder(string folder) {
 
@@ -2247,7 +2339,7 @@ namespace TV_show_Renamer
                    dataGridView1.Rows[i].Cells[0].Value = fileName[i];
                    dataGridView1.Rows[i].Cells[1].Value = fileName[i];
                }*/
-
+            /*
             MethodInvoker action2 = delegate
             {
                 dataGridView1.Rows.Clear();
@@ -2264,9 +2356,10 @@ namespace TV_show_Renamer
             {
                 Thread t = new Thread(new ThreadStart(autoConvert));
                 t.Start();
-            }
-        
-        
+            }*/
+            Thread q = new Thread(new ThreadStart(addPendingFiles));
+            q.Start();
+
         }
 
         //change bool openZIPs
