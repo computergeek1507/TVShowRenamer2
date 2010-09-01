@@ -25,7 +25,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 252;//2.5Beta
+        const int appVersion = 253;//2.5Beta
         const int HowDeepToScan = 4;
         bool addfile = false;
         bool shownb4 = false;
@@ -39,8 +39,6 @@ namespace TV_show_Renamer
         List<string> fileFolder = new List<string>();//origonal folder
         List<string> fileName = new List<string>();//origonal file name
         List<string> fileExtention = new List<string>();//origonal file Extention
-
-
         List<string> newFileName = new List<string>();//new file name
 
         List<string> movefolder = new List<string>();
@@ -49,8 +47,7 @@ namespace TV_show_Renamer
         //create other forms
         junk_words userJunk = new junk_words();
         Addtitle titles = new Addtitle();
-        Text_Converter textConvert = new Text_Converter();
-        
+        Text_Converter textConvert = new Text_Converter();        
         LogWrite Log = new LogWrite();
 
         //get working directory
@@ -981,7 +978,6 @@ namespace TV_show_Renamer
         //new convert method
         public void autoConvert()
         {
-
             if (fileName.Count != 0) //if files are selected
             {
                 for (int z = 0; z < fileName.Count; z++)
@@ -1091,7 +1087,6 @@ namespace TV_show_Renamer
             //figure out if tv show is listed
             for (int i = 0; i < folderlist.Count(); i++)
             {
-
                 string newFolderEdited = lowering(folderlist[i]);
 
                 infoChanged = fileName.Replace(newFolderEdited, "0000");
@@ -2106,8 +2101,7 @@ namespace TV_show_Renamer
                 //add file folder
                 fileFolder.Add(fi9.DirectoryName);
                 //add file extension
-                fileExtention.Add(fi9.Extension);
-                
+                fileExtention.Add(fi9.Extension);            
 
             }            
             catch (FileNotFoundException) {
@@ -2126,9 +2120,7 @@ namespace TV_show_Renamer
         {
 
             List<string> info = new List<string>();
-            //info.Add("0");
-            //info.Add("0");
-            //info.Add("0");
+
             string archiveName = null;
             int archiveIndex = -1;
             FileInfo fi8 = new FileInfo(zipfile);
@@ -2148,7 +2140,6 @@ namespace TV_show_Renamer
                     this.archiveExtrector(zipfile, zipName, passwordYou.Password);
                     //passwordYou.Password
                     passwordYou.Close();
-
                 }
                 return;
             }
@@ -2174,7 +2165,6 @@ namespace TV_show_Renamer
                     this.archiveExtrector(zipfile, zipName, passwordYou.Password);
                     //passwordYou.Password
                     passwordYou.Close();
-
                 }
                 return;
             }
@@ -2263,38 +2253,11 @@ namespace TV_show_Renamer
 
                     if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
                     {
-                        archiveExtrector(file3, fi3.Name);
-                                                
+                        archiveExtrector(file3, fi3.Name);                                                
                     }
 
-
                 }//end of loop 
-                /*dataGridView1.Rows.Clear();
-                for (int i = 0; i < fileName.Count(); i++)
-                {
-                    dataGridView1.Rows.Add();
-                    dataGridView1.Rows[i].Cells[0].Value = fileName[i];
-                    dataGridView1.Rows[i].Cells[1].Value = fileName[i];
-                }*/
-            /*
-            MethodInvoker action2 = delegate
-            {
-                dataGridView1.Rows.Clear();
-                for (int z = 0; z < fileName.Count; z++)
-                {
-                    dataGridView1.Rows.Add();
-                    dataGridView1.Rows[z].Cells[0].Value = fileName[z];
-                    dataGridView1.Rows[z].Cells[1].Value = fileName[z];
-                }
-            };
-            dataGridView1.BeginInvoke(action2);
 
-
-                if (fileName.Count() != 0)
-                {
-                    Thread t = new Thread(new ThreadStart(autoConvert));
-                    t.Start();
-                }*/
             Thread p = new Thread(new ThreadStart(addPendingFiles));
             p.Start();
             }
@@ -2328,38 +2291,10 @@ namespace TV_show_Renamer
             if (openZIPs) {
                 ProcessDirZIP(folder);
             }
-
             ProcessDir(folder, 0);
 
-            
-            /*dataGridView1.Rows.Clear();
-               for (int i = 0; i < fileName.Count(); i++)
-               {
-                   dataGridView1.Rows.Add();
-                   dataGridView1.Rows[i].Cells[0].Value = fileName[i];
-                   dataGridView1.Rows[i].Cells[1].Value = fileName[i];
-               }*/
-            /*
-            MethodInvoker action2 = delegate
-            {
-                dataGridView1.Rows.Clear();
-                for (int z = 0; z < fileName.Count; z++)
-                {
-                    dataGridView1.Rows.Add();
-                    dataGridView1.Rows[z].Cells[0].Value = fileName[z];
-                    dataGridView1.Rows[z].Cells[1].Value = fileName[z];
-                }
-            };
-            dataGridView1.BeginInvoke(action2);
-
-            if (fileName.Count() != 0)
-            {
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
-            }*/
             Thread q = new Thread(new ThreadStart(addPendingFiles));
             q.Start();
-
         }
 
         //change bool openZIPs
@@ -3256,5 +3191,3 @@ namespace TV_show_Renamer
                        
     }//end of form1 partial class
 }//end of namespace
-
-

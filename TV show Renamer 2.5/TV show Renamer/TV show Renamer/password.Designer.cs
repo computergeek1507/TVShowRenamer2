@@ -95,7 +95,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "password";
             this.ShowInTaskbar = false;
-            this.Text = "password";
+            this.Text = "Password";
             this.ResumeLayout(false);
             this.PerformLayout();
 
