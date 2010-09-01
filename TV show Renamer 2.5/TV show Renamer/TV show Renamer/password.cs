@@ -11,15 +11,14 @@ namespace TV_show_Renamer
 {
     public partial class password : Form
     {
-        //List<string> password2 = new List<string>();
         string password2 = "";
         string fullzipfile = null;
         string fullzipname = null;
         Form1 main;
-        //int i = 0;
 
-        public string Password { get { return password2; } set { password2 = value; } }
-
+        //get password
+        public string Password { get { return password2; } }
+        
         public password(Form1 temp, string zipFile, string zipname)            
         {
             InitializeComponent();
@@ -28,8 +27,8 @@ namespace TV_show_Renamer
             fullzipname = zipname;
             label2.Text = zipname;
         }
-        
-        
+
+        //ok button        
         private void button1_Click(object sender, EventArgs e)
         {
             password2 = textBox1.Text;
@@ -37,25 +36,16 @@ namespace TV_show_Renamer
                 MessageBox.Show("No Password Entered");
                 return;
             }
-            
-            //main.archiveExtrector(fullzipfile, fullzipname, password2);
-            //fullzipfile.RemoveAt(0);
-            //fullzipname.RemoveAt(0);
-            //if (fullzipfile.Count() == 0)
-            //{
-                //label2.Text = fullzipname[0]; 
-            //}
-           // else {
-              //  this.Hide();
-            //}
             this.Hide();
         }
 
+        //close button
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        //update password as you type
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             password2 = textBox1.Text;
