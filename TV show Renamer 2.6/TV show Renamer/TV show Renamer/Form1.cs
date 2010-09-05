@@ -1465,6 +1465,7 @@ namespace TV_show_Renamer
             return worked;
         }
 
+        //add title 
         public bool addTitle(string title,int which)
         {
             bool worked = false;

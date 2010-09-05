@@ -203,13 +203,13 @@ namespace TV_show_Renamer
                         IMDbSerieSeason season = title.Seasons[i];
                         if (season.Episodes != null)
                         {
-                            int q = 1;
+                            //int q = 1;
                             foreach (IMDbSerieEpisode ep in season.Episodes)
                             {                               
                                 if (ep.AirDate != "") {
                                     //yoyo.Add("Title: " + title.Title + " Season " + season.Number + " Episode " + q + ": " + ep.Title);
                                     yoyo.Add(ep.Title);
-                                    q++;
+                                    //q++;
                                 }                                
                             }
                         }                                         
@@ -242,7 +242,7 @@ namespace TV_show_Renamer
         {
             error = true;
             progressBar1.Value = 0;
-            MessageBox.Show(exc.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //MessageBox.Show(exc.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //MessageBox.Show("FU");
         }
 
