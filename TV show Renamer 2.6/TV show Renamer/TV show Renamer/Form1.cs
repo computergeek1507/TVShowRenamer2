@@ -1643,7 +1643,7 @@ namespace TV_show_Renamer
             stuff.Add("no folder");
             stuff.Add("0");
             stuff.Add("-1");
-
+            /*
             //figure out if tv show is listed
             for (int i = 0; i < folderlist.Count(); i++)
             {
@@ -1663,8 +1663,107 @@ namespace TV_show_Renamer
 
                     break;
                 }
-            }//end of for loop              
+            }//end of for loop
+            */
+            string shortTitle = null;
+            string test = fileName;
 
+            //string test = title[0];
+            int you = -1;
+
+            for (int i = 1; i < 40; i++)
+            {
+                //varable for break command later
+                bool end = false;
+
+                //loop for episodes
+                for (int j = 1; j < 100; j++)
+                {
+                    string newi = i.ToString();
+                    string newj = j.ToString();
+                    //string output = null;
+                    //check if i is less than 10
+                    if (i < 10)
+                    {
+                        newi = "0" + i.ToString();
+                    }
+                    //check if j is less than 10
+                    if (j < 10)
+                    {
+                        newj = "0" + j.ToString();
+                    }
+                    //make string to compare changed name too
+                    //1x01 format 
+                    if (x01ToolStripMenuItem.Checked)
+                    {
+                        you = test.IndexOf(i.ToString() + "x" + newj);//1x01 add title
+                    }
+                    //0101 format
+                    if (toolStripMenuItem3.Checked)
+                    {
+                        you = test.IndexOf(newi + newj);//0101 add title
+                    }
+                    //101 format
+                    if (toolStripMenuItem1.Checked)
+                    {
+                        you = test.IndexOf(i.ToString() + newj);//0101 add title
+                    }
+                    //S01E01 format
+                    if (s01E01ToolStripMenuItem1.Checked)
+                    {                        
+                        you = test.IndexOf("S" + newi + "E" + newj);//S01E01 add title
+                        you = test.IndexOf("S" + newi + "e" + newj);//S01E01 add title if second time
+                    }
+                    
+                    //stop loop when name is change                    
+                    if (you != -1)
+                    {
+                        stuff[1] = i.ToString();
+                        //episode = j;
+                        shortTitle = test.Remove(you - 1, test.Length - (you - 1));
+                        end = true;
+                        break;
+                    }
+                }//end of episode loop
+
+                //stop loop when name is change
+                if (end)
+                {
+                    break;
+                }
+            }//end of season loop
+
+            //figure out if tv show is listed
+            if (shortTitle==null) {
+                shortTitle = fileName;
+            }
+
+            for (int i = 0; i < folderlist.Count(); i++)
+            {
+
+                string newFolderEdited = lowering(folderlist[i]);
+
+                infoChanged = shortTitle.Replace(newFolderEdited, "0000");
+                if (infoChanged != shortTitle)
+                {
+                    stuff[0] = folderlist[i];
+                    indexof = i;
+
+                    //figure out root folder
+                    string filenameraw = folderlist[indexof - 1];
+                    string index = filenameraw.Replace(folderlist[indexof] + "  ", "");
+                    stuff[2] = index;
+
+                    break;
+                }
+            }//end of for loop
+
+
+
+
+
+
+            /*
             //loop for seasons
             for (int i = 1; i < 40; i++)
             {
@@ -1728,7 +1827,7 @@ namespace TV_show_Renamer
                     break;
                 }
 
-            }//end of season loop
+            }//end of season loop*/
             return stuff;
         }//end of infofinder method
 
@@ -2641,7 +2740,7 @@ namespace TV_show_Renamer
                                             FileSystem.MoveFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileName[z]), UIOption.AllDialogs);
                                             Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\"));
                                             //clear stuff
-                                            fileFolder[z] = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
+                                            //fileFolder[z] = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
                                         }
                                         catch (FileNotFoundException r)
                                         {
@@ -2665,6 +2764,7 @@ namespace TV_show_Renamer
                                             Log.WriteLog(t.ToString());
                                             continue;
                                         }
+                                        fileFolder[z] = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
                                     }
                                 }
                                 else//if no season is selected 
@@ -2674,7 +2774,7 @@ namespace TV_show_Renamer
                                         //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\" + multselct2[z]));
                                         FileSystem.MoveFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\" + fileName[z]), UIOption.AllDialogs);
                                         Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0]));
-                                        fileFolder[z] = (movefolder[index] + "\\" + info[0]);
+                                        //fileFolder[z] = (movefolder[index] + "\\" + info[0]);
                                     }
                                     catch (FileNotFoundException r)
                                     {
@@ -2698,6 +2798,7 @@ namespace TV_show_Renamer
                                         Log.WriteLog(t.ToString());
                                         continue;
                                     }
+                                    fileFolder[z] = (movefolder[index] + "\\" + info[0]);
                                 }//end of if-else
                             }
                             else
@@ -2886,7 +2987,7 @@ namespace TV_show_Renamer
                     FileSystem.MoveFile(fullFileName, (movieFolder + "\\" + fileName[z]), UIOption.AllDialogs);
                     Log.WriteLog(fullFileName + " Moved to " + movieFolder);
                     //clear stuff
-                    fileFolder[z] = (movieFolder);
+                    //fileFolder[z] = (movieFolder);
                 }
                 catch (FileNotFoundException r)
                 {
@@ -2910,6 +3011,7 @@ namespace TV_show_Renamer
                     Log.WriteLog(t.ToString());
                     continue;
                 }
+                fileFolder[z] = (movieFolder);
             }
         }
 
@@ -2929,8 +3031,7 @@ namespace TV_show_Renamer
                     FileSystem.MoveFile(fullFileName, (movieFolder2 + "\\" + fileName[z]), UIOption.AllDialogs);
                     Log.WriteLog(fullFileName + " Moved to " + movieFolder2);
                     //clear stuff
-                    fileFolder[z] = (movieFolder2);
-
+                    //fileFolder[z] = (movieFolder2);
                 }
                 catch (FileNotFoundException r)
                 {
@@ -2954,6 +3055,7 @@ namespace TV_show_Renamer
                     Log.WriteLog(t.ToString());
                     continue;
                 }
+                fileFolder[z] = (movieFolder2);
             }
         }
 
@@ -2973,8 +3075,7 @@ namespace TV_show_Renamer
                     FileSystem.MoveFile(fullFileName, (trailersFolder + "\\" + fileName[z]), UIOption.AllDialogs);
                     Log.WriteLog(fullFileName + " Moved to " + trailersFolder);
                     //clear stuff
-                    fileFolder[z] = (trailersFolder);
-
+                    //fileFolder[z] = (trailersFolder);
                 }
                 catch (FileNotFoundException r)
                 {
@@ -2998,6 +3099,7 @@ namespace TV_show_Renamer
                     Log.WriteLog(t.ToString());
                     continue;
                 }
+                fileFolder[z] = (trailersFolder);
             }
         }
 
@@ -3017,8 +3119,7 @@ namespace TV_show_Renamer
                     FileSystem.MoveFile(fullFileName, (musicVidFolder + "\\" + fileName[z]), UIOption.AllDialogs);
                     Log.WriteLog(fullFileName + " Moved to " + musicVidFolder);
                     //clear stuff
-                    fileFolder[z] = (musicVidFolder);
-
+                    //fileFolder[z] = (musicVidFolder);
                 }
                 catch (FileNotFoundException r)
                 {
@@ -3042,6 +3143,7 @@ namespace TV_show_Renamer
                     Log.WriteLog(t.ToString());
                     continue;
                 }
+                fileFolder[z] = (musicVidFolder);
             }
         }
 
@@ -3061,8 +3163,7 @@ namespace TV_show_Renamer
                     FileSystem.MoveFile(fullFileName, (otherVidFolder + "\\" + fileName[z]), UIOption.AllDialogs);
                     Log.WriteLog(fullFileName + " Moved to " + otherVidFolder);
                     //clear stuff
-                    fileFolder[z] = (otherVidFolder);
-
+                    //fileFolder[z] = (otherVidFolder);
                 }
                 catch (FileNotFoundException r)
                 {
@@ -3086,6 +3187,7 @@ namespace TV_show_Renamer
                     Log.WriteLog(t.ToString());
                     continue;
                 }
+                fileFolder[z] = (otherVidFolder);
             }
         }
 
@@ -3373,7 +3475,7 @@ namespace TV_show_Renamer
                             FileSystem.MoveFile(fullFileName, (movieFolder + "\\" + fileName[i]), UIOption.AllDialogs);
                             Log.WriteLog(fullFileName + " Moved to " + movieFolder);
                             //clear stuff
-                            fileFolder[i] = (movieFolder);
+                            //fileFolder[i] = (movieFolder);
                         }
                         catch (FileNotFoundException r)
                         {
@@ -3397,6 +3499,7 @@ namespace TV_show_Renamer
                             Log.WriteLog(t.ToString());
                             continue;
                         }
+                        fileFolder[i] = (movieFolder);
                     }
                 }
             }            
@@ -3422,7 +3525,7 @@ namespace TV_show_Renamer
                             FileSystem.MoveFile(fullFileName, (movieFolder2 + "\\" + fileName[i]), UIOption.AllDialogs);
                             Log.WriteLog(fullFileName + " Moved to " + movieFolder2);
                             //clear stuff
-                            fileFolder[i] = (movieFolder2);
+                            //fileFolder[i] = (movieFolder2);
                         }
                         catch (FileNotFoundException r)
                         {
@@ -3446,6 +3549,7 @@ namespace TV_show_Renamer
                             Log.WriteLog(t.ToString());
                             continue;
                         }
+                        fileFolder[i] = (movieFolder2);
                     }
                 }
             }
@@ -3471,7 +3575,7 @@ namespace TV_show_Renamer
                             FileSystem.MoveFile(fullFileName, (trailersFolder + "\\" + fileName[i]), UIOption.AllDialogs);
                             Log.WriteLog(fullFileName + " Moved to " + trailersFolder);
                             //clear stuff
-                            fileFolder[i] = (trailersFolder);
+                            //fileFolder[i] = (trailersFolder);
                         }
                         catch (FileNotFoundException r)
                         {
@@ -3495,6 +3599,7 @@ namespace TV_show_Renamer
                             Log.WriteLog(t.ToString());
                             continue;
                         }
+                        fileFolder[i] = (trailersFolder);
                     }
                 }
             }
@@ -3520,7 +3625,7 @@ namespace TV_show_Renamer
                             FileSystem.MoveFile(fullFileName, (musicVidFolder + "\\" + fileName[i]), UIOption.AllDialogs);
                             Log.WriteLog(fullFileName + " Moved to " + musicVidFolder);
                             //clear stuff
-                            fileFolder[i] = (musicVidFolder);
+                            //fileFolder[i] = (musicVidFolder);
                         }
                         catch (FileNotFoundException r)
                         {
@@ -3544,6 +3649,7 @@ namespace TV_show_Renamer
                             Log.WriteLog(t.ToString());
                             continue;
                         }
+                        fileFolder[i] = (musicVidFolder);
                     }
                 }
             }
@@ -3569,7 +3675,7 @@ namespace TV_show_Renamer
                             FileSystem.MoveFile(fullFileName, (otherVidFolder + "\\" + fileName[i]), UIOption.AllDialogs);
                             Log.WriteLog(fullFileName + " Moved to " + otherVidFolder);
                             //clear stuff
-                            fileFolder[i] = (otherVidFolder);
+                            //fileFolder[i] = (otherVidFolder);
                         }
                         catch (FileNotFoundException r)
                         {
@@ -3593,6 +3699,7 @@ namespace TV_show_Renamer
                             Log.WriteLog(t.ToString());
                             continue;
                         }
+                        fileFolder[i] = (otherVidFolder);
                     }
                 }
             }
