@@ -14,8 +14,7 @@ namespace TV_show_Renamer
     public partial class Display : Form
     {
         List<String> columnOne = new List<String>();
-        List<String> columnTwo = new List<String>();
-        
+        List<String> columnTwo = new List<String>();        
         
         //move_folder mainFolder;
         //bool folder = false;
@@ -127,10 +126,8 @@ namespace TV_show_Renamer
                         dataGridView1.Rows[i].Cells[0].Value = columnOne[i] ;
                     }                    
                     mainJunk.removeSelected(u);
-                }//end of text if
-                
+                }//end of text if                
             }
-        }
-                
+        }                
     }
 }

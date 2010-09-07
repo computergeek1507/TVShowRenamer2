@@ -11,8 +11,7 @@ using System.Threading;
 namespace TV_show_Renamer
 {
     public partial class Addtitle : Form
-    {
-        
+    {        
         List<String> title = new List<String>();
         List<String> names = new List<String>();
         //bool open = false;
@@ -23,8 +22,7 @@ namespace TV_show_Renamer
         {
             InitializeComponent();
             Main = test;
-            names = tvlist;
-            
+            names = tvlist;            
             this.Show();
         }
 

@@ -39,19 +39,16 @@ namespace TV_show_Renamer
         List<string> fileFolder = new List<string>();//origonal folder
         List<string> fileName = new List<string>();//origonal file name
         List<string> fileExtention = new List<string>();//origonal file Extention
-        List<string> fileTitle = new List<string>();//Title
-        
+        List<string> fileTitle = new List<string>();//Title files        
         List<string> newFileName = new List<string>();//new file name
-
-        List<string> movefolder = new List<string>();
-        List<string> junklist = new List<string>();
+        List<string> movefolder = new List<string>();//TV Show folders
+        List<string> junklist = new List<string>();//junk word list
         
         //create other forms
         junk_words userJunk = new junk_words();
         //Addtitle titles = new Addtitle();
         Text_Converter textConvert = new Text_Converter();
-        LogWrite Log = new LogWrite();
-        
+        LogWrite Log = new LogWrite();        
 
         //get working directory
         string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer 2.6";
@@ -62,8 +59,7 @@ namespace TV_show_Renamer
 
         //add files button
         private void addFilesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
+        {            
             openFileDialog2.Title = "Select Media files";
             openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|Archive Files (*.zip;*.rar;*.r01;*.7z;)|*.zip;*.rar;*.r01;*.7z;|All Files (*.*)|*.*";
             openFileDialog2.FileName = "";
@@ -90,11 +86,9 @@ namespace TV_show_Renamer
                         //add file extension
                         fileExtention.Add(fi3.Extension);                    
                     }
-
                     if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01")
                     {
                         List<string> info = archiveExtrector(file3);
-
                         if (info[0] == "0") {
                             continue;
                         }
@@ -105,9 +99,7 @@ namespace TV_show_Renamer
                         fileFolder.Add(info[1]);
                         //add file extension
                         fileExtention.Add(info[2]);
-                    }
-                                        
-
+                    } 
                 }//end of loop 
                 dataGridView1.Rows.Clear();             
                 for (int i = 0; i < fileName.Count(); i++)
@@ -121,9 +113,7 @@ namespace TV_show_Renamer
                     Thread t = new Thread(new ThreadStart(autoConvert));
                     t.Start();
                 }*/
-
             }//end of if
-
         }//end of file button
 
         //add folder button
@@ -137,7 +127,6 @@ namespace TV_show_Renamer
                 string folder = null;
                 folder = folderBrowserDialog1.SelectedPath;
                 ProcessDir(folder, 0);
-
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < fileName.Count(); i++)
                 {
@@ -145,7 +134,6 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i].Cells[0].Value = fileName[i];
                     dataGridView1.Rows[i].Cells[1].Value = fileName[i];
                 }
-
                 if (fileName.Count() != 0)
                 {
                     Thread t = new Thread(new ThreadStart(autoConvert));
@@ -197,14 +185,10 @@ namespace TV_show_Renamer
                     multselct2.Add(origName);
                     //add names and folder to string list
                     multselct.Add(fi.DirectoryName + "\\" + origName);
-                    multfile = fi.Name;
-                    
+                    multfile = fi.Name;                    
                 }//end of foreach */
-
-                #endregion
-                
+                #endregion                
             }//end of if
-
         }//end of folder button
 
         //remove selected
@@ -212,26 +196,17 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> u =new List<int>();// dataGridView1.CurrentRow.Index;
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                for (int i = dataGridView1.Rows.Count - 1; i >= 0; i--)
                 {
-                    if(dataGridView1.Rows[i].Cells[0].Selected){
-                    u.Add(i);
-                    
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
+                    {
+                        fileFolder.RemoveAt(i);
+                        fileExtention.RemoveAt(i);
+                        fileName.RemoveAt(i);
+                        newFileName.RemoveAt(i);
+                        fileTitle.RemoveAt(i);
                     }
                 }
-                //dataGridView1.Rows[i].Cells[0].Selected
-                for (int i = u.Count-1; i >= 0; i--)
-                {
-                fileFolder.RemoveAt(u[i]);
-                fileExtention.RemoveAt(u[i]);
-                fileName.RemoveAt(u[i]);
-                newFileName.RemoveAt(u[i]);
-                fileTitle.RemoveAt(u[i]);
-                
-                }
-                
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < fileName.Count(); i++)
                 {
@@ -250,8 +225,7 @@ namespace TV_show_Renamer
             fileTitle.Clear();
             fileExtention.Clear();
             newFileName.Clear();
-            dataGridView1.Rows.Clear();
-            
+            dataGridView1.Rows.Clear();            
         }
 
         //Exit button 
@@ -277,8 +251,7 @@ namespace TV_show_Renamer
         {
                 Addtitle titles = new Addtitle(fileName,this);
                 //titles.sendTitle(fileName,this,r);
-                //titles.Show();
-           
+                //titles.Show();           
         }
 
         //default setting method 
@@ -437,8 +410,7 @@ namespace TV_show_Renamer
         private void settingsMenuItem_Click(object sender, EventArgs e)
         {
             Settings MainSettings = new Settings(this, openZIPs, movefolder);
-        }
-                
+        }                
         #endregion
 
         #region On the form Buttons
@@ -2608,64 +2580,156 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                for (int u = 0; u < dataGridView1.Rows.Count; u++)
                 {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
+                    if (dataGridView1.Rows[u].Cells[0].Selected || dataGridView1.Rows[u].Cells[1].Selected)
                     {
-                        z.Add(i);
+                        try
+                        {
+                            System.IO.File.Move((fileFolder[u] + "\\" + fileName[u]), (fileFolder[u] + "\\" + newFileName[u]));
+                            Log.WriteLog(fileName[u], newFileName[u]);
+                            fileName[u] = newFileName[u];
+                            fileTitle[u] = "";
+                            dataGridView1.Rows[u].Cells[0].Value = fileName[u];
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + (fileFolder[u] + "\\" + fileName[u]) + "\n" + (fileFolder[u] + "\\" + newFileName[u]));
+                        }
+                        catch (IOException)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + (fileFolder[u] + "\\" + fileName[u]) + "\n" + (fileFolder[u] + "\\" + newFileName[u]));
+                        }
                     }
                 }
-                foreach (int u in z)
-                {
-                    try
-                    {
-                        System.IO.File.Move((fileFolder[u] + "\\" + fileName[u]), (fileFolder[u] + "\\" + newFileName[u]));
-                        Log.WriteLog(fileName[u], newFileName[u]);
-                        fileName[u] = newFileName[u];
-                        fileTitle[u] = "";
-                        dataGridView1.Rows[u].Cells[0].Value = fileName[u];
-                    }
-                    catch (FileNotFoundException)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + (fileFolder[u] + "\\" + fileName[u]) + "\n" + (fileFolder[u] + "\\" + newFileName[u]));
-                    }
-                    catch (IOException)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + (fileFolder[u] + "\\" + fileName[u]) + "\n" + (fileFolder[u] + "\\" + newFileName[u]));
-                    }
-                }
-
             }
         }
-               
+
+        //move selected file
         private void moveSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
             {
-                if (dataGridView1.CurrentRow != null)
+                if (movefolder.Count() != 0)
                 {
-                    //int z = dataGridView1.CurrentRow.Index;
-                    List<int> u = new List<int>();// dataGridView1.CurrentRow.Index;
+                    List<string> folderlist = folderFinder(movefolder);
 
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    for (int z = 0; z < dataGridView1.Rows.Count; z++)
                     {
-                        if (dataGridView1.Rows[i].Cells[0].Selected)
+                        if (dataGridView1.Rows[z].Cells[0].Selected || dataGridView1.Rows[z].Cells[1].Selected)
                         {
-                            u.Add(i);
+                            List<string> info = new List<string>();
+                            string fullFileName = fileFolder[z] + "\\" + fileName[z];
+                            info = infoFinder(fullFileName, folderlist, movefolder);
+                            int index = Convert.ToInt32(info[2]);
+                            if (info[0] != "no folder")
+                            {
+                                if (index == -1)
+                                {
+                                    MessageBox.Show("Folder List is Wrong");
+                                    return;
+                                }
+                                if (info[1] != "0")
+                                {
+                                    if (!(File.Exists(movefolder[index] + "\\" + info[0] + "\\Season " + info[1])))
+                                    {
+                                        System.IO.Directory.CreateDirectory(movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
+                                        //MessageBox.Show((movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));
+                                        try
+                                        {
+                                            //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));                                        
+                                            FileSystem.MoveFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileName[z]), UIOption.AllDialogs);
+                                            Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\"));
+                                            //clear stuff
+                                            fileFolder[z] = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
+                                        }
+                                        catch (FileNotFoundException r)
+                                        {
+                                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                                            Log.WriteLog(r.ToString());
+                                            continue;
+                                        }
+                                        catch (IOException g)
+                                        {
+                                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                                            Log.WriteLog(g.ToString());
+                                            continue;
+                                        }
+                                        catch (OperationCanceledException)
+                                        {
+                                            continue;
+                                        }
+                                        catch (Exception t)
+                                        {
+                                            MessageBox.Show("Broken\n" + t.ToString());
+                                            Log.WriteLog(t.ToString());
+                                            continue;
+                                        }
+                                    }
+                                }
+                                else//if no season is selected 
+                                {
+                                    try
+                                    {
+                                        //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\" + multselct2[z]));
+                                        FileSystem.MoveFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\" + fileName[z]), UIOption.AllDialogs);
+                                        Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0]));
+                                        fileFolder[z] = (movefolder[index] + "\\" + info[0]);
+                                    }
+                                    catch (FileNotFoundException r)
+                                    {
+                                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                                        Log.WriteLog(r.ToString());
+                                        continue;
+                                    }
+                                    catch (IOException g)
+                                    {
+                                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                                        Log.WriteLog(g.ToString());
+                                        continue;
+                                    }
+                                    catch (OperationCanceledException)
+                                    {
+                                        continue;
+                                    }
+                                    catch (Exception t)
+                                    {
+                                        MessageBox.Show("Broken" + t.ToString());
+                                        Log.WriteLog(t.ToString());
+                                        continue;
+                                    }
+                                }//end of if-else
+                            }
+                            else
+                            {
+                                MessageBox.Show("No Such TV Show On Server");
+                            }
 
                         }
                     }
 
-                    if (movefolder.Count() != 0)
-                    {
-                        foreach (int z in u)
-                        {
-                            //move crap goes here
-                            List<string> folderlist = folderFinder(movefolder);
-                            List<string> info = new List<string>();
+                }
+                else
+                {
+                    MessageBox.Show("No Folder Selected For Videos to Be Moved To");
+                }
+            }
+        }
 
+        //copy selected file
+        private void copySelectedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                if (movefolder.Count() != 0)
+                {                    
+                    List<string> folderlist = folderFinder(movefolder);
+
+                    for (int z = 0; z < dataGridView1.Rows.Count; z++)
+                    {
+                        if (dataGridView1.Rows[z].Cells[0].Selected || dataGridView1.Rows[z].Cells[1].Selected)
+                        {
+                            List<string> info = new List<string>();
 
                             string fullFileName = fileFolder[z] + "\\" + fileName[z];
                             info = infoFinder(fullFileName, folderlist, movefolder);
@@ -2688,32 +2752,31 @@ namespace TV_show_Renamer
                                         {
                                             //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));                                        
                                             FileSystem.MoveFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileName[z]), UIOption.AllDialogs);
-                                            Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\"));
+                                            Log.WriteLog(fullFileName + " Copied " + (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\")); 
                                             //clear stuff
-                                            fileFolder[z] = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
-
+                                            fileFolder[z] = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);                                            
                                         }
                                         catch (FileNotFoundException r)
                                         {
                                             MessageBox.Show("File have been changed or moved \n" + fullFileName);
                                             Log.WriteLog(r.ToString());
-
+                                            continue;
                                         }
                                         catch (IOException g)
                                         {
                                             MessageBox.Show("File already exists or is in use\n" + fullFileName);
                                             Log.WriteLog(g.ToString());
-
+                                            continue;
                                         }
                                         catch (OperationCanceledException)
                                         {
-
+                                            continue;
                                         }
                                         catch (Exception t)
                                         {
                                             MessageBox.Show("Broken\n" + t.ToString());
                                             Log.WriteLog(t.ToString());
-
+                                            continue;
                                         }
                                     }
                                 }
@@ -2722,31 +2785,31 @@ namespace TV_show_Renamer
                                     try
                                     {
                                         //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\" + multselct2[z]));
-                                        FileSystem.MoveFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\" + fileName[z]), UIOption.AllDialogs);
-                                        Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0]));
-                                        fileFolder[z] = (movefolder[index] + "\\" + info[0]);
+                                        FileSystem.CopyFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\" + fileName[z]), UIOption.AllDialogs);
+                                        Log.WriteLog(fullFileName+" Copied "+ (movefolder[index] + "\\" + info[0]));
+                                        
                                     }
                                     catch (FileNotFoundException r)
                                     {
                                         MessageBox.Show("File have been changed or moved \n" + fullFileName);
                                         Log.WriteLog(r.ToString());
-
+                                        continue;
                                     }
                                     catch (IOException g)
                                     {
                                         MessageBox.Show("File already exists or is in use\n" + fullFileName);
                                         Log.WriteLog(g.ToString());
-
+                                        continue;
                                     }
                                     catch (OperationCanceledException)
                                     {
-
+                                        continue;
                                     }
                                     catch (Exception t)
                                     {
                                         MessageBox.Show("Broken" + t.ToString());
                                         Log.WriteLog(t.ToString());
-
+                                        continue;
                                     }
                                 }//end of if-else
                             }
@@ -2754,134 +2817,8 @@ namespace TV_show_Renamer
                             {
                                 MessageBox.Show("No Such TV Show On Server");
                             }
-
                         }
-                        //MessageBox.Show("Moved");
                     }
-                    else
-                    {
-                        MessageBox.Show("No Folder Selected For Videos to Be Moved To");
-                    }
-                }
-            }
-        }
-
-        private void copySelectedToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow != null)
-            {
-                //int z = dataGridView1.CurrentRow.Index;
-                List<int> u = new List<int>();// dataGridView1.CurrentRow.Index;
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        u.Add(i);
-                    }
-                }
-                
-                if (movefolder.Count() != 0)
-                {
-                    foreach (int z in u)
-                    {
-
-
-                        //move crap goes here
-                        List<string> folderlist = folderFinder(movefolder);
-                        List<string> info = new List<string>();
-
-
-                        string fullFileName = fileFolder[z] + "\\" + fileName[z];
-                        info = infoFinder(fullFileName, folderlist, movefolder);
-                        int index = Convert.ToInt32(info[2]);
-
-                        if (info[0] != "no folder")
-                        {
-                            if (index == -1)
-                            {
-                                MessageBox.Show("Folder List is Wrong");
-                                return;
-                            }
-                            if (info[1] != "0")
-                            {
-                                if (!(File.Exists(movefolder[index] + "\\" + info[0] + "\\Season " + info[1])))
-                                {
-                                    System.IO.Directory.CreateDirectory(movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
-                                    //MessageBox.Show((movefolder + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));
-                                    try
-                                    {
-                                        //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + multselct2[z]));
-                                        FileSystem.CopyFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileName[z]), UIOption.AllDialogs);
-                                        Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\"));
-                                        //clear stuff
-                                        //fileFolder[z] = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
-
-                                    }
-                                    catch (FileNotFoundException r)
-                                    {
-                                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                                        Log.WriteLog(r.ToString());
-
-                                    }
-                                    catch (IOException g)
-                                    {
-                                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                                        Log.WriteLog(g.ToString());
-
-                                    }
-                                    catch (OperationCanceledException)
-                                    {
-
-                                    }
-                                    catch (Exception t)
-                                    {
-                                        MessageBox.Show("Broken\n" + t.ToString());
-                                        Log.WriteLog(t.ToString());
-
-                                    }
-                                }
-                            }
-                            else//if no season is selected 
-                            {
-                                try
-                                {
-                                    //System.IO.File.Move(multselct[z], (movefolder[index] + "\\" + info[0] + "\\" + multselct2[z]));
-                                    FileSystem.CopyFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\" + fileName[z]), UIOption.AllDialogs);
-                                    Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0]));
-                                    //fileFolder[z] = (movefolder[index] + "\\" + info[0]);
-                                }
-                                catch (FileNotFoundException r)
-                                {
-                                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                                    Log.WriteLog(r.ToString());
-
-                                }
-                                catch (IOException g)
-                                {
-                                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                                    Log.WriteLog(g.ToString());
-
-                                }
-                                catch (OperationCanceledException)
-                                {
-
-                                }
-                                catch (Exception t)
-                                {
-                                    MessageBox.Show("Broken" + t.ToString());
-                                    Log.WriteLog(t.ToString());
-
-                                }
-                            }//end of if-else
-                        }
-                        else
-                        {
-                            MessageBox.Show("No Such TV Show On Server");
-                        }
-
-                    }
-                    //MessageBox.Show("Moved");
                 }
                 else
                 {
@@ -2890,30 +2827,22 @@ namespace TV_show_Renamer
             }
         }
 
+        //remove selected file
         private void removeSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> u = new List<int>();// dataGridView1.CurrentRow.Index;
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                for (int i = dataGridView1.Rows.Count - 1; i >= 0; i--)
                 {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        u.Add(i);
-
+                        fileFolder.RemoveAt(i);
+                        fileExtention.RemoveAt(i);
+                        fileName.RemoveAt(i);
+                        newFileName.RemoveAt(i);
+                        fileTitle.RemoveAt(i);
                     }
-                }
-                //dataGridView1.Rows[i].Cells[0].Selected
-                for (int i = u.Count - 1; i >= 0; i--)
-                {
-                    fileFolder.RemoveAt(u[i]);
-                    fileExtention.RemoveAt(u[i]);
-                    fileName.RemoveAt(u[i]);
-                    newFileName.RemoveAt(u[i]);
-                    fileTitle.RemoveAt(u[i]);
-                }
-
+                }                
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < fileName.Count(); i++)
                 {
@@ -2924,23 +2853,20 @@ namespace TV_show_Renamer
             }
         }
 
+        //view folder of selected file
         private void viewFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
             {
-
-                List<string> u = new List<string>();// dataGridView1.CurrentRow.Index;
+                List<string> u = new List<string>();
 
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells[0].Selected)
                     {
                         u.Add(fileFolder[i]);
-
                     }
                 }
-                //int u = dataGridView1.CurrentRow.Index;
-                //MessageBox.Show(fileFolder[u]);
                 Display publibb = new Display(u);
             }
         }
@@ -3385,27 +3311,19 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> u = new List<int>();// dataGridView1.CurrentRow.Index;
-
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
+                    if (dataGridView1.Rows[i].Cells[0].Selected||dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        u.Add(i);
+                        if (fileTitle[i] == "")
+                        {
+                            continue;
+                        }
+                        fileTitle[i] = "";
                     }
-                }
-
-                for (int i = 0; i < u.Count; i++)
-                {
-                    if (fileTitle[u[i]] == "")
-                    {
-                        continue;
-                    }
-                    fileTitle[u[i]] = "";
                 }
                 Thread t = new Thread(new ThreadStart(autoConvert));
                 t.Start();
-
             }
         }
 
@@ -3414,31 +3332,25 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        z.Add(i);
+                        if (fileTitle[i] == "")
+                        {
+                            continue;
+                        }
+                        EditTitle mainEdit = new EditTitle(fileTitle[i]);
+                        if (mainEdit.ShowDialog() == DialogResult.OK)
+                        {
+                            fileTitle[i] = mainEdit.getTitle();
+                            mainEdit.Close();                            
+                        }
                     }
                 }
-                foreach (int u in z)
-                {
-                    if (fileTitle[u] == "")
-                    {
-                        continue;
-                    }
-                    EditTitle mainEdit = new EditTitle(fileTitle[u]);
-                    if (mainEdit.ShowDialog() == DialogResult.OK)
-                    {
-                        fileTitle[u] = mainEdit.getTitle();
-                        mainEdit.Close();
-                        Thread t = new Thread(new ThreadStart(autoConvert));
-                        t.Start();
-                    }
-                }
-            }
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
+              }
         }
 
         //move selected to movie folder
@@ -3446,54 +3358,48 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (movieFolder == "" || movieFolder == "0000")
                 {
-                    MessageBox.Show("No Movies Folder Selected");
+                    MessageBox.Show("No Movie Folder Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.MoveFile(fullFileName, (movieFolder + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Moved to " + movieFolder);
-                        //clear stuff
-                        fileFolder[u] = (movieFolder);
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.MoveFile(fullFileName, (movieFolder + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Moved to " + movieFolder);
+                            //clear stuff
+                            fileFolder[i] = (movieFolder);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
-            }
+            }            
         }
 
         //move selected to movie folder2
@@ -3501,51 +3407,45 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (movieFolder2 == "" || movieFolder2 == "0000")
                 {
-                    MessageBox.Show("No Movies Folder 2 Selected");
+                    MessageBox.Show("No Movie Folder 2 Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.MoveFile(fullFileName, (movieFolder2 + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Moved to " + movieFolder2);
-                        //clear stuff
-                        fileFolder[u] = (movieFolder2);
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.MoveFile(fullFileName, (movieFolder2 + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Moved to " + movieFolder2);
+                            //clear stuff
+                            fileFolder[i] = (movieFolder2);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
             }
@@ -3556,51 +3456,45 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (trailersFolder == "" || trailersFolder == "0000")
                 {
                     MessageBox.Show("No Movie Trailers Folder Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.MoveFile(fullFileName, (trailersFolder + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Moved to " + trailersFolder);
-                        //clear stuff
-                        fileFolder[u] = (trailersFolder);
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.MoveFile(fullFileName, (trailersFolder + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Moved to " + trailersFolder);
+                            //clear stuff
+                            fileFolder[i] = (trailersFolder);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
             }
@@ -3611,51 +3505,45 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (musicVidFolder == "" || musicVidFolder == "0000")
                 {
                     MessageBox.Show("No Music Videos Folder Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.MoveFile(fullFileName, (musicVidFolder + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Moved to " + musicVidFolder);
-                        //clear stuff
-                        fileFolder[u] = (musicVidFolder);
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.MoveFile(fullFileName, (musicVidFolder + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Moved to " + musicVidFolder);
+                            //clear stuff
+                            fileFolder[i] = (musicVidFolder);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
             }
@@ -3666,51 +3554,45 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (otherVidFolder == "" || otherVidFolder == "0000")
                 {
                     MessageBox.Show("No Other Videos Folder Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.MoveFile(fullFileName, (otherVidFolder + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Moved to " + otherVidFolder);
-                        //clear stuff
-                        fileFolder[u] = (otherVidFolder);
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.MoveFile(fullFileName, (otherVidFolder + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Moved to " + otherVidFolder);
+                            //clear stuff
+                            fileFolder[i] = (otherVidFolder);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
             }
@@ -3721,50 +3603,43 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (movieFolder == "" || movieFolder == "0000")
                 {
-                    MessageBox.Show("No Movies Folder Selected");
+                    MessageBox.Show("No Movie Folder Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.CopyFile(fullFileName, (movieFolder + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Copied to " + movieFolder);
-
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.CopyFile(fullFileName, (movieFolder + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Copied to " + movieFolder);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
             }
@@ -3775,50 +3650,43 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (movieFolder2 == "" || movieFolder2 == "0000")
                 {
-                    MessageBox.Show("No Movies Folder 2 Selected");
+                    MessageBox.Show("No Movie Folder 2 Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.CopyFile(fullFileName, (movieFolder2 + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Copied to " + movieFolder2);
-
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.CopyFile(fullFileName, (movieFolder2 + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Copied to " + movieFolder2);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
             }
@@ -3829,50 +3697,43 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (trailersFolder == "" || trailersFolder == "0000")
                 {
                     MessageBox.Show("No Movie Trailers Folder Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.CopyFile(fullFileName, (trailersFolder + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Copied to " + trailersFolder);
-
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.CopyFile(fullFileName, (trailersFolder + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Copied to " + trailersFolder);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
             }
@@ -3883,50 +3744,43 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (musicVidFolder == "" || musicVidFolder == "0000")
                 {
-                    MessageBox.Show("No Movies Folder Selected");
+                    MessageBox.Show("No Music Videos Folder Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.CopyFile(fullFileName, (musicVidFolder + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Copied to " + musicVidFolder);
-
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.CopyFile(fullFileName, (musicVidFolder + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Copied to " + musicVidFolder);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
             }
@@ -3937,56 +3791,47 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                List<int> z = new List<int>();
-
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        z.Add(i);
-                    }
-                }
                 if (otherVidFolder == "" || otherVidFolder == "0000")
                 {
-                    MessageBox.Show("No Movies Folder Selected");
+                    MessageBox.Show("No Other Videos Folder Selected");
                     return;
                 }
-                foreach (int u in z)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    string fullFileName = fileFolder[u] + "\\" + fileName[u];
-                    try
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        FileSystem.CopyFile(fullFileName, (otherVidFolder + "\\" + fileName[u]), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Copied to " + otherVidFolder);
-
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        string fullFileName = fileFolder[i] + "\\" + fileName[i];
+                        try
+                        {
+                            FileSystem.CopyFile(fullFileName, (otherVidFolder + "\\" + fileName[i]), UIOption.AllDialogs);
+                            Log.WriteLog(fullFileName + " Copied to " + otherVidFolder);
+                        }
+                        catch (FileNotFoundException r)
+                        {
+                            MessageBox.Show("File have been changed or moved \n" + fullFileName);
+                            Log.WriteLog(r.ToString());
+                            continue;
+                        }
+                        catch (IOException g)
+                        {
+                            MessageBox.Show("File already exists or is in use\n" + fullFileName);
+                            Log.WriteLog(g.ToString());
+                            continue;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            continue;
+                        }
+                        catch (Exception t)
+                        {
+                            MessageBox.Show("Error with Operation\n" + t.ToString());
+                            Log.WriteLog(t.ToString());
+                            continue;
+                        }
                     }
                 }
             }
-        }
-        
-         
+        }         
         #endregion
         
         //loads when starts
@@ -4139,5 +3984,3 @@ namespace TV_show_Renamer
                        
     }//end of form1 partial class
 }//end of namespace
-
-

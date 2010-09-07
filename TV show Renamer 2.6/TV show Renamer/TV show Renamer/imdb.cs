@@ -13,7 +13,7 @@ namespace TV_show_Renamer
 {
     public partial class imdb : Form
     {
-        #region shit
+        #region stuff
         /// <summary>
         /// Delegate to call the processResults.
         /// </summary>
@@ -55,10 +55,8 @@ namespace TV_show_Renamer
         /// The api manager instance.
         /// </summary>
         private IMDbManager manag; 
-        #endregion
-        
+        #endregion        
         Form1 main;
-
         List<string> mainlist = new List<string>();
 
         string title = null;
@@ -120,10 +118,8 @@ namespace TV_show_Renamer
                         {
                             newj = "0" + j.ToString();
                         }
-
                         //make string to compare changed name too
                         //string startnewname = fileName;
-
                         switch (format)
                         {
                             case 1:
@@ -156,7 +152,6 @@ namespace TV_show_Renamer
                     {
                         break;
                     }
-
                 }//end of season loop
 
                 //MessageBox.Show("||" + imdbTitle + "||" + season + "||" +episode+ "||");
@@ -189,9 +184,10 @@ namespace TV_show_Renamer
                 this.Close();            
         }
         
+        //process results off of IMDB
         public void processResult(int type, object result)
         {
-            List<string> yoyo = new List<string>();
+            List<string> titleList = new List<string>();
             if (!error) // if no errors occured
             {
                 if (type == 0) // if we get a title
@@ -203,13 +199,11 @@ namespace TV_show_Renamer
                         IMDbSerieSeason season = title.Seasons[i];
                         if (season.Episodes != null)
                         {
-                            //int q = 1;
                             foreach (IMDbSerieEpisode ep in season.Episodes)
                             {                               
                                 if (ep.AirDate != "") {
                                     //yoyo.Add("Title: " + title.Title + " Season " + season.Number + " Episode " + q + ": " + ep.Title);
-                                    yoyo.Add(ep.Title);
-                                    //q++;
+                                    titleList.Add(ep.Title);
                                 }                                
                             }
                         }                                         
@@ -219,23 +213,12 @@ namespace TV_show_Renamer
                 {
                     List<IMDbLink> results = (List<IMDbLink>)result;
 
-                    //Results res = new Results();
-                    //res.setResults(results);
-                    //if (res.ShowDialog() == DialogResult.OK)
                     manag.IMDbParse(results[0].URL);
-                    //res.ShowDialog();
-
                 }
-            }
-            //label1.Text = yoyo[episode];
-            //Display toto = new Display(yoyo);
-            if (yoyo.Count() > mainlist.Count()) {
-                mainlist = yoyo;
-            }
-            //mainlist = yoyo;
-            //episodeTitle = yoyo[episode];
-            //label1.Text = yoyo[episode];
-            
+            }            
+            if (titleList.Count() > mainlist.Count()) {
+                mainlist = titleList;
+            }            
         }
 
         public void errorHandler(Exception exc)

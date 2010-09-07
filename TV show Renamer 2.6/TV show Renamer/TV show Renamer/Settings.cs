@@ -28,7 +28,6 @@ namespace TV_show_Renamer
             if (colorDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Main.BackColor = colorDialog1.Color;
-                //Main.
                 Main.MainMenuStrip.BackColor = colorDialog1.Color;
             }
         }
@@ -48,7 +47,6 @@ namespace TV_show_Renamer
             if (colorDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Main.ForeColor = colorDialog1.Color;
-                //Main.
                 Main.MainMenuStrip.ForeColor = colorDialog1.Color;
             }
         }
@@ -129,7 +127,6 @@ namespace TV_show_Renamer
             move_folder tvshow = new move_folder(Main, tvFolder);
             tvshow.Show();
         }
-
 
     }//end of class
 }//end of namespace
