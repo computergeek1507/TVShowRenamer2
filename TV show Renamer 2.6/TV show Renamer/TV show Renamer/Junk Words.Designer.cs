@@ -79,9 +79,9 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(96, 100);
+            this.button3.Location = new System.Drawing.Point(15, 103);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(51, 23);
+            this.button3.Size = new System.Drawing.Size(55, 23);
             this.button3.TabIndex = 4;
             this.button3.Text = "Close";
             this.button3.UseVisualStyleBackColor = true;
@@ -98,11 +98,11 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // Junk_Words
+            // junk_words
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(257, 135);
+            this.ClientSize = new System.Drawing.Size(257, 138);
             this.ControlBox = false;
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -113,7 +113,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Junk_Words";
+            this.Name = "junk_words";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Junk Words Editor";

@@ -19,8 +19,7 @@ namespace TV_show_Renamer
         }
 
         public string getTitle(){
-            return title;
-        
+            return title;        
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
