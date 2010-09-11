@@ -99,30 +99,30 @@
             this.saveNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.moveSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.viewFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button6 = new System.Windows.Forms.Button();
-            this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toMovieFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toMovieFolder2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toMovieTrailerFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toMusicVideosFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toOtherVideosFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toTVFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toMoviesFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toMoviesFolder2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.movieTrailersFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toMusicVideoFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toOtherVideosFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button6 = new System.Windows.Forms.Button();
+            this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
@@ -173,7 +173,7 @@
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(597, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(685, 24);
             this.menuStrip1.TabIndex = 23;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -530,7 +530,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(265, 450);
+            this.label1.Location = new System.Drawing.Point(353, 437);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 28;
@@ -539,7 +539,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.ContextMenuStrip = this.contextMenuStrip2;
-            this.button1.Location = new System.Drawing.Point(244, 445);
+            this.button1.Location = new System.Drawing.Point(332, 432);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(108, 23);
             this.button1.TabIndex = 4;
@@ -598,7 +598,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.ContextMenuStrip = this.contextMenuStrip3;
-            this.button2.Location = new System.Drawing.Point(358, 445);
+            this.button2.Location = new System.Drawing.Point(446, 432);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(106, 23);
             this.button2.TabIndex = 5;
@@ -656,7 +656,7 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button5.Location = new System.Drawing.Point(13, 445);
+            this.button5.Location = new System.Drawing.Point(13, 432);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(101, 23);
             this.button5.TabIndex = 1;
@@ -698,7 +698,7 @@
             this.dataGridView1.RowTemplate.ReadOnly = true;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.ShowEditingIcon = false;
-            this.dataGridView1.Size = new System.Drawing.Size(572, 412);
+            this.dataGridView1.Size = new System.Drawing.Size(660, 399);
             this.dataGridView1.TabIndex = 30;
             // 
             // oldName
@@ -768,74 +768,6 @@
             this.moveSelectedToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.moveSelectedToolStripMenuItem.Text = "Move Selected";
             // 
-            // copySelectedToolStripMenuItem
-            // 
-            this.copySelectedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toTVFolderToolStripMenuItem,
-            this.toMoviesFolderToolStripMenuItem,
-            this.toMoviesFolder2ToolStripMenuItem,
-            this.movieTrailersFolderToolStripMenuItem,
-            this.toMusicVideoFolderToolStripMenuItem,
-            this.toOtherVideosFolderToolStripMenuItem1});
-            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
-            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.copySelectedToolStripMenuItem.Text = "Copy Selected";
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(162, 6);
-            // 
-            // removeSelectedToolStripMenuItem
-            // 
-            this.removeSelectedToolStripMenuItem.Name = "removeSelectedToolStripMenuItem";
-            this.removeSelectedToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.removeSelectedToolStripMenuItem.Text = "Remove Selected";
-            this.removeSelectedToolStripMenuItem.Click += new System.EventHandler(this.removeSelectedToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(162, 6);
-            // 
-            // viewFolderToolStripMenuItem
-            // 
-            this.viewFolderToolStripMenuItem.Name = "viewFolderToolStripMenuItem";
-            this.viewFolderToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.viewFolderToolStripMenuItem.Text = "View Folder";
-            this.viewFolderToolStripMenuItem.Click += new System.EventHandler(this.viewFolderToolStripMenuItem_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // button6
-            // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.ContextMenuStrip = this.contextMenuStrip4;
-            this.button6.Location = new System.Drawing.Point(470, 445);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(115, 23);
-            this.button6.TabIndex = 31;
-            this.button6.Text = "Get Title(s) off IMDB";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // contextMenuStrip4
-            // 
-            this.contextMenuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem});
-            this.contextMenuStrip4.Name = "contextMenuStrip4";
-            this.contextMenuStrip4.ShowImageMargin = false;
-            this.contextMenuStrip4.Size = new System.Drawing.Size(210, 26);
-            // 
-            // getTitlesOffIMBDOfSelectedToolStripMenuItem
-            // 
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Name = "getTitlesOffIMBDOfSelectedToolStripMenuItem";
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Text = "Get Titles off IMBD of Selected";
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Click += new System.EventHandler(this.getTitlesOffIMBDOfSelectedToolStripMenuItem_Click);
-            // 
             // moveToToolStripMenuItem
             // 
             this.moveToToolStripMenuItem.Name = "moveToToolStripMenuItem";
@@ -877,6 +809,19 @@
             this.toOtherVideosFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.toOtherVideosFolderToolStripMenuItem.Text = "to Other Videos Folder";
             this.toOtherVideosFolderToolStripMenuItem.Click += new System.EventHandler(this.toOtherVideosFolderToolStripMenuItem_Click);
+            // 
+            // copySelectedToolStripMenuItem
+            // 
+            this.copySelectedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toTVFolderToolStripMenuItem,
+            this.toMoviesFolderToolStripMenuItem,
+            this.toMoviesFolder2ToolStripMenuItem,
+            this.movieTrailersFolderToolStripMenuItem,
+            this.toMusicVideoFolderToolStripMenuItem,
+            this.toOtherVideosFolderToolStripMenuItem1});
+            this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
+            this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.copySelectedToolStripMenuItem.Text = "Copy Selected";
             // 
             // toTVFolderToolStripMenuItem
             // 
@@ -920,12 +865,17 @@
             this.toOtherVideosFolderToolStripMenuItem1.Text = "to Other Videos Folder";
             this.toOtherVideosFolderToolStripMenuItem1.Click += new System.EventHandler(this.toOtherVideosFolderToolStripMenuItem1_Click);
             // 
-            // toolStripMenuItem5
+            // toolStripSeparator9
             // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(165, 22);
-            this.toolStripMenuItem5.Text = "Remove Selected Title";
-            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(162, 6);
+            // 
+            // removeSelectedToolStripMenuItem
+            // 
+            this.removeSelectedToolStripMenuItem.Name = "removeSelectedToolStripMenuItem";
+            this.removeSelectedToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.removeSelectedToolStripMenuItem.Text = "Remove Selected";
+            this.removeSelectedToolStripMenuItem.Click += new System.EventHandler(this.removeSelectedToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
@@ -939,6 +889,56 @@
             this.toolStripMenuItem6.Text = "Edit Selected Title";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(165, 22);
+            this.toolStripMenuItem5.Text = "Remove Selected Title";
+            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(162, 6);
+            // 
+            // viewFolderToolStripMenuItem
+            // 
+            this.viewFolderToolStripMenuItem.Name = "viewFolderToolStripMenuItem";
+            this.viewFolderToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.viewFolderToolStripMenuItem.Text = "View Folder";
+            this.viewFolderToolStripMenuItem.Click += new System.EventHandler(this.viewFolderToolStripMenuItem_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // button6
+            // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.ContextMenuStrip = this.contextMenuStrip4;
+            this.button6.Location = new System.Drawing.Point(558, 432);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(115, 23);
+            this.button6.TabIndex = 31;
+            this.button6.Text = "Get Title(s) off IMDB";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // contextMenuStrip4
+            // 
+            this.contextMenuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem});
+            this.contextMenuStrip4.Name = "contextMenuStrip4";
+            this.contextMenuStrip4.ShowImageMargin = false;
+            this.contextMenuStrip4.Size = new System.Drawing.Size(210, 26);
+            // 
+            // getTitlesOffIMBDOfSelectedToolStripMenuItem
+            // 
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Name = "getTitlesOffIMBDOfSelectedToolStripMenuItem";
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Text = "Get Titles off IMBD of Selected";
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Click += new System.EventHandler(this.getTitlesOffIMBDOfSelectedToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -946,7 +946,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(597, 475);
+            this.ClientSize = new System.Drawing.Size(685, 462);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button5);
