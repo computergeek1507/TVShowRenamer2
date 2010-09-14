@@ -123,6 +123,8 @@
             this.button6 = new System.Windows.Forms.Button();
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getTitlesOffIMBDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
@@ -920,24 +922,40 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(115, 23);
             this.button6.TabIndex = 31;
-            this.button6.Text = "Get Title(s) off IMDB";
+            this.button6.Text = "Get Title(s) off TVDB";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // contextMenuStrip4
             // 
             this.contextMenuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem});
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem,
+            this.getTitlesOffIMBDToolStripMenuItem,
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem1});
             this.contextMenuStrip4.Name = "contextMenuStrip4";
             this.contextMenuStrip4.ShowImageMargin = false;
-            this.contextMenuStrip4.Size = new System.Drawing.Size(210, 26);
+            this.contextMenuStrip4.Size = new System.Drawing.Size(218, 70);
             // 
             // getTitlesOffIMBDOfSelectedToolStripMenuItem
             // 
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Name = "getTitlesOffIMBDOfSelectedToolStripMenuItem";
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Text = "Get Titles off IMBD of Selected";
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Text = "Get Title(s) off TVBD of Selected";
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Click += new System.EventHandler(this.getTitlesOffIMBDOfSelectedToolStripMenuItem_Click);
+            // 
+            // getTitlesOffIMBDToolStripMenuItem
+            // 
+            this.getTitlesOffIMBDToolStripMenuItem.Name = "getTitlesOffIMBDToolStripMenuItem";
+            this.getTitlesOffIMBDToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.getTitlesOffIMBDToolStripMenuItem.Text = "Get Title(s) off IMBD";
+            this.getTitlesOffIMBDToolStripMenuItem.Click += new System.EventHandler(this.getTitlesOffIMBDToolStripMenuItem_Click);
+            // 
+            // getTitlesOffIMBDOfSelectedToolStripMenuItem1
+            // 
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem1.Name = "getTitlesOffIMBDOfSelectedToolStripMenuItem1";
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem1.Size = new System.Drawing.Size(217, 22);
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem1.Text = "Get Title(s) off IMBD of Selected";
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem1.Click += new System.EventHandler(this.getTitlesOffIMBDOfSelectedToolStripMenuItem1_Click);
             // 
             // Form1
             // 
@@ -1066,6 +1084,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem getTitlesOffIMBDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem getTitlesOffIMBDOfSelectedToolStripMenuItem1;
     }
 }
 
