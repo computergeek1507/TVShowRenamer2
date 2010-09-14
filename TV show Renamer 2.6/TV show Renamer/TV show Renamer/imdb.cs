@@ -171,10 +171,10 @@ namespace TV_show_Renamer
                 //this.dislplayResults();
                 if (mainlist.Count() != 0)
                 {
-                    string youknow = mainlist[episode - 1];
-                    youknow = youknow.Replace(":", "").Replace("&#x27;", "'").Replace("&#xE9;", "e").Replace("&#xE0;", "a").Replace("&#x26;", "&").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
+                    string newTitle = mainlist[episode - 1];
+                    newTitle = newTitle.Replace(":", "").Replace("&#x27;", "'").Replace("&#xE9;", "e").Replace("&#xE0;", "a").Replace("&#x26;", "&").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
 
-                    if (main.addTitle(youknow, indexes))
+                    if (main.addTitle(newTitle, indexes))
                     {
                         //textBox1.Text = null;
                         Thread t = new Thread(new ThreadStart(convert));

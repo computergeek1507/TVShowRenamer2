@@ -105,8 +105,8 @@ namespace TV_show_Renamer
 
                 if (text)
                 {
-                    columnOne.RemoveAt(u+1);
-                    columnOne.RemoveAt(u);
+                    columnOne.RemoveAt((u*2)+1);
+                    columnOne.RemoveAt(u * 2);
                     dataGridView1.Rows.Clear();
                     for (int i = 0; i < columnOne.Count(); i = i + 2)
                     {

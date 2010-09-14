@@ -661,7 +661,7 @@ namespace TV_show_Renamer
             }
         }
 
-        //IMDB
+        //TVDB
         private void button6_Click(object sender, EventArgs e)
         {
 
@@ -687,7 +687,7 @@ namespace TV_show_Renamer
                 format = 4;
             }
 
-            Thread h = new Thread(delegate() { autoTitle(format, true); });
+            Thread h = new Thread(delegate() { autoTitleTVDB(format, true); });
             h.Start();
 
             //imdb getData = new imdb(this,y,fileName[y], format);
@@ -985,6 +985,7 @@ namespace TV_show_Renamer
 
         #region Public Mehtods
 
+        //get title of selected off IMDB
         public void getIMDBTitles()
         {
             int format = -1;
@@ -1016,6 +1017,77 @@ namespace TV_show_Renamer
 
         }
 
+        //get title of selected off IMDB
+        public void getTVDBTitles()
+        {
+            int format = -1;
+            //1x01
+            if (x01ToolStripMenuItem.Checked)
+            {
+                format = 1;
+            }
+            //0101 format
+            if (toolStripMenuItem3.Checked)
+            {
+                format = 2;
+            }
+            //101 format
+            if (toolStripMenuItem1.Checked)
+            {
+                format = 3;
+            }
+            //S01E01 format
+            if (s01E01ToolStripMenuItem1.Checked)
+            {
+                format = 4;
+            }
+
+            Thread h = new Thread(delegate() { autoTitleTVDB(format, false); });
+            h.Start();
+
+            //imdb getData = new imdb(this,y,fileName[y], format);
+
+        }
+
+        //method for thread TVDB
+        public void autoTitleTVDB(int format2, bool all)
+        {
+            if (all && fileName.Count != 0)
+            {
+                for (int y = 0; y < fileName.Count(); y++)
+                {
+                    TVDB InternetTest = new TVDB(this, y, fileName[y], commonAppData, format2);
+                    //imdb getData = new imdb(this, y, fileName[y], format2);
+                }
+
+            }
+            else
+                if (dataGridView1.CurrentRow != null)
+                {
+                    List<int> z = new List<int>();
+
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells[0].Selected)
+                        {
+                            z.Add(i);
+                        }
+                    }
+                    foreach (int u in z)
+                    {
+
+                        TVDB InternetTest = new TVDB(this, u, fileName[u], commonAppData, format2);
+
+                    }
+                }
+
+            //for (int y = 0; y < fileName.Count(); y++)
+            //{ 
+            //    imdb getData = new imdb(this,y,fileName[y], format2);
+            //}        
+        }
+
+        //method for thread IMDB
         public void autoTitle(int format2, bool all)
         {
             if (all && fileName.Count != 0)
@@ -1040,6 +1112,7 @@ namespace TV_show_Renamer
                     }
                     foreach (int u in z)
                     {
+
                         imdb getData = new imdb(this, u, fileName[u], format2);
 
                     }
@@ -3235,7 +3308,7 @@ namespace TV_show_Renamer
         //right click to get titles off IMDB
         private void getTitlesOffIMBDOfSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.getIMDBTitles();
+            this.getTVDBTitles();
         }
 
         //remove selected titles
@@ -3410,6 +3483,41 @@ namespace TV_show_Renamer
             }
         }
 
+        //get titles of selected off IMBD
+        private void getTitlesOffIMBDOfSelectedToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.getIMDBTitles();
+        }
+
+        //get titles off IMBD
+        private void getTitlesOffIMBDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int format = -1;
+            //1x01
+            if (x01ToolStripMenuItem.Checked)
+            {
+                format = 1;
+            }
+            //0101 format
+            if (toolStripMenuItem3.Checked)
+            {
+                format = 2;
+            }
+            //101 format
+            if (toolStripMenuItem1.Checked)
+            {
+                format = 3;
+            }
+            //S01E01 format
+            if (s01E01ToolStripMenuItem1.Checked)
+            {
+                format = 4;
+            }
+
+            Thread h = new Thread(delegate() { autoTitleTVDB(format, true); });
+            h.Start();
+        }
+        
         #endregion
 
         //loads when starts
@@ -3481,6 +3589,7 @@ namespace TV_show_Renamer
             Log.closeLog();
         }
 
+      
         /*message box example
                if (MessageBox.Show("Scott is Awesome?","Option Menu", MessageBoxButtons.YesNo)== DialogResult.Yes)
                    {
