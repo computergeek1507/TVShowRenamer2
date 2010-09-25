@@ -26,7 +26,7 @@ namespace TV_show_Renamer
         #region Initiate Stuff
         //initiate varibles  
         const int appVersion = 261;//2.6Beta
-        const int HowDeepToScan = 4;
+        const int HowDeepToScan = 3;
         bool addfile = false;
         bool shownb4 = false;
         bool openZIPs = false;
@@ -1167,6 +1167,9 @@ namespace TV_show_Renamer
                     string origName = fi.Name;
                     string exten = fi.Extension;
                     string attrib = fi.Attributes.ToString();
+                    if (fileName.Count() > 500) {
+                        return;
+                    }
 
                     if (attrib == "Hidden, System, Archive")
                     {
@@ -1220,6 +1223,9 @@ namespace TV_show_Renamer
                     //add file extension
                     fileExtention.Add(exten);
                     fileTitle.Add("");
+
+                    addPendingFiles(origName);
+                    
                 }
 
                 // Recurse into subdirectories of this directory.
@@ -1644,29 +1650,72 @@ namespace TV_show_Renamer
 
         }//end of preferenceXMLReader Method
 
+        //add files from String to DataGrid
+        public void addPendingFiles(string fileNameToAdd)
+        {             
+            MethodInvoker action2 = delegate
+            {
+                    dataGridView1.Rows.Add();
+                   
+                    dataGridView1.Rows[dataGridView1.Rows.Count-1].Cells[0].Value = fileNameToAdd;
+                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = fileNameToAdd;
+            };
+            dataGridView1.BeginInvoke(action2);                          
+
+        }
+        
         //add files from List<String> to DataGrid
-        public void addPendingFiles()
+        /*public void addPendingFiles(List<string> fileNameToAdd)
         {
             MethodInvoker action2 = delegate
             {
-                dataGridView1.Rows.Clear();
-                for (int z = 0; z < fileName.Count; z++)
+                int current = dataGridView1.Rows.Count;
+                dataGridView1.Rows.Add(fileNameToAdd.Count);
+
+                //dataGridView1.DataSource.Equals(fileNameToAdd);// = fileNameToAdd; 
+                //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = fileNameToAdd;
+                //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = fileNameToAdd;
+                for (int j = current; j < dataGridView1.Rows.Count; j++)
                 {
-                    dataGridView1.Rows.Add();
-                    dataGridView1.Rows[z].Cells[0].Value = fileName[z];
-                    dataGridView1.Rows[z].Cells[1].Value = fileName[z];
+                    //dataGridView1.Rows.Add();
+                    dataGridView1.Rows[j].Cells[0].Value = dataGridView1.Rows[j].Cells[1].Value = fileNameToAdd[j];
+                    //dataGridView1.Rows[j].Cells[1].Value = fileNameToAdd[j];
+                    autoConvert();
+                
                 }
 
-                if (fileName.Count() != 0)
-                {
-                    Thread t = new Thread(new ThreadStart(autoConvert));
-                    t.Start();
-                }
+
             };
             dataGridView1.BeginInvoke(action2);
+            //Thread p = new Thread(new ThreadStart(autoConvert));
+            //p.Start();
+
+        }*/
+
+        public void addPendingFiles(int size)
+        {
+            MethodInvoker action2 = delegate
+            {
+                int current = dataGridView1.Rows.Count;
+                dataGridView1.Rows.Add(size);
+
+                //dataGridView1.DataSource.Equals(fileNameToAdd);// = fileNameToAdd; 
+                //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[0].Value = fileNameToAdd;
+                //dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = fileNameToAdd;
+                for (int j = current; j < dataGridView1.Rows.Count; j++)
+                {
+                    //dataGridView1.Rows.Add();
+                    dataGridView1.Rows[j].Cells[0].Value = dataGridView1.Rows[j].Cells[1].Value = fileName[j];
+                    //dataGridView1.Rows[j].Cells[1].Value = fileNameToAdd[j];
+                    autoConvert();
+
+                }
 
 
-
+            };
+            dataGridView1.BeginInvoke(action2);
+            //Thread p = new Thread(new ThreadStart(autoConvert));
+            //p.Start();
 
         }
 
@@ -1871,6 +1920,7 @@ namespace TV_show_Renamer
         #endregion
 
         #region Private Methods
+
         //returns string list of info
         private List<string> infoFinder(string oldfile, List<string> folderlist, List<string> rootfolderlist)
         {
@@ -2689,6 +2739,7 @@ namespace TV_show_Renamer
                     fileExtention.Add(fi9.Extension);
                     //add blank titile
                     fileTitle.Add("");
+                    addPendingFiles(fi9.Name);
                 }
             }
             catch (FileNotFoundException)
@@ -2699,8 +2750,12 @@ namespace TV_show_Renamer
             {
                 return;
             }
-            Thread p = new Thread(new ThreadStart(addPendingFiles));
-            p.Start();
+           
+                //Thread h = new Thread(delegate() { addPendingFiles(fileName); });
+                //h.Start();
+                //Thread p = new Thread(new ThreadStart(addPendingFiles(fileNameADD)));
+                //p.Start();
+            
 
         }
 
@@ -2801,6 +2856,7 @@ namespace TV_show_Renamer
                     fileExtention.Add(fi9.Extension);
                     //add blank titile
                     fileTitle.Add("");
+                    addPendingFiles(fi9.Name);
                 }
             }
             catch (FileNotFoundException)
@@ -2811,8 +2867,12 @@ namespace TV_show_Renamer
             {
                 return;
             }
-            Thread p = new Thread(new ThreadStart(addPendingFiles));
-            p.Start();
+            //Thread p = new Thread(new ThreadStart(addPendingFiles));
+            //p.Start();
+            
+                //Thread h = new Thread(delegate() { addPendingFiles(fileName); });
+                //h.Start();
+            
 
         }
 
@@ -2854,6 +2914,8 @@ namespace TV_show_Renamer
                     fileExtention.Add(fi3.Extension);
                     //add blank titile
                     fileTitle.Add("");
+                    //addPendingFiles(fi3.Name);
+                    
                 }
                 else if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
                 {
@@ -2870,13 +2932,23 @@ namespace TV_show_Renamer
                     fileExtention.Add(fi3.Extension);
                     //add blank titile
                     fileTitle.Add("");
+                    //addPendingFiles(fi3.Name);       
 
                 }
-
+                
 
             }//end of loop 
-            Thread p = new Thread(new ThreadStart(addPendingFiles));
-            p.Start();
+            addPendingFiles(fileList.Length);
+
+            //Thread p = new Thread(new ThreadStart(addPendingFiles));
+            //p.Start();
+            //foreach (string fileNameADD in fileName)
+            //{
+            //    Thread h = new Thread(delegate() { addPendingFiles(fileNameADD); });
+             //   h.Start();
+            //}
+            //Thread p = new Thread(new ThreadStart(autoConvert));
+            //p.Start();
         }
 
         //add files from folder
@@ -2891,9 +2963,21 @@ namespace TV_show_Renamer
 
             ProcessDir(folder, 0);
 
-            Thread main = new Thread(new ThreadStart(addPendingFiles));
-            main.Start();
-
+            //Display tempName = new Display(fileName);
+            //tempName.Show();
+            //Thread main = new Thread(new ThreadStart(addPendingFiles));
+            //main.Start();
+            //addPendingFiles(fileName);
+            
+            //foreach (string fileNameADD in fileName)
+            //{
+            //    Thread h = new Thread(delegate() { addPendingFiles(fileNameADD); });
+             //   h.Start();
+                //Thread p = new Thread(new ThreadStart(addPendingFiles(fileNameADD)));
+                //p.Start();
+           // }
+            //Thread p = new Thread(new ThreadStart(autoConvert));
+            //p.Start();
         }
 
         //drag and drop

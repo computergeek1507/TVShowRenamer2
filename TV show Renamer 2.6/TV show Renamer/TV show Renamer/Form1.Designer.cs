@@ -701,6 +701,7 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.Size = new System.Drawing.Size(660, 399);
+            this.dataGridView1.StandardTab = true;
             this.dataGridView1.TabIndex = 30;
             // 
             // oldName
