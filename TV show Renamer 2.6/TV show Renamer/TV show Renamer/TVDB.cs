@@ -105,7 +105,7 @@ namespace TV_show_Renamer
             //string test = title[0];
             int you = -1;
 
-            for (int i = 1; i < 40; i++)
+            for (int i = 40; i >=0; i--)
             {
                 //varable for break command later
                 bool end = false;
