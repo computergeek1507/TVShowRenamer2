@@ -95,6 +95,11 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.oldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.newname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.titles = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.filefolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.newfullfolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fullfolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fileextention = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.saveNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -681,7 +686,12 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.oldName,
-            this.newname});
+            this.newname,
+            this.titles,
+            this.filefolder,
+            this.newfullfolder,
+            this.fullfolder,
+            this.fileextention});
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
@@ -707,6 +717,7 @@
             // oldName
             // 
             this.oldName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.oldName.DataPropertyName = "FileName";
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.oldName.DefaultCellStyle = dataGridViewCellStyle1;
             this.oldName.HeaderText = "Current File Name";
@@ -719,6 +730,7 @@
             // newname
             // 
             this.newname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.newname.DataPropertyName = "NewFileName";
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newname.DefaultCellStyle = dataGridViewCellStyle2;
             this.newname.HeaderText = "Pending File Name";
@@ -727,6 +739,51 @@
             this.newname.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.newname.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.newname.Width = 121;
+            // 
+            // titles
+            // 
+            this.titles.DataPropertyName = "FileTitle";
+            this.titles.HeaderText = "titles";
+            this.titles.Name = "titles";
+            this.titles.ReadOnly = true;
+            this.titles.Visible = false;
+            this.titles.Width = 53;
+            // 
+            // filefolder
+            // 
+            this.filefolder.DataPropertyName = "FileFolder";
+            this.filefolder.HeaderText = "filefolder";
+            this.filefolder.Name = "filefolder";
+            this.filefolder.ReadOnly = true;
+            this.filefolder.Visible = false;
+            this.filefolder.Width = 71;
+            // 
+            // newfullfolder
+            // 
+            this.newfullfolder.DataPropertyName = "NewFullFileName";
+            this.newfullfolder.HeaderText = "newfullfolder";
+            this.newfullfolder.Name = "newfullfolder";
+            this.newfullfolder.ReadOnly = true;
+            this.newfullfolder.Visible = false;
+            this.newfullfolder.Width = 91;
+            // 
+            // fullfolder
+            // 
+            this.fullfolder.DataPropertyName = "FullFileName";
+            this.fullfolder.HeaderText = "fullfolder";
+            this.fullfolder.Name = "fullfolder";
+            this.fullfolder.ReadOnly = true;
+            this.fullfolder.Visible = false;
+            this.fullfolder.Width = 71;
+            // 
+            // fileextention
+            // 
+            this.fileextention.DataPropertyName = "FileExtention";
+            this.fileextention.HeaderText = "fileextention";
+            this.fileextention.Name = "fileextention";
+            this.fileextention.ReadOnly = true;
+            this.fileextention.Visible = false;
+            this.fileextention.Width = 88;
             // 
             // contextMenuStrip1
             // 
@@ -744,7 +801,7 @@
             this.viewFolderToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(166, 182);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(166, 204);
             // 
             // saveNameToolStripMenuItem
             // 
@@ -760,6 +817,7 @@
             // 
             // moveSelectedToolStripMenuItem
             // 
+            this.moveSelectedToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.moveSelectedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moveToToolStripMenuItem,
             this.toMovieFolderToolStripMenuItem,
@@ -773,6 +831,7 @@
             // 
             // moveToToolStripMenuItem
             // 
+            this.moveToToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.moveToToolStripMenuItem.Name = "moveToToolStripMenuItem";
             this.moveToToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.moveToToolStripMenuItem.Text = "to TV Folder";
@@ -780,6 +839,7 @@
             // 
             // toMovieFolderToolStripMenuItem
             // 
+            this.toMovieFolderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toMovieFolderToolStripMenuItem.Name = "toMovieFolderToolStripMenuItem";
             this.toMovieFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.toMovieFolderToolStripMenuItem.Text = "to Movies Folder";
@@ -787,6 +847,7 @@
             // 
             // toMovieFolder2ToolStripMenuItem
             // 
+            this.toMovieFolder2ToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toMovieFolder2ToolStripMenuItem.Name = "toMovieFolder2ToolStripMenuItem";
             this.toMovieFolder2ToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.toMovieFolder2ToolStripMenuItem.Text = "to Movies Folder 2";
@@ -794,6 +855,7 @@
             // 
             // toMovieTrailerFolderToolStripMenuItem
             // 
+            this.toMovieTrailerFolderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toMovieTrailerFolderToolStripMenuItem.Name = "toMovieTrailerFolderToolStripMenuItem";
             this.toMovieTrailerFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.toMovieTrailerFolderToolStripMenuItem.Text = "to Movie Trailers Folder";
@@ -801,6 +863,7 @@
             // 
             // toMusicVideosFolderToolStripMenuItem
             // 
+            this.toMusicVideosFolderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toMusicVideosFolderToolStripMenuItem.Name = "toMusicVideosFolderToolStripMenuItem";
             this.toMusicVideosFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.toMusicVideosFolderToolStripMenuItem.Text = "to Music Videos Folder";
@@ -808,6 +871,7 @@
             // 
             // toOtherVideosFolderToolStripMenuItem
             // 
+            this.toOtherVideosFolderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toOtherVideosFolderToolStripMenuItem.Name = "toOtherVideosFolderToolStripMenuItem";
             this.toOtherVideosFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.toOtherVideosFolderToolStripMenuItem.Text = "to Other Videos Folder";
@@ -1064,8 +1128,6 @@
         private System.Windows.Forms.ToolStripMenuItem moveToOtherVideosFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToOtherVideosFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn oldName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn newname;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
@@ -1087,6 +1149,13 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem getTitlesOffIMBDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getTitlesOffIMBDOfSelectedToolStripMenuItem1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn oldName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn newname;
+        private System.Windows.Forms.DataGridViewTextBoxColumn titles;
+        private System.Windows.Forms.DataGridViewTextBoxColumn filefolder;
+        private System.Windows.Forms.DataGridViewTextBoxColumn newfullfolder;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fullfolder;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fileextention;
     }
 }
 
