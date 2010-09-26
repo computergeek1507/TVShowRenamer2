@@ -111,8 +111,10 @@ namespace TV_show_Renamer
             //ProcessStartInfo startInfo2 = new ProcessStartInfo("msiexec.exe", "/x {D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}");
             //Process.Start(startInfo2);
             //MessageBox.Show( commonAppData + "\TV show Renamer.exe " + Directory.GetCurrentDirectory() + "\TV show Renamer.exe");
-            ProcessStartInfo startInfo2 = new ProcessStartInfo(commonAppData + "//test.exe", commonAppData + "//tvshowsenamer.exe " + Directory.GetCurrentDirectory()+"//tvshowrenamer.exe");
-            Process.Start(startInfo2);
+            //ProcessStartInfo startInfo2 = new ProcessStartInfo(commonAppData + "//test.exe", commonAppData + "//tvshowsenamer.exe " + Directory.GetCurrentDirectory()+"//tvshowrenamer.exe");
+            //Process.Start(startInfo2);
+
+            
 
             //startInfo2.FileName = label1.Text;
             //startInfo.Arguments

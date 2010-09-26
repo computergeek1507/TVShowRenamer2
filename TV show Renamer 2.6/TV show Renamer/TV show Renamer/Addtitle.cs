@@ -12,14 +12,14 @@ namespace TV_show_Renamer
 {
     public partial class Addtitle : Form
     {        
-        List<String> title = new List<String>();
-        List<TVClass> names = new List<TVClass>();
+        //List<String> title = new List<String>();
+        BindingList<TVClass> names = new BindingList<TVClass>();
         //bool open = false;
        
         Form1 Main;
 
-        
-        public Addtitle(List<TVClass> tvlist, Form1 test)
+
+        public Addtitle(BindingList<TVClass> tvlist, Form1 test)
         {
             InitializeComponent();
             Main = test;

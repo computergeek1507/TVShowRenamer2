@@ -37,24 +37,28 @@ namespace TV_show_Renamer
             get { return _fileFolder; }
             set { _fileFolder = value; }
         }
+
         public string FileExtention
         {
             get { return _fileExtention; }
             set { _fileExtention = value; }
         }
+
         public string FileTitle
         {
             get { return _fileTitle; }
             set { _fileTitle = value; }
         }
+
         public string FullFileName
         {
-            get { return _fileFolder +"//"+ _fileName; }
+            get { return _fileFolder +"\\"+ _fileName; }
             
         }
+
         public string NewFullFileName
         {
-            get { return _fileFolder + "//" + _newFileName; }
+            get { return _fileFolder + "\\" + _newFileName; }
 
         }
     }
