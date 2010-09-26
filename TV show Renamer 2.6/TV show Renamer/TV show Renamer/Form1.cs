@@ -2401,9 +2401,7 @@ namespace TV_show_Renamer
             string archiveName = null;
             int archiveIndex = -1;
             FileInfo fi8 = new FileInfo(zipfile);
-
             SevenZipExtractor mainExtrector;
-
             try
             {
                 mainExtrector = new SevenZipExtractor(zipfile);
@@ -2415,10 +2413,8 @@ namespace TV_show_Renamer
                 if (passwordYou.ShowDialog() == DialogResult.OK)
                 {
                     this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
-                    //passwordYou.Password
                     passwordYou.Close();
                 }
-                //passwordyou.Show();
                 return;
             }
             catch (SevenZipLibraryException)
@@ -2426,7 +2422,6 @@ namespace TV_show_Renamer
                 MessageBox.Show("Incorrect 7z.dll for your version of Windows");
                 return;
             }
-            //SevenZipExtractor mainExtrector = new SevenZipExtractor(zipfile);
             int sizeOfArchive = 0;
             try
             {
@@ -2434,20 +2429,16 @@ namespace TV_show_Renamer
             }
             catch (SevenZipArchiveException)
             {
-                //password shit
+                //Call Passord Method
                 password passwordYou = new password(this, zipfile, zipName);
-
                 if (passwordYou.ShowDialog() == DialogResult.OK)
                 {
                     this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
-                    //passwordYou.Password
                     passwordYou.Close();
                 }
-
                 return;
             }
-            //int sizeOfArchive = (int)mainExtrector.FilesCount;
-
+            
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
@@ -2459,19 +2450,16 @@ namespace TV_show_Renamer
                     break;
                 }
             }
-
             if (archiveIndex == -1)
             {
                 return;
             }
-
             try
             {
                 mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
                 if (add)
                 {
                     FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
-                    //add file name
                     for (int i = 0; i < fileList.Count(); i++)
                     {
                         if (fi9.Name == fileList[i].FileName)
@@ -2479,22 +2467,12 @@ namespace TV_show_Renamer
                             return;
                         }
                     }
+                    //add file names
                     MethodInvoker action = delegate
                     {
-                        //dataGridView1.DataSource = none;
                         fileList.Add(new TVClass(fi9.DirectoryName, fi9.Name, fi9.Extension));
                     };
-                    dataGridView1.BeginInvoke(action);
-                    //fileList.Add(new TVClass(fi9.DirectoryName, fi9.Name, fi9.Extension));
-                    //fileName.Add(fi9.Name);
-                    //newFileName.Add(fi9.Name);
-                    //add file folder
-                    //fileFolder.Add(fi9.DirectoryName);
-                    //add file extension
-                    //fileExtention.Add(fi9.Extension);
-                    //add blank titile
-                    //fileTitle.Add("");
-                    //addPendingFiles(fi9.Name);
+                    dataGridView1.BeginInvoke(action);                    
                 }
             }
             catch (FileNotFoundException)
@@ -2505,13 +2483,6 @@ namespace TV_show_Renamer
             {
                 return;
             }
-           
-                //Thread h = new Thread(delegate() { addPendingFiles(fileName); });
-                //h.Start();
-                //Thread p = new Thread(new ThreadStart(addPendingFiles(fileNameADD)));
-                //p.Start();
-            
-
         }
         
         /// <summary>
@@ -2523,13 +2494,10 @@ namespace TV_show_Renamer
         /// <param name="add">add file to data grid</param>
         public void archiveExtrector(string zipfile, string zipName, string password, bool add)
         {
-
             List<string> info = new List<string>();
-
             string archiveName = null;
             int archiveIndex = -1;
             FileInfo fi8 = new FileInfo(zipfile);
-
             SevenZipExtractor mainExtrector;
 
             try
@@ -2543,7 +2511,6 @@ namespace TV_show_Renamer
                 if (passwordYou.ShowDialog() == DialogResult.OK)
                 {
                     this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
-                    //passwordYou.Password
                     passwordYou.Close();
                 }
                 return;
@@ -2554,15 +2521,13 @@ namespace TV_show_Renamer
                 return;
             }
 
-            //SevenZipExtractor mainExtrector = new SevenZipExtractor(zipfile);
             int sizeOfArchive = 0;
             try
             {
                 sizeOfArchive = (int)mainExtrector.FilesCount;
             }
             catch (SevenZipArchiveException)
-            {
-                //add password
+            {   //add password
                 password passwordYou = new password(this, zipfile, zipName);
 
                 if (passwordYou.ShowDialog() == DialogResult.OK)
@@ -2571,8 +2536,7 @@ namespace TV_show_Renamer
                     passwordYou.Close();
                 }
                 return;
-            }
-            
+            }            
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
@@ -2593,12 +2557,9 @@ namespace TV_show_Renamer
             try
             {
                 mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
-
                 if (add)
                 {
-
-                    FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
-                    //add file name
+                    FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);                    
                     for (int i = 0; i < fileList.Count(); i++)
                     {
                         if (fi9.Name == fileList[i].FileName)
@@ -2606,15 +2567,12 @@ namespace TV_show_Renamer
                             return;
                         }
                     }
+                    //add file name
                     MethodInvoker action = delegate
-                    {
-                        //dataGridView1.DataSource = none;
+                    {                        
                         fileList.Add(new TVClass(fi9.DirectoryName, fi9.Name, fi9.Extension));
                     };
-                    dataGridView1.BeginInvoke(action);
-                    //fileList.Add(new TVClass(fi9.DirectoryName, fi9.Name, fi9.Extension));
-                    
-                    //addPendingFiles(fi9.Name);
+                    dataGridView1.BeginInvoke(action);                    
                 }
             }
             catch (FileNotFoundException)
@@ -2624,12 +2582,7 @@ namespace TV_show_Renamer
             catch (IOException)
             {
                 return;
-            }
-            //Thread p = new Thread(new ThreadStart(addPendingFiles));
-            //p.Start();
-            
-                //Thread h = new Thread(delegate() { addPendingFiles(fileName); });
-                //h.Start();
+            }            
         }
 
         //add files 
@@ -3360,8 +3313,7 @@ namespace TV_show_Renamer
 
         //create preference file when program closes and close log
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            formClosed = true;            
+        {          
             StreamWriter pw = new StreamWriter(commonAppData + "//preferences.seh");
 
             pw.WriteLine(convertToolStripMenuItem.Checked);
