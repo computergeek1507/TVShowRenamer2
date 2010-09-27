@@ -36,10 +36,5 @@ namespace TV_show_Renamer
         {
             //System.Diagnostics.Process.Start("scott@scottnation.com");
         }
-
-        private void About_Load(object sender, EventArgs e)
-        {
-
-        }
     }//end of about class
 }//end of namespace

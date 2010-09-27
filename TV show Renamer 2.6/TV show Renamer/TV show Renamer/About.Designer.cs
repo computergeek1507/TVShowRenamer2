@@ -123,8 +123,6 @@
             this.Name = "About";
             this.ShowInTaskbar = false;
             this.Text = "About";
-            this.Load += new System.EventHandler(this.About_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
