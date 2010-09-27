@@ -80,22 +80,13 @@ namespace TV_show_Renamer
             indexes = selected;
             button1.Visible = false;
             this.Show();
-
         }
         
         //get info for imdb
         private void button1_Click(object sender, EventArgs e)
-        {
-            //this.Show();
-            //progressBar1.Show();
-            //progressBar1.Value = 0;
-            //title = main.getSelectedFileNames();
-            //indexes = main.getSelected();
-                            
-                string test = title;
-            
-            //string test = title[0];
-                int you = -1;
+        {                            
+            string test = title;
+            int nameFound = -1;
 
                 for (int i = 1; i < 40; i++)
                 {
@@ -107,7 +98,6 @@ namespace TV_show_Renamer
                     {
                         string newi = i.ToString();
                         string newj = j.ToString();
-                        //string output = null;
                         //check if i is less than 10
                         if (i < 10)
                         {
@@ -119,29 +109,28 @@ namespace TV_show_Renamer
                             newj = "0" + j.ToString();
                         }
                         //make string to compare changed name too
-                        //string startnewname = fileName;
                         switch (format)
                         {
                             case 1:
-                                you = test.IndexOf(i.ToString() + "x" + newj);
+                                nameFound = test.IndexOf(i.ToString() + "x" + newj);
                                 break;
                             case 2:
-                                you = test.IndexOf(newi + newj);
+                                nameFound = test.IndexOf(newi + newj);
                                 break;
                             case 3:
-                                you = test.IndexOf(i.ToString() + newj);
+                                nameFound = test.IndexOf(i.ToString() + newj);
                                 break;
                             case 4:
-                                you = test.IndexOf("S" + newi + "E" + newj);
-                                you = test.IndexOf("S" + newi + "e" + newj);
+                                nameFound = test.IndexOf("S" + newi + "E" + newj);
+                                nameFound = test.IndexOf("S" + newi + "e" + newj);
                                 break;
                         }
                         //stop loop when name is change                    
-                        if (you != -1)
+                        if (nameFound != -1)
                         {
                             season = i;
                             episode = j;
-                            imdbTitle = test.Remove(you - 1, test.Length - (you - 1));
+                            imdbTitle = test.Remove(nameFound - 1, test.Length - (nameFound - 1));
                             end = true;
                             break;
                         }
@@ -153,8 +142,6 @@ namespace TV_show_Renamer
                         break;
                     }
                 }//end of season loop
-
-                //MessageBox.Show("||" + imdbTitle + "||" + season + "||" +episode+ "||");
 
                 bool[] fields = { true, true, true, true, true, true, true, true, true, true, true }; //Parses all the fields.
                 progressBar1.Value = 0;
@@ -168,7 +155,6 @@ namespace TV_show_Renamer
 
                 manag.IMDbSearch(0, imdbTitle, 1, -1, season, season, fields);
 
-                //this.dislplayResults();
                 if (mainlist.Count() != 0)
                 {
                     string newTitle = mainlist[episode - 1];
@@ -176,7 +162,6 @@ namespace TV_show_Renamer
 
                     if (main.addTitle(newTitle, indexes))
                     {
-                        //textBox1.Text = null;
                         Thread t = new Thread(new ThreadStart(convert));
                         t.Start();
                     }
@@ -202,7 +187,6 @@ namespace TV_show_Renamer
                             foreach (IMDbSerieEpisode ep in season.Episodes)
                             {                               
                                 if (ep.AirDate != "") {
-                                    //yoyo.Add("Title: " + title.Title + " Season " + season.Number + " Episode " + q + ": " + ep.Title);
                                     titleList.Add(ep.Title);
                                 }                                
                             }
@@ -225,8 +209,6 @@ namespace TV_show_Renamer
         {
             error = true;
             progressBar1.Value = 0;
-            //MessageBox.Show(exc.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //MessageBox.Show("FU");
         }
 
         public void progressUpdater(int value)
@@ -241,7 +223,6 @@ namespace TV_show_Renamer
             {
                 if (main.addTitle(label1.Text))
                 {
-                    //textBox1.Text = null;
                     Thread t = new Thread(new ThreadStart(convert));
                     t.Start();
                 }
@@ -261,8 +242,7 @@ namespace TV_show_Renamer
             }
             else {
                 MessageBox.Show("No Results Found");
-            }
-            
+            }            
         }
     }//end of class
 }

@@ -22,7 +22,6 @@ namespace TV_show_Renamer
             InitializeComponent();
             for (int i = 0; i < tempTVshows.Count(); i++)
             {
-                //label1.Text += (tempTVshows[i] + "\n");
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells[0].Value = tempTVshows[i];
             }
@@ -46,7 +45,6 @@ namespace TV_show_Renamer
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 tvfolderslist.Add(folderBrowserDialog1.SelectedPath);
-                //label1.Text += folderBrowserDialog1.SelectedPath+"\n";
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[tvfolderslist.Count()-1].Cells[0].Value = folderBrowserDialog1.SelectedPath;
             }
@@ -62,11 +60,9 @@ namespace TV_show_Renamer
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < tvfolderslist.Count(); i++)
                 {
-                    //label1.Text += (tempTVshows[i] + "\n");
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = tvfolderslist[i];
                 }
-                //newForm.removePlaylist(u);
             }
         }
     }//end of class

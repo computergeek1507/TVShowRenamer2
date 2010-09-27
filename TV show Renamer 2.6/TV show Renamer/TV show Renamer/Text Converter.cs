@@ -40,8 +40,7 @@ namespace TV_show_Renamer
                 sw.Close();//close writer stream
             }
             else
-            {
-                //read junk file 
+            {   //read junk file 
                 StreamReader tr = new StreamReader(commonAppData + "//convertlibrary.seh");
                 textConvert.Clear();//clear old list
 
@@ -57,9 +56,7 @@ namespace TV_show_Renamer
                     textConvert.Add(tr.ReadLine());
                 }//end of for
                 tr.Close();//close reader stream
-
             }//end of method
-
         }//end of getTextConvert method
 
         //autoconvert method 
@@ -123,12 +120,9 @@ namespace TV_show_Renamer
         }
 
         //remove selected
-        public void removeSelected(int u) {
-            //textConvert.RemoveAt(u+1);
-            //textConvert.RemoveAt(u);
+        public void removeSelected() {
             Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
-            
+            t.Start();            
         }
     }
 }

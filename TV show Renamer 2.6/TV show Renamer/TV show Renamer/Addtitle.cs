@@ -14,10 +14,8 @@ namespace TV_show_Renamer
     {        
         //List<String> title = new List<String>();
         BindingList<TVClass> names = new BindingList<TVClass>();
-        //bool open = false;
-       
+              
         Form1 Main;
-
 
         public Addtitle(BindingList<TVClass> tvlist, Form1 test)
         {
@@ -29,9 +27,7 @@ namespace TV_show_Renamer
 
         //"close" form
         private void button1_Click(object sender, EventArgs e)
-        {
-            //this.Hide();
-            //Main.autoConvert();
+        {            
             if (names.Count() != 0)
             {
                 Thread t = new Thread(new ThreadStart(convert));
@@ -63,15 +59,8 @@ namespace TV_show_Renamer
         private void button3_Click(object sender, EventArgs e)
         {
             Main.clearTitles();
-        }
-               
-        //run when form loads
-        private void Addtitle_Load(object sender, EventArgs e)
-        {
-            //set value to see if any titles were added
-            //open = true;
-        }
-
+        }              
+     
         private void button4_Click(object sender, EventArgs e)
         {
             Main.removeTitle();

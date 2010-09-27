@@ -15,15 +15,12 @@ namespace TV_show_Renamer
     {
         List<String> columnOne = new List<String>();
         List<String> columnTwo = new List<String>();        
-        
-        //move_folder mainFolder;
-        //bool folder = false;
+
         Text_Converter mainText;
         bool text = false;
         junk_words mainJunk;
         bool junk = false;
-        bool general = false;       
-        
+    
         //text converter method
         public Display(List<string> textConvert,  Text_Converter test)
         {
@@ -45,23 +42,21 @@ namespace TV_show_Renamer
             columnOne = textConvert;
             this.Show();
         }
+
         //general
         public Display(List<string> test)
         {
-            InitializeComponent();
-
-            //dataGridView1.Columns[0]
+            InitializeComponent(); 
+           
             button2.Hide();
 
             if (test.Count() != 0)
             {
-                //dataGridView1.ColumnHeadersVisible = true;
                 for (int i = 0; i < test.Count(); i++)
                 {
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i ].Cells[0].Value = test[i];
                 }
-                //mainText = test;
                 text = true;
             }
             columnOne = test;
@@ -112,9 +107,8 @@ namespace TV_show_Renamer
                     {
                         dataGridView1.Rows.Add();
                         dataGridView1.Rows[i/2].Cells[0].Value = columnOne[i] + " to " + columnOne[i + 1];
-                    }
-                    //mainText.removeSelected(u + 1);
-                    mainText.removeSelected(u);
+                    }                    
+                    mainText.removeSelected();
                 }//end of text if
                 else if (junk)
                 {
@@ -125,9 +119,9 @@ namespace TV_show_Renamer
                         dataGridView1.Rows.Add();
                         dataGridView1.Rows[i].Cells[0].Value = columnOne[i] ;
                     }                    
-                    mainJunk.removeSelected(u);
+                    mainJunk.removeSelected();
                 }//end of text if                
             }
-        }                
+        }        
     }
 }
