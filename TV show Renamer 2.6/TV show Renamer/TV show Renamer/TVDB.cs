@@ -58,15 +58,12 @@ namespace TV_show_Renamer
                 for (int i = 0; i < list.Count();i++ )
                 {
                     if (list[i].Overview != "")
-                    {
-                        //MessageBox.Show("||"+list[i].Overview+"||");
+                    {                       
                         seriesId = list[i].Id;
                         break;
                     }
                 }
-                if(seriesId == -1)return;
-                //int seriesId =list[0].Id;//   r.Id.ToString()
-                //Display main = new Display(list);
+                if(seriesId == -1)return;               
                 TvdbSeries s = m_tvdbHandler.GetSeries(seriesId, TvdbLanguage.DefaultLanguage, true, false, false);
                 List<String> epList = new List<string>();
                 string newTitle = null;
@@ -76,27 +73,20 @@ namespace TV_show_Renamer
                     {
                         newTitle = esp.EpisodeName;
                         break;                    
-                    }
-                   //epList.Add("Season " + esp.SeasonNumber + " Episode " + esp.EpisodeNumber + ": " + esp.EpisodeName);
+                    }                   
                 }
-                //MessageBox.Show(newTitle);
                 if (newTitle == null) {
                     return;
                 }
-
                 newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
                 
                 if (main.addTitle(newTitle, indexes))
                 {
-                    //textBox1.Text = null;
                     Thread t = new Thread(new ThreadStart(convert));
                     t.Start();
                 }
-                this.Close();
-
-                //Display main = new Display(epList);
+                this.Close();               
             }
-            //TvdbSeries s = m_tvdbHandler.GetSeries(seriesId, TvdbLanguage.DefaultLanguage, true, true, true, false);
         }
 
         private void infoFinder() {
@@ -115,7 +105,6 @@ namespace TV_show_Renamer
                 {
                     string newi = i.ToString();
                     string newj = j.ToString();
-                    //string output = null;
                     //check if i is less than 10
                     if (i < 10)
                     {
@@ -127,7 +116,6 @@ namespace TV_show_Renamer
                         newj = "0" + j.ToString();
                     }
                     //make string to compare changed name too
-                    //string startnewname = fileName;
                     switch (format)
                     {
                         case 1:
@@ -161,16 +149,11 @@ namespace TV_show_Renamer
                     break;
                 }
             }//end of season loop
-        
-        
-        
-        
         }
 
         private void convert()
         {
             main.autoConvert();
         }
-
     }
 }

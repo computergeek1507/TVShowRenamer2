@@ -29,7 +29,6 @@ namespace TV_show_Renamer
             Main = test;
             junkwords = junkwords2;
             commonAppData = commonAppData2;
-            //MessageBox.Show(commonAppData2);
             this.getuserjunk();
         }
         
@@ -59,9 +58,7 @@ namespace TV_show_Renamer
                     userwords.Add(tr.ReadLine());
                 }//end of for
                 tr.Close();//close reader stream
-
-            }//end of method
-            
+            }//end of method            
         }//end of getuserjunk method
 
         //add word button
@@ -98,8 +95,7 @@ namespace TV_show_Renamer
             textBox1.Text = null;//clear box
 
             Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
-                       
+            t.Start();                       
          }
 
         //dislpay junk words
@@ -121,8 +117,7 @@ namespace TV_show_Renamer
             this.Hide();
             
             Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
-            
+            t.Start();            
         }//end of button method
 
         //autoconvert method 
@@ -132,7 +127,8 @@ namespace TV_show_Renamer
         }
 
         //return junk words
-        public List<string> getjunk() {
+        public List<string> getjunk() 
+        {
             return userwords;        
         }
 
@@ -149,8 +145,7 @@ namespace TV_show_Renamer
         }
 
         //remove selected 
-        public void removeSelected(int y) {
-            //userwords.RemoveAt(y);
+        public void removeSelected() {
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
