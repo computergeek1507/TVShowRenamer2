@@ -21,7 +21,6 @@ namespace TV_show_Renamer
         {
             InitializeComponent();
             dataGridView1.DataSource = fileList;
-            //fileListFake.Add(new TVClass("", "", ""));            
         }
 
         #region Initiate Stuff
@@ -1002,12 +1001,15 @@ namespace TV_show_Renamer
                 }//end of for loop
                 
                 MethodInvoker action = delegate
-                {                   
+                {
+                    //MessageBox.Show("works");
                     dataGridView1.Refresh();
-                    dataGridView1.AutoResizeColumns();           
+                    dataGridView1.AutoResizeColumns(); 
+          
                 };
                 if (!formClosed)
                 {
+                    //MessageBox.Show("works");
                     dataGridView1.BeginInvoke(action);
                 }
             }
@@ -2611,14 +2613,15 @@ namespace TV_show_Renamer
 
                 if (fi3.Extension == ".avi" || fi3.Extension == ".mkv" || fi3.Extension == ".mp4" || fi3.Extension == ".m4v" || fi3.Extension == ".mpg")
                 {
-                    //add file name
+                    //add file name                    
                     MethodInvoker action = delegate
                     {
-                        //dataGridView1.DataSource = none;
-                        fileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension)); 
+                        fileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension));
+                        Thread p = new Thread(new ThreadStart(autoConvert));
+                        p.Start();
+                        dataGridView1.Refresh();
                     };
-                    dataGridView1.BeginInvoke(action);
-                    //fileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension));                    
+                    dataGridView1.BeginInvoke(action);                                        
                 }
                 else if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
                 {
@@ -2628,31 +2631,18 @@ namespace TV_show_Renamer
                 {
                     MethodInvoker action = delegate
                     {
-                        //dataGridView1.DataSource = none;
                         fileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension));
+                        Thread p = new Thread(new ThreadStart(autoConvert));
+                        p.Start();
+                        dataGridView1.Refresh();
                     };
-                    dataGridView1.BeginInvoke(action);
-                    //fileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension));                    
+                    dataGridView1.BeginInvoke(action);                                        
                 }               
 
-            }//end of loop 
-            //addPendingFiles(fileList2.Length);
-            //MethodInvoker action = delegate
-            //{
-                //dataGridView1.DataSource = none;
-               // dataGridView1.DataSource = fileList; 
-            //};
-            //dataGridView1.BeginInvoke(action);
-            
-            //Thread p = new Thread(new ThreadStart(addPendingFiles));
+            }//end of loop             
+
+            //Thread p = new Thread(new ThreadStart(autoConvert));
             //p.Start();
-            //foreach (string fileNameADD in fileName)
-            //{
-            //    Thread h = new Thread(delegate() { addPendingFiles(fileNameADD); });
-             //   h.Start();
-            //}
-            Thread p = new Thread(new ThreadStart(autoConvert));
-            p.Start();
         }
 
         //add files from folder
