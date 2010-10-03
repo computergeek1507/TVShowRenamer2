@@ -13,6 +13,7 @@ using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 using System.Threading;
 using SevenZip;
+
 namespace TV_show_Renamer
 {
     public partial class Form1 : Form
@@ -30,7 +31,8 @@ namespace TV_show_Renamer
         bool addfile = false;
         bool shownb4 = false;
         bool openZIPs = false;
-        bool formClosed = false;        
+        bool formClosed = false;
+        bool closeforUpdate = false;
 
         string movieFolder = "0000";
         string movieFolder2 = "0000";
@@ -1691,6 +1693,12 @@ namespace TV_show_Renamer
             
         }
 
+        //close app for update
+        public void CloseForUpdates() {
+            closeforUpdate = true;
+            Application.Exit();
+        }
+
         #endregion
 
         #region Private Methods
@@ -3303,7 +3311,11 @@ namespace TV_show_Renamer
 
         //create preference file when program closes and close log
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {          
+        {
+            formClosed = true;
+            if (closeforUpdate) {
+                return;
+            }
             StreamWriter pw = new StreamWriter(commonAppData + "//preferences.seh");
 
             pw.WriteLine(convertToolStripMenuItem.Checked);
