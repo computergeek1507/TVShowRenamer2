@@ -30,25 +30,12 @@ namespace TV_show_Renamer
         public void downloadUpdate(string location2){
             
             label1.Text = location2;
-            //check is not working
-           /* try
-            {
-                WebRequest request = WebRequest.Create(new Uri("http://update.scottnation.com/TV_Show_Renamer/TV Show Renamer Setup.msi"));
-                request.Method = "HEAD";
-                WebResponse response = request.GetResponse();
-                Console.WriteLine("{0} {1}", response.ContentLength, response.ContentType);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Problem with Server\nPlease Contact Admin");
-                return;
-            }*/
-            
+                        
             WebClient webClient = new WebClient();
             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
             webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
             //webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/TV Show Renamer Setup.msi"), location2);
-            webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/TV show Renamer.exe"), location2 + "//tvshowsenamer.exe");
+            webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/TV show Renamer.exe"), location2 + "//tvshowrenamer.exe");
         }
 
         //methoid for progress bar
@@ -105,35 +92,18 @@ namespace TV_show_Renamer
             {
                 window.writeLog("Error when deleting files before update" + q.ToString());
             }
-            //string installdir = Directory.GetCurrentDirectory();
+
+            string downloadDir = commonAppData + "\\tvshowrenamer.exe";
+            string installDir = Directory.GetCurrentDirectory() + "\\TV show Renamer.exe";
+
+            string fixedDownloadDir = downloadDir.Replace(" ", "*");
+            string fixedInstallDir = installDir.Replace(" ", "*");
+            string argument = fixedDownloadDir + " " + fixedInstallDir;
+
+            ProcessStartInfo startInfo2 = new ProcessStartInfo(commonAppData + "//test.exe", argument);
+            Process.Start(startInfo2);
             
-            //MessageBox.Show("The uninstaller will run and when it is finished you will have to double click the installer you saved to:\n" + label1.Text);
-            //ProcessStartInfo startInfo2 = new ProcessStartInfo("msiexec.exe", "/x {D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}");
-            //Process.Start(startInfo2);
-            //MessageBox.Show( commonAppData + "\TV show Renamer.exe " + Directory.GetCurrentDirectory() + "\TV show Renamer.exe");
-            //ProcessStartInfo startInfo2 = new ProcessStartInfo(commonAppData + "//test.exe", commonAppData + "//tvshowsenamer.exe " + Directory.GetCurrentDirectory()+"//tvshowrenamer.exe");
-            //Process.Start(startInfo2);
-
-            
-
-            //startInfo2.FileName = label1.Text;
-            //startInfo.Arguments
-            
-            //startInfo2.
-            //ProcessStartInfo startInfo = new ProcessStartInfo();
-            //startInfo.FileName = label1.Text;
-            //startInfo.Arguments
-            //Process.Start(startInfo);
-
-            //ProcessStartInfo startInfo2 = new ProcessStartInfo(commonAppData + "\\Intraller.exe", label1.Text + " " + installdir);
-            //Process.Start(startInfo2);
-            //System.Environment.Exit(0);
-
-            //ProcessStartInfo startInfo2 = new ProcessStartInfo(label1.Text);
-            //Process.Start(startInfo2);
-
-            Application.Exit();
-            //window.Close();
+            window.CloseForUpdates();            
         }
 
         //loads with form
