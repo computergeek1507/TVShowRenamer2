@@ -45,8 +45,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_DA828DEA83F6C68C4C8190829550EF5D"
+        "OwnerKey" = "8:_3A5677DD31504340AB3D9A4D294E3E9C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_3A5677DD31504340AB3D9A4D294E3E9C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DA828DEA83F6C68C4C8190829550EF5D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -268,6 +280,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DA828DEA83F6C68C4C8190829550EF5D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:TvdbLib, Version=0.8.8.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_DA828DEA83F6C68C4C8190829550EF5D"
+                    {
+                    "Name" = "8:TvdbLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:TvdbLib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2015FD8047204861BCE52D7462CFB5C7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -325,14 +368,14 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TV Show Renamer"
         "ProductCode" = "8:{D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}"
-        "PackageCode" = "8:{70ED3296-5D55-462B-9AC6-A03FDF0D5DFA}"
+        "PackageCode" = "8:{249A0C01-7E47-4484-A78D-D34E49ACCF34}"
         "UpgradeCode" = "8:{1FF4AD03-4CF8-4C66-8404-DA88C333C778}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.6.0"
+        "ProductVersion" = "8:2.6.2"
         "Manufacturer" = "8:Scott"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://scottnation.com"

@@ -39,6 +39,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8C0DC57FAB170D805C6D73B64D803771"
+        "OwnerKey" = "8:_2E4798B3EE034DAA83AC989998EBEBE1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D96DFA2BF0DC4C5666E91DE760A73A66"
         "OwnerKey" = "8:_2E4798B3EE034DAA83AC989998EBEBE1"
         "MsmSig" = "8:_UNDEFINED"
@@ -47,6 +53,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_2E4798B3EE034DAA83AC989998EBEBE1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8C0DC57FAB170D805C6D73B64D803771"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -237,6 +249,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8C0DC57FAB170D805C6D73B64D803771"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:TvdbLib, Version=0.8.8.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_8C0DC57FAB170D805C6D73B64D803771"
+                    {
+                    "Name" = "8:TvdbLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:TvdbLib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_EDB6F74B3F9E4730912B4DDCAEAC0980"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D96DFA2BF0DC4C5666E91DE760A73A66"
             {
             "AssemblyRegister" = "3:1"
@@ -332,7 +375,7 @@
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.6.0"
+        "ProductVersion" = "8:2.6.2"
         "Manufacturer" = "8:Scott"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://scottnation.com"
