@@ -919,7 +919,7 @@ namespace TV_show_Renamer
             {
                 for (int y = 0; y < fileList.Count(); y++)
                 {
-                    TVDB InternetTest = new TVDB(this, y, fileList[y].FileName, commonAppData, format2);
+                    TVDB InternetTest = new TVDB(this, y, fileList[y].NewFileName, commonAppData, format2);
                     //imdb getData = new imdb(this, y, fileName[y], format2);
                 }
             }
@@ -937,7 +937,7 @@ namespace TV_show_Renamer
                     }
                     foreach (int u in z)
                     {
-                        TVDB InternetTest = new TVDB(this, u, fileList[u].FileName, commonAppData, format2);
+                        TVDB InternetTest = new TVDB(this, u, fileList[u].NewFileName, commonAppData, format2);
                     }
                 }
             //for (int y = 0; y < fileName.Count(); y++)
@@ -959,7 +959,7 @@ namespace TV_show_Renamer
             {
                 for (int y = 0; y < fileList.Count(); y++)
                 {
-                    imdb getData = new imdb(this, y, fileList[y].FileName, format2);
+                    imdb getData = new imdb(this, y, fileList[y].NewFileName, format2);
                 }
             }
             else
@@ -976,7 +976,7 @@ namespace TV_show_Renamer
                     }
                     foreach (int u in z)
                     {
-                        imdb getData = new imdb(this, u, fileList[u].FileName, format2);
+                        imdb getData = new imdb(this, u, fileList[u].NewFileName, format2);
                     }
                 }
             //for (int y = 0; y < fileName.Count(); y++)
@@ -1153,8 +1153,8 @@ namespace TV_show_Renamer
             startlist.Add("topaz");
             startlist.Add("saphire");
             startlist.Add("fqm");
-            startlist.Add("[vtv]");
-            startlist.Add("[eztv]");
+            startlist.Add("vtv");
+            startlist.Add("eztv");
             startlist.Add("lol");
             startlist.Add("dot");
             startlist.Add("xor");
@@ -1174,10 +1174,11 @@ namespace TV_show_Renamer
             startlist.Add("dsr");
             startlist.Add("dvsky");
             startlist.Add("proper");
-            startlist.Add("(the real deal)");
+            startlist.Add("the real deal");
             startlist.Add("repack");
             startlist.Add("ac3");
             startlist.Add("mvgroup.org");
+            startlist.Add("mvgroup org");
             startlist.Add("hidef");
             startlist.Add(" ws");
             startlist.Add("saints");
@@ -1189,8 +1190,8 @@ namespace TV_show_Renamer
             startlist.Add("p0w4");
             startlist.Add("crimsoni");
             startlist.Add("crimson");
-            startlist.Add("[cac]");
-            startlist.Add("[clarkadamc]");
+            startlist.Add("cac");
+            startlist.Add("clarkadamc");
             startlist.Add("bia");
             startlist.Add("dvsky");
             startlist.Add("notseen");
@@ -1218,9 +1219,9 @@ namespace TV_show_Renamer
             startlist.Add("agd");
             startlist.Add("gnarly");
             startlist.Add("krs");
-            startlist.Add("[goat]");
-            startlist.Add("[buck]");
-            startlist.Add("[bucktv]");
+            startlist.Add("goat");
+            startlist.Add("buck");
+            startlist.Add("bucktv");
             startlist.Add("orpheus");
             startlist.Add("720p");
             startlist.Add("x264");
@@ -1233,7 +1234,7 @@ namespace TV_show_Renamer
             startlist.Add("www directlinkspot com");
             startlist.Add("onelinkmoviez.com");
             startlist.Add("onelinkmoviez com");
-            startlist.Add("tv");
+            //startlist.Add("tv");
 
             //if no file exist make a default file
             if (!File.Exists(commonAppData + "//library.seh"))
@@ -1501,8 +1502,7 @@ namespace TV_show_Renamer
                 Log.WriteLog("Reading Preference Error \n" + e.ToString());
             }
 
-        }//end of preferenceXMLReader Method
-            
+        }//end of preferenceXMLReader Method            
         
         //Move All Files
         public void moveAllFiles(string Outputfolder)
@@ -1741,7 +1741,7 @@ namespace TV_show_Renamer
             //string test = title[0];
             int you = -1;
 
-            for (int i = 1; i < 40; i++)
+            for (int i = 40; i >=0; i--)
             {
                 //varable for break command later
                 bool end = false;
@@ -2011,7 +2011,7 @@ namespace TV_show_Renamer
                 //new way with file input
                 for (int x = 0; x < junklist.Count(); x++)
                 {
-                    newfilename = newfilename.Replace(junklist[x], "");
+                    newfilename = newfilename.Replace(junklist[x] + temp, temp);
                 }//end of for
             }//end of removeExtraCrapToolStripMenuItem if
 
