@@ -18,10 +18,17 @@ namespace TV_show_Renamer
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(string[] args)
         {
             InitializeComponent();
             dataGridView1.DataSource = fileList;
+            getFiles(args);
+        }
+
+        public Form1()
+        {
+            InitializeComponent();
+            dataGridView1.DataSource = fileList;            
         }
 
         #region Initiate Stuff
@@ -46,11 +53,11 @@ namespace TV_show_Renamer
         List<string> junklist = new List<string>();//junk word list
 
         //create other forms
-        junk_words userJunk = new junk_words();
-        //Addtitle titles = new Addtitle();
+        junk_words userJunk = new junk_words();        
         Text_Converter textConvert = new Text_Converter();
+        StatusBar Progress = new StatusBar(100);
         LogWrite Log = new LogWrite();
-
+        
         //get working directory
         string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer 2.6";
 
@@ -1036,9 +1043,7 @@ namespace TV_show_Renamer
                     string origName = fi.Name;
                     string exten = fi.Extension;
                     string attrib = fi.Attributes.ToString();
-                    //if (fileList.Count() > 6000) {
-                    //    return;
-                    //}
+                    
                     if (attrib == "Hidden, System, Archive")
                     {
                         continue;
@@ -1080,14 +1085,10 @@ namespace TV_show_Renamer
                         }
                     }
                     MethodInvoker action = delegate
-                    {
-                        //dataGridView1.DataSource = none;
+                    {                        
                         fileList.Add(new TVClass(fi.DirectoryName, origName, exten));
                     };
-                    dataGridView1.BeginInvoke(action);
-                    //fileList.Add(new TVClass(fi.DirectoryName, origName, exten));
-                    
-                    //addPendingFiles(origName);                    
+                    dataGridView1.BeginInvoke(action);                                
                 }
 
                 // Recurse into subdirectories of this directory.
@@ -2309,6 +2310,7 @@ namespace TV_show_Renamer
             newfilename = newfilename.Replace("Vi" + temp, "VI" + temp);
             newfilename = newfilename.Replace("Iii", "III");
             newfilename = newfilename.Replace("Ii", "II");
+            newfilename = newfilename.Replace("X Files", "X-Files");
 
             // return converted file name
             return newfilename;
@@ -2415,6 +2417,7 @@ namespace TV_show_Renamer
             try
             {
                 mainExtrector = new SevenZipExtractor(zipfile);
+                
             }
             catch (SevenZipArchiveException)
             {
@@ -2448,7 +2451,12 @@ namespace TV_show_Renamer
                 }
                 return;
             }
-            
+
+            mainExtrector.Extracting += extr_Extracting;
+            //StatusBar Progress = new StatusBar(100);
+            Progress.ProgressBarSize(100);
+            Progress.Show();
+                        
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
@@ -2467,6 +2475,7 @@ namespace TV_show_Renamer
             try
             {
                 mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
+                
                 if (add)
                 {
                     FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
@@ -2509,7 +2518,7 @@ namespace TV_show_Renamer
             int archiveIndex = -1;
             FileInfo fi8 = new FileInfo(zipfile);
             SevenZipExtractor mainExtrector;
-
+            if (password == "") return;
             try
             {
                 mainExtrector = new SevenZipExtractor(zipfile, password);
@@ -2546,7 +2555,13 @@ namespace TV_show_Renamer
                     passwordYou.Close();
                 }
                 return;
-            }            
+            }
+
+            mainExtrector.Extracting += extr_Extracting;
+            //StatusBar Progress = new StatusBar(100);
+            Progress.ProgressBarSize(100);
+            Progress.Show();
+            
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
@@ -2667,6 +2682,11 @@ namespace TV_show_Renamer
             
             Thread p = new Thread(new ThreadStart(autoConvert));
             p.Start();
+        }
+
+        private void extr_Extracting(object sender, ProgressEventArgs e)
+        {
+            Progress.ProgressBarSet(e.PercentDone);
         }
 
         //drag and drop
