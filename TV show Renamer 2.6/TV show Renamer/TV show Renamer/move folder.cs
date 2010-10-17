@@ -11,6 +11,7 @@ namespace TV_show_Renamer
 {
     public partial class move_folder : Form
     {
+        
         Form1 mainform = new Form1();
         List<string> tvfolderslist = new List<string>();
         
