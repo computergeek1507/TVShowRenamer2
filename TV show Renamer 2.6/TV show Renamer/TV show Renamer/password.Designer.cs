@@ -96,6 +96,7 @@
             this.Name = "password";
             this.ShowInTaskbar = false;
             this.Text = "Password";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -117,6 +117,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Junk Words Editor";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

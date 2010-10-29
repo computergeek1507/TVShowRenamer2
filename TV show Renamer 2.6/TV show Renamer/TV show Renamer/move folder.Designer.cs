@@ -119,6 +119,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "TV Folder Locations";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.move_folder_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

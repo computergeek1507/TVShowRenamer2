@@ -105,7 +105,8 @@
             this.Name = "Addtitle";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "Add Title";            
+            this.Text = "Add Title";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

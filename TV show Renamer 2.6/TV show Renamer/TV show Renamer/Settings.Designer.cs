@@ -165,6 +165,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Settings";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
