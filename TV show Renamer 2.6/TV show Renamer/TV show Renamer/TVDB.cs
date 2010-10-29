@@ -54,17 +54,35 @@ namespace TV_show_Renamer
             List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(tvdbTitle);
             if (list != null && list.Count > 0)
             {
-                int seriesId = -1;
+                List<int> seriesId = new List<int>();
+                List<string> seriesName = new List<string>();
                 for (int i = 0; i < list.Count();i++ )
                 {
                     if (list[i].Overview != "")
                     {                       
-                        seriesId = list[i].Id;
-                        break;
+                        seriesId.Add(list[i].Id);// = list[i].Id;
+                        seriesName.Add(list[i].SeriesName);
+                        //break;
                     }
                 }
-                if(seriesId == -1)return;               
-                TvdbSeries s = m_tvdbHandler.GetSeries(seriesId, TvdbLanguage.DefaultLanguage, true, false, false);
+                if (seriesId.Count() == 0) return;//return if nothing found
+                int selectedSeriesId = -1;
+                if (seriesId.Count() == 1) 
+                { 
+                    selectedSeriesId = seriesId[0]; 
+                } else 
+                {
+                    SelectMenu SelectMain = new SelectMenu(seriesName);
+                    if (SelectMain.ShowDialog() == DialogResult.OK)
+                    {
+                        int selectedid = SelectMain.selected;
+                        selectedSeriesId = seriesId[selectedid];
+                        SelectMain.Close();                        
+                    }                    
+                }
+
+                if (selectedSeriesId==-1) return;//return if nothing is found
+                TvdbSeries s = m_tvdbHandler.GetSeries(selectedSeriesId, TvdbLanguage.DefaultLanguage, true, false, false);
                 List<String> epList = new List<string>();
                 string newTitle = null;
                 foreach (TvdbEpisode esp in s.Episodes)

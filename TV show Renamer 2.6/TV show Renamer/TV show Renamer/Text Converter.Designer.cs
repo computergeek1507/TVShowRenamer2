@@ -139,6 +139,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Text Converter";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

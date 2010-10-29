@@ -74,6 +74,7 @@
             this.Name = "EditTitle";
             this.ShowInTaskbar = false;
             this.Text = "Edit Title";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

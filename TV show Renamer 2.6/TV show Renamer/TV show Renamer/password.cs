@@ -14,19 +14,20 @@ namespace TV_show_Renamer
         string password2 = "";
         string fullzipfile = null;
         string fullzipname = null;
-        Form1 main;
+        //Form1 main;
 
         //get password
         public string Password { get { return password2; } }
 
-        public password(Form1 temp, string zipFile, string zipname)
+        public password(string zipFile, string zipname)
         {
             InitializeComponent();
-            main = temp;
+            //main = temp;
             fullzipfile = zipFile;
             fullzipname = zipname;
             label2.Text = zipname;
         }
+
 
         //ok button        
         private void button1_Click(object sender, EventArgs e)

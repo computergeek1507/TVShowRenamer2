@@ -178,7 +178,7 @@ namespace TV_show_Renamer
                 if (type == 0) // if we get a title
                 {
                     IMDbTitle title = (IMDbTitle)result;
-                    Console.WriteLine(title.Title);
+                    
                     for (int i = 0; i < title.Seasons.Count; i++)
                     {
                         IMDbSerieSeason season = title.Seasons[i];
@@ -215,20 +215,7 @@ namespace TV_show_Renamer
         {
             progressBar1.Value += value;
         }
-
-        //add title button
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (label1.Text!="")
-            {
-                if (main.addTitle(label1.Text))
-                {
-                    Thread t = new Thread(new ThreadStart(convert));
-                    t.Start();
-                }
-            }
-        }
-
+                
         //autoconvert method 
         private void convert()
         {

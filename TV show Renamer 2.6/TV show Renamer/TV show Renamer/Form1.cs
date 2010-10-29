@@ -2421,7 +2421,7 @@ namespace TV_show_Renamer
             }
             catch (SevenZipArchiveException)
             {
-                password passwordYou = new password(this, zipfile, zipName);
+                password passwordYou = new password(zipfile, zipName);
 
                 if (passwordYou.ShowDialog() == DialogResult.OK)
                 {
@@ -2443,7 +2443,7 @@ namespace TV_show_Renamer
             catch (SevenZipArchiveException)
             {
                 //Call Passord Method
-                password passwordYou = new password(this, zipfile, zipName);
+                password passwordYou = new password( zipfile, zipName);
                 if (passwordYou.ShowDialog() == DialogResult.OK)
                 {
                     this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
@@ -2456,7 +2456,8 @@ namespace TV_show_Renamer
             //StatusBar Progress = new StatusBar(100);
             Progress.ProgressBarSize(100);
             Progress.Show();
-                        
+            
+                       
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
@@ -2494,6 +2495,17 @@ namespace TV_show_Renamer
                     dataGridView1.BeginInvoke(action);                    
                 }
             }
+            catch (SevenZipArchiveException)
+            {
+                //Call Passord Method
+                password passwordYou = new password( zipfile, zipName);
+                if (passwordYou.ShowDialog() == DialogResult.OK)
+                {
+                    this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
+                    passwordYou.Close();
+                }
+                return;
+            }
             catch (FileNotFoundException)
             {
                 return;
@@ -2525,7 +2537,7 @@ namespace TV_show_Renamer
             }
             catch (SevenZipArchiveException)
             {
-                password passwordYou = new password(this, zipfile, zipName);
+                password passwordYou = new password( zipfile, zipName);
 
                 if (passwordYou.ShowDialog() == DialogResult.OK)
                 {
@@ -2547,7 +2559,7 @@ namespace TV_show_Renamer
             }
             catch (SevenZipArchiveException)
             {   //add password
-                password passwordYou = new password(this, zipfile, zipName);
+                password passwordYou = new password( zipfile, zipName);
 
                 if (passwordYou.ShowDialog() == DialogResult.OK)
                 {
@@ -2560,7 +2572,7 @@ namespace TV_show_Renamer
             mainExtrector.Extracting += extr_Extracting;
             //StatusBar Progress = new StatusBar(100);
             Progress.ProgressBarSize(100);
-            Progress.Show();
+            Progress.Show();            
             
             for (int j = 0; j < sizeOfArchive; j++)
             {
@@ -2599,6 +2611,17 @@ namespace TV_show_Renamer
                     };
                     dataGridView1.BeginInvoke(action);                    
                 }
+            }
+            catch (SevenZipArchiveException)
+            {
+                //Call Passord Method
+                password passwordYou = new password( zipfile, zipName);
+                if (passwordYou.ShowDialog() == DialogResult.OK)
+                {
+                    this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
+                    passwordYou.Close();
+                }
+                return;
             }
             catch (FileNotFoundException)
             {

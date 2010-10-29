@@ -76,8 +76,9 @@
             this.MinimizeBox = false;
             this.Name = "download";
             this.Text = "Downloading";
-            this.Load += new System.EventHandler(this.download_Load);
+            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.download_FormClosed);
+            this.Load += new System.EventHandler(this.download_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
