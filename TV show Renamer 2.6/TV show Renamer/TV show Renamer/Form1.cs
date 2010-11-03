@@ -858,37 +858,7 @@ namespace TV_show_Renamer
         #region Other Methods
 
         #region Public Mehtods
-
-        //get title of selected off IMDB
-        public void getIMDBTitles()
-        {
-            int format = -1;
-            //1x01
-            if (x01ToolStripMenuItem.Checked)
-            {
-                format = 1;
-            }
-            //0101 format
-            if (toolStripMenuItem3.Checked)
-            {
-                format = 2;
-            }
-            //101 format
-            if (toolStripMenuItem1.Checked)
-            {
-                format = 3;
-            }
-            //S01E01 format
-            if (s01E01ToolStripMenuItem1.Checked)
-            {
-                format = 4;
-            }
-            Thread h = new Thread(delegate() { autoTitle(format, false); });
-            h.Start();
-
-            //imdb getData = new imdb(this,y,fileName[y], format);
-        }
-
+                
         //get title of selected off IMDB
         public void getTVDBTitles()
         {
@@ -958,46 +928,7 @@ namespace TV_show_Renamer
             };
             dataGridView1.BeginInvoke(action);
         }
-
-        //method for thread IMDB
-        public void autoTitle(int format2, bool all)
-        {
-            if (all && fileList.Count != 0)
-            {
-                for (int y = 0; y < fileList.Count(); y++)
-                {
-                    imdb getData = new imdb(this, y, fileList[y].NewFileName, format2);
-                }
-            }
-            else
-                if (dataGridView1.CurrentRow != null)
-                {
-                    List<int> z = new List<int>();
-
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        if (dataGridView1.Rows[i].Cells[0].Selected)
-                        {
-                            z.Add(i);
-                        }
-                    }
-                    foreach (int u in z)
-                    {
-                        imdb getData = new imdb(this, u, fileList[u].NewFileName, format2);
-                    }
-                }
-            //for (int y = 0; y < fileName.Count(); y++)
-            //{ 
-            //    imdb getData = new imdb(this,y,fileName[y], format2);
-            //} 
-            MethodInvoker action = delegate
-            {
-                dataGridView1.Refresh();
-                dataGridView1.AutoResizeColumns();
-            };
-            dataGridView1.BeginInvoke(action);
-        }
-
+        
         //new convert method
         public void autoConvert()
         {
@@ -3298,42 +3229,7 @@ namespace TV_show_Renamer
                 copySelectedFiles(otherVidFolder);
             }
         }
-
-        //get titles of selected off IMBD
-        private void getTitlesOffIMBDOfSelectedToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            this.getIMDBTitles();
-        }
-
-        //get titles off IMBD
-        private void getTitlesOffIMBDToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            int format = -1;
-            //1x01
-            if (x01ToolStripMenuItem.Checked)
-            {
-                format = 1;
-            }
-            //0101 format
-            if (toolStripMenuItem3.Checked)
-            {
-                format = 2;
-            }
-            //101 format
-            if (toolStripMenuItem1.Checked)
-            {
-                format = 3;
-            }
-            //S01E01 format
-            if (s01E01ToolStripMenuItem1.Checked)
-            {
-                format = 4;
-            }
-
-            Thread h = new Thread(delegate() { autoTitleTVDB(format, true); });
-            h.Start();
-        }
-        
+                               
         #endregion
 
         //loads when starts

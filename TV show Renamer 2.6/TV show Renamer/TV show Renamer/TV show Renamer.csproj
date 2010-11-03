@@ -132,12 +132,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="imdb.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="imdb.Designer.cs">
-      <DependentUpon>imdb.cs</DependentUpon>
-    </Compile>
     <Compile Include="Junk Words.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,9 +194,6 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="imdb.resx">
-      <DependentUpon>imdb.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Junk Words.resx">
       <DependentUpon>Junk Words.cs</DependentUpon>
@@ -311,7 +302,6 @@
     <Resource Include="Resources\64-bit\7z.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Resources\IMDBDLL.dll" />
     <Content Include="Resources\TvdbLib.dll" />
     <Content Include="tv.ico" />
   </ItemGroup>
