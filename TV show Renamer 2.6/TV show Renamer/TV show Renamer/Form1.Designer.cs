@@ -204,7 +204,7 @@
             this.addFilesToolStripMenuItem.Name = "addFilesToolStripMenuItem";
             this.addFilesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.addFilesToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.addFilesToolStripMenuItem.Text = "Add Files";
+            this.addFilesToolStripMenuItem.Text = "Add Files...";
             this.addFilesToolStripMenuItem.ToolTipText = "Add Files To be Coverted";
             this.addFilesToolStripMenuItem.Click += new System.EventHandler(this.addFilesToolStripMenuItem_Click);
             // 
@@ -214,7 +214,7 @@
             this.addFolderToolStripMenuItem.Name = "addFolderToolStripMenuItem";
             this.addFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.addFolderToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.addFolderToolStripMenuItem.Text = "Add Folder";
+            this.addFolderToolStripMenuItem.Text = "Add Folder...";
             this.addFolderToolStripMenuItem.ToolTipText = "Add a Folder of Files To be Coverted";
             this.addFolderToolStripMenuItem.Click += new System.EventHandler(this.addFolderToolStripMenuItem_Click);
             // 
