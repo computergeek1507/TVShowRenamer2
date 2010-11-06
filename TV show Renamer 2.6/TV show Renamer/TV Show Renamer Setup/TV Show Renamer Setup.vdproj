@@ -21,13 +21,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_38BA4709AE58F1E5FB060FA2BBA499BD"
+        "OwnerKey" = "8:_3A5677DD31504340AB3D9A4D294E3E9C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_3A5677DD31504340AB3D9A4D294E3E9C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4D70F9A90C3CADEF9602A4B7FAF5F41A"
+        "MsmKey" = "8:_6251D3484636B963EB814BDF13E5DE50"
         "OwnerKey" = "8:_3A5677DD31504340AB3D9A4D294E3E9C"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -35,12 +41,6 @@
         {
         "MsmKey" = "8:_6FCB15A20F85483092394FD9D4543827"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_980D1A4C3F2386B6EA36F1CD7D2FAF63"
-        "OwnerKey" = "8:_3A5677DD31504340AB3D9A4D294E3E9C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -58,19 +58,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6251D3484636B963EB814BDF13E5DE50"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_DA828DEA83F6C68C4C8190829550EF5D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_980D1A4C3F2386B6EA36F1CD7D2FAF63"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4D70F9A90C3CADEF9602A4B7FAF5F41A"
+        "OwnerKey" = "8:_38BA4709AE58F1E5FB060FA2BBA499BD"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -198,20 +198,51 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4D70F9A90C3CADEF9602A4B7FAF5F41A"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_38BA4709AE58F1E5FB060FA2BBA499BD"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:SevenZipSharp, Version=1.0.3537.37869, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_4D70F9A90C3CADEF9602A4B7FAF5F41A"
+                    "_38BA4709AE58F1E5FB060FA2BBA499BD"
                     {
                     "Name" = "8:SevenZipSharp.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:SevenZipSharp.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2015FD8047204861BCE52D7462CFB5C7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6251D3484636B963EB814BDF13E5DE50"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:IMDBDLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_6251D3484636B963EB814BDF13E5DE50"
+                    {
+                    "Name" = "8:IMDBDLL.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:IMDBDLL.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2015FD8047204861BCE52D7462CFB5C7"
@@ -247,37 +278,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_980D1A4C3F2386B6EA36F1CD7D2FAF63"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:IMDBDLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_980D1A4C3F2386B6EA36F1CD7D2FAF63"
-                    {
-                    "Name" = "8:IMDBDLL.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:IMDBDLL.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_2015FD8047204861BCE52D7462CFB5C7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DA828DEA83F6C68C4C8190829550EF5D"
@@ -368,14 +368,14 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TV Show Renamer"
         "ProductCode" = "8:{D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}"
-        "PackageCode" = "8:{249A0C01-7E47-4484-A78D-D34E49ACCF34}"
+        "PackageCode" = "8:{2BE78915-583E-4744-8B11-A0A2E67CC852}"
         "UpgradeCode" = "8:{1FF4AD03-4CF8-4C66-8404-DA88C333C778}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.6.2"
+        "ProductVersion" = "8:2.6.3"
         "Manufacturer" = "8:Scott"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://scottnation.com"

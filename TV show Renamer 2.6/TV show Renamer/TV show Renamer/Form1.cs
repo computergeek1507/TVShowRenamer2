@@ -33,7 +33,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 262;//2.6Beta
+        const int appVersion = 263;//2.6Beta
         const int HowDeepToScan = 4;
         bool addfile = false;
         bool shownb4 = false;
@@ -2053,7 +2053,7 @@ namespace TV_show_Renamer
                 for (int j = 0; j < 100; j++)
                 {
                     string newi = i.ToString();
-                    string newj = j.ToString();
+                    string newj = j.ToString();                    
                     string output = null;
                     //check if i is less than 10
                     if (i < 10)
@@ -2063,7 +2063,7 @@ namespace TV_show_Renamer
                     //check if j is less than 10
                     if (j < 10)
                     {
-                        newj = "0" + j.ToString();
+                        newj = "0" + j.ToString();                        
                     }
 
                     //make string to compare changed name too
@@ -2073,7 +2073,7 @@ namespace TV_show_Renamer
                     if (x01ToolStripMenuItem.Checked)
                     {
                         output = i.ToString() + "x" + newj;
-
+                       
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
                         newfilename = newfilename.Replace(newi + newj, output);//0101
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
