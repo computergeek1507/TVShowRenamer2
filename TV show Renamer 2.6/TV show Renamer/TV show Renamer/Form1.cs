@@ -303,7 +303,7 @@ namespace TV_show_Renamer
                     for (int z = 0; z < fileList.Count; z++)
                     {
                         string fullFileName = fileList[z].FullFileName;// fileFolder[z] + "\\" + fileName[z];
-                        info = infoFinder(fullFileName, folderlist, movefolder);
+                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
                         int index = Convert.ToInt32(info[2]);
                         if (info[0] != "no folder")
                         {
@@ -312,8 +312,20 @@ namespace TV_show_Renamer
                                 MessageBox.Show("Folder List is Wrong");
                                 return;
                             }
-                            if (info[1] != "0")
+                            if (info[0] == "no folder")
+                        {
+                            if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
+                                System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
+                                info[0] = movefolder[index] + "\\" + info[3];
+                                info[1]="0";
+                                index = 0;
+                            }
+                            else {
+                                break;
+                            }
+                        
+                        }
                                 if (!(File.Exists(movefolder[index] + "\\" + info[0] + "\\Season " + info[1])))
                                 {
                                     System.IO.Directory.CreateDirectory(movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
@@ -378,12 +390,7 @@ namespace TV_show_Renamer
                                     Log.WriteLog(t.ToString());
                                     continue;
                                 }
-                            }//end of if-else
-                        }
-                        else
-                        {
-                            MessageBox.Show("No Such TV Show On Server");
-                        }
+                            }//end of if-else                        
                     }//end of for loop                    
                 }
                 else
@@ -410,10 +417,22 @@ namespace TV_show_Renamer
                     for (int z = 0; z < fileList.Count; z++)
                     {
                         string fullFileName = fileList[z].FullFileName;
-                        info = infoFinder(fullFileName, folderlist, movefolder);
+                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
                         int index = Convert.ToInt32(info[2]);
-                        if (info[0] != "no folder")
+                        if (info[0] == "no folder")
                         {
+                            if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            {
+                                System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
+                                info[0] = movefolder[index] + "\\" + info[3];
+                                info[1]="0";
+                                index = 0;
+                            }
+                            else {
+                                break;
+                            }
+                        
+                        }
                             if (index == -1)
                             {
                                 MessageBox.Show("Folder List is Wrong");
@@ -486,11 +505,7 @@ namespace TV_show_Renamer
                                     continue;
                                 }
                             }//end of if-else
-                        }
-                        else
-                        {
-                            MessageBox.Show("No Such TV Show On Server");
-                        }
+                        
 
                     }//end of for loop
                     //MessageBox.Show("Moved");
@@ -532,8 +547,9 @@ namespace TV_show_Renamer
                         continue;
                     }
                 }//end of for loop
-                dataGridView1.Refresh();
-                dataGridView1.AutoResizeColumns();
+
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
             }
             else
             {//catch if nothing is selected
@@ -936,7 +952,10 @@ namespace TV_show_Renamer
             {
                 for (int z = 0; z < fileList.Count; z++)
                 {
-                    //call fileRenamer methoid
+                    if (!fileList[z].AutoEdit) {
+                        continue;
+                    }
+                    //call fileRenamer method
                     fileList[z].NewFileName = this.fileRenamer(fileList[z].FileName, z, fileList[z].FileExtention);
                 }//end of for loop
                 
@@ -1636,7 +1655,7 @@ namespace TV_show_Renamer
         #region Private Methods
 
         //returns string list of info
-        private List<string> infoFinder(string oldfile, List<string> folderlist, List<string> rootfolderlist)
+        private List<string> infoFinder(string oldfile,string oldfileLocation, List<string> folderlist, List<string> rootfolderlist)
         {
             string fileName = lowering(oldfile);
             List<string> stuff = new List<string>();
@@ -1646,6 +1665,7 @@ namespace TV_show_Renamer
             stuff.Add("no folder");
             stuff.Add("0");
             stuff.Add("-1");
+            stuff.Add("New Folder");
             /*
             //figure out if tv show is listed
             for (int i = 0; i < folderlist.Count(); i++)
@@ -1721,6 +1741,9 @@ namespace TV_show_Renamer
                         stuff[1] = i.ToString();
                         //episode = j;
                         shortTitle = test.Remove(you - 1, test.Length - (you - 1));
+                        //figure out name for new folder
+                        stuff[3] = oldfile.Remove(you - 1, test.Length - (you - 1)).Replace(oldfileLocation + "\\", "");
+                        
                         end = true;
                         break;
                     }
@@ -2387,6 +2410,12 @@ namespace TV_show_Renamer
             //StatusBar Progress = new StatusBar(100);
             Progress.ProgressBarSize(100);
             Progress.Show();
+            /*MethodInvoker action2 = delegate
+            {
+                Progress.ProgressBarSize(100);
+                Progress.Show();
+            };
+            Progress.BeginInvoke(action2);*/
             
                        
             for (int j = 0; j < sizeOfArchive; j++)
@@ -2407,6 +2436,7 @@ namespace TV_show_Renamer
             try
             {
                 mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
+                //mainExtrector.Dispose();
                 
                 if (add)
                 {
@@ -2445,6 +2475,8 @@ namespace TV_show_Renamer
             {
                 return;
             }
+            Thread p = new Thread(new ThreadStart(autoConvert));
+            p.Start();
         }
         
         /// <summary>
@@ -2465,6 +2497,7 @@ namespace TV_show_Renamer
             try
             {
                 mainExtrector = new SevenZipExtractor(zipfile, password);
+                
             }
             catch (SevenZipArchiveException)
             {
@@ -2503,7 +2536,13 @@ namespace TV_show_Renamer
             mainExtrector.Extracting += extr_Extracting;
             //StatusBar Progress = new StatusBar(100);
             Progress.ProgressBarSize(100);
-            Progress.Show();            
+            Progress.Show();
+            /*MethodInvoker action2 = delegate
+            {
+                Progress.ProgressBarSize(100);
+                Progress.Show();
+            };
+            Progress.BeginInvoke(action2);*/
             
             for (int j = 0; j < sizeOfArchive; j++)
             {
@@ -2525,6 +2564,7 @@ namespace TV_show_Renamer
             try
             {
                 mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
+                //mainExtrector.Dispose();
                 if (add)
                 {
                     FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);                    
@@ -2561,7 +2601,9 @@ namespace TV_show_Renamer
             catch (IOException)
             {
                 return;
-            }            
+            }
+            Thread p = new Thread(new ThreadStart(autoConvert));
+            p.Start();
         }
 
         //add files 
@@ -2706,10 +2748,18 @@ namespace TV_show_Renamer
                         {
                             List<string> info = new List<string>();
                             string fullFileName = fileList[z].FullFileName;
-                            info = infoFinder(fullFileName, folderlist, movefolder);
+                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
                             int index = Convert.ToInt32(info[2]);
-                            if (info[0] != "no folder")
+                            if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
+                                System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
+                                info[0] = movefolder[index] + "\\" + info[3];
+                                info[1]="0";
+                                index = 0;
+                            }
+                            else {
+                                break;
+                            }
                                 if (index == -1)
                                 {
                                     MessageBox.Show("Folder List is Wrong");
@@ -2787,11 +2837,7 @@ namespace TV_show_Renamer
                                     }
                                     fileList[z].FileFolder = (movefolder[index] + "\\" + info[0]);
                                 }//end of if-else
-                            }
-                            else
-                            {
-                                MessageBox.Show("No Such TV Show On Server");
-                            }
+                           
 
                         }
                     }
@@ -2820,11 +2866,19 @@ namespace TV_show_Renamer
                             List<string> info = new List<string>();
 
                             string fullFileName = fileList[z].FullFileName;
-                            info = infoFinder(fullFileName, folderlist, movefolder);
+                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
                             int index = Convert.ToInt32(info[2]);
 
-                            if (info[0] != "no folder")
+                             if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
+                                System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
+                                info[0] = movefolder[index] + "\\" + info[3];
+                                info[1]="0";
+                                index = 0;
+                            }
+                            else {
+                                break;
+                            }
                                 if (index == -1)
                                 {
                                     MessageBox.Show("Folder List is Wrong");
@@ -2900,11 +2954,7 @@ namespace TV_show_Renamer
                                         continue;
                                     }
                                 }//end of if-else
-                            }
-                            else
-                            {
-                                MessageBox.Show("No Such TV Show On Server");
-                            }
+                            
                         }
                     }
                 }
@@ -2933,7 +2983,7 @@ namespace TV_show_Renamer
 
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
                         u.Add(fileList[i].FileFolder);
                     }
@@ -3229,7 +3279,31 @@ namespace TV_show_Renamer
                 copySelectedFiles(otherVidFolder);
             }
         }
-                               
+
+        //edit Pending File Name
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
+                    {
+                        EditTitle mainEdit = new EditTitle(fileList[i].NewFileName);
+                        mainEdit.Text = "Edit Pending File Name";
+                        if (mainEdit.ShowDialog() == DialogResult.OK)
+                        {
+                            fileList[i].NewFileName = mainEdit.getTitle();
+                            fileList[i].AutoEdit = false;
+                            mainEdit.Close();
+                        }
+                        dataGridView1.Refresh();
+                        dataGridView1.AutoResizeColumns();
+                    }
+                }
+            }
+        }
+                                       
         #endregion
 
         //loads when starts
@@ -3297,6 +3371,6 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();          
         }
-        
+               
     }//end of form1 partial class
 }//end of namespace
