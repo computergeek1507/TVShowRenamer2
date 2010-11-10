@@ -60,12 +60,12 @@ namespace TV_show_Renamer
                 {
                     if (list[i].Overview != "")
                     {                       
-                        seriesId.Add(list[i].Id);// = list[i].Id;
+                        seriesId.Add(list[i].Id);   // = list[i].Id;
                         seriesName.Add(list[i].SeriesName);
                         //break;
                     }
                 }
-                if (seriesId.Count() == 0) return;//return if nothing found
+                if (seriesId.Count() == 0) return;  //return if nothing found
                 int selectedSeriesId = -1;
                 if (seriesId.Count() == 1) 
                 { 
@@ -81,7 +81,7 @@ namespace TV_show_Renamer
                     }                    
                 }
 
-                if (selectedSeriesId==-1) return;//return if nothing is found
+                if (selectedSeriesId==-1) return;   //return if nothing is found
                 TvdbSeries s = m_tvdbHandler.GetSeries(selectedSeriesId, TvdbLanguage.DefaultLanguage, true, false, false);
                 List<String> epList = new List<string>();
                 string newTitle = null;
