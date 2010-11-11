@@ -302,37 +302,38 @@ namespace TV_show_Renamer
                     List<string> info = new List<string>();
                     for (int z = 0; z < fileList.Count; z++)
                     {
-                        string fullFileName = fileList[z].FullFileName;// fileFolder[z] + "\\" + fileName[z];
+                        string fullFileName = fileList[z].FullFileName;
                         info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
                         int index = Convert.ToInt32(info[2]);
-                        if (info[0] != "no folder")
-                        {
-                            if (index == -1)
-                            {
-                                MessageBox.Show("Folder List is Wrong");
-                                return;
-                            }
-                            if (info[0] == "no folder")
+                        if (info[0] == "no folder")
                         {
                             if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
                                 System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
-                                info[0] = movefolder[index] + "\\" + info[3];
-                                info[1]="0";
                                 index = 0;
+                                info[0] = movefolder[index] + "\\" + info[3];
+                                info[1] = "0";
                             }
-                            else {
+                            else
+                            {
                                 break;
                             }
-                        
+
                         }
-                                if (!(File.Exists(movefolder[index] + "\\" + info[0] + "\\Season " + info[1])))
-                                {
-                                    System.IO.Directory.CreateDirectory(movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
-                                }                                
-                                try
-                                {
-                                    FileSystem.MoveFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileList[z].FileName), UIOption.AllDialogs);
+                        if (index == -1)
+                        {
+                            MessageBox.Show("Folder List is Wrong");
+                            return;
+                        }
+                        if (info[1] != "0")
+                        {
+                            if (!(File.Exists(movefolder[index] + "\\" + info[0] + "\\Season " + info[1])))
+                            {
+                                System.IO.Directory.CreateDirectory(movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
+                            }
+                            try
+                            {
+                                FileSystem.MoveFile(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileList[z].FileName), UIOption.AllDialogs);
                                     Log.moveWriteLog(fullFileName, (movefolder[index] + "\\" + info[0] + "\\Season " + info[1] + "\\"));
                                     //clear stuff
                                     fileList[z].FileFolder = (movefolder[index] + "\\" + info[0] + "\\Season " + info[1]);
@@ -424,9 +425,9 @@ namespace TV_show_Renamer
                             if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
                                 System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
+                                index = 0;
                                 info[0] = movefolder[index] + "\\" + info[3];
                                 info[1]="0";
-                                index = 0;
                             }
                             else {
                                 break;
@@ -1663,8 +1664,8 @@ namespace TV_show_Renamer
             string infoChanged = fileName;
             int indexof = 0;
             stuff.Add("no folder");
-            stuff.Add("0");
-            stuff.Add("-1");
+            stuff.Add("0");//season 
+            stuff.Add("-1");//tv folder
             stuff.Add("New Folder");
             /*
             //figure out if tv show is listed
@@ -1754,6 +1755,67 @@ namespace TV_show_Renamer
                     break;
                 }
             }//end of season loop
+
+            //date format
+            if (dateToolStripMenuItem.Checked)
+            {
+                string finalValue = null;
+                for (int year = 0; year < 20; year++)
+                {
+                    bool end = false;
+                    for (int month = 0; month < 13; month++)
+                    {
+                        for (int day = 1; day < 32; day++)
+                        {
+                            string newyear = year.ToString();
+                            string newmonth = month.ToString();
+                            string newday = day.ToString();
+
+                            //check if i is less than 10
+                            if (year < 10)
+                            {
+                                newyear = "0" + year.ToString();
+                            }
+                            //check if j is less than 10
+                            if (month < 10)
+                            {
+                                newmonth = "0" + month.ToString();
+                            }
+                            //check if k is less than 10
+                            if (day < 10)
+                            {
+                                newday = "0" + day.ToString();
+                            }
+                            string kk = "20" + newyear;
+                            finalValue = month.ToString() + "-" + day.ToString() + "-" + kk;
+                            you = test.IndexOf(finalValue);//date time
+                            //you = test.IndexOf(newmonth + "-" + newday + "-" + kk);//date time
+                            //finalValue = test.Replace(month.ToString() + "-" + day.ToString() + "-" + kk, "0000");
+                            if (you != -1)
+                            {
+                                //MessageBox.Show(you.ToString());
+                                shortTitle = test.Remove(you - 1, test.Length - (you - 1));
+                                //figure out name for new folder
+                                stuff[3] = oldfile.Remove(you - 1, test.Length - (you - 1)).Replace(oldfileLocation + "\\", "");
+                                end = true;
+                                break;
+                            }
+
+                        }//end of for loop day
+                        if (end)
+                        {
+                            break;
+                        }
+                    }//end of for loop month
+                    if (end)
+                    {
+                        break;
+                    }
+                }//end of for loop year
+                //MessageBox.Show(finalValue);
+            }//end of if for date check box
+
+
             //figure out if tv show is listed
             if (shortTitle == null)
             {
@@ -1775,6 +1837,11 @@ namespace TV_show_Renamer
                     break;
                 }
             }//end of for loop
+
+            
+
+
+
             /*
             //loop for seasons
             for (int i = 1; i < 40; i++)
@@ -2750,15 +2817,19 @@ namespace TV_show_Renamer
                             string fullFileName = fileList[z].FullFileName;
                             info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
                             int index = Convert.ToInt32(info[2]);
-                            if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            if (info[0] == "no folder")
                             {
-                                System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
-                                info[0] = movefolder[index] + "\\" + info[3];
-                                info[1]="0";
-                                index = 0;
-                            }
-                            else {
-                                break;
+                                if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                {
+                                    System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
+                                    index = 0;
+                                    info[0] = movefolder[index] + "\\" + info[3];
+                                    info[1] = "0";
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
                                 if (index == -1)
                                 {
@@ -2868,16 +2939,19 @@ namespace TV_show_Renamer
                             string fullFileName = fileList[z].FullFileName;
                             info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
                             int index = Convert.ToInt32(info[2]);
-
-                             if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            if (info[0] == "no folder")
                             {
-                                System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
-                                info[0] = movefolder[index] + "\\" + info[3];
-                                info[1]="0";
-                                index = 0;
-                            }
-                            else {
-                                break;
+                                if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                {
+                                    System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
+                                    index = 0;
+                                    info[0] = movefolder[index] + "\\" + info[3];
+                                    info[1] = "0";
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
                                 if (index == -1)
                                 {
