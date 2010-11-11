@@ -309,10 +309,18 @@ namespace TV_show_Renamer
                         {
                             if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
-                                System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
-                                index = 0;
-                                info[0] = movefolder[index] + "\\" + info[3];
-                                info[1] = "0";
+                                EditTitle mainEdit = new EditTitle(info[3]);
+                                mainEdit.Text = "Edit Folder Name";
+                                if (mainEdit.ShowDialog() == DialogResult.OK)
+                                {
+                                    //mainEdit.getTitle();
+                                    System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + mainEdit.getTitle());
+                                    index = 0;
+                                    info[0] = mainEdit.getTitle();
+                                    info[1] = "0";
+                                    mainEdit.Close();
+                                }
+                                else break;                                
                             }
                             else
                             {
@@ -424,10 +432,18 @@ namespace TV_show_Renamer
                         {
                             if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
-                                System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
-                                index = 0;
-                                info[0] = movefolder[index] + "\\" + info[3];
-                                info[1]="0";
+                                EditTitle mainEdit = new EditTitle(info[3]);
+                                mainEdit.Text = "Edit Folder Name";
+                                if (mainEdit.ShowDialog() == DialogResult.OK)
+                                {
+                                    //mainEdit.getTitle();
+                                    System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + mainEdit.getTitle());
+                                    index = 0;
+                                    info[0] = mainEdit.getTitle();
+                                    info[1] = "0";
+                                    mainEdit.Close();
+                                }
+                                else break;  
                             }
                             else {
                                 break;
@@ -1763,9 +1779,9 @@ namespace TV_show_Renamer
                 for (int year = 0; year < 20; year++)
                 {
                     bool end = false;
-                    for (int month = 0; month < 13; month++)
+                    for (int month = 12; month >= 0; month--)
                     {
-                        for (int day = 1; day < 32; day++)
+                        for (int day = 31; day > 0; day--)
                         {
                             string newyear = year.ToString();
                             string newmonth = month.ToString();
@@ -2254,11 +2270,11 @@ namespace TV_show_Renamer
                     if (fileList[index].FileTitle != "")
                     {
                         string newTitle = fileList[index].FileTitle;
-                        tempTitle = " - " + newTitle;
+                        dateTitle = " - " + newTitle;
                     }
                     else
                     {
-                        tempTitle = " -";
+                        dateTitle = " -";
                     }//end of nested if-else
                 }
                 else
@@ -2268,10 +2284,12 @@ namespace TV_show_Renamer
 
                 for (int year = 0; year < 20; year++)
                 {
+                    bool end = false;
                     for (int month = 1; month < 13; month++)
                     {
                         for (int day = 1; day < 32; day++)
                         {
+                            string startnewname = newfilename;
                             string newyear = year.ToString();
                             string newmonth = month.ToString();
                             string newday = day.ToString();
@@ -2293,11 +2311,26 @@ namespace TV_show_Renamer
                             }
                             string kk = "20" + newyear;
 
-                            newfilename = newfilename.Replace(kk + " " + newmonth + " " + newday, month + "-" + day + "-" + kk + dateTitle);
+                            newfilename = newfilename.Replace(kk + " " + newmonth + " " + newday, month.ToString() + "-" + day.ToString() + "-" + kk);
+                            newfilename = newfilename.Replace(kk + " " + month + " " + day, month + "-" + day + "-" + kk);
+                            newfilename = newfilename.Replace(month + "-" + day + "-" + kk, month + "-" + day + "-" + kk + dateTitle);//add title
                             newfilename = newfilename.Replace(month + " " + day + " " + kk, month + "-" + day + "-" + kk + dateTitle);//add title
 
+                            if (startnewname != newfilename)
+                            {
+                                end = true;
+                                break;
+                            }
                         }//end of for loop day
+                        if (end)
+                        {
+                            break;
+                        }
                     }//end of for loop month
+                    if (end)
+                    {
+                        break;
+                    }
                 }//end of for loop year
 
             }//end of if for date check box
@@ -2821,10 +2854,18 @@ namespace TV_show_Renamer
                             {
                                 if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                                 {
-                                    System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
-                                    index = 0;
-                                    info[0] = movefolder[index] + "\\" + info[3];
-                                    info[1] = "0";
+                                    EditTitle mainEdit = new EditTitle(info[3]);
+                                    mainEdit.Text = "Edit Folder Name";
+                                    if (mainEdit.ShowDialog() == DialogResult.OK)
+                                    {
+                                        //mainEdit.getTitle();
+                                        System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + mainEdit.getTitle());
+                                        index = 0;
+                                        info[0] = mainEdit.getTitle();
+                                        info[1] = "0";
+                                        mainEdit.Close();
+                                    }
+                                    else break;  
                                 }
                                 else
                                 {
@@ -2943,10 +2984,18 @@ namespace TV_show_Renamer
                             {
                                 if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                                 {
-                                    System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + info[3]);
-                                    index = 0;
-                                    info[0] = movefolder[index] + "\\" + info[3];
-                                    info[1] = "0";
+                                    EditTitle mainEdit = new EditTitle(info[3]);
+                                    mainEdit.Text = "Edit Folder Name";
+                                    if (mainEdit.ShowDialog() == DialogResult.OK)
+                                    {
+                                        //mainEdit.getTitle();
+                                        System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + mainEdit.getTitle());
+                                        index = 0;
+                                        info[0] = mainEdit.getTitle();
+                                        info[1] = "0";
+                                        mainEdit.Close();
+                                    }
+                                    else break;  
                                 }
                                 else
                                 {
