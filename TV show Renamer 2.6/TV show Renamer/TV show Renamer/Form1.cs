@@ -33,7 +33,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 263;//2.6Beta
+        const int appVersion = 264;//2.6Beta
         const int HowDeepToScan = 4;
         bool addfile = false;
         bool shownb4 = false;
