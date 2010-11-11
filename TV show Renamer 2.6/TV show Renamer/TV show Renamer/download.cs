@@ -40,8 +40,7 @@ namespace TV_show_Renamer
 
         //methoid for progress bar
         private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e){
-            progressBar1.Value = e.ProgressPercentage;
-            
+            progressBar1.Value = e.ProgressPercentage;            
         }
 
         //runs when download completes
