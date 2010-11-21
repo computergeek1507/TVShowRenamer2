@@ -315,9 +315,12 @@ namespace TV_show_Renamer
                                 {
                                     //mainEdit.getTitle();
                                     System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + mainEdit.getTitle());
+                                    folderlist.Add(movefolder[0] + "\\" + mainEdit.getTitle());
+                                    info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
+                                    //index = Convert.ToInt32(info[2]);
                                     index = 0;
                                     info[0] = mainEdit.getTitle();
-                                    info[1] = "0";
+                                    //info[1] = "0";
                                     mainEdit.Close();
                                 }
                                 else break;                                
@@ -438,9 +441,12 @@ namespace TV_show_Renamer
                                 {
                                     //mainEdit.getTitle();
                                     System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + mainEdit.getTitle());
+                                    folderlist.Add(movefolder[0] + "\\" + mainEdit.getTitle());
+                                    info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
+                                    //index = Convert.ToInt32(info[2]);
                                     index = 0;
                                     info[0] = mainEdit.getTitle();
-                                    info[1] = "0";
+                                    //info[1] = "0";
                                     mainEdit.Close();
                                 }
                                 else break;  
@@ -2860,9 +2866,12 @@ namespace TV_show_Renamer
                                     {
                                         //mainEdit.getTitle();
                                         System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + mainEdit.getTitle());
+                                        folderlist.Add(movefolder[0] + "\\" + mainEdit.getTitle());
+                                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
+                                        //index = Convert.ToInt32(info[2]);
                                         index = 0;
                                         info[0] = mainEdit.getTitle();
-                                        info[1] = "0";
+                                        //info[1] = "0";
                                         mainEdit.Close();
                                     }
                                     else break;  
@@ -2990,9 +2999,12 @@ namespace TV_show_Renamer
                                     {
                                         //mainEdit.getTitle();
                                         System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + mainEdit.getTitle());
+                                        folderlist.Add(movefolder[0] + "\\" + mainEdit.getTitle());
+                                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
+                                        //index = Convert.ToInt32(info[2]);
                                         index = 0;
                                         info[0] = mainEdit.getTitle();
-                                        info[1] = "0";
+                                        //info[1] = "0";
                                         mainEdit.Close();
                                     }
                                     else break;  
