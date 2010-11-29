@@ -2291,9 +2291,9 @@ namespace TV_show_Renamer
                 for (int year = 0; year < 20; year++)
                 {
                     bool end = false;
-                    for (int month = 1; month < 13; month++)
+                    for (int month = 12; month > 0; month--)
                     {
-                        for (int day = 1; day < 32; day++)
+                        for (int day = 31; day > 0; day--)
                         {
                             string startnewname = newfilename;
                             string newyear = year.ToString();
@@ -2317,8 +2317,9 @@ namespace TV_show_Renamer
                             }
                             string kk = "20" + newyear;
 
-                            newfilename = newfilename.Replace(kk + " " + newmonth + " " + newday, month.ToString() + "-" + day.ToString() + "-" + kk);
                             newfilename = newfilename.Replace(kk + " " + month + " " + day, month + "-" + day + "-" + kk);
+                            newfilename = newfilename.Replace(kk + " " + newmonth + " " + newday, month.ToString() + "-" + day.ToString() + "-" + kk);
+                            
                             newfilename = newfilename.Replace(month + "-" + day + "-" + kk, month + "-" + day + "-" + kk + dateTitle);//add title
                             newfilename = newfilename.Replace(month + " " + day + " " + kk, month + "-" + day + "-" + kk + dateTitle);//add title
 
