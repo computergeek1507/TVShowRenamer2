@@ -287,6 +287,39 @@ namespace TV_show_Renamer
             Settings MainSettings = new Settings(this, openZIPs, movefolder);
         }
 
+        //hidden save
+        private void secretSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (fileList.Count != 0) //if files are selected
+            {
+                for (int y = 0; y < fileList.Count(); y++)
+                {
+                    try
+                    {
+                        System.IO.File.Move((fileList[y].FullFileName), (fileList[y].NewFullFileName));
+                        fileList[y].FileName = fileList[y].NewFileName;
+                        fileList[y].FileTitle = "";
+                        dataGridView1.Rows[y].Cells[0].Value = fileList[y].FileName;
+                        Log.WriteLog(fileList[y].FileName, fileList[y].NewFileName);
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        MessageBox.Show("File have been changed or moved \n" + (fileList[y].FullFileName) + "\n" + (fileList[y].NewFullFileName));
+                        continue;
+                    }
+                    catch (IOException)
+                    {
+                        MessageBox.Show("File already exists or is in use\n" + (fileList[y].FullFileName) + "\n" + (fileList[y].NewFullFileName));
+                        continue;
+                    }
+                }//end of for loop
+
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
+            }
+        }
+        
+
         #endregion
 
         #region On the form Buttons
@@ -1490,6 +1523,7 @@ namespace TV_show_Renamer
                     Log.WriteLog(fullFileName + " Moved to " + Outputfolder);
                     //clear stuff
                     //fileFolder[z] = (movieFolder);
+                    fileList[z].FileFolder = (Outputfolder);
                 }
                 catch (FileNotFoundException r)
                 {
@@ -1512,8 +1546,7 @@ namespace TV_show_Renamer
                     MessageBox.Show("Error with Operation\n" + t.ToString());
                     Log.WriteLog(t.ToString());
                     continue;
-                }
-                fileList[z].FileFolder = (Outputfolder);
+                }                
             }
         }
 
@@ -1529,6 +1562,7 @@ namespace TV_show_Renamer
                     {
                         FileSystem.MoveFile(fullFileName, (outputFolder + "\\" + fileList[i].FileName), UIOption.AllDialogs);
                         Log.WriteLog(fullFileName + " Moved to " + outputFolder);
+                        fileList[i].FileFolder = (outputFolder);
                     }
                     catch (FileNotFoundException r)
                     {
@@ -1552,8 +1586,7 @@ namespace TV_show_Renamer
                         Log.WriteLog(t.ToString());
                         continue;
                     }
-                    fileList[i].FileFolder = (movieFolder2);
-                }
+                 }
             }
         }
 
@@ -3507,6 +3540,7 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();          
         }
+
                
     }//end of form1 partial class
 }//end of namespace
