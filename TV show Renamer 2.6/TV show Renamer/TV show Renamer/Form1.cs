@@ -331,6 +331,8 @@ namespace TV_show_Renamer
                         fileList[u].AutoEdit = true;
                     }
                 }
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
             }
         }
          
