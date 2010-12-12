@@ -100,6 +100,7 @@ namespace TV_show_Renamer
             string argument = fixedDownloadDir + " " + fixedInstallDir;
 
             ProcessStartInfo startInfo2 = new ProcessStartInfo(commonAppData + "//test.exe", argument);
+            startInfo2.Verb = "runas";
             Process.Start(startInfo2);
             
             window.CloseForUpdates();            
