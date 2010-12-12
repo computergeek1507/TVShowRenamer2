@@ -49,6 +49,7 @@
             this.clearListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -131,7 +132,7 @@
             this.button6 = new System.Windows.Forms.Button();
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secretSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
@@ -198,7 +199,8 @@
             this.clearListToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem,
-            this.secretSaveToolStripMenuItem});
+            this.secretSaveToolStripMenuItem,
+            this.secretResetToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -258,6 +260,15 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // secretSaveToolStripMenuItem
+            // 
+            this.secretSaveToolStripMenuItem.Name = "secretSaveToolStripMenuItem";
+            this.secretSaveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.secretSaveToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretSaveToolStripMenuItem.Text = "Secret Save";
+            this.secretSaveToolStripMenuItem.Visible = false;
+            this.secretSaveToolStripMenuItem.Click += new System.EventHandler(this.secretSaveToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -1033,14 +1044,14 @@
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Text = "Get Title(s) off TVBD of Selected";
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Click += new System.EventHandler(this.getTitlesOffIMBDOfSelectedToolStripMenuItem_Click);
             // 
-            // secretSaveToolStripMenuItem
+            // secretResetToolStripMenuItem
             // 
-            this.secretSaveToolStripMenuItem.Name = "secretSaveToolStripMenuItem";
-            this.secretSaveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.secretSaveToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretSaveToolStripMenuItem.Text = "Secret Save";
-            this.secretSaveToolStripMenuItem.Visible = false;
-            this.secretSaveToolStripMenuItem.Click += new System.EventHandler(this.secretSaveToolStripMenuItem_Click);
+            this.secretResetToolStripMenuItem.Name = "secretResetToolStripMenuItem";
+            this.secretResetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.secretResetToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretResetToolStripMenuItem.Text = "Secret Reset";
+            this.secretResetToolStripMenuItem.Visible = false;
+            this.secretResetToolStripMenuItem.Click += new System.EventHandler(this.secretResetToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -1178,6 +1189,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn fullfolder;
         private System.Windows.Forms.DataGridViewTextBoxColumn fileextention;
         private System.Windows.Forms.ToolStripMenuItem secretSaveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem secretResetToolStripMenuItem;
     }
 }
 

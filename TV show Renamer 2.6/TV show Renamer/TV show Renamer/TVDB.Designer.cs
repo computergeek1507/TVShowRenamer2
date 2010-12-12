@@ -43,9 +43,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "TVDB";
-            this.Load += new System.EventHandler(this.button1_Click);
             this.ResumeLayout(false);
-
         }
 
         #endregion

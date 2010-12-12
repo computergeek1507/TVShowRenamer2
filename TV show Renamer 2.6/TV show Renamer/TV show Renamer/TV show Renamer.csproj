@@ -148,6 +148,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchInfo.cs" />
     <Compile Include="SelectMenu.cs">
       <SubType>Form</SubType>
     </Compile>
