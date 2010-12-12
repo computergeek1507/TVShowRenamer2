@@ -11,8 +11,8 @@ namespace TV_show_Renamer
 {
     public partial class SelectMenu : Form
     {
-        int intSelected = 0;
-        public int selected { get { if (intSelected == 0)return -1; return intSelected; } }
+        int intSelected = -1;
+        public int selected { get { return intSelected; } }
 
         public SelectMenu(List<string> select)
         {
@@ -24,7 +24,7 @@ namespace TV_show_Renamer
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[z].Cells[0].Value = select[z];
                 }
-
+                //intSelected = dataGridView1.CurrentRow.Index;
         }        
 
         private void button2_Click(object sender, EventArgs e)
@@ -34,6 +34,11 @@ namespace TV_show_Renamer
 
         private void button1_Click(object sender, EventArgs e)
         {            
+            intSelected = dataGridView1.CurrentRow.Index;
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
             intSelected = dataGridView1.CurrentRow.Index;
         }
         

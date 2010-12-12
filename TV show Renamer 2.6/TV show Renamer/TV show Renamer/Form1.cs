@@ -318,8 +318,22 @@ namespace TV_show_Renamer
                 t.Start();
             }
         }
-        
 
+        //secret autoEdit reset
+        private void secretResetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                for (int u = 0; u < dataGridView1.Rows.Count; u++)
+                {
+                    if (dataGridView1.Rows[u].Cells[0].Selected || dataGridView1.Rows[u].Cells[1].Selected)
+                    {
+                        fileList[u].AutoEdit = true;
+                    }
+                }
+            }
+        }
+         
         #endregion
 
         #region On the form Buttons
@@ -346,13 +360,14 @@ namespace TV_show_Renamer
                                 mainEdit.Text = "Edit Folder Name";
                                 if (mainEdit.ShowDialog() == DialogResult.OK)
                                 {
-                                    //mainEdit.getTitle();
-                                    System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + mainEdit.getTitle());
-                                    folderlist.Add(movefolder[0] + "\\" + mainEdit.getTitle());
+                                    string methodGet= mainEdit.getTitle();
+                                    System.IO.Directory.CreateDirectory(movefolder[0] + "\\" + methodGet);
+                                    folderlist.Add(methodGet+"  0");
+                                    folderlist.Add(methodGet);
                                     info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, movefolder);
                                     //index = Convert.ToInt32(info[2]);
                                     index = 0;
-                                    info[0] = mainEdit.getTitle();
+                                    info[0] = methodGet;
                                     //info[1] = "0";
                                     mainEdit.Close();
                                 }
@@ -966,11 +981,10 @@ namespace TV_show_Renamer
         {
             if (all && fileList.Count != 0)
             {
-                for (int y = 0; y < fileList.Count(); y++)
-                {
-                    TVDB InternetTest = new TVDB(this, y, fileList[y].NewFileName, commonAppData, format2);
+                
+                    TVDB InternetTest = new TVDB(this, fileList, commonAppData, format2);
                     //imdb getData = new imdb(this, y, fileName[y], format2);
-                }
+                
             }
             else
                 if (dataGridView1.CurrentRow != null)
@@ -984,10 +998,9 @@ namespace TV_show_Renamer
                             z.Add(i);
                         }
                     }
-                    foreach (int u in z)
-                    {
-                        TVDB InternetTest = new TVDB(this, u, fileList[u].NewFileName, commonAppData, format2);
-                    }
+                    
+                    TVDB InternetTest = new TVDB(this, fileList,z, commonAppData, format2);
+                    
                 }
             //for (int y = 0; y < fileName.Count(); y++)
             //{ 
@@ -2222,11 +2235,17 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
                         newfilename = newfilename.Replace(newi + newj, output);//0101
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
+                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + newj + temp, output + temp);//S1e01
+                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
+                        newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
                         newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
+                        newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output + temp);//Season 1 Episode 01
+                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
+                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
                         newfilename = newfilename.Replace("0" + output, output);//01x01 fix might be unnessitarry
                         newfilename = newfilename.Replace(output, output + tempTitle);//1x01 add title
@@ -2239,11 +2258,17 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101 
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
+                        newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
                         newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
+                        newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
+                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + newj + temp, output + temp);//S1e01
+                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output + temp);//Season 1 Episode 01
+                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
+                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
                         newfilename = newfilename.Replace(output, output + tempTitle);//0101 add title
                     }
@@ -2255,11 +2280,17 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
                         newfilename = newfilename.Replace(newi + newj, output);//0101
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
+                        newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01E01
+                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
+                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + newj + temp, output + temp);//S1e01
+                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
                         newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
+                        newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output + temp);//Season 1 Episode 01
+                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
+                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
                         newfilename = newfilename.Replace("S" + newi + "E" + newj, output + tempTitle);//S01E01 add title
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output + tempTitle);//S01E01 add title if second time
@@ -2272,11 +2303,17 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace(newi + newj, output);//0101
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
                         newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
+                        newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
                         newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
+                        newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
+                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
                         newfilename = newfilename.Replace("S" + i.ToString() + "e" + newj + temp, output + temp);//S1e01
+                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output + temp);//Season 1 Episode 01
+                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
+                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
                         newfilename = newfilename.Replace(output, output + tempTitle);//0101 add title
                     }
@@ -3540,7 +3577,6 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();          
         }
-
-               
+                     
     }//end of form1 partial class
 }//end of namespace
