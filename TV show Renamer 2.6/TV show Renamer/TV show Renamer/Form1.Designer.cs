@@ -50,6 +50,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secretSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +70,7 @@
             this.addTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addJunkWordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.defaultSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,7 +134,6 @@
             this.button6 = new System.Windows.Forms.Button();
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secretResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
@@ -269,6 +270,15 @@
             this.secretSaveToolStripMenuItem.Text = "Secret Save";
             this.secretSaveToolStripMenuItem.Visible = false;
             this.secretSaveToolStripMenuItem.Click += new System.EventHandler(this.secretSaveToolStripMenuItem_Click);
+            // 
+            // secretResetToolStripMenuItem
+            // 
+            this.secretResetToolStripMenuItem.Name = "secretResetToolStripMenuItem";
+            this.secretResetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.secretResetToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretResetToolStripMenuItem.Text = "Secret Reset";
+            this.secretResetToolStripMenuItem.Visible = false;
+            this.secretResetToolStripMenuItem.Click += new System.EventHandler(this.secretResetToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -449,6 +459,7 @@
             this.addTitleToolStripMenuItem,
             this.textConverterToolStripMenuItem,
             this.addJunkWordsToolStripMenuItem,
+            this.toolStripMenuItem8,
             this.toolStripSeparator3,
             this.defaultSettingsToolStripMenuItem});
             this.otherOptionsToolStripMenuItem.Name = "otherOptionsToolStripMenuItem";
@@ -460,7 +471,7 @@
             this.addTitleToolStripMenuItem.AutoToolTip = true;
             this.addTitleToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.addTitleToolStripMenuItem.Name = "addTitleToolStripMenuItem";
-            this.addTitleToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.addTitleToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.addTitleToolStripMenuItem.Text = "Add Title...";
             this.addTitleToolStripMenuItem.ToolTipText = "Add Title After Season/Episode Data";
             this.addTitleToolStripMenuItem.Click += new System.EventHandler(this.addTitleToolStripMenuItem_Click);
@@ -470,7 +481,7 @@
             this.textConverterToolStripMenuItem.AutoToolTip = true;
             this.textConverterToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.textConverterToolStripMenuItem.Name = "textConverterToolStripMenuItem";
-            this.textConverterToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.textConverterToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.textConverterToolStripMenuItem.Text = "Text Converter...";
             this.textConverterToolStripMenuItem.ToolTipText = "Convert Text to other Text";
             this.textConverterToolStripMenuItem.Click += new System.EventHandler(this.textConverterToolStripMenuItem_Click);
@@ -479,21 +490,28 @@
             // 
             this.addJunkWordsToolStripMenuItem.AutoToolTip = true;
             this.addJunkWordsToolStripMenuItem.Name = "addJunkWordsToolStripMenuItem";
-            this.addJunkWordsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.addJunkWordsToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.addJunkWordsToolStripMenuItem.Text = "Add Junk Words...";
             this.addJunkWordsToolStripMenuItem.ToolTipText = "Make List of Junk Words";
             this.addJunkWordsToolStripMenuItem.Click += new System.EventHandler(this.addJunkWordsToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(201, 22);
+            this.toolStripMenuItem8.Text = "Offset Season/Episode...";
+            this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(196, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(198, 6);
             // 
             // defaultSettingsToolStripMenuItem
             // 
             this.defaultSettingsToolStripMenuItem.AutoToolTip = true;
             this.defaultSettingsToolStripMenuItem.Name = "defaultSettingsToolStripMenuItem";
-            this.defaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.defaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.defaultSettingsToolStripMenuItem.Text = "Restore Default Settings";
             this.defaultSettingsToolStripMenuItem.ToolTipText = "Restore Default Settings of Form";
             this.defaultSettingsToolStripMenuItem.Click += new System.EventHandler(this.defaultSettingsToolStripMenuItem_Click);
@@ -1044,15 +1062,6 @@
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Text = "Get Title(s) off TVBD of Selected";
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Click += new System.EventHandler(this.getTitlesOffIMBDOfSelectedToolStripMenuItem_Click);
             // 
-            // secretResetToolStripMenuItem
-            // 
-            this.secretResetToolStripMenuItem.Name = "secretResetToolStripMenuItem";
-            this.secretResetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.secretResetToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretResetToolStripMenuItem.Text = "Secret Reset";
-            this.secretResetToolStripMenuItem.Visible = false;
-            this.secretResetToolStripMenuItem.Click += new System.EventHandler(this.secretResetToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -1190,6 +1199,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn fileextention;
         private System.Windows.Forms.ToolStripMenuItem secretSaveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secretResetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
     }
 }
 

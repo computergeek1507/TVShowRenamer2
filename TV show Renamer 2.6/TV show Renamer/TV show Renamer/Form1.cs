@@ -35,6 +35,8 @@ namespace TV_show_Renamer
         //initiate varibles  
         const int appVersion = 264;//2.6Beta
         const int HowDeepToScan = 4;
+        int seasonOffset = 0;
+        int episodeOffset = 0;
         bool addfile = false;
         bool shownb4 = false;
         bool openZIPs = false;
@@ -57,6 +59,18 @@ namespace TV_show_Renamer
         Text_Converter textConvert = new Text_Converter();
         StatusBar Progress = new StatusBar(100);
         LogWrite Log = new LogWrite();
+
+        public int SeasonOffset
+        {
+            get { return seasonOffset; }
+            set { seasonOffset = value; }
+        }
+
+        public int EpisodeOffset
+        {
+            get { return episodeOffset; }
+            set { episodeOffset = value; }
+        }
         
         //get working directory
         string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer 2.6";
@@ -335,7 +349,13 @@ namespace TV_show_Renamer
                 t.Start();
             }
         }
-         
+
+        //offset menu
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            Offset offsetObective = new Offset(this, seasonOffset, episodeOffset);
+        }
+
         #endregion
 
         #region On the form Buttons
@@ -2204,7 +2224,7 @@ namespace TV_show_Renamer
             }//end of if-else
 
             //loop for seasons
-            for (int i = 1; i < 40; i++)
+            for (int i = 3; i < 40; i++)
             {
                 //varable for break command later
                 bool end = false;
@@ -2213,8 +2233,11 @@ namespace TV_show_Renamer
                 for (int j = 0; j < 100; j++)
                 {
                     string newi = i.ToString();
-                    string newj = j.ToString();                    
+                    string newi2 = (i + seasonOffset).ToString();
+                    string newj = j.ToString();
+                    string newj2 = (j + episodeOffset).ToString();
                     string output = null;
+                    string output2 = null;
                     //check if i is less than 10
                     if (i < 10)
                     {
@@ -2225,6 +2248,15 @@ namespace TV_show_Renamer
                     {
                         newj = "0" + j.ToString();                        
                     }
+                    if ((i + seasonOffset) < 10)
+                    {
+                        newi2 = "0" + (i + seasonOffset).ToString();
+                    }
+                    //check if j is less than 10
+                    if ((j + episodeOffset) < 10)
+                    {
+                        newj2 = "0" + (j + episodeOffset).ToString();
+                    }
 
                     //make string to compare changed name too
                     string startnewname = newfilename;
@@ -2232,7 +2264,8 @@ namespace TV_show_Renamer
                     //1x01 format 
                     if (x01ToolStripMenuItem.Checked)
                     {
-                        output = i.ToString() + "x" + newj;
+                        output = (i + seasonOffset).ToString() + "x" + newj2;
+                        output2 = i.ToString() + "x" + newj;
                        
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
                         newfilename = newfilename.Replace(newi + newj, output);//0101
@@ -2249,13 +2282,14 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
-                        newfilename = newfilename.Replace("0" + output, output);//01x01 fix might be unnessitarry
-                        newfilename = newfilename.Replace(output, output + tempTitle);//1x01 add title
+                        newfilename = newfilename.Replace("0" + output2, output);//01x01 fix might be unnessitarry
+                        newfilename = newfilename.Replace(output2, output + tempTitle);//1x01 add title
                     }
                     //0101 format
                     if (toolStripMenuItem3.Checked)
                     {
-                        output = newi + newj;
+                        output = newi2 + newj2;
+                        output2 = newi + newj;
 
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101 
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
@@ -2272,12 +2306,13 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
-                        newfilename = newfilename.Replace(output, output + tempTitle);//0101 add title
+                        newfilename = newfilename.Replace(output2, output + tempTitle);//0101 add title
                     }
                     //S01E01 format
                     if (s01E01ToolStripMenuItem1.Checked)
                     {
-                        output = "S" + newi + "E" + newj;
+                        output = "S" + newi2 + "E" + newj2;
+                        output2 = "S" + newi + "E" + newj;
 
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
@@ -2300,7 +2335,8 @@ namespace TV_show_Renamer
                     //101 format
                     if (toolStripMenuItem1.Checked)
                     {
-                        output = i.ToString() + newj;
+                        output = (i + seasonOffset).ToString() + newj2;
+                        output2 = i.ToString() + newj;
 
                         newfilename = newfilename.Replace(newi + newj, output);//0101
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
@@ -2317,7 +2353,7 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
-                        newfilename = newfilename.Replace(output, output + tempTitle);//0101 add title
+                        newfilename = newfilename.Replace(output2, output + tempTitle);//0101 add title
                     }
 
                     //stop loop when name is change                    
@@ -3537,48 +3573,54 @@ namespace TV_show_Renamer
             if (closeforUpdate) {
                 return;
             }
-            StreamWriter pw = new StreamWriter(commonAppData + "//preferences.seh");
-
-            pw.WriteLine(convertToolStripMenuItem.Checked);
-            pw.WriteLine(convertToToolStripMenuItem.Checked);
-            pw.WriteLine(removeToolStripMenuItem.Checked);
-            pw.WriteLine(capitalizeToolStripMenuItem.Checked);
-            pw.WriteLine(removeExtraCrapToolStripMenuItem.Checked);
-            pw.WriteLine(addForTitleToolStripMenuItem.Checked);
-            pw.WriteLine(x01ToolStripMenuItem.Checked);
-            pw.WriteLine(toolStripMenuItem3.Checked);
-            pw.WriteLine(s01E01ToolStripMenuItem1.Checked);
-            pw.WriteLine(dateToolStripMenuItem.Checked);
-            pw.WriteLine(removeYearToolStripMenuItem.Checked);
-            pw.WriteLine(this.BackColor.A);
-            pw.WriteLine(this.BackColor.R);
-            pw.WriteLine(this.BackColor.G);
-            pw.WriteLine(this.BackColor.B);
-            pw.WriteLine(this.ForeColor.A);
-            pw.WriteLine(this.ForeColor.R);
-            pw.WriteLine(this.ForeColor.G);
-            pw.WriteLine(this.ForeColor.B);
-            pw.WriteLine(openZIPs);
-            pw.WriteLine(movieFolder);
-            pw.WriteLine(movieFolder2);
-            pw.WriteLine(trailersFolder);
-            pw.WriteLine(musicVidFolder);
-            pw.WriteLine(otherVidFolder);
-            pw.WriteLine(toolStripMenuItem1.Checked);
-            pw.WriteLine(toolStripMenuItem4.Checked);
-            pw.Close();//close writer stream
-
-            //write tv folder locations
-            StreamWriter tv = new StreamWriter(commonAppData + "//TVFolder.seh");
-            tv.WriteLine(movefolder.Count());
-            for (int i = 0; i < movefolder.Count(); i++)
+            try
             {
-                tv.WriteLine(movefolder[i]);
+                StreamWriter pw = new StreamWriter(commonAppData + "//preferences.seh");
+
+                pw.WriteLine(convertToolStripMenuItem.Checked);
+                pw.WriteLine(convertToToolStripMenuItem.Checked);
+                pw.WriteLine(removeToolStripMenuItem.Checked);
+                pw.WriteLine(capitalizeToolStripMenuItem.Checked);
+                pw.WriteLine(removeExtraCrapToolStripMenuItem.Checked);
+                pw.WriteLine(addForTitleToolStripMenuItem.Checked);
+                pw.WriteLine(x01ToolStripMenuItem.Checked);
+                pw.WriteLine(toolStripMenuItem3.Checked);
+                pw.WriteLine(s01E01ToolStripMenuItem1.Checked);
+                pw.WriteLine(dateToolStripMenuItem.Checked);
+                pw.WriteLine(removeYearToolStripMenuItem.Checked);
+                pw.WriteLine(this.BackColor.A);
+                pw.WriteLine(this.BackColor.R);
+                pw.WriteLine(this.BackColor.G);
+                pw.WriteLine(this.BackColor.B);
+                pw.WriteLine(this.ForeColor.A);
+                pw.WriteLine(this.ForeColor.R);
+                pw.WriteLine(this.ForeColor.G);
+                pw.WriteLine(this.ForeColor.B);
+                pw.WriteLine(openZIPs);
+                pw.WriteLine(movieFolder);
+                pw.WriteLine(movieFolder2);
+                pw.WriteLine(trailersFolder);
+                pw.WriteLine(musicVidFolder);
+                pw.WriteLine(otherVidFolder);
+                pw.WriteLine(toolStripMenuItem1.Checked);
+                pw.WriteLine(toolStripMenuItem4.Checked);
+                pw.Close();//close writer stream
+
+                //write tv folder locations
+                StreamWriter tv = new StreamWriter(commonAppData + "//TVFolder.seh");
+                tv.WriteLine(movefolder.Count());
+                for (int i = 0; i < movefolder.Count(); i++)
+                {
+                    tv.WriteLine(movefolder[i]);
+                }
+                tv.Close();
+                
+            }catch(Exception){
+                Log.WriteLog("Preference Write Falure");
             }
-            tv.Close();
             //write log
-            Log.closeLog();          
-        }
-                     
+            Log.closeLog();
+        }               
+                             
     }//end of form1 partial class
 }//end of namespace

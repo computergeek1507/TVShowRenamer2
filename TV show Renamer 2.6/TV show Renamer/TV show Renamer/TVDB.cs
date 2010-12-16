@@ -335,7 +335,15 @@ namespace TV_show_Renamer
                     {
                         season = i;
                         episode = j;
-                        tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
+                        if (you == 0)
+                        {
+                            tvdbTitle = test.Remove(you , test.Length - (you ));
+                        }
+                        else
+                        {
+                            tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
+                        }
+                        //tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
                         end = true;
                         break;
                     }

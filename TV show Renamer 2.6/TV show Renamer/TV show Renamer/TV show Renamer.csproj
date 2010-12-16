@@ -140,6 +140,12 @@
     <Compile Include="move folder.Designer.cs">
       <DependentUpon>move folder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Offset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Offset.Designer.cs">
+      <DependentUpon>Offset.cs</DependentUpon>
+    </Compile>
     <Compile Include="password.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="move folder.resx">
       <DependentUpon>move folder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Offset.resx">
+      <DependentUpon>Offset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="password.resx">
       <DependentUpon>password.cs</DependentUpon>

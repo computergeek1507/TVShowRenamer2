@@ -24,18 +24,7 @@ namespace TV_show_Renamer
             names = tvlist;            
             this.Show();
         }
-
-        //"close" form
-        private void button1_Click(object sender, EventArgs e)
-        {            
-            if (names.Count() != 0)
-            {
-                Thread t = new Thread(new ThreadStart(convert));
-                t.Start();
-            }
-            this.Close();
-        }
-
+        
         //autoconvert method 
         private void convert() {
             Main.autoConvert();
@@ -64,6 +53,15 @@ namespace TV_show_Renamer
         private void button4_Click(object sender, EventArgs e)
         {
             Main.removeTitle();
+        }
+
+        private void Addtitle_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (names.Count() != 0)
+            {
+                Thread t = new Thread(new ThreadStart(convert));
+                t.Start();
+            }
         }
     }
 }
