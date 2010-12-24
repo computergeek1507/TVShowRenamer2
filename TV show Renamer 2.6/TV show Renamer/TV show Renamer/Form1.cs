@@ -641,8 +641,11 @@ namespace TV_show_Renamer
                     }
                 }//end of for loop
 
+                seasonOffset = 0;
+                episodeOffset = 0;
+
                 Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
+                t.Start();                
             }
             else
             {//catch if nothing is selected
@@ -2224,7 +2227,7 @@ namespace TV_show_Renamer
             }//end of if-else
 
             //loop for seasons
-            for (int i = 3; i < 40; i++)
+            for (int i = 0; i < 40; i++)
             {
                 //varable for break command later
                 bool end = false;
