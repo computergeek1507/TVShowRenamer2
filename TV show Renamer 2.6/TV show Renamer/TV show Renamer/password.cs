@@ -14,7 +14,6 @@ namespace TV_show_Renamer
         string password2 = "";
         string fullzipfile = null;
         string fullzipname = null;
-        //Form1 main;
 
         //get password
         public string Password { get { return password2; } }
@@ -22,12 +21,10 @@ namespace TV_show_Renamer
         public password(string zipFile, string zipname)
         {
             InitializeComponent();
-            //main = temp;
             fullzipfile = zipFile;
             fullzipname = zipname;
             label2.Text = zipname;
         }
-
 
         //ok button        
         private void button1_Click(object sender, EventArgs e)
@@ -52,5 +49,5 @@ namespace TV_show_Renamer
         {
             password2 = textBox1.Text;
         }
-    }
-}
+    }//end of class
+}//end of namespace

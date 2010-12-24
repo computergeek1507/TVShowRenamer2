@@ -15,8 +15,8 @@ namespace TV_show_Renamer
         /// Start Log Writer
         /// </summary>
         /// <param name="folder">log location</param>
-        public void startLog(string folder) {
-
+        public void startLog(string folder)
+        {
             logFolder = folder;
                         
             // Create a writer and open the file:
@@ -33,7 +33,8 @@ namespace TV_show_Renamer
         }
 
         // Close Log
-        public void closeLog() {
+        public void closeLog()
+        {
             log.WriteLine(DateTime.Now + " - Program Closed :(");
             log.Close();
         }
@@ -74,4 +75,4 @@ namespace TV_show_Renamer
             }
         }
     }//end of LogWrite Class
-}
+}//end of namespace

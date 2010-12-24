@@ -22,7 +22,6 @@ namespace TV_show_Renamer
             this.Show();        
         }
 
-
         //autoconvert method 
         private void convert()
         {
@@ -42,5 +41,5 @@ namespace TV_show_Renamer
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
-    }
-}
+    }//end of class
+}//end of namespace

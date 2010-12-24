@@ -10,7 +10,6 @@ using System.Net;
 using System.IO;
 using System.Diagnostics;
 
-
 namespace TV_show_Renamer
 {
     public partial class download : Form
@@ -27,8 +26,8 @@ namespace TV_show_Renamer
         }
 
         //downlaod file after checks to see if it was there
-        public void downloadUpdate(string location2){
-            
+        public void downloadUpdate(string location2)
+        {            
             label1.Text = location2;
                         
             WebClient webClient = new WebClient();
@@ -39,14 +38,14 @@ namespace TV_show_Renamer
         }
 
         //methoid for progress bar
-        private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e){
+        private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
             progressBar1.Value = e.ProgressPercentage;            
         }
 
         //runs when download completes
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
-
             try
             {
                 if (File.Exists(commonAppData + "//library.seh"))
@@ -108,24 +107,9 @@ namespace TV_show_Renamer
 
         //loads with form
         private void download_Load(object sender, EventArgs e)
-        {
-            
+        {            
             this.Show();
-            //string name=null;
-            saveFileDialog1.Filter = "Installer (*.msi)|*.msi";
-            saveFileDialog1.FilterIndex = 0;
-            saveFileDialog1.RestoreDirectory = true;
-            saveFileDialog1.FileName = "TV Show Renamer Setup.msi";
-            saveFileDialog1.DefaultExt = ".msi";
-            saveFileDialog1.OverwritePrompt = true;
-            saveFileDialog1.Title = "Select Location to Download";
-
-            //if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-                string name = saveFileDialog1.FileName;
-                this.downloadUpdate(commonAppData);
-            //}         
-            
+            this.downloadUpdate(commonAppData);
         }
 
         //cancel button
@@ -140,6 +124,5 @@ namespace TV_show_Renamer
         {
             window.Show();
         }  
-
-    }
-}
+    }//end of class
+}//end of namespace

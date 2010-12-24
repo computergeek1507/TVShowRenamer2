@@ -12,7 +12,7 @@ namespace TV_show_Renamer
         string _fileExtention;//origonal file Extention
         string _fileTitle="";//Title files        
         string _newFileName;//new file name
-        bool _auto = true;
+        bool _auto = true;//autoconvert
 
         public TVClass(string fileFolder, string fileName, string fileExtention)
         {
@@ -69,5 +69,6 @@ namespace TV_show_Renamer
             get { return _auto; }
             set { _auto = value; }
         }
-    }
-}
+
+    }//end of class
+}//end of namespace

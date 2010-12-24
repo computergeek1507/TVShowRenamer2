@@ -24,6 +24,6 @@ namespace TV_show_Renamer
         public int SelectedValue
         {
             get { return _selected; }            
-        }       
-    }
-}
+        }
+    }//end of class
+}//end of namespace

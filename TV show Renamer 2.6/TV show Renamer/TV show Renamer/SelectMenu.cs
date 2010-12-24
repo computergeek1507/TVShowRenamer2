@@ -17,14 +17,12 @@ namespace TV_show_Renamer
         public SelectMenu(List<string> select)
         {
             InitializeComponent();
-            //this.Show();
             dataGridView1.Rows.Clear();
-                for (int z = 0; z < select.Count; z++)
-                {
-                    dataGridView1.Rows.Add();
-                    dataGridView1.Rows[z].Cells[0].Value = select[z];
-                }
-                //intSelected = dataGridView1.CurrentRow.Index;
+            for (int z = 0; z < select.Count; z++)
+            {
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[z].Cells[0].Value = select[z];
+            }
         }        
 
         private void button2_Click(object sender, EventArgs e)
@@ -41,6 +39,5 @@ namespace TV_show_Renamer
         {
             intSelected = dataGridView1.CurrentRow.Index;
         }
-        
-    }
-}
+    }//end of class
+}//end of namespace
