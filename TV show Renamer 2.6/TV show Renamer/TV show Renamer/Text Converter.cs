@@ -95,9 +95,7 @@ namespace TV_show_Renamer
                 textConvert.Add(textBox2.Text);
                 }
             textBox1.Text = null;
-            textBox2.Text = null;
-            //Display newbox = new Display(textConvert, true);                
-            //newbox.Show();
+            textBox2.Text = null;            
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
@@ -124,5 +122,5 @@ namespace TV_show_Renamer
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();            
         }
-    }
-}
+    }//end of class
+}//end of namespace

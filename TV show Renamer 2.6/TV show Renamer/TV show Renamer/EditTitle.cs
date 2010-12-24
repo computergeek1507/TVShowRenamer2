@@ -18,7 +18,8 @@ namespace TV_show_Renamer
             textBox1.Text = title = temptitle;
         }
 
-        public string getTitle(){
+        public string getTitle()
+        {
             return title;        
         }
 
@@ -26,5 +27,5 @@ namespace TV_show_Renamer
         {
             title = textBox1.Text;
         }
-    }
-}
+    }//end of class
+}//end of namespace

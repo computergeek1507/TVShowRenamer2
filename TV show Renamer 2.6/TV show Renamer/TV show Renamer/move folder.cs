@@ -10,8 +10,7 @@ using System.Windows.Forms;
 namespace TV_show_Renamer
 {
     public partial class move_folder : Form
-    {
-        
+    {        
         Form1 mainform = new Form1();
         List<string> tvfolderslist = new List<string>();
         
@@ -67,4 +66,4 @@ namespace TV_show_Renamer
             }
         }
     }//end of class
-}
+}//end of namespace

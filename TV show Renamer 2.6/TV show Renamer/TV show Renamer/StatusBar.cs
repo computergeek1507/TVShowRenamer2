@@ -15,10 +15,12 @@ namespace TV_show_Renamer
         {
             InitializeComponent();
         }
-        public void ProgressBarSize(int size){
-            progressBar1.Maximum = size;       
-        
+
+        public void ProgressBarSize(int size)
+        {
+            progressBar1.Maximum = size;        
         }
+
         public void ProgressBarSet(int progress)
         {
             if (progress < progressBar1.Maximum) {
@@ -28,6 +30,6 @@ namespace TV_show_Renamer
             {
                 this.Hide();
             }
-        }        
-    }
-}
+        }
+    }//end of class
+}//end of namespace

@@ -23,13 +23,8 @@ namespace TV_show_Renamer
         List<SearchInfo> selectionList = new List<SearchInfo>();
 
         string folder = null;
-
         int format = -1;
         bool renameWorked = false;
-        //List<int> selected = new List<int>();
-
-        //string title = null;
-        //int indexes = -1;
         int season = -1;
         int episode = -1;
         string tvdbTitle = null;
@@ -39,26 +34,18 @@ namespace TV_show_Renamer
             InitializeComponent();
             folder = newFolder;
             format = newFormat;
-            //selected = newSelected;
-            //title = showMainName;
             fileList = newFileList;
-
             main = temp;
-            //this.Show();
-            findTitleAll();
-            
+            findTitleAll();            
         }
+
         public TVDB(Form1 temp, BindingList<TVClass> newFileList,  List<int> newSelected, string newFolder, int newFormat)
         {
             InitializeComponent();
             folder = newFolder;
             format = newFormat;
-            //selected = newSelected;
-            //title = showMainName;
             fileList = newFileList;
-
             main = temp;
-            //this.Show();
             findTitleselected(newSelected);
         }
         
@@ -83,9 +70,8 @@ namespace TV_show_Renamer
                     {
                         if (list[i].Overview != "")
                         {
-                            seriesId.Add(list[i].Id);   // = list[i].Id;
+                            seriesId.Add(list[i].Id);   
                             seriesName.Add(list[i].SeriesName);
-                            //break;
                         }
                     }
                     if (seriesId.Count() == 0) return;  //return if nothing found
@@ -287,10 +273,7 @@ namespace TV_show_Renamer
             season = -1;
             episode = -1;
             tvdbTitle = null;
-
             string test = fileName;
-
-            //string test = title[0];
             int you = -1;
 
             for (int i = 40; i >=0; i--)
