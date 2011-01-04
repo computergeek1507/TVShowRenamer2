@@ -310,7 +310,7 @@ namespace TV_show_Renamer
                             break;
                         case 4:
                             you = test.IndexOf("S" + newi + "E" + newj);
-                            you = test.IndexOf("S" + newi + "e" + newj);
+                            //you = test.IndexOf("S" + newi + "e" + newj);
                             break;
                     }
                     //stop loop when name is change                    

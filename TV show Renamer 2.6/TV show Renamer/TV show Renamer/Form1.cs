@@ -59,7 +59,6 @@ namespace TV_show_Renamer
         //create other forms
         junk_words userJunk = new junk_words();        
         Text_Converter textConvert = new Text_Converter();
-        StatusBar Progress = new StatusBar(100);
         LogWrite Log = new LogWrite();
 
         public int SeasonOffset
@@ -2441,10 +2440,16 @@ namespace TV_show_Renamer
                 }
                 return;
             }
+
+            MethodInvoker action2 = delegate
+            {
+                progressBar1.Maximum = 100;
+                progressBar1.Value = 0;
+                progressBar1.Show();
+            };
+            progressBar1.BeginInvoke(action2);
             mainExtrector.Extracting += extr_Extracting;
-            Progress.ProgressBarSize(100);
-            Progress.Show();
-           
+                                
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
@@ -2502,6 +2507,13 @@ namespace TV_show_Renamer
             }
             Thread p = new Thread(new ThreadStart(autoConvert));
             p.Start();
+            mainExtrector.Extracting -= extr_Extracting;
+            mainExtrector.Dispose();
+            MethodInvoker action3 = delegate
+            {
+                progressBar1.Hide();
+            };
+            progressBar1.BeginInvoke(action3);
         }
         
         /// <summary>
@@ -2558,10 +2570,16 @@ namespace TV_show_Renamer
                 return;
             }
 
+            MethodInvoker action2 = delegate
+            {
+                progressBar1.Maximum = 100;
+                progressBar1.Value = 0;
+                progressBar1.Show();
+                
+            };
+            progressBar1.BeginInvoke(action2);
             mainExtrector.Extracting += extr_Extracting;
-            Progress.ProgressBarSize(100);
-            Progress.Show();
-     
+
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
@@ -2621,6 +2639,13 @@ namespace TV_show_Renamer
             }
             Thread p = new Thread(new ThreadStart(autoConvert));
             p.Start();
+            mainExtrector.Extracting -= extr_Extracting;
+            mainExtrector.Dispose();
+            MethodInvoker action3 = delegate
+            {
+                progressBar1.Hide();
+            };
+            progressBar1.BeginInvoke(action3);
         }
 
         //add files 
@@ -2646,19 +2671,7 @@ namespace TV_show_Renamer
                     continue;
                 }
 
-                if (fi3.Extension == ".avi" || fi3.Extension == ".mkv" || fi3.Extension == ".mp4" || fi3.Extension == ".m4v" || fi3.Extension == ".mpg")
-                {
-                    //add file name                    
-                    MethodInvoker action = delegate
-                    {
-                        fileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension));
-                        Thread p = new Thread(new ThreadStart(autoConvert));
-                        p.Start();
-                        dataGridView1.Refresh();
-                    };
-                    dataGridView1.BeginInvoke(action);                                        
-                }
-                else if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
+                if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
                 {
                     archiveExtrector(file3, fi3.Name, true);
                 }
@@ -2692,7 +2705,25 @@ namespace TV_show_Renamer
 
         private void extr_Extracting(object sender, ProgressEventArgs e)
         {
-            Progress.ProgressBarSet(e.PercentDone);
+            int progress = e.PercentDone;
+            if (progress < progressBar1.Maximum)
+            {
+                MethodInvoker action = delegate
+                {
+                    progressBar1.Value = progress;
+                };
+                progressBar1.BeginInvoke(action);
+                //progressBar1.Value = progress;
+            }
+            if (progress == progressBar1.Maximum)
+            {
+                MethodInvoker action = delegate
+                {
+                    progressBar1.Hide(); 
+                };
+                progressBar1.BeginInvoke(action);
+                //progressBar1.Hide();                
+            }
         }
 
         //drag and drop
