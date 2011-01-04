@@ -134,6 +134,8 @@
             this.button6 = new System.Windows.Forms.Button();
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
@@ -1062,6 +1064,16 @@
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Text = "Get Title(s) off TVBD of Selected";
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem.Click += new System.EventHandler(this.getTitlesOffIMBDOfSelectedToolStripMenuItem_Click);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(120, 432);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(206, 23);
+            this.progressBar1.TabIndex = 32;
+            this.progressBar1.Visible = false;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -1070,6 +1082,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(685, 462);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button5);
@@ -1200,6 +1213,8 @@
         private System.Windows.Forms.ToolStripMenuItem secretSaveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secretResetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
