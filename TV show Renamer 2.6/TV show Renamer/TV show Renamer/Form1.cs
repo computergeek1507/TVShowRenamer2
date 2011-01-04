@@ -914,7 +914,7 @@ namespace TV_show_Renamer
 
         #region Public Mehtods
                 
-        //get title of selected off IMDB
+        //get selected titles off IMDB
         public void getTVDBTitles()
         {
             int format = -1;
@@ -959,12 +959,14 @@ namespace TV_show_Renamer
 
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells[0].Selected)
+                        if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                         {
                             z.Add(i);
                         }
-                    }                    
-                    TVDB InternetTest = new TVDB(this, fileList,z, commonAppData, format2);                    
+                    }
+                    if(z.Count()!=0){
+                        TVDB InternetTest = new TVDB(this, fileList,z, commonAppData, format2);
+                    }
                 }            
             MethodInvoker action = delegate
             {                
