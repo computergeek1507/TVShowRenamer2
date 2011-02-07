@@ -39,13 +39,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D8B3C9539E7F680DC1734D7676BEAA65"
-        "OwnerKey" = "8:_2E4798B3EE034DAA83AC989998EBEBE1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F83A626C7E9C450F52264CA53C4D6108"
+        "MsmKey" = "8:_E8E557486EA6A1E34A46CC34DAA220AF"
         "OwnerKey" = "8:_2E4798B3EE034DAA83AC989998EBEBE1"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -64,13 +58,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D8B3C9539E7F680DC1734D7676BEAA65"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F83A626C7E9C450F52264CA53C4D6108"
+        "OwnerKey" = "8:_E8E557486EA6A1E34A46CC34DAA220AF"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -249,51 +237,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D8B3C9539E7F680DC1734D7676BEAA65"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E8E557486EA6A1E34A46CC34DAA220AF"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:SevenZipSharp, Version=1.0.3537.37869, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_D8B3C9539E7F680DC1734D7676BEAA65"
+                    "_E8E557486EA6A1E34A46CC34DAA220AF"
                     {
                     "Name" = "8:SevenZipSharp.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:SevenZipSharp.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_EDB6F74B3F9E4730912B4DDCAEAC0980"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F83A626C7E9C450F52264CA53C4D6108"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:IMDBDLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_F83A626C7E9C450F52264CA53C4D6108"
-                    {
-                    "Name" = "8:IMDBDLL.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:IMDBDLL.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_EDB6F74B3F9E4730912B4DDCAEAC0980"
@@ -375,11 +332,11 @@
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.6.3"
+        "ProductVersion" = "8:2.6.5"
         "Manufacturer" = "8:Scott"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://scottnation.com"
-        "Title" = "8:TV Show Renamer 2.5Beta"
+        "Title" = "8:TV Show Renamer 2.6Beta"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Scott"
         "Keywords" = "8:"
@@ -997,7 +954,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2E4798B3EE034DAA83AC989998EBEBE1"
             {
-            "SourcePath" = "8:..\\TV show Renamer\\obj\\Debug\\TV show Renamer.exe"
+            "SourcePath" = "8:..\\TV show Renamer\\obj\\Release\\TV show Renamer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_EDB6F74B3F9E4730912B4DDCAEAC0980"

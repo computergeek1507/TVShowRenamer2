@@ -35,7 +35,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 264;//2.6Beta
+        const int appVersion = 265;//2.6Beta
         const int HowDeepToScan = 4;
         int seasonOffset = 0;
         int episodeOffset = 0;
@@ -84,7 +84,7 @@ namespace TV_show_Renamer
         private void addFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog2.Title = "Select Media files";
-            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg|Archive Files (*.zip;*.rar;*.r01;*.7z;)|*.zip;*.rar;*.r01;*.7z;|All Files (*.*)|*.*";
+            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg;*.mov;*.mpeg;*.rm;*.rmvb)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg;*.mov;*.mpeg;*.rm;*.rmvb|Archive Files (*.zip;*.rar;*.r01;*.7z;)|*.zip;*.rar;*.r01;*.7z;|All Files (*.*)|*.*";
             openFileDialog2.FileName = "";
             openFileDialog2.FilterIndex = 0;
             openFileDialog2.CheckFileExists = true;
@@ -619,10 +619,11 @@ namespace TV_show_Renamer
                     try
                     {
                         System.IO.File.Move((fileList[y].FullFileName), (fileList[y].NewFullFileName));
+                        Log.WriteLog(fileList[y].FileName, fileList[y].NewFileName);
                         fileList[y].FileName = fileList[y].NewFileName;
                         fileList[y].FileTitle = "";
                         dataGridView1.Rows[y].Cells[0].Value = fileList[y].FileName;
-                        Log.WriteLog(fileList[y].FileName, fileList[y].NewFileName);
+                        
                     }
                     catch (FileNotFoundException)
                     {
@@ -651,29 +652,36 @@ namespace TV_show_Renamer
         //TVDB
         private void button6_Click(object sender, EventArgs e)
         {
-            int format = -1;
-            //1x01
-            if (x01ToolStripMenuItem.Checked)
+            if (fileList.Count != 0) //if files are selected
             {
-                format = 1;
+                int format = -1;
+                //1x01
+                if (x01ToolStripMenuItem.Checked)
+                {
+                    format = 1;
+                }
+                //0101 format
+                if (toolStripMenuItem3.Checked)
+                {
+                    format = 2;
+                }
+                //101 format
+                if (toolStripMenuItem1.Checked)
+                {
+                    format = 3;
+                }
+                //S01E01 format
+                if (s01E01ToolStripMenuItem1.Checked)
+                {
+                    format = 4;
+                }
+                Thread h = new Thread(delegate() { autoTitleTVDB(format, true); });
+                h.Start();            
             }
-            //0101 format
-            if (toolStripMenuItem3.Checked)
-            {
-                format = 2;
-            }
-            //101 format
-            if (toolStripMenuItem1.Checked)
-            {
-                format = 3;
-            }
-            //S01E01 format
-            if (s01E01ToolStripMenuItem1.Checked)
-            {
-                format = 4;
-            }
-            Thread h = new Thread(delegate() { autoTitleTVDB(format, true); });
-            h.Start();
+            else
+            {//catch if nothing is selected
+                MessageBox.Show("No Files Selected");
+            }            
         }
         
         #endregion
@@ -690,7 +698,6 @@ namespace TV_show_Renamer
             }
             catch (Exception)
             {
-
                 return false;
             }
         }//end of ConnectionExists class
@@ -901,6 +908,7 @@ namespace TV_show_Renamer
             //this.Hide();
         }
 
+        //finish update program downloader
         private void Completed3(object sender, AsyncCompletedEventArgs e)
         {
             download update = new download(commonAppData, this);
@@ -1036,7 +1044,7 @@ namespace TV_show_Renamer
                         continue;
                     }
                     //check if its a legal file type
-                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v"))
+                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v" || exten == ".mpeg" || exten == ".mov" || exten == ".rm"||exten == ".rmvb"))
                     {
                         //if dialog was shown b4 dont show again
                         if (!shownb4)
@@ -2455,7 +2463,7 @@ namespace TV_show_Renamer
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
-                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000");
+                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000").Replace(".mpeg", "0000").Replace(".mov", "0000").Replace(".rm", "0000").Replace(".rmvb", "0000");
 
                 if (testArchiveName != archiveName)
                 {
@@ -2465,6 +2473,11 @@ namespace TV_show_Renamer
             }
             if (archiveIndex == -1)
             {
+                MethodInvoker action3 = delegate
+                {
+                    progressBar1.Hide();
+                };
+                progressBar1.BeginInvoke(action3);
                 return;
             }
             try
@@ -2477,6 +2490,11 @@ namespace TV_show_Renamer
                     {
                         if (fi9.Name == fileList[i].FileName)
                         {
+                            MethodInvoker action3 = delegate
+                            {
+                                progressBar1.Hide();
+                            };
+                            progressBar1.BeginInvoke(action3);
                             return;
                         }
                     }
@@ -2497,25 +2515,40 @@ namespace TV_show_Renamer
                     this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
                     passwordYou.Close();
                 }
+                MethodInvoker action3 = delegate
+                {
+                    progressBar1.Hide();
+                };
+                progressBar1.BeginInvoke(action3);
                 return;
             }
             catch (FileNotFoundException)
             {
+                MethodInvoker action3 = delegate
+                {
+                    progressBar1.Hide();
+                };
+                progressBar1.BeginInvoke(action3);
                 return;
             }
             catch (IOException)
             {
+                MethodInvoker action3 = delegate
+                {
+                    progressBar1.Hide();
+                };
+                progressBar1.BeginInvoke(action3);
                 return;
             }
             Thread p = new Thread(new ThreadStart(autoConvert));
             p.Start();
             mainExtrector.Extracting -= extr_Extracting;
             mainExtrector.Dispose();
-            MethodInvoker action3 = delegate
+            MethodInvoker action4 = delegate
             {
                 progressBar1.Hide();
             };
-            progressBar1.BeginInvoke(action3);
+            progressBar1.BeginInvoke(action4);
         }
         
         /// <summary>
@@ -2546,7 +2579,7 @@ namespace TV_show_Renamer
                 {
                     this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
                     passwordYou.Close();
-                }
+                }                
                 return;
             }
             catch (SevenZipLibraryException)
@@ -2585,7 +2618,7 @@ namespace TV_show_Renamer
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
-                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000");
+                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000").Replace(".mpeg", "0000").Replace(".mov", "0000").Replace(".rm", "0000").Replace(".rmvb", "0000");
 
                 if (testArchiveName != archiveName)
                 {
@@ -2596,6 +2629,11 @@ namespace TV_show_Renamer
 
             if (archiveIndex == -1)
             {
+                MethodInvoker action3 = delegate
+                {
+                    progressBar1.Hide();
+                };
+                progressBar1.BeginInvoke(action3);
                 return;
             }
 
@@ -2609,6 +2647,11 @@ namespace TV_show_Renamer
                     {
                         if (fi9.Name == fileList[i].FileName)
                         {
+                            MethodInvoker action3 = delegate
+                            {
+                                progressBar1.Hide();
+                            };
+                            progressBar1.BeginInvoke(action3);
                             return;
                         }
                     }
@@ -2629,25 +2672,40 @@ namespace TV_show_Renamer
                     this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
                     passwordYou.Close();
                 }
+                MethodInvoker action3 = delegate
+                {
+                    progressBar1.Hide();
+                };
+                progressBar1.BeginInvoke(action3);
                 return;
             }
             catch (FileNotFoundException)
             {
+                MethodInvoker action3 = delegate
+                {
+                    progressBar1.Hide();
+                };
+                progressBar1.BeginInvoke(action3);
                 return;
             }
             catch (IOException)
             {
+                MethodInvoker action3 = delegate
+                {
+                    progressBar1.Hide();
+                };
+                progressBar1.BeginInvoke(action3);
                 return;
             }
             Thread p = new Thread(new ThreadStart(autoConvert));
             p.Start();
             mainExtrector.Extracting -= extr_Extracting;
             mainExtrector.Dispose();
-            MethodInvoker action3 = delegate
+            MethodInvoker action4 = delegate
             {
                 progressBar1.Hide();
             };
-            progressBar1.BeginInvoke(action3);
+            progressBar1.BeginInvoke(action4);
         }
 
         //add files 
@@ -2772,6 +2830,11 @@ namespace TV_show_Renamer
                             MessageBox.Show("File already exists or is in use\n" + (fileList[u].FullFileName) + "\n" + (fileList[u].NewFullFileName));
                         }
                     }
+                    seasonOffset = 0;
+                    episodeOffset = 0;
+
+                    Thread t = new Thread(new ThreadStart(autoConvert));
+                    t.Start();
                 }
             }
         }
