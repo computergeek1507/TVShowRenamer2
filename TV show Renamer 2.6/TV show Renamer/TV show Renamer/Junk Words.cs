@@ -116,6 +116,7 @@ namespace TV_show_Renamer
             sw.Close();//close writer stream
             this.Hide();
             
+
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();            
         }//end of button method
@@ -148,6 +149,11 @@ namespace TV_show_Renamer
         public void removeSelected() {
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
+        }
+
+        private void junk_words_Load(object sender, EventArgs e)
+        {
+
         }
         
     }//end of partial class 

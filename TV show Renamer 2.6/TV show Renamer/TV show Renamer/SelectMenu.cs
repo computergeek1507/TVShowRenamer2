@@ -39,5 +39,19 @@ namespace TV_show_Renamer
         {
             intSelected = dataGridView1.CurrentRow.Index;
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            intSelected = dataGridView1.CurrentRow.Index;
+            if (intSelected != -1)
+            {
+                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            }
+            else
+            {
+                this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            }
+            //System.Windows.Forms.DialogResult.OK;
+        }
     }//end of class
 }//end of namespace

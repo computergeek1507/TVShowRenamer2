@@ -17,7 +17,7 @@
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ApplicationIcon>tv.ico</ApplicationIcon>
+    <ApplicationIcon>TVcustom.ico</ApplicationIcon>
     <SignAssembly>false</SignAssembly>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -103,6 +103,12 @@
     <Compile Include="Addtitle.Designer.cs">
       <DependentUpon>Addtitle.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConversionOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConversionOptions.Designer.cs">
+      <DependentUpon>ConversionOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Display.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     <EmbeddedResource Include="Addtitle.resx">
       <DependentUpon>Addtitle.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConversionOptions.resx">
+      <DependentUpon>ConversionOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
@@ -284,7 +293,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\56.bmp" />
+    <Content Include="TVcustom.ico" />
+    <Content Include="TVcustom.png" />
     <None Include="Resources\licence.rtf" />
     <Resource Include="Resources\32-bit\7z.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -298,8 +308,8 @@
     <Resource Include="Resources\64-bit\7z.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <None Include="Resources\Program1.png" />
     <Content Include="Resources\TvdbLib.dll" />
-    <Content Include="tv.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
