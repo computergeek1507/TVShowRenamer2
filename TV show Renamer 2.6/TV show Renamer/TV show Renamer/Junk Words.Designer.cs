@@ -118,6 +118,7 @@
             this.ShowInTaskbar = false;
             this.Text = "Junk Words Editor";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.junk_words_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

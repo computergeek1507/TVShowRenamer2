@@ -60,6 +60,7 @@
             this.removeExtraCrapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addForTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeYearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testShowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.seasonEpisodeFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x01ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -177,6 +178,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
             this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
@@ -292,7 +294,8 @@
             this.capitalizeToolStripMenuItem,
             this.removeExtraCrapToolStripMenuItem,
             this.addForTitleToolStripMenuItem,
-            this.removeYearToolStripMenuItem});
+            this.removeYearToolStripMenuItem,
+            this.testShowToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(124, 20);
             this.optionsToolStripMenuItem.Text = "Conversion Options";
@@ -390,6 +393,13 @@
             this.removeYearToolStripMenuItem.Text = "Remove Year";
             this.removeYearToolStripMenuItem.ToolTipText = "Remove Year If Exists";
             this.removeYearToolStripMenuItem.Click += new System.EventHandler(this.removeYearToolStripMenuItem_Click);
+            // 
+            // testShowToolStripMenuItem
+            // 
+            this.testShowToolStripMenuItem.Name = "testShowToolStripMenuItem";
+            this.testShowToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.testShowToolStripMenuItem.Text = "Test show";
+            this.testShowToolStripMenuItem.Click += new System.EventHandler(this.testShowToolStripMenuItem_Click);
             // 
             // seasonEpisodeFormatToolStripMenuItem
             // 
@@ -748,6 +758,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(660, 399);
             this.dataGridView1.StandardTab = true;
             this.dataGridView1.TabIndex = 30;
+            this.dataGridView1.DoubleClick += new System.EventHandler(this.button5_Click);
             // 
             // oldName
             // 
@@ -1095,7 +1106,7 @@
             this.MinimumSize = new System.Drawing.Size(500, 130);
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "TV Show Renamer 2.6 BETA";
+            this.Text = "TV Show Renamer 2.7 BETA";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
@@ -1215,6 +1226,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ToolStripMenuItem testShowToolStripMenuItem;
     }
 }
 

@@ -30,7 +30,7 @@ namespace TV_show_Renamer
         public Form1()
         {
             InitializeComponent();
-            dataGridView1.DataSource = fileList;            
+            dataGridView1.DataSource = fileList;
         }
 
         #region Initiate Stuff
@@ -55,7 +55,9 @@ namespace TV_show_Renamer
 
         List<string> movefolder = new List<string>();//TV Show folders
         List<string> junklist = new List<string>();//junk word list
-
+        List<string> userjunklist = new List<string>();//user junk word list
+        List<string> textConverter = new List<string>();//textConverter word list
+        
         //create other forms
         junk_words userJunk = new junk_words();        
         Text_Converter textConvert = new Text_Converter();
@@ -1896,19 +1898,19 @@ namespace TV_show_Renamer
             newfilename = newfilename.Replace(extend, temp + "&&&&");
 
             //Text converter
-            List<string> testConverter = new List<string>();
-            testConverter = textConvert.getText();
+            
+            textConverter = textConvert.getText();
 
-            for (int x = 0; x < testConverter.Count(); x += 2)
+            for (int x = 0; x < textConverter.Count(); x += 2)
             {
-                newfilename = newfilename.Replace(testConverter[x], testConverter[x + 1]);
+                newfilename = newfilename.Replace(textConverter[x], textConverter[x + 1]);
             }//end of for
 
             //user junk list
             if (removeExtraCrapToolStripMenuItem.Checked)
             {
                 //make user junk list
-                List<string> userjunklist = new List<string>();
+                
                 userjunklist = userJunk.getjunk();
                 if (userjunklist.Count() != 0)
                 {
@@ -3104,14 +3106,19 @@ namespace TV_show_Renamer
             {
                 List<string> u = new List<string>();
 
+                string selectedFiles="";
+
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        u.Add(fileList[i].FileFolder);
+                        selectedFiles = fileList[i].FileFolder;
+                        break;
                     }
                 }
-                Display publibb = new Display(u);
+                //selectedFiles = fileList[0].FileFolder;
+                Process.Start("explorer.exe", selectedFiles);
+                //Display publibb = new Display(u);
             }
         }
 
@@ -3499,6 +3506,12 @@ namespace TV_show_Renamer
             }
             //write log
             Log.closeLog();
+        }
+
+        private void testShowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConversionOptions MainSettings = new ConversionOptions();
+            MainSettings.Show();
         }               
                              
     }//end of form1 partial class

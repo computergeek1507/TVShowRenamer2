@@ -76,7 +76,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::TV_show_Renamer.Properties.Resources._56;
+            this.pictureBox1.Image = global::TV_show_Renamer.Properties.Resources.Program;
             this.pictureBox1.Location = new System.Drawing.Point(7, 71);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(248, 176);
@@ -123,6 +123,7 @@
             this.Name = "About";
             this.ShowInTaskbar = false;
             this.Text = "About";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
