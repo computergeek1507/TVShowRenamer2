@@ -35,7 +35,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 265;//2.6Beta
+        const int appVersion = 265;//2.7Beta
         const int HowDeepToScan = 4;
         int seasonOffset = 0;
         int episodeOffset = 0;
