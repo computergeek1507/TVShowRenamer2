@@ -98,7 +98,7 @@ namespace TV_show_Renamer
             string fixedInstallDir = installDir.Replace(" ", "*");
             string argument = fixedDownloadDir + " " + fixedInstallDir;
 
-            ProcessStartInfo startInfo2 = new ProcessStartInfo(commonAppData + "//test.exe", argument);
+            ProcessStartInfo startInfo2 = new ProcessStartInfo(commonAppData + "//update.exe", argument);
             startInfo2.Verb = "runas";
             Process.Start(startInfo2);
             

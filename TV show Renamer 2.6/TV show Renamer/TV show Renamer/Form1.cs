@@ -896,7 +896,7 @@ namespace TV_show_Renamer
         {
             WebClient webClient = new WebClient();
             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed3);
-            webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/test.exe"), commonAppData + "\\test.exe");
+            webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/test.exe"), commonAppData + "\\update.exe");
 
             //download update = new download(commonAppData, this);
             //update.Show();

@@ -14,6 +14,8 @@ namespace TV_show_Renamer
         public ConversionOptions()
         {
             InitializeComponent();
+            comboBox1.SelectedValue = 1;
+            comboBox2.SelectedValue = 1;
         }
     }
 }
