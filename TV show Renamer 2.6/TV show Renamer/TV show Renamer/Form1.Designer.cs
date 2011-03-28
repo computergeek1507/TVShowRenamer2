@@ -52,21 +52,7 @@
             this.secretSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secretResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.convertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.convertToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.capitalizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeExtraCrapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addForTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeYearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testShowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.seasonEpisodeFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.x01ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.s01E01ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.otherOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textConverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -131,7 +117,6 @@
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.viewFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button6 = new System.Windows.Forms.Button();
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -183,7 +168,6 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.optionsToolStripMenuItem,
-            this.seasonEpisodeFormatToolStripMenuItem,
             this.otherOptionsToolStripMenuItem,
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -287,183 +271,17 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.convertToolStripMenuItem,
-            this.convertToToolStripMenuItem,
-            this.removeToolStripMenuItem,
-            this.toolStripMenuItem4,
-            this.capitalizeToolStripMenuItem,
-            this.removeExtraCrapToolStripMenuItem,
-            this.addForTitleToolStripMenuItem,
-            this.removeYearToolStripMenuItem,
             this.testShowToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(124, 20);
             this.optionsToolStripMenuItem.Text = "Conversion Options";
             // 
-            // convertToolStripMenuItem
-            // 
-            this.convertToolStripMenuItem.AutoToolTip = true;
-            this.convertToolStripMenuItem.Checked = true;
-            this.convertToolStripMenuItem.CheckOnClick = true;
-            this.convertToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.convertToolStripMenuItem.Name = "convertToolStripMenuItem";
-            this.convertToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.convertToolStripMenuItem.Text = "Convert \".\" to \" \"";
-            this.convertToolStripMenuItem.Click += new System.EventHandler(this.convertToolStripMenuItem_Click);
-            // 
-            // convertToToolStripMenuItem
-            // 
-            this.convertToToolStripMenuItem.AutoToolTip = true;
-            this.convertToToolStripMenuItem.Checked = true;
-            this.convertToToolStripMenuItem.CheckOnClick = true;
-            this.convertToToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.convertToToolStripMenuItem.Name = "convertToToolStripMenuItem";
-            this.convertToToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.convertToToolStripMenuItem.Text = "Convert \"_\" to \" \"";
-            this.convertToToolStripMenuItem.ToolTipText = "Convert \"_\" to \" \"";
-            this.convertToToolStripMenuItem.Click += new System.EventHandler(this.convertToToolStripMenuItem_Click);
-            // 
-            // removeToolStripMenuItem
-            // 
-            this.removeToolStripMenuItem.AutoToolTip = true;
-            this.removeToolStripMenuItem.Checked = true;
-            this.removeToolStripMenuItem.CheckOnClick = true;
-            this.removeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.removeToolStripMenuItem.Text = "Remove \"-\"";
-            this.removeToolStripMenuItem.ToolTipText = "Remove all Dashes";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Checked = true;
-            this.toolStripMenuItem4.CheckOnClick = true;
-            this.toolStripMenuItem4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(206, 22);
-            this.toolStripMenuItem4.Text = "Remove \"()\" , \"{}\"and \"[]\"";
-            this.toolStripMenuItem4.ToolTipText = "Remove";
-            this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
-            // 
-            // capitalizeToolStripMenuItem
-            // 
-            this.capitalizeToolStripMenuItem.AutoToolTip = true;
-            this.capitalizeToolStripMenuItem.Checked = true;
-            this.capitalizeToolStripMenuItem.CheckOnClick = true;
-            this.capitalizeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.capitalizeToolStripMenuItem.Name = "capitalizeToolStripMenuItem";
-            this.capitalizeToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.capitalizeToolStripMenuItem.Text = "Capitalize";
-            this.capitalizeToolStripMenuItem.ToolTipText = "Capitalize First Letter After Spaces/Period";
-            this.capitalizeToolStripMenuItem.Click += new System.EventHandler(this.capitalizeToolStripMenuItem_Click);
-            // 
-            // removeExtraCrapToolStripMenuItem
-            // 
-            this.removeExtraCrapToolStripMenuItem.AutoToolTip = true;
-            this.removeExtraCrapToolStripMenuItem.Checked = true;
-            this.removeExtraCrapToolStripMenuItem.CheckOnClick = true;
-            this.removeExtraCrapToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.removeExtraCrapToolStripMenuItem.Name = "removeExtraCrapToolStripMenuItem";
-            this.removeExtraCrapToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.removeExtraCrapToolStripMenuItem.Text = "Remove Extra Crap";
-            this.removeExtraCrapToolStripMenuItem.ToolTipText = "Remove Stuff if in Junk Library";
-            this.removeExtraCrapToolStripMenuItem.Click += new System.EventHandler(this.removeExtraCrapToolStripMenuItem_Click);
-            // 
-            // addForTitleToolStripMenuItem
-            // 
-            this.addForTitleToolStripMenuItem.AutoToolTip = true;
-            this.addForTitleToolStripMenuItem.Checked = true;
-            this.addForTitleToolStripMenuItem.CheckOnClick = true;
-            this.addForTitleToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.addForTitleToolStripMenuItem.Name = "addForTitleToolStripMenuItem";
-            this.addForTitleToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.addForTitleToolStripMenuItem.Text = "Add \" - \" for Title";
-            this.addForTitleToolStripMenuItem.ToolTipText = "Add Dash if Title Is Added";
-            this.addForTitleToolStripMenuItem.Click += new System.EventHandler(this.addForTitleToolStripMenuItem_Click);
-            // 
-            // removeYearToolStripMenuItem
-            // 
-            this.removeYearToolStripMenuItem.AutoToolTip = true;
-            this.removeYearToolStripMenuItem.Checked = true;
-            this.removeYearToolStripMenuItem.CheckOnClick = true;
-            this.removeYearToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.removeYearToolStripMenuItem.Name = "removeYearToolStripMenuItem";
-            this.removeYearToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.removeYearToolStripMenuItem.Text = "Remove Year";
-            this.removeYearToolStripMenuItem.ToolTipText = "Remove Year If Exists";
-            this.removeYearToolStripMenuItem.Click += new System.EventHandler(this.removeYearToolStripMenuItem_Click);
-            // 
             // testShowToolStripMenuItem
             // 
             this.testShowToolStripMenuItem.Name = "testShowToolStripMenuItem";
-            this.testShowToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.testShowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.testShowToolStripMenuItem.Text = "Test show";
             this.testShowToolStripMenuItem.Click += new System.EventHandler(this.testShowToolStripMenuItem_Click);
-            // 
-            // seasonEpisodeFormatToolStripMenuItem
-            // 
-            this.seasonEpisodeFormatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.x01ToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem3,
-            this.s01E01ToolStripMenuItem1,
-            this.dateToolStripMenuItem});
-            this.seasonEpisodeFormatToolStripMenuItem.Name = "seasonEpisodeFormatToolStripMenuItem";
-            this.seasonEpisodeFormatToolStripMenuItem.Size = new System.Drawing.Size(143, 20);
-            this.seasonEpisodeFormatToolStripMenuItem.Text = "Season/Episode Format";
-            // 
-            // x01ToolStripMenuItem
-            // 
-            this.x01ToolStripMenuItem.AutoToolTip = true;
-            this.x01ToolStripMenuItem.Checked = true;
-            this.x01ToolStripMenuItem.CheckOnClick = true;
-            this.x01ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.x01ToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.x01ToolStripMenuItem.Name = "x01ToolStripMenuItem";
-            this.x01ToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.x01ToolStripMenuItem.Text = "1x01";
-            this.x01ToolStripMenuItem.ToolTipText = "Sample Show 1x01.avi";
-            this.x01ToolStripMenuItem.Click += new System.EventHandler(this.x01ToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.CheckOnClick = true;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
-            this.toolStripMenuItem1.Text = "101";
-            this.toolStripMenuItem1.ToolTipText = "Sample Show 101.avi";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.AutoToolTip = true;
-            this.toolStripMenuItem3.CheckOnClick = true;
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(155, 22);
-            this.toolStripMenuItem3.Text = "0101";
-            this.toolStripMenuItem3.ToolTipText = "Sample Show 0101.avi";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
-            // 
-            // s01E01ToolStripMenuItem1
-            // 
-            this.s01E01ToolStripMenuItem1.AutoToolTip = true;
-            this.s01E01ToolStripMenuItem1.CheckOnClick = true;
-            this.s01E01ToolStripMenuItem1.Name = "s01E01ToolStripMenuItem1";
-            this.s01E01ToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
-            this.s01E01ToolStripMenuItem1.Text = "S01E01";
-            this.s01E01ToolStripMenuItem1.ToolTipText = "Sample Show S01E01.avi";
-            this.s01E01ToolStripMenuItem1.Click += new System.EventHandler(this.s01E01ToolStripMenuItem1_Click);
-            // 
-            // dateToolStripMenuItem
-            // 
-            this.dateToolStripMenuItem.AutoToolTip = true;
-            this.dateToolStripMenuItem.CheckOnClick = true;
-            this.dateToolStripMenuItem.Name = "dateToolStripMenuItem";
-            this.dateToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.dateToolStripMenuItem.Text = "1-1-2010 (Date)";
-            this.dateToolStripMenuItem.ToolTipText = "Sample Show 1-1-2010.avi";
-            this.dateToolStripMenuItem.Click += new System.EventHandler(this.dateToolStripMenuItem_Click);
             // 
             // otherOptionsToolStripMenuItem
             // 
@@ -1044,10 +862,6 @@
             this.viewFolderToolStripMenuItem.Text = "View Folder";
             this.viewFolderToolStripMenuItem.Click += new System.EventHandler(this.viewFolderToolStripMenuItem_Click);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // button6
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1136,17 +950,6 @@
         private System.Windows.Forms.ToolStripMenuItem addFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem convertToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem convertToToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem capitalizeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeExtraCrapToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addForTitleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem seasonEpisodeFormatToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem x01ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem s01E01ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem dateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem otherOptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addTitleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem textConverterToolStripMenuItem;
@@ -1160,7 +963,6 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem defaultSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem removeYearToolStripMenuItem;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button5;
@@ -1178,7 +980,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
         private System.Windows.Forms.ToolStripMenuItem movieFolderToolStripMenuItem;
@@ -1191,9 +992,7 @@
         private System.Windows.Forms.ToolStripMenuItem musicVideoFolderToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem moveToOtherVideosFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToOtherVideosFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
         private System.Windows.Forms.ToolStripMenuItem getTitlesOffIMBDOfSelectedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveToToolStripMenuItem;
