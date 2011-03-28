@@ -6,7 +6,7 @@ using System.IO;
 
 namespace TV_show_Renamer
 {
-    class LogWrite
+    public class LogWrite
     {
         string logFolder = null;
         StreamWriter log;

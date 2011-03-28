@@ -29,7 +29,8 @@ namespace TV_show_Renamer
         
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://armorgames.com/play/4703/miami-shark");
+            //System.Diagnostics.Process.Start("http://armorgames.com/play/4703/miami-shark");
+            System.Diagnostics.Process.Start("https://www.paypal.com/us/cgi-bin/webscr?cmd=_flow&SESSION=bzy56ZFh-cc0N6PnIseq9L8NP8SwPl0JAmrAvrMYrRkAGIWg47Al10MsANO&dispatch=5885d80a13c0db1f8e263663d3faee8d5fa8ff279e37c3d9d4e38bdbee0ede69");
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

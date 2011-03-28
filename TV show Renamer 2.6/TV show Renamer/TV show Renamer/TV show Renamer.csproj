@@ -64,6 +64,9 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TV_show_Renamer.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="SevenZipSharp">
@@ -140,6 +143,7 @@
       <DependentUpon>Junk Words.cs</DependentUpon>
     </Compile>
     <Compile Include="LogWrite.cs" />
+    <Compile Include="MainSettings.cs" />
     <Compile Include="move folder.cs">
       <SubType>Form</SubType>
     </Compile>

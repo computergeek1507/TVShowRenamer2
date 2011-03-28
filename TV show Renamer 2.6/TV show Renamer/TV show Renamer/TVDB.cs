@@ -21,7 +21,7 @@ namespace TV_show_Renamer
         Form1 main;
         BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list    
         List<SearchInfo> selectionList = new List<SearchInfo>();
-
+        
         string folder = null;
         int format = -1;
         bool renameWorked = false;
