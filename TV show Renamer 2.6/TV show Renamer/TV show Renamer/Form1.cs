@@ -125,6 +125,12 @@ namespace TV_show_Renamer
             this.Close();
         }
 
+        //New conversion settings
+        private void testShowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConversionOptions MainSettings = new ConversionOptions(this, newMainSettings);
+        } 
+    
         //User junk word menu
         private void addJunkWordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -155,10 +161,10 @@ namespace TV_show_Renamer
         //check for updates
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.checkForUpdate();
+            //this.checkForUpdate();
             //new thread for update
-            //Thread t = new Thread(new ThreadStart(checkForUpdate));
-            //t.Start();
+            Thread t = new Thread(new ThreadStart(checkForUpdate));
+            t.Start();
         }
 
         //about display
@@ -618,7 +624,12 @@ namespace TV_show_Renamer
             {   //global update crap
                 if (MessageBox.Show("There is an update available, Would you like to update?\nNOTE: This will reinstall the program", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    this.fullUpdate();
+                    MethodInvoker action5 = delegate
+                    {
+                        this.fullUpdate();
+                    };
+                    this.BeginInvoke(action5);
+                    //this.fullUpdate();
                 }
                 else
                 {
@@ -3219,12 +3230,6 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();
         }
-
-        private void testShowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ConversionOptions MainSettings = new ConversionOptions(this,newMainSettings);
-            
-        }               
-                             
+                                    
     }//end of form1 partial class
 }//end of namespace
