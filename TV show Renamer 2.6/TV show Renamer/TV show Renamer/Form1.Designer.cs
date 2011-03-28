@@ -278,9 +278,11 @@
             // 
             // testShowToolStripMenuItem
             // 
+            this.testShowToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.testShowToolStripMenuItem.Name = "testShowToolStripMenuItem";
-            this.testShowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.testShowToolStripMenuItem.Text = "Test show";
+            this.testShowToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.testShowToolStripMenuItem.Text = "Conversion Options";
+            this.testShowToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.testShowToolStripMenuItem.Click += new System.EventHandler(this.testShowToolStripMenuItem_Click);
             // 
             // otherOptionsToolStripMenuItem
