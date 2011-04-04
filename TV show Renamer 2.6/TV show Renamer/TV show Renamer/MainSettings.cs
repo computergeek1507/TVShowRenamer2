@@ -204,7 +204,28 @@ namespace TV_show_Renamer
                     _musicVidFolder = tr3.ReadLine();
                     _otherVidFolder = tr3.ReadLine();                    
 
-                    tr3.Close();//close reader stream    
+                    tr3.Close();//close reader stream 
+
+                    if (!(System.IO.Directory.Exists(_movieFolder)))
+                    {
+                        _movieFolder = "0000";
+                    }
+                    if (!(System.IO.Directory.Exists(_movieFolder2)))
+                    {
+                        _movieFolder2 = "0000";
+                    }
+                    if (!(System.IO.Directory.Exists(_trailersFolder)))
+                    {
+                        _trailersFolder = "0000";
+                    }
+                    if (!(System.IO.Directory.Exists(_musicVidFolder)))
+                    {
+                        _musicVidFolder = "0000";
+                    }
+                    if (!(System.IO.Directory.Exists(_otherVidFolder)))
+                    {
+                        _otherVidFolder = "0000";
+                    }
                 }//end of if. 
                 if (File.Exists(_dataFolder + "//TVFolder.seh"))
                 {
@@ -216,7 +237,11 @@ namespace TV_show_Renamer
                         {
                             break;
                         }
-                        _moveFolder.Add(tv2.ReadLine());
+                        string readLine = tv2.ReadLine();
+                        if (System.IO.Directory.Exists(readLine))
+                        {
+                            _moveFolder.Add(readLine);
+                        }                        
                     }//end of for loop  
                     tv2.Close();
                 }//end of if

@@ -3267,7 +3267,7 @@ namespace TV_show_Renamer
         //loads when starts
         private void Form1_Load(object sender, EventArgs e)
         {           
-            if (!(File.Exists(newMainSettings.DataFolder)))
+            if (!(System.IO.Directory.Exists(newMainSettings.DataFolder)))
             {
                 System.IO.Directory.CreateDirectory(newMainSettings.DataFolder);
             }            
