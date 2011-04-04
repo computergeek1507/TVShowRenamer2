@@ -128,9 +128,15 @@ namespace TV_show_Renamer
         //New conversion settings
         private void testShowToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
+        }
+
+        //Convertion option menu 
+        private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
             ConversionOptions MainSettings = new ConversionOptions(this, newMainSettings);
-        } 
-    
+        }
+
         //User junk word menu
         private void addJunkWordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -229,12 +235,7 @@ namespace TV_show_Renamer
             }
         }
 
-        //offset menu
-        private void toolStripMenuItem8_Click(object sender, EventArgs e)
-        {
-            Offset offsetObective = new Offset(this,newMainSettings, newMainSettings.SeasonOffset, newMainSettings.EpisodeOffset);
-        }
-
+       
         #endregion
 
         #region On the form Buttons
@@ -497,7 +498,8 @@ namespace TV_show_Renamer
                 {
                     try
                     {
-                        System.IO.File.Move((fileList[y].FullFileName), (fileList[y].NewFullFileName));
+                        FileSystem.MoveFile((fileList[y].FullFileName), (fileList[y].NewFullFileName), true);
+                        //System.IO.File.Move((fileList[y].FullFileName), (fileList[y].NewFullFileName));
                         Log.WriteLog(fileList[y].FileName, fileList[y].NewFileName);
                         fileList[y].FileName = fileList[y].NewFileName;
                         fileList[y].FileTitle = "";
@@ -652,6 +654,7 @@ namespace TV_show_Renamer
             else
             {   //no updats available
                 MessageBox.Show("No updates available");
+
             }
         }
 
@@ -682,6 +685,15 @@ namespace TV_show_Renamer
                         }//end of case 
                 }//end of switch
             }//end of while loop
+            xmlReader.Close();
+            try
+            {
+                System.IO.File.Delete(newMainSettings.DataFolder + "//webversion.xml");
+            }
+            catch (Exception) {
+               //MessageBox.Show("not working");
+            }
+            
             return data;
         }//end of WebXMLReader Method
 
@@ -1035,6 +1047,9 @@ namespace TV_show_Renamer
             startlist.Add("bajskorv");
             startlist.Add("momentum");
             startlist.Add("yestv");
+            startlist.Add("qssdivx");
+            startlist.Add("mmi");
+            startlist.Add("rdf");
             startlist.Add("dcp");
             startlist.Add("dgas");
             startlist.Add("nogrp");
@@ -1049,6 +1064,7 @@ namespace TV_show_Renamer
             startlist.Add("xoxo");
             startlist.Add("medieval");
             startlist.Add("webrip");
+            startlist.Add("bdrip");
             startlist.Add("agd");
             startlist.Add("gnarly");
             startlist.Add("krs");
@@ -1067,6 +1083,10 @@ namespace TV_show_Renamer
             startlist.Add("www directlinkspot com");
             startlist.Add("onelinkmoviez.com");
             startlist.Add("onelinkmoviez com");
+            startlist.Add("asap");
+            startlist.Add("dd5.1");
+            startlist.Add("dd5 1");
+
             //startlist.Add("tv");
 
             //if no file exist make a default file
@@ -1646,11 +1666,28 @@ namespace TV_show_Renamer
             return s.ToString();
         }
 
+        //uppercase stuff
+        private string UpperCaseing(string orig)
+        {//make every thing lowercase for crap remover to work
+            StringBuilder s = new StringBuilder(orig);
+            for (int l = 0; l < orig.Length; l++)
+            {
+                s[l] = char.ToUpper(s[l]);
+            }//reassign edited name 
+            return s.ToString();
+        }
+
         //rename method
         private string fileRenamer(string newfilename, int index, string extend)
         {//make temp function
             string temp = null;
-            if (true)
+            string seasonDash = "";
+            if (!newMainSettings.DashSeason) 
+            {
+                seasonDash = "- ";            
+            }
+            
+            if (newMainSettings.RemovePeriod)
             {
                 temp = " ";
             }
@@ -1687,25 +1724,25 @@ namespace TV_show_Renamer
             }//end of removeExtraCrapToolStripMenuItem if
 
             //replace periods(".") with spaces 
-            if (true)
+            if (newMainSettings.RemovePeriod)
             {
                 newfilename = newfilename.Replace(".", temp);
             }
 
             //Replace "_" with spaces
-            if (true)
+            if (newMainSettings.RemoveUnderscore)
             {
                 newfilename = newfilename.Replace("_", temp);
             }
 
             //Replace "-" with spaces
-            if (true)
+            if (newMainSettings.RemoveDash)
             {
                 newfilename = newfilename.Replace("-", temp);
             }
 
             //Replace (), {}, and [] with spaces
-            if (true)
+            if (newMainSettings.RemoveBracket)
             {
                 newfilename = newfilename.Replace("(", temp).Replace(")", temp).Replace("{", temp).Replace("}", temp).Replace("[", temp).Replace("]", temp);
             }
@@ -1779,7 +1816,7 @@ namespace TV_show_Renamer
             }//end of for
 
             //Capitalize Function
-            if (true)
+            if (newMainSettings.ProgramFormat < 2)
             {
                 StringBuilder s2 = new StringBuilder(newfilename);
                 int size3 = newfilename.Length;
@@ -1787,30 +1824,35 @@ namespace TV_show_Renamer
                 //make first letter capital
                 char strTemp = char.ToUpper(s2[0]);
                 s2[0] = strTemp;
-
-                //Finds Letter after spaces and capitalizes them
-                for (int i = 2; i < size3 - 4; i++)
+                if (newMainSettings.ProgramFormat==0)
                 {
-                    if (s2[i] == ' ' || s2[i] == '.')
+                    //Finds Letter after spaces and capitalizes them
+                    for (int i = 2; i < size3 - 4; i++)
                     {
-                        char strTemp2 = char.ToUpper(s2[i + 1]);
-                        s2[i + 1] = strTemp2;
-                    }
-                }//end of for loop
-
+                        if (s2[i] == ' ' || s2[i] == '.')
+                        {
+                            char strTemp2 = char.ToUpper(s2[i + 1]);
+                            s2[i + 1] = strTemp2;
+                        }
+                    }//end of for loop
+                }
                 //adds changes to newfilename
                 newfilename = s2.ToString();
             }//end of capilization
 
+            if (newMainSettings.ProgramFormat == 2) 
+            {
+                newfilename = UpperCaseing(newfilename);            
+            }
+
             //add dash if the title exists or add one 
             string tempTitle = null;
-            if (true)
+            if (!newMainSettings.DashTitle)
             {
                 //bool titleAvil = titles.checkTitle(index);
                 if (fileList[index].FileTitle != "")
                 {
-                    string newTitle = fileList[index].FileTitle;
-                    tempTitle = " - " + newTitle;
+                    tempTitle = " - " + fileList[index].FileTitle;
                 }
                 else
                 {
@@ -1819,7 +1861,8 @@ namespace TV_show_Renamer
             }
             else
             {
-                tempTitle = "";
+                tempTitle = fileList[index].FileTitle;
+                //tempTitle = "";
             }//end of if-else
 
             //loop for seasons
@@ -1905,7 +1948,7 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
-                        newfilename = newfilename.Replace(output2, output + tempTitle);//0101 add title
+                        newfilename = newfilename.Replace(output2,  output + tempTitle);//0101 add title
                     }
                     //S01E01 format
                     if (newMainSettings.SeasonFormat == 2)
@@ -1928,8 +1971,8 @@ namespace TV_show_Renamer
                         newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
-                        newfilename = newfilename.Replace("S" + newi + "E" + newj, output + tempTitle);//S01E01 add title
-                        newfilename = newfilename.Replace("S" + newi + "e" + newj, output + tempTitle);//S01E01 add title if second time
+                        newfilename = newfilename.Replace("S" + newi + "E" + newj,  output + tempTitle);//S01E01 add title
+                        newfilename = newfilename.Replace("S" + newi + "e" + newj,  output + tempTitle);//S01E01 add title if second time
                     }
                     //101 format
                     if (newMainSettings.SeasonFormat == 3)
@@ -1977,12 +2020,11 @@ namespace TV_show_Renamer
             {
                 //add dash if the title exists or add one 
                 string dateTitle = null;
-                if (true)
+                if (!newMainSettings.DashTitle)
                 {
                     if (fileList[index].FileTitle != "")
                     {
-                        string newTitle = fileList[index].FileTitle;
-                        dateTitle = " - " + newTitle;
+                        dateTitle = " - " + fileList[index].FileTitle;
                     }
                     else
                     {
@@ -1991,7 +2033,8 @@ namespace TV_show_Renamer
                 }
                 else
                 {
-                    dateTitle = "";
+                    dateTitle = fileList[index].FileTitle;
+                    //dateTitle = "";
                 }//end of if-else
 
                 for (int year = 0; year < 20; year++)
@@ -2025,9 +2068,9 @@ namespace TV_show_Renamer
 
                             newfilename = newfilename.Replace(kk + " " + month + " " + day, month + "-" + day + "-" + kk);
                             newfilename = newfilename.Replace(kk + " " + newmonth + " " + newday, month.ToString() + "-" + day.ToString() + "-" + kk);
-                            
-                            newfilename = newfilename.Replace(month + "-" + day + "-" + kk, month + "-" + day + "-" + kk + dateTitle);//add title
-                            newfilename = newfilename.Replace(month + " " + day + " " + kk, month + "-" + day + "-" + kk + dateTitle);//add title
+
+                            newfilename = newfilename.Replace( month + "-" + day + "-" + kk, month + "-" + day + "-" + kk + dateTitle);//add title
+                            newfilename = newfilename.Replace( month + " " + day + " " + kk, month + "-" + day + "-" + kk + dateTitle);//add title
 
                             if (startnewname != newfilename)
                             {
@@ -2046,6 +2089,25 @@ namespace TV_show_Renamer
                     }
                 }//end of for loop year
             }//end of if for date check box
+
+            switch (newMainSettings.ExtFormat)
+            {
+                case 0:
+                    extend = lowering(extend);
+                    break;
+                case 1:
+                    StringBuilder ext1 = new StringBuilder(extend);
+                    ext1[1] = char.ToUpper(ext1[1]);
+                    extend = ext1.ToString();                
+                    break;
+                case 2:
+                    extend = UpperCaseing(extend);
+                    break;
+                default:
+                    
+                    break;
+            }
+
 
             //add file extention back on 
             newfilename = newfilename.Replace(temp + "&&&&", extend);
@@ -2582,7 +2644,8 @@ namespace TV_show_Renamer
                     {
                         try
                         {
-                            System.IO.File.Move((fileList[u].FullFileName), (fileList[u].NewFullFileName));
+                            FileSystem.MoveFile((fileList[u].FullFileName), (fileList[u].NewFullFileName), true);
+                            //System.IO.File.Move((fileList[u].FullFileName), (fileList[u].NewFullFileName));
                             Log.WriteLog(fileList[u].FullFileName, fileList[u].NewFullFileName);
                             fileList[u].FileName = fileList[u].NewFileName;
                             fileList[u].FileTitle = "";
@@ -2890,7 +2953,7 @@ namespace TV_show_Renamer
         //move to movie folder
         private void movieFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.MovieFolder == "" || newMainSettings.MovieFolder == "0000")
+            if ((newMainSettings.MovieFolder == "" || newMainSettings.MovieFolder == "0000"))
             {
                 MessageBox.Show("No Movie Folder Selected");
                 return;
@@ -2901,7 +2964,7 @@ namespace TV_show_Renamer
         //move to movie folder2
         private void movieFolder2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.MovieFolder2 == "" || newMainSettings.MovieFolder2 == "0000")
+            if ((newMainSettings.MovieFolder2 == "" || newMainSettings.MovieFolder2 == "0000"))
             {
                 MessageBox.Show("No Movie Folder 2 Selected");
                 return;
@@ -2912,7 +2975,7 @@ namespace TV_show_Renamer
         //move to movie trailer folder
         private void movieTrailerFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.TrailersFolder == "" || newMainSettings.TrailersFolder == "0000")
+            if ((newMainSettings.TrailersFolder == "" || newMainSettings.TrailersFolder == "0000"))
             {
                 MessageBox.Show("No Movie Trailer Folder Selected");
                 return;
@@ -2923,7 +2986,7 @@ namespace TV_show_Renamer
         //move to music video folder
         private void musicVideoFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.MusicVidFolder == "" || newMainSettings.MusicVidFolder == "0000")
+            if ((newMainSettings.MusicVidFolder == "" || newMainSettings.MusicVidFolder == "0000"))
             {
                 MessageBox.Show("No Music Video Folder Selected");
                 return;
@@ -2934,7 +2997,7 @@ namespace TV_show_Renamer
         //move to other video folder
         private void moveToOtherVideosFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.OtherVidFolder == "" || newMainSettings.OtherVidFolder == "0000")
+            if ((newMainSettings.OtherVidFolder == "" || newMainSettings.OtherVidFolder == "0000"))
             {
                 MessageBox.Show("No Other Video Folder Selected");
                 return;
@@ -2945,7 +3008,7 @@ namespace TV_show_Renamer
         //copy to movie folders
         private void movieFolderToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.MovieFolder == "" || newMainSettings.MovieFolder == "0000")
+            if ((newMainSettings.MovieFolder == "" || newMainSettings.MovieFolder == "0000"))
             {
                 MessageBox.Show("No Movie Folder Selected");
                 return;
@@ -2956,7 +3019,7 @@ namespace TV_show_Renamer
         //copy to movie folders2
         private void movieFolder2ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.MovieFolder2 == "" || newMainSettings.MovieFolder2 == "0000")
+            if ((newMainSettings.MovieFolder2 == "" || newMainSettings.MovieFolder2 == "0000"))
             {
                 MessageBox.Show("No Movie Folder 2 Selected");
                 return;
@@ -2967,7 +3030,7 @@ namespace TV_show_Renamer
         //copy to movie trailer folder
         private void movieTrailerFolderToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.TrailersFolder == "" || newMainSettings.TrailersFolder == "0000")
+            if ((newMainSettings.TrailersFolder == "" || newMainSettings.TrailersFolder == "0000"))
             {
                 MessageBox.Show("No Movie Trailer Folder Selected");
                 return;
@@ -2978,7 +3041,7 @@ namespace TV_show_Renamer
         //copy to music video folder
         private void musicVideoFolderToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.MusicVidFolder == "" || newMainSettings.MusicVidFolder == "0000")
+            if ((newMainSettings.MusicVidFolder == "" || newMainSettings.MusicVidFolder == "0000"))
             {
                 MessageBox.Show("No Music Video Folder Selected");
                 return;
@@ -2989,7 +3052,7 @@ namespace TV_show_Renamer
         //copy to other video folder
         private void copyToOtherVideosFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (newMainSettings.OtherVidFolder == "" || newMainSettings.OtherVidFolder == "0000")
+            if ((newMainSettings.OtherVidFolder == "" || newMainSettings.OtherVidFolder == "0000"))
             {
                 MessageBox.Show("No Other Video Folder Selected");
                 return;
@@ -3210,12 +3273,13 @@ namespace TV_show_Renamer
             }            
             Log.startLog(newMainSettings.DataFolder);
             newMainSettings.Start(Log);
-            //this.preferenceXmlRead();
+            
             this.junkRemover();
             this.fileChecker();
-
+            newMainSettings.loadStettings();
             userJunk.junk_adder(junklist, newMainSettings.DataFolder, this);
             textConvert.setUp(this, newMainSettings.DataFolder);
+            BuildMenuItems();
         }//end of load command
 
         //create preference file when program closes and close log
@@ -3224,12 +3288,37 @@ namespace TV_show_Renamer
             newMainSettings.FormClosed = true;
             if (newMainSettings.ClosedForUpdates)
             {
+                Log.closeLog();
                 return;
             }
-            
+            newMainSettings.saveStettings();
             //write log
             Log.closeLog();
         }
+
+        private void BuildMenuItems()
+        {
+            //optionsToolStripMenuItem.
+            ToolStripMenuItem[] items = new ToolStripMenuItem[2]; // You would obviously calculate this value at runtime
+            for (int i = 0; i < items.Length; i++)
+            {
+                items[i] = new ToolStripMenuItem();
+                items[i].Name = "dynamicItem" + i.ToString();
+                items[i].Tag = "specialDataHere";
+                items[i].Text = "Visible Menu Text Here";
+                items[i].Click += new EventHandler(MenuItemClickHandler);
+            }
+
+            optionsToolStripMenuItem.DropDownItems.AddRange(items);
+        }
+
+        private void MenuItemClickHandler(object sender, EventArgs e)
+        {
+            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+            //clickedItem.Tag
+            // Take some action based on the data in clickedItem
+        }
+               
                                     
     }//end of form1 partial class
 }//end of namespace

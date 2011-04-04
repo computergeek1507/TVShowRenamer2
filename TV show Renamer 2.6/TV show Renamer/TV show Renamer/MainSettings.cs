@@ -14,7 +14,7 @@ namespace TV_show_Renamer
         bool _removeBracket = true;
         bool _removeCrap = true;
         bool _dashSeason = true;
-        bool _dashTitle = true;
+        bool _dashTitle = false;
         bool _removeYear = true;
         bool _openZIPs = false;
         bool _autoTitle = true;
@@ -57,8 +57,9 @@ namespace TV_show_Renamer
             _removeDash = true;
             _removeBracket = true;
             _removeCrap = true;
+
             _dashSeason = true;
-            _dashTitle = true;
+            _dashTitle = false;
             _removeYear = true;
             _openZIPs = false;
             _autoTitle = true;
@@ -97,15 +98,19 @@ namespace TV_show_Renamer
                 StreamWriter pw = new StreamWriter(_dataFolder + "//newpreferences.seh");
 
                 pw.WriteLine(_removePeriod);
-                pw.WriteLine(_removePeriod);
+                pw.WriteLine(_removeUnderscore);
                 pw.WriteLine(_removeDash);
-                pw.WriteLine(_removeBracket);
-                
+                pw.WriteLine(_removeBracket);                
                 pw.WriteLine(_removeCrap);
+
+                pw.WriteLine(_dashSeason);
                 pw.WriteLine(_dashTitle);
                 pw.WriteLine(_removeYear);
                 pw.WriteLine(_openZIPs);
                 pw.WriteLine(_autoTitle);
+
+                pw.WriteLine(_seasonOffset);
+                pw.WriteLine(_episodeOffset);
                 pw.WriteLine(_programFormat);
                 pw.WriteLine(_seasonFormat);
                 pw.WriteLine(_titleFormat);
@@ -153,7 +158,74 @@ namespace TV_show_Renamer
 
         public bool loadStettings()
         {
+            try
+            {
+                if (File.Exists(_dataFolder + "//newpreferences.seh"))
+                {
+                    StreamReader tr3 = new StreamReader(_dataFolder + "//newpreferences.seh");
+                    //bool.Parse(tr3.ReadLine());
+                    _removePeriod = bool.Parse(tr3.ReadLine());
+                    _removeUnderscore = bool.Parse(tr3.ReadLine());
+                    _removeDash= bool.Parse(tr3.ReadLine());
+                    _removeBracket= bool.Parse(tr3.ReadLine());
+                    _removeCrap= bool.Parse(tr3.ReadLine());
 
+                    _dashSeason = bool.Parse(tr3.ReadLine());
+                    _dashTitle= bool.Parse(tr3.ReadLine());
+                    _removeYear= bool.Parse(tr3.ReadLine());
+                    _openZIPs= bool.Parse(tr3.ReadLine());
+                    _autoTitle= bool.Parse(tr3.ReadLine());
+
+                    _seasonOffset= int.Parse(tr3.ReadLine());
+                    _episodeOffset = int.Parse(tr3.ReadLine());
+                    _programFormat= int.Parse(tr3.ReadLine());
+                    _seasonFormat = int.Parse(tr3.ReadLine());
+                    _titleFormat = int.Parse(tr3.ReadLine());
+                    _junkFormat = int.Parse(tr3.ReadLine());
+                    _extFormat = int.Parse(tr3.ReadLine());
+
+
+                    _backgroundColor[0] = int.Parse(tr3.ReadLine());
+                    _backgroundColor[1] = int.Parse(tr3.ReadLine());
+                    _backgroundColor[2] = int.Parse(tr3.ReadLine());
+                    _backgroundColor[3] = int.Parse(tr3.ReadLine());
+                    _foregroundColor[0] = int.Parse(tr3.ReadLine());
+                    _foregroundColor[1] = int.Parse(tr3.ReadLine());
+                    _foregroundColor[2] = int.Parse(tr3.ReadLine());
+                    _foregroundColor[3] = int.Parse(tr3.ReadLine());
+                    _buttonColor[0] = int.Parse(tr3.ReadLine());
+                    _buttonColor[1] = int.Parse(tr3.ReadLine());
+                    _buttonColor[2] = int.Parse(tr3.ReadLine());
+                    _buttonColor[3] = int.Parse(tr3.ReadLine());
+
+                    _movieFolder = tr3.ReadLine();
+                    _movieFolder2 = tr3.ReadLine();
+                    _trailersFolder = tr3.ReadLine();
+                    _musicVidFolder = tr3.ReadLine();
+                    _otherVidFolder = tr3.ReadLine();                    
+
+                    tr3.Close();//close reader stream    
+                }//end of if. 
+                if (File.Exists(_dataFolder + "//TVFolder.seh"))
+                {
+                    StreamReader tv2 = new StreamReader(_dataFolder + "//TVFolder.seh");
+                    int length = Int32.Parse(tv2.ReadLine());
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (length == 0)
+                        {
+                            break;
+                        }
+                        _moveFolder.Add(tv2.ReadLine());
+                    }//end of for loop  
+                    tv2.Close();
+                }//end of if
+            }
+            catch (Exception e)
+            {
+                _main.WriteLog("Reading Preference Error \n" + e.ToString());
+                return false;
+            }
 
             return true;
         }
@@ -268,6 +340,7 @@ namespace TV_show_Renamer
             get { return _extFormat; }
             set { _extFormat = value; }
         }
+
         public int[] BackgroundColor
         {
             get { return _backgroundColor; }
@@ -317,5 +390,5 @@ namespace TV_show_Renamer
             get { return _moveFolder; }
             set { _moveFolder = value; }
         }
-    }
-}
+    }//end of class
+}//end of namespace

@@ -90,37 +90,92 @@ namespace TV_show_Renamer
         private void button2_Click(object sender, EventArgs e)
         {
             if ((textBox1.Text != "") || (textBox1.Text != "0000"))
-                {
+            {
                 textConvert.Add(textBox1.Text);
                 textConvert.Add(textBox2.Text);
+
+                textBox1.Text = null;
+                textBox2.Text = null;
+                if (button2.Text == "Save") button2.Text = "Add";
+
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < textConvert.Count(); i = i + 2)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                    dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                    dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
                 }
-            textBox1.Text = null;
-            textBox2.Text = null;            
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+                Thread t = new Thread(new ThreadStart(convert));
+                t.Start();
+            }
         }
-
-        //view list
-        private void button3_Click(object sender, EventArgs e)
+       
+        //edit
+        private void button4_Click_1(object sender, EventArgs e)
         {
-            Display newbox = new Display(textConvert,this);                
+            if (dataGridView1.CurrentRow != null)
+            {
+                int u = dataGridView1.CurrentRow.Index;
+
+                textBox1.Text = textConvert[(u * 2) + 1];
+                textBox2.Text = textConvert[(u * 2)];
+                textConvert.RemoveAt((u*2)+1);
+                textConvert.RemoveAt(u * 2);
+                button2.Text = "Save";
+
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < textConvert.Count(); i = i + 2)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                    dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                    dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
+                }
+                Thread t = new Thread(new ThreadStart(convert));
+                t.Start();
+            }
         }
 
-        //clear list
-        private void button4_Click(object sender, EventArgs e)
+        //remove 
+        private void button3_Click_1(object sender, EventArgs e)
         {
-            textConvert.Clear();
-            StreamWriter sw = new StreamWriter(commonAppData + "//convertlibrary.seh");
-            sw.WriteLine("0");
-            sw.Close();//close writer stream
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            if (dataGridView1.CurrentRow != null)
+            {
+                for (int i = textConvert.Count() - 1; i >= 0; i=i-2)
+                {
+                    if (dataGridView1.Rows[i / 2].Cells[0].Selected || dataGridView1.Rows[i / 2].Cells[1].Selected || dataGridView1.Rows[i / 2].Cells[2].Selected)
+                    {
+                        textConvert.RemoveAt(i);
+                        textConvert.RemoveAt(i-1);
+                    }
+                }
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < textConvert.Count(); i = i + 2)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                    dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                    dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
+                }
+                Thread t = new Thread(new ThreadStart(convert));
+                t.Start();
+            }
         }
 
-        //remove selected
-        public void removeSelected() {
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();            
+        private void Text_Converter_Load(object sender, EventArgs e)
+        {
+            if (textConvert.Count() != 0)
+            {
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < textConvert.Count(); i = i + 2)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                    dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                    dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
+                }                
+            }
         }
     }//end of class
 }//end of namespace

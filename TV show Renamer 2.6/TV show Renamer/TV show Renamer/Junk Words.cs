@@ -30,6 +30,15 @@ namespace TV_show_Renamer
             junkwords = junkwords2;
             commonAppData = commonAppData2;
             this.getuserjunk();
+            if (userwords.Count() != 0)
+            {
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < userwords.Count(); i++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = userwords[i];
+                }
+            }
         }
         
         //read file that has user junk in it
@@ -92,18 +101,20 @@ namespace TV_show_Renamer
             }//end of if
             //add word
             userwords.Add(newword);//add junkword
+
+            dataGridView1.Rows.Clear();
+            for (int i = 0; i < userwords.Count(); i++)
+            {
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[i].Cells[0].Value = userwords[i];
+            }
+
             textBox1.Text = null;//clear box
 
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();                       
          }
-
-        //dislpay junk words
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Display box = new Display(userwords, this);
-        }
-
+        
         //"close" form and save new words to file
         private void button3_Click(object sender, EventArgs e)
         {
@@ -131,29 +142,43 @@ namespace TV_show_Renamer
         public List<string> getjunk() 
         {
             return userwords;        
-        }
-
-        //clear user junk word list and rewrite file to blank
-        private void button4_Click(object sender, EventArgs e)
+        }        
+                        
+        //remove button
+        private void button2_Click(object sender, EventArgs e)
         {
-            userwords.Clear();
-            StreamWriter sw = new StreamWriter(commonAppData + "//userlibrary.seh");
-            sw.WriteLine("0");
-            sw.Close();//close writer stream
-
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            if (dataGridView1.CurrentRow != null)
+            {
+                for (int i = userwords.Count() - 1; i >= 0; i--)
+                {
+                    if (dataGridView1.Rows[i].Cells[0].Selected)
+                    {
+                        userwords.RemoveAt(i);
+                    }
+                }
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < userwords.Count(); i++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = userwords[i];
+                }
+                Thread t = new Thread(new ThreadStart(convert));
+                t.Start();
+            }
         }
 
-        //remove selected 
-        public void removeSelected() {
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
-        }
-
+        //load
         private void junk_words_Load(object sender, EventArgs e)
         {
-
+            if (userwords.Count() != 0)
+            {
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < userwords.Count(); i++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = userwords[i];
+                }               
+            }
         }
         
     }//end of partial class 
