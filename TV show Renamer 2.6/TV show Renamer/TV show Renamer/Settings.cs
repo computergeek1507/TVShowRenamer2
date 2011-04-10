@@ -76,5 +76,10 @@ namespace TV_show_Renamer
                 this.Close();            
         }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }//end of class
 }//end of namespace

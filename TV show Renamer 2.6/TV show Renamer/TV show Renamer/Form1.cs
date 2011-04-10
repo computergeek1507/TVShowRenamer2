@@ -1256,7 +1256,7 @@ namespace TV_show_Renamer
                     if (origName == "Thumbs.db")                   
                         continue;                    
                     //zip fix
-                    if ((exten == ".zip" || exten == ".rar" || exten == ".r01" || exten == ".7z") && newMainSettings.OpenZIP)
+                    if ((exten == ".zip" || exten == ".rar" || exten == ".r01" || exten == ".7z") && newMainSettings.OpenZIPs)
                         continue;                    
                     //check if its a legal file type
                     if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v" || exten == ".mpeg" || exten == ".mov" || exten == ".rm"||exten == ".rmvb"))
