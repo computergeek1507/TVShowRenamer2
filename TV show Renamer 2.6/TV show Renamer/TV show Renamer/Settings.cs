@@ -64,25 +64,16 @@ namespace TV_show_Renamer
         {
             move_folder tvshow = new move_folder(Main, tvFolder);
             this.Hide();
-            if (tvshow.ShowDialog() == DialogResult.OK)
-            {
-                this.Close();
-            }
+            if (tvshow.ShowDialog() == DialogResult.OK)            
+                this.Close();            
         }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            //Main.b
-        }
-
+                
         private void button4_Click(object sender, EventArgs e)
         {
             FolderControl folderAdd = new FolderControl(Main);
             this.Hide();
-            if (folderAdd.ShowDialog() == DialogResult.OK)
-            {
-                this.Close();
-            }
+            if (folderAdd.ShowDialog() == DialogResult.OK)            
+                this.Close();            
         }
 
     }//end of class

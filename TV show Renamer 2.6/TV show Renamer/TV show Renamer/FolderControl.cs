@@ -16,11 +16,9 @@ namespace TV_show_Renamer
         //List<string> folderList = new List<string>();
 
         public FolderControl(Form1 tempMain)
-        {
-            
+        {            
             Main = tempMain;
             InitializeComponent();
-            //this.Show();
         }
 
         //add folder button
@@ -46,10 +44,8 @@ namespace TV_show_Renamer
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            {
-                textBox2.Text = folderBrowserDialog1.SelectedPath;
-            }
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)            
+                textBox2.Text = folderBrowserDialog1.SelectedPath;            
         }
 
         private void FolderControl_FormClosing(object sender, FormClosingEventArgs e)

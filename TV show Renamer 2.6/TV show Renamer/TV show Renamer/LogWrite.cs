@@ -17,17 +17,12 @@ namespace TV_show_Renamer
         /// <param name="folder">log location</param>
         public void startLog(string folder)
         {
-            logFolder = folder;
-                        
+            logFolder = folder;                        
             // Create a writer and open the file:
-            if (!File.Exists(logFolder+"//logfile.txt"))
-            {
-                log = new StreamWriter(logFolder + "//logfile.txt");
-            }
-            else
-            {
-                log = File.AppendText(logFolder + "//logfile.txt");
-            }
+            if (!File.Exists(logFolder+"//logfile.txt"))            
+                log = new StreamWriter(logFolder + "//logfile.txt");            
+            else            
+                log = File.AppendText(logFolder + "//logfile.txt");            
             // Write to the file:
             log.WriteLine(DateTime.Now + " - Program started :)");
         }
@@ -48,10 +43,8 @@ namespace TV_show_Renamer
         //save function calls (List String)
         public void convertWriteLog( List<string> oldName,List<string> newName )
         {
-            for (int i = 0; i < oldName.Count(); i++) 
-            {
-                log.WriteLine(DateTime.Now + " - " + oldName[i] + " Saved as " + newName[i]);            
-            }
+            for (int i = 0; i < oldName.Count(); i++)             
+                log.WriteLine(DateTime.Now + " - " + oldName[i] + " Saved as " + newName[i]);
         }
         
         //move function calls
@@ -69,10 +62,8 @@ namespace TV_show_Renamer
         //write string List
         public void WriteLog( List<string> error)
         {
-            foreach (string i in error)
-            {
+            foreach (string i in error)            
                 log.WriteLine(DateTime.Now + " - " + i);            
-            }
         }
     }//end of LogWrite Class
 }//end of namespace

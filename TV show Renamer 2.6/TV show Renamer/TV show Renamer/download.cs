@@ -48,10 +48,8 @@ namespace TV_show_Renamer
         {
             try
             {
-                if (File.Exists(commonAppData + "//library.seh"))
-                {
-                    File.Delete(commonAppData + "//library.seh");
-                }
+                if (File.Exists(commonAppData + "//library.seh"))               
+                    File.Delete(commonAppData + "//library.seh");                
             }
             catch (Exception q)
             {
@@ -60,9 +58,7 @@ namespace TV_show_Renamer
             try
             {
                 if (File.Exists(commonAppData + "//version.xml"))
-                {
-                    File.Delete(commonAppData + "//version.xml");
-                }
+                    File.Delete(commonAppData + "//version.xml");                
             }
             catch (Exception q)
             {
@@ -71,9 +67,7 @@ namespace TV_show_Renamer
             try
             {
                 if (File.Exists(commonAppData + "//webversion.xml"))
-                {
-                    File.Delete(commonAppData + "//webversion.xml");
-                }
+                    File.Delete(commonAppData + "//webversion.xml");                
             }
             catch (Exception q)
             {
@@ -82,9 +76,7 @@ namespace TV_show_Renamer
             try
             {
                 if (File.Exists(commonAppData + "//preferences.seh"))
-                {
-                    File.Delete(commonAppData + "//preferences.seh");
-                }
+                    File.Delete(commonAppData + "//preferences.seh");               
             }
             catch (Exception q)
             {

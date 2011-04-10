@@ -55,10 +55,8 @@ namespace TV_show_Renamer
             {
                 infoFinder(fileList[z].NewFileName);
 
-                if (tvdbTitle == null)
-                {
-                    continue;
-                }                
+                if (tvdbTitle == null)                
+                    continue;                                
                 m_cacheProvider = new XmlCacheProvider(folder);
                 m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
                 List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(tvdbTitle);
@@ -76,10 +74,8 @@ namespace TV_show_Renamer
                     }
                     if (seriesId.Count() == 0) return;  //return if nothing found
                     int selectedSeriesId = -1;
-                    if (seriesId.Count() == 1)
-                    {
-                        selectedSeriesId = seriesId[0];
-                    }
+                    if (seriesId.Count() == 1)                    
+                        selectedSeriesId = seriesId[0];                    
                     else
                     {
                         if (selectionList.Count() == 0)
@@ -113,9 +109,8 @@ namespace TV_show_Renamer
                                     selectedSeriesId = seriesId[selectedid];
                                     SelectMain2.Close();
                                 }
-                            } else {
-                                selectedSeriesId = seriesId[idNumber];
-                            }                        
+                            } else 
+                                selectedSeriesId = seriesId[idNumber];                                                    
                         }
                     }
 
@@ -131,20 +126,14 @@ namespace TV_show_Renamer
                             break;
                         }
                     }
-                    if (newTitle == null)
-                    {
-                        continue;
-                    }
+                    if (newTitle == null)                    
+                        continue;                    
                     newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
                
-                    if (renameWorked)
-                    {
-                        main.addTitle(newTitle, z);
-                    }
-                    else
-                    {
-                        renameWorked = main.addTitle(newTitle, z);
-                    }                 
+                    if (renameWorked)                    
+                        main.addTitle(newTitle, z);                    
+                    else                    
+                        renameWorked = main.addTitle(newTitle, z);                                     
                 }
             }//end of for loop
             if (renameWorked)
@@ -161,10 +150,8 @@ namespace TV_show_Renamer
             {
                 infoFinder(fileList[x].NewFileName);
 
-                if (tvdbTitle == null)
-                {
-                    continue;
-                }
+                if (tvdbTitle == null)                
+                    continue;                
 
                 m_cacheProvider = new XmlCacheProvider(folder);
                 m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
@@ -184,10 +171,8 @@ namespace TV_show_Renamer
                     }
                     if (seriesId.Count() == 0) return;  //return if nothing found
                     int selectedSeriesId = -1;
-                    if (seriesId.Count() == 1)
-                    {
-                        selectedSeriesId = seriesId[0];
-                    }
+                    if (seriesId.Count() == 1)                    
+                        selectedSeriesId = seriesId[0];                    
                     else
                     {
                         if (selectionList.Count() == 0)
@@ -225,10 +210,8 @@ namespace TV_show_Renamer
                                     SelectMain.Close();
                                 }
                             }
-                            else
-                            {
-                                selectedSeriesId = seriesId[idNumber];
-                            }
+                            else                            
+                                selectedSeriesId = seriesId[idNumber];                            
                         }
                     }
 
@@ -245,19 +228,13 @@ namespace TV_show_Renamer
                         }
                     }
                     if (newTitle == null)
-                    {
-                        continue;
-                    }
+                        continue;                    
                     newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
                
-                    if (renameWorked)
-                    {
+                    if (renameWorked)                    
                         main.addTitle(newTitle, x);
-                    }
-                    else
-                    {
-                        renameWorked = main.addTitle(newTitle, x);
-                    }
+                    else                    
+                        renameWorked = main.addTitle(newTitle, x);                    
                 }
             }//end of for loop
             if (renameWorked)
@@ -287,15 +264,11 @@ namespace TV_show_Renamer
                     string newi = i.ToString();
                     string newj = j.ToString();
                     //check if i is less than 10
-                    if (i < 10)
-                    {
-                        newi = "0" + i.ToString();
-                    }
+                    if (i < 10)                    
+                        newi = "0" + i.ToString();                    
                     //check if j is less than 10
-                    if (j < 10)
-                    {
-                        newj = "0" + j.ToString();
-                    }
+                    if (j < 10)                    
+                        newj = "0" + j.ToString();                    
                     //make string to compare changed name too
                     switch (format)
                     {
@@ -318,14 +291,10 @@ namespace TV_show_Renamer
                     {
                         season = i;
                         episode = j;
-                        if (you == 0)
-                        {
-                            tvdbTitle = test.Remove(you , test.Length - (you ));
-                        }
-                        else
-                        {
-                            tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
-                        }
+                        if (you == 0)                        
+                            tvdbTitle = test.Remove(you , test.Length - (you ));                        
+                        else                        
+                            tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));                        
                         //tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
                         end = true;
                         break;
@@ -333,17 +302,14 @@ namespace TV_show_Renamer
                 }//end of episode loop
 
                 //stop loop when name is change
-                if (end)
-                {
-                    break;
-                }
+                if (end)                
+                    break;                
             }//end of season loop
         }
 
         private void convert()
         {
             main.autoConvert();
-        }
-             
+        }             
     }//end of class
 }//end of namespace

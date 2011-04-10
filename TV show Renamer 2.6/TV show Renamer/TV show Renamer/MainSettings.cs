@@ -131,19 +131,15 @@ namespace TV_show_Renamer
                 //write tv folder locations
                 pw = new StreamWriter(_dataFolder + "//TVFolder.seh");
                 pw.WriteLine(_moveFolder.Count());
-                for (int i = 0; i < _moveFolder.Count(); i++)
-                {
-                    pw.WriteLine(_moveFolder[i]);
-                }
+                for (int i = 0; i < _moveFolder.Count(); i++)                
+                    pw.WriteLine(_moveFolder[i]);                
                 pw.Close();
 
                 //write other folder locations
                 pw = new StreamWriter(_dataFolder + "//OtherFolders.seh");
                 pw.WriteLine(_otherFolders.Count());
-                for (int i = 0; i < _otherFolders.Count(); i++)
-                {
-                    pw.WriteLine(_otherFolders[i]);
-                }
+                for (int i = 0; i < _otherFolders.Count(); i++)                
+                    pw.WriteLine(_otherFolders[i]);                
                 pw.Close();
 
             }
@@ -199,8 +195,7 @@ namespace TV_show_Renamer
                     if (DateTime.Today.Date.ToString() != lastUpdateTime)
                         _checkForUpdates = true;
                     
-                    tr3.Close();//close reader stream 
-                                       
+                    tr3.Close();//close reader stream                                        
                 }//end of if. 
 
                 //Read TV show folders
@@ -210,15 +205,11 @@ namespace TV_show_Renamer
                     int length = Int32.Parse(tv2.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
-                        if (length == 0)
-                        {
-                            break;
-                        }
+                        if (length == 0)                        
+                            break;                        
                         string readLine = tv2.ReadLine();
-                        if (System.IO.Directory.Exists(readLine))
-                        {
-                            _moveFolder.Add(readLine);
-                        }                        
+                        if (System.IO.Directory.Exists(readLine))                       
+                            _moveFolder.Add(readLine);                                                
                     }//end of for loop  
                     tv2.Close();
                 }//end of if
@@ -230,22 +221,15 @@ namespace TV_show_Renamer
                     int length = Int32.Parse(tv3.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
-                        if (length == 0)
-                        {
-                            break;
-                        }
+                        if (length == 0)                        
+                            break;                        
                         string readLine = tv3.ReadLine();
-                        if ((i % 2) == 0)
-                        {
-                            _otherFolders.Add(readLine);
-                        }
-                        else if (System.IO.Directory.Exists(readLine))
-                        {
-                            _otherFolders.Add(readLine);
-                        }
-                        else {
-                            _otherFolders.RemoveAt(_otherFolders.Count - 1);
-                        }
+                        if ((i % 2) == 0)                        
+                            _otherFolders.Add(readLine);                        
+                        else if (System.IO.Directory.Exists(readLine))                        
+                            _otherFolders.Add(readLine);                        
+                        else 
+                            _otherFolders.RemoveAt(_otherFolders.Count - 1);                        
                         
                     }//end of for loop  
                     tv3.Close();
@@ -257,7 +241,6 @@ namespace TV_show_Renamer
                 _main.WriteLog("Reading Preference Error \n" + e.ToString());
                 return false;
             }
-
             return true;
         }
 
@@ -405,7 +388,6 @@ namespace TV_show_Renamer
             get { return _moveFolder; }
             set { _moveFolder = value; }
         }
-
         public List<string> OtherFolders
         {
             get { return _otherFolders; }
