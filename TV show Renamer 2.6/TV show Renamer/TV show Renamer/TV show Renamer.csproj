@@ -124,6 +124,12 @@
     <Compile Include="EditTitle.Designer.cs">
       <DependentUpon>EditTitle.cs</DependentUpon>
     </Compile>
+    <Compile Include="FolderControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FolderControl.Designer.cs">
+      <DependentUpon>FolderControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditTitle.resx">
       <DependentUpon>EditTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FolderControl.resx">
+      <DependentUpon>FolderControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

@@ -115,23 +115,6 @@ namespace TV_show_Renamer
             t.Start();                       
          }
         
-        //"close" form and save new words to file
-        private void button3_Click(object sender, EventArgs e)
-        {
-            StreamWriter sw = new StreamWriter(commonAppData + "//userlibrary.seh");
-            sw.WriteLine(userwords.Count());
-            for (int j = 0; j < userwords.Count(); j++)
-            {
-                sw.WriteLine(userwords[j]);
-            }//end of for
-            sw.Close();//close writer stream
-            this.Hide();
-            
-
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();            
-        }//end of button method
-
         //autoconvert method 
         private void convert()
         {
@@ -179,6 +162,23 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i].Cells[0].Value = userwords[i];
                 }               
             }
+        }
+
+        private void junk_words_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            StreamWriter sw = new StreamWriter(commonAppData + "//userlibrary.seh");
+            sw.WriteLine(userwords.Count());
+            for (int j = 0; j < userwords.Count(); j++)
+            {
+                sw.WriteLine(userwords[j]);
+            }//end of for
+            sw.Close();//close writer stream
+            this.Hide();
+
+
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start(); 
         }
         
     }//end of partial class 
