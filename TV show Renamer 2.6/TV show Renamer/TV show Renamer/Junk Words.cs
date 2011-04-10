@@ -50,24 +50,19 @@ namespace TV_show_Renamer
                 sw.WriteLine("0");                
                 sw.Close();//close writer stream
             }else
-            {
-                //read junk file 
+            {//read junk file 
                 StreamReader tr = new StreamReader(commonAppData + "//userlibrary.seh");
                 userwords.Clear();//clear old list
 
                 int size = Int32.Parse(tr.ReadLine());//read number of lines
                 //if file is blank return nothing
-                if (size == 0)
-                {
-                    return;
-                }
+                if (size == 0)                
+                    return;                
                 //read words from file
-                for (int i = 0; i < size; i++)
-                {
+                for (int i = 0; i < size; i++)                
                     userwords.Add(tr.ReadLine());
-                }//end of for
                 tr.Close();//close reader stream
-            }//end of method            
+            }            
         }//end of getuserjunk method
 
         //add word button
@@ -75,10 +70,8 @@ namespace TV_show_Renamer
         {
             string newword = textBox1.Text;
 
-            if (newword == "" || newword == " " || newword == "  ")
-            {
-                return;
-            }
+            if (newword == "" || newword == " " || newword == "  ")            
+                return;            
 
             //check to see if new word is in main library
             for (int i = 0; i < junkwords.Count; i++) {
@@ -134,10 +127,8 @@ namespace TV_show_Renamer
             {
                 for (int i = userwords.Count() - 1; i >= 0; i--)
                 {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)
-                    {
-                        userwords.RemoveAt(i);
-                    }
+                    if (dataGridView1.Rows[i].Cells[0].Selected)                    
+                        userwords.RemoveAt(i);                    
                 }
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < userwords.Count(); i++)
@@ -169,17 +160,12 @@ namespace TV_show_Renamer
             e.Cancel = true;
             StreamWriter sw = new StreamWriter(commonAppData + "//userlibrary.seh");
             sw.WriteLine(userwords.Count());
-            for (int j = 0; j < userwords.Count(); j++)
-            {
+            for (int j = 0; j < userwords.Count(); j++)            
                 sw.WriteLine(userwords[j]);
-            }//end of for
             sw.Close();//close writer stream
             this.Hide();
-
-
             Thread t = new Thread(new ThreadStart(convert));
             t.Start(); 
-        }
-        
+        }        
     }//end of partial class 
 }//end of namespace

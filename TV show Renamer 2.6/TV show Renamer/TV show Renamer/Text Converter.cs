@@ -46,15 +46,11 @@ namespace TV_show_Renamer
 
                 int size = Int32.Parse(tr.ReadLine());//read number of lines
                 //if file is blank return nothing
-                if (size == 0)
-                {
-                    return;
-                }
+                if (size == 0)                
+                    return;                
                 //read words from file
-                for (int i = 0; i < size; i++)
-                {
-                    textConvert.Add(tr.ReadLine());
-                }//end of for
+                for (int i = 0; i < size; i++)                
+                    textConvert.Add(tr.ReadLine());               
                 tr.Close();//close reader stream
             }//end of method
         }//end of getTextConvert method
@@ -169,10 +165,8 @@ namespace TV_show_Renamer
             e.Cancel = true;
             StreamWriter sw = new StreamWriter(commonAppData + "//convertlibrary.seh");
             sw.WriteLine(textConvert.Count());
-            for (int j = 0; j < textConvert.Count(); j++)
-            {
-                sw.WriteLine(textConvert[j]);
-            }//end of for
+            for (int j = 0; j < textConvert.Count(); j++)            
+                sw.WriteLine(textConvert[j]);            
             sw.Close();//close writer stream
             this.Hide();
             Thread t = new Thread(new ThreadStart(convert));
