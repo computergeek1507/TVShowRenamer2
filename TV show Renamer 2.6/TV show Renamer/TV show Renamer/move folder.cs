@@ -37,6 +37,7 @@ namespace TV_show_Renamer
         private void move_folder_FormClosing(object sender, FormClosingEventArgs e)
         {
             mainform.tvFolderChanger(tvfolderslist);
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
         //add folder to list

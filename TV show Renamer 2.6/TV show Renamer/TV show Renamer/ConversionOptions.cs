@@ -135,6 +135,26 @@ namespace TV_show_Renamer
             newMainSettings.EpisodeOffset = (int)numericUpDown2.Value;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
+        }
+        //remove dash
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            newMainSettings.RemoveDash = checkBox3.Checked;
+        }
+
+        private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        {
+            newMainSettings.RemoveYear = checkBox6.Checked;
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            newMainSettings.RemoveBracket = checkBox4.Checked;
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            newMainSettings.RemoveCrap = checkBox5.Checked;
         }        
 
     }//end of class

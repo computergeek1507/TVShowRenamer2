@@ -30,9 +30,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.x01ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +54,8 @@
             this.secretSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secretResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.otherOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,19 +71,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.movieFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieFolder2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieTrailerFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.musicVideoFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveToOtherVideosFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button2 = new System.Windows.Forms.Button();
-            this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.movieFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieFolder2ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieTrailerFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.musicVideoFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToOtherVideosFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button5 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.oldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -94,19 +86,7 @@
             this.saveNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.moveSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toMovieFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toMovieFolder2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toMovieTrailerFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toMusicVideosFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toOtherVideosFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toTVFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toMoviesFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toMoviesFolder2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.movieTrailersFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toMusicVideoFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toOtherVideosFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -121,9 +101,8 @@
             this.getTitlesOffIMBDOfSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStrip1.SuspendLayout();
-            this.contextMenuStrip2.SuspendLayout();
-            this.contextMenuStrip3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip4.SuspendLayout();
@@ -200,7 +179,7 @@
             this.addFilesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.addFilesToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.addFilesToolStripMenuItem.Text = "Add Files...";
-            this.addFilesToolStripMenuItem.ToolTipText = "Add Files To be Coverted";
+            this.addFilesToolStripMenuItem.ToolTipText = "Add Files To be Renamed";
             this.addFilesToolStripMenuItem.Click += new System.EventHandler(this.addFilesToolStripMenuItem_Click);
             // 
             // addFolderToolStripMenuItem
@@ -210,7 +189,7 @@
             this.addFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.addFolderToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.addFolderToolStripMenuItem.Text = "Add Folder...";
-            this.addFolderToolStripMenuItem.ToolTipText = "Add a Folder of Files To be Coverted";
+            this.addFolderToolStripMenuItem.ToolTipText = "Add a Folder of Files To be Renamed";
             this.addFolderToolStripMenuItem.Click += new System.EventHandler(this.addFolderToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
@@ -269,9 +248,24 @@
             // 
             // optionsToolStripMenuItem
             // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.moveToToolStripMenuItem1,
+            this.copyToToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.optionsToolStripMenuItem.Text = "Edit";
+            // 
+            // moveToToolStripMenuItem1
+            // 
+            this.moveToToolStripMenuItem1.Name = "moveToToolStripMenuItem1";
+            this.moveToToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.moveToToolStripMenuItem1.Text = "Move To";
+            // 
+            // copyToToolStripMenuItem
+            // 
+            this.copyToToolStripMenuItem.Name = "copyToToolStripMenuItem";
+            this.copyToToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyToToolStripMenuItem.Text = "Copy To";
             // 
             // otherOptionsToolStripMenuItem
             // 
@@ -288,6 +282,7 @@
             // 
             // toolStripMenuItem1
             // 
+            this.toolStripMenuItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
             this.toolStripMenuItem1.Text = "Conversion Options...";
@@ -316,6 +311,7 @@
             // addJunkWordsToolStripMenuItem
             // 
             this.addJunkWordsToolStripMenuItem.AutoToolTip = true;
+            this.addJunkWordsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.addJunkWordsToolStripMenuItem.Name = "addJunkWordsToolStripMenuItem";
             this.addJunkWordsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.addJunkWordsToolStripMenuItem.Text = "Add Junk Words...";
@@ -330,6 +326,7 @@
             // defaultSettingsToolStripMenuItem
             // 
             this.defaultSettingsToolStripMenuItem.AutoToolTip = true;
+            this.defaultSettingsToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.defaultSettingsToolStripMenuItem.Name = "defaultSettingsToolStripMenuItem";
             this.defaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.defaultSettingsToolStripMenuItem.Text = "Restore Default Settings";
@@ -397,7 +394,6 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.ContextMenuStrip = this.contextMenuStrip2;
             this.button1.Location = new System.Drawing.Point(332, 432);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(108, 23);
@@ -406,57 +402,9 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.movieFolderToolStripMenuItem,
-            this.movieFolder2ToolStripMenuItem,
-            this.movieTrailerFolderToolStripMenuItem,
-            this.musicVideoFolderToolStripMenuItem,
-            this.moveToOtherVideosFolderToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.ShowImageMargin = false;
-            this.contextMenuStrip2.Size = new System.Drawing.Size(207, 114);
-            // 
-            // movieFolderToolStripMenuItem
-            // 
-            this.movieFolderToolStripMenuItem.Name = "movieFolderToolStripMenuItem";
-            this.movieFolderToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.movieFolderToolStripMenuItem.Text = "Move to Movies Folder";
-            this.movieFolderToolStripMenuItem.Click += new System.EventHandler(this.movieFolderToolStripMenuItem_Click);
-            // 
-            // movieFolder2ToolStripMenuItem
-            // 
-            this.movieFolder2ToolStripMenuItem.Name = "movieFolder2ToolStripMenuItem";
-            this.movieFolder2ToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.movieFolder2ToolStripMenuItem.Text = "Move to Movies Folder 2";
-            this.movieFolder2ToolStripMenuItem.Click += new System.EventHandler(this.movieFolder2ToolStripMenuItem_Click);
-            // 
-            // movieTrailerFolderToolStripMenuItem
-            // 
-            this.movieTrailerFolderToolStripMenuItem.Name = "movieTrailerFolderToolStripMenuItem";
-            this.movieTrailerFolderToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.movieTrailerFolderToolStripMenuItem.Text = "Move to Movie Trailers Folder";
-            this.movieTrailerFolderToolStripMenuItem.Click += new System.EventHandler(this.movieTrailerFolderToolStripMenuItem_Click);
-            // 
-            // musicVideoFolderToolStripMenuItem
-            // 
-            this.musicVideoFolderToolStripMenuItem.Name = "musicVideoFolderToolStripMenuItem";
-            this.musicVideoFolderToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.musicVideoFolderToolStripMenuItem.Text = "Move to Music Videos Folder";
-            this.musicVideoFolderToolStripMenuItem.Click += new System.EventHandler(this.musicVideoFolderToolStripMenuItem_Click);
-            // 
-            // moveToOtherVideosFolderToolStripMenuItem
-            // 
-            this.moveToOtherVideosFolderToolStripMenuItem.Name = "moveToOtherVideosFolderToolStripMenuItem";
-            this.moveToOtherVideosFolderToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.moveToOtherVideosFolderToolStripMenuItem.Text = "Move to Other Videos Folder";
-            this.moveToOtherVideosFolderToolStripMenuItem.Click += new System.EventHandler(this.moveToOtherVideosFolderToolStripMenuItem_Click);
-            // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.ContextMenuStrip = this.contextMenuStrip3;
             this.button2.Location = new System.Drawing.Point(446, 432);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(106, 23);
@@ -464,53 +412,6 @@
             this.button2.Text = "Copy To TV Folder";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // contextMenuStrip3
-            // 
-            this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.movieFolderToolStripMenuItem1,
-            this.movieFolder2ToolStripMenuItem1,
-            this.movieTrailerFolderToolStripMenuItem1,
-            this.musicVideoFolderToolStripMenuItem1,
-            this.copyToOtherVideosFolderToolStripMenuItem});
-            this.contextMenuStrip3.Name = "contextMenuStrip3";
-            this.contextMenuStrip3.ShowImageMargin = false;
-            this.contextMenuStrip3.Size = new System.Drawing.Size(205, 114);
-            // 
-            // movieFolderToolStripMenuItem1
-            // 
-            this.movieFolderToolStripMenuItem1.Name = "movieFolderToolStripMenuItem1";
-            this.movieFolderToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
-            this.movieFolderToolStripMenuItem1.Text = "Copy to Movies Folder";
-            this.movieFolderToolStripMenuItem1.Click += new System.EventHandler(this.movieFolderToolStripMenuItem1_Click);
-            // 
-            // movieFolder2ToolStripMenuItem1
-            // 
-            this.movieFolder2ToolStripMenuItem1.Name = "movieFolder2ToolStripMenuItem1";
-            this.movieFolder2ToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
-            this.movieFolder2ToolStripMenuItem1.Text = "Copy to Movies Folder 2";
-            this.movieFolder2ToolStripMenuItem1.Click += new System.EventHandler(this.movieFolder2ToolStripMenuItem1_Click);
-            // 
-            // movieTrailerFolderToolStripMenuItem1
-            // 
-            this.movieTrailerFolderToolStripMenuItem1.Name = "movieTrailerFolderToolStripMenuItem1";
-            this.movieTrailerFolderToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
-            this.movieTrailerFolderToolStripMenuItem1.Text = "Copy to Movie Trailers Folder";
-            this.movieTrailerFolderToolStripMenuItem1.Click += new System.EventHandler(this.movieTrailerFolderToolStripMenuItem1_Click);
-            // 
-            // musicVideoFolderToolStripMenuItem1
-            // 
-            this.musicVideoFolderToolStripMenuItem1.Name = "musicVideoFolderToolStripMenuItem1";
-            this.musicVideoFolderToolStripMenuItem1.Size = new System.Drawing.Size(204, 22);
-            this.musicVideoFolderToolStripMenuItem1.Text = "Copy to Music Videos Folder";
-            this.musicVideoFolderToolStripMenuItem1.Click += new System.EventHandler(this.musicVideoFolderToolStripMenuItem1_Click);
-            // 
-            // copyToOtherVideosFolderToolStripMenuItem
-            // 
-            this.copyToOtherVideosFolderToolStripMenuItem.Name = "copyToOtherVideosFolderToolStripMenuItem";
-            this.copyToOtherVideosFolderToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.copyToOtherVideosFolderToolStripMenuItem.Text = "Copy to Other Videos Folder";
-            this.copyToOtherVideosFolderToolStripMenuItem.Click += new System.EventHandler(this.copyToOtherVideosFolderToolStripMenuItem_Click);
             // 
             // button5
             // 
@@ -535,6 +436,14 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.oldName,
@@ -546,18 +455,26 @@
             this.fullfolder,
             this.fileextention});
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView1.Location = new System.Drawing.Point(13, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.RowTemplate.ReadOnly = true;
@@ -572,8 +489,8 @@
             // 
             this.oldName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.oldName.DataPropertyName = "FileName";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.oldName.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.oldName.DefaultCellStyle = dataGridViewCellStyle2;
             this.oldName.HeaderText = "Current File Name";
             this.oldName.Name = "oldName";
             this.oldName.ReadOnly = true;
@@ -594,8 +511,8 @@
             // 
             this.newname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.newname.DataPropertyName = "NewFileName";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newname.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newname.DefaultCellStyle = dataGridViewCellStyle3;
             this.newname.HeaderText = "Pending File Name";
             this.newname.Name = "newname";
             this.newname.ReadOnly = true;
@@ -666,7 +583,7 @@
             this.viewFolderToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 210);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 232);
             // 
             // saveNameToolStripMenuItem
             // 
@@ -682,120 +599,15 @@
             // 
             // moveSelectedToolStripMenuItem
             // 
-            this.moveSelectedToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.moveSelectedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.moveToToolStripMenuItem,
-            this.toMovieFolderToolStripMenuItem,
-            this.toMovieFolder2ToolStripMenuItem,
-            this.toMovieTrailerFolderToolStripMenuItem,
-            this.toMusicVideosFolderToolStripMenuItem,
-            this.toOtherVideosFolderToolStripMenuItem});
             this.moveSelectedToolStripMenuItem.Name = "moveSelectedToolStripMenuItem";
             this.moveSelectedToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.moveSelectedToolStripMenuItem.Text = "Move Selected";
-            // 
-            // moveToToolStripMenuItem
-            // 
-            this.moveToToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.moveToToolStripMenuItem.Name = "moveToToolStripMenuItem";
-            this.moveToToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.moveToToolStripMenuItem.Text = "to TV Folder";
-            this.moveToToolStripMenuItem.Click += new System.EventHandler(this.moveSelectedToolStripMenuItem_Click);
-            // 
-            // toMovieFolderToolStripMenuItem
-            // 
-            this.toMovieFolderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toMovieFolderToolStripMenuItem.Name = "toMovieFolderToolStripMenuItem";
-            this.toMovieFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.toMovieFolderToolStripMenuItem.Text = "to Movies Folder";
-            this.toMovieFolderToolStripMenuItem.Click += new System.EventHandler(this.toMovieFolderToolStripMenuItem_Click);
-            // 
-            // toMovieFolder2ToolStripMenuItem
-            // 
-            this.toMovieFolder2ToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toMovieFolder2ToolStripMenuItem.Name = "toMovieFolder2ToolStripMenuItem";
-            this.toMovieFolder2ToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.toMovieFolder2ToolStripMenuItem.Text = "to Movies Folder 2";
-            this.toMovieFolder2ToolStripMenuItem.Click += new System.EventHandler(this.toMovieFolder2ToolStripMenuItem_Click);
-            // 
-            // toMovieTrailerFolderToolStripMenuItem
-            // 
-            this.toMovieTrailerFolderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toMovieTrailerFolderToolStripMenuItem.Name = "toMovieTrailerFolderToolStripMenuItem";
-            this.toMovieTrailerFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.toMovieTrailerFolderToolStripMenuItem.Text = "to Movie Trailers Folder";
-            this.toMovieTrailerFolderToolStripMenuItem.Click += new System.EventHandler(this.toMovieTrailerFolderToolStripMenuItem_Click);
-            // 
-            // toMusicVideosFolderToolStripMenuItem
-            // 
-            this.toMusicVideosFolderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toMusicVideosFolderToolStripMenuItem.Name = "toMusicVideosFolderToolStripMenuItem";
-            this.toMusicVideosFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.toMusicVideosFolderToolStripMenuItem.Text = "to Music Videos Folder";
-            this.toMusicVideosFolderToolStripMenuItem.Click += new System.EventHandler(this.toMusicVideosFolderToolStripMenuItem_Click);
-            // 
-            // toOtherVideosFolderToolStripMenuItem
-            // 
-            this.toOtherVideosFolderToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toOtherVideosFolderToolStripMenuItem.Name = "toOtherVideosFolderToolStripMenuItem";
-            this.toOtherVideosFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.toOtherVideosFolderToolStripMenuItem.Text = "to Other Videos Folder";
-            this.toOtherVideosFolderToolStripMenuItem.Click += new System.EventHandler(this.toOtherVideosFolderToolStripMenuItem_Click);
+            this.moveSelectedToolStripMenuItem.Text = "Move Selected To";
             // 
             // copySelectedToolStripMenuItem
             // 
-            this.copySelectedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toTVFolderToolStripMenuItem,
-            this.toMoviesFolderToolStripMenuItem,
-            this.toMoviesFolder2ToolStripMenuItem,
-            this.movieTrailersFolderToolStripMenuItem,
-            this.toMusicVideoFolderToolStripMenuItem,
-            this.toOtherVideosFolderToolStripMenuItem1});
             this.copySelectedToolStripMenuItem.Name = "copySelectedToolStripMenuItem";
             this.copySelectedToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.copySelectedToolStripMenuItem.Text = "Copy Selected";
-            // 
-            // toTVFolderToolStripMenuItem
-            // 
-            this.toTVFolderToolStripMenuItem.Name = "toTVFolderToolStripMenuItem";
-            this.toTVFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.toTVFolderToolStripMenuItem.Text = "to TV Folder";
-            this.toTVFolderToolStripMenuItem.Click += new System.EventHandler(this.copySelectedToolStripMenuItem_Click);
-            // 
-            // toMoviesFolderToolStripMenuItem
-            // 
-            this.toMoviesFolderToolStripMenuItem.Name = "toMoviesFolderToolStripMenuItem";
-            this.toMoviesFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.toMoviesFolderToolStripMenuItem.Text = "to Movies Folder";
-            this.toMoviesFolderToolStripMenuItem.Click += new System.EventHandler(this.toMoviesFolderToolStripMenuItem_Click);
-            // 
-            // toMoviesFolder2ToolStripMenuItem
-            // 
-            this.toMoviesFolder2ToolStripMenuItem.Name = "toMoviesFolder2ToolStripMenuItem";
-            this.toMoviesFolder2ToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.toMoviesFolder2ToolStripMenuItem.Text = "to Movies Folder 2";
-            this.toMoviesFolder2ToolStripMenuItem.Click += new System.EventHandler(this.toMoviesFolder2ToolStripMenuItem_Click);
-            // 
-            // movieTrailersFolderToolStripMenuItem
-            // 
-            this.movieTrailersFolderToolStripMenuItem.Name = "movieTrailersFolderToolStripMenuItem";
-            this.movieTrailersFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.movieTrailersFolderToolStripMenuItem.Text = "to Movie Trailers Folder";
-            this.movieTrailersFolderToolStripMenuItem.Click += new System.EventHandler(this.movieTrailersFolderToolStripMenuItem_Click);
-            // 
-            // toMusicVideoFolderToolStripMenuItem
-            // 
-            this.toMusicVideoFolderToolStripMenuItem.Name = "toMusicVideoFolderToolStripMenuItem";
-            this.toMusicVideoFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.toMusicVideoFolderToolStripMenuItem.Text = "to Music Videos Folder";
-            this.toMusicVideoFolderToolStripMenuItem.Click += new System.EventHandler(this.toMusicVideoFolderToolStripMenuItem_Click);
-            // 
-            // toOtherVideosFolderToolStripMenuItem1
-            // 
-            this.toOtherVideosFolderToolStripMenuItem1.Name = "toOtherVideosFolderToolStripMenuItem1";
-            this.toOtherVideosFolderToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
-            this.toOtherVideosFolderToolStripMenuItem1.Text = "to Other Videos Folder";
-            this.toOtherVideosFolderToolStripMenuItem1.Click += new System.EventHandler(this.toOtherVideosFolderToolStripMenuItem1_Click);
+            this.copySelectedToolStripMenuItem.Text = "Copy Selected To";
             // 
             // toolStripSeparator9
             // 
@@ -816,6 +628,7 @@
             // 
             // toolStripMenuItem6
             // 
+            this.toolStripMenuItem6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
             this.toolStripMenuItem6.Size = new System.Drawing.Size(181, 22);
             this.toolStripMenuItem6.Text = "Edit Selected Title...";
@@ -916,8 +729,6 @@
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.contextMenuStrip2.ResumeLayout(false);
-            this.contextMenuStrip3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStrip4.ResumeLayout(false);
@@ -970,33 +781,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
-        private System.Windows.Forms.ToolStripMenuItem movieFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem movieFolder2ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem movieTrailerFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem musicVideoFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem movieFolderToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem movieFolder2ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem movieTrailerFolderToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem musicVideoFolderToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem moveToOtherVideosFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyToOtherVideosFolderToolStripMenuItem;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
         private System.Windows.Forms.ToolStripMenuItem getTitlesOffIMBDOfSelectedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem moveToToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toMovieFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toMovieFolder2ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toMovieTrailerFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toMusicVideosFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toOtherVideosFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toTVFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toMoviesFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toMoviesFolder2ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem movieTrailersFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toMusicVideoFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toOtherVideosFolderToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
@@ -1015,6 +802,9 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem moveToToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem copyToToolStripMenuItem;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
     }
 }
 

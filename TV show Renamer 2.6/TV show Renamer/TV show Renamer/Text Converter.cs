@@ -70,22 +70,7 @@ namespace TV_show_Renamer
         {
             return textConvert;
         }
-
-        //"close" window
-        private void button1_Click(object sender, EventArgs e)
-        {
-            StreamWriter sw = new StreamWriter(commonAppData + "//convertlibrary.seh");
-            sw.WriteLine(textConvert.Count());
-            for (int j = 0; j < textConvert.Count(); j++)
-            {
-                sw.WriteLine(textConvert[j]);
-            }//end of for
-            sw.Close();//close writer stream
-            this.Hide();
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
-        }
-
+               
         //add text to be converted
         private void button2_Click(object sender, EventArgs e)
         {
@@ -118,8 +103,8 @@ namespace TV_show_Renamer
             {
                 int u = dataGridView1.CurrentRow.Index;
 
-                textBox1.Text = textConvert[(u * 2) + 1];
-                textBox2.Text = textConvert[(u * 2)];
+                textBox2.Text = textConvert[(u * 2) + 1];
+                textBox1.Text = textConvert[(u * 2)];
                 textConvert.RemoveAt((u*2)+1);
                 textConvert.RemoveAt(u * 2);
                 button2.Text = "Save";
@@ -165,6 +150,7 @@ namespace TV_show_Renamer
 
         private void Text_Converter_Load(object sender, EventArgs e)
         {
+            
             if (textConvert.Count() != 0)
             {
                 dataGridView1.Rows.Clear();
@@ -176,6 +162,22 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
                 }                
             }
+        }
+
+        private void Text_Converter_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            StreamWriter sw = new StreamWriter(commonAppData + "//convertlibrary.seh");
+            sw.WriteLine(textConvert.Count());
+            for (int j = 0; j < textConvert.Count(); j++)
+            {
+                sw.WriteLine(textConvert[j]);
+            }//end of for
+            sw.Close();//close writer stream
+            this.Hide();
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
+            this.Hide();
         }
     }//end of class
 }//end of namespace

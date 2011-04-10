@@ -22,6 +22,7 @@ namespace TV_show_Renamer
         bool _shownb4 = false;
         bool _formClosed = false;
         bool _closedForUpdates = false;
+        bool _checkForUpdates = false;
 
         int _seasonOffset = 0;
         int _episodeOffset = 0;
@@ -36,21 +37,19 @@ namespace TV_show_Renamer
         int[] _buttonColor = { 255, 153, 180, 209 };
 
         string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer";
-        string _movieFolder = "0000";
-        string _movieFolder2 = "0000";
-        string _trailersFolder = "0000";
-        string _musicVidFolder = "0000";
-        string _otherVidFolder = "0000";
 
         LogWrite _main;
 
         List<string> _moveFolder = new List<string>();//TV Show folders
+        List<string> _otherFolders = new List<string>();//Other folders
 
+        //get log object to write too
         public void Start(LogWrite main) 
         {
             _main = main;
         }
 
+        //change to default settings
         public void defaultSettings() {
             _removePeriod = true;
             _removeUnderscore = true;
@@ -82,15 +81,11 @@ namespace TV_show_Renamer
             _foregroundColor = temp2;
             _buttonColor = temp3;
 
-            _movieFolder = "0000";
-            _movieFolder2 = "0000";
-            _trailersFolder = "0000";
-            _musicVidFolder = "0000";
-            _otherVidFolder = "0000";
-
             _moveFolder.Clear();
+            _otherFolders.Clear();
         }
 
+        //save settings
         public bool saveStettings() 
         {
             try
@@ -129,23 +124,27 @@ namespace TV_show_Renamer
                 pw.WriteLine(_buttonColor[1]);
                 pw.WriteLine(_buttonColor[2]);
                 pw.WriteLine(_buttonColor[3]);
-
-                pw.WriteLine(_movieFolder);
-                pw.WriteLine(_movieFolder2);
-                pw.WriteLine(_trailersFolder);
-                pw.WriteLine(_musicVidFolder);
-                pw.WriteLine(_otherVidFolder);
+                pw.WriteLine(DateTime.Today.Date.ToString()); 
 
                 pw.Close();//close writer stream
 
                 //write tv folder locations
-                StreamWriter tv = new StreamWriter(_dataFolder + "//TVFolder.seh");
-                tv.WriteLine(_moveFolder.Count());
+                pw = new StreamWriter(_dataFolder + "//TVFolder.seh");
+                pw.WriteLine(_moveFolder.Count());
                 for (int i = 0; i < _moveFolder.Count(); i++)
                 {
-                    tv.WriteLine(_moveFolder[i]);
+                    pw.WriteLine(_moveFolder[i]);
                 }
-                tv.Close();
+                pw.Close();
+
+                //write other folder locations
+                pw = new StreamWriter(_dataFolder + "//OtherFolders.seh");
+                pw.WriteLine(_otherFolders.Count());
+                for (int i = 0; i < _otherFolders.Count(); i++)
+                {
+                    pw.WriteLine(_otherFolders[i]);
+                }
+                pw.Close();
 
             }
             catch (Exception)
@@ -156,14 +155,14 @@ namespace TV_show_Renamer
             return true;        
         }
 
+        //load settings file
         public bool loadStettings()
         {
             try
             {
-                if (File.Exists(_dataFolder + "//newpreferences.seh"))
+                if (File.Exists(_dataFolder + "//newpreferences.seh"))//see if file exists
                 {
                     StreamReader tr3 = new StreamReader(_dataFolder + "//newpreferences.seh");
-                    //bool.Parse(tr3.ReadLine());
                     _removePeriod = bool.Parse(tr3.ReadLine());
                     _removeUnderscore = bool.Parse(tr3.ReadLine());
                     _removeDash= bool.Parse(tr3.ReadLine());
@@ -184,7 +183,6 @@ namespace TV_show_Renamer
                     _junkFormat = int.Parse(tr3.ReadLine());
                     _extFormat = int.Parse(tr3.ReadLine());
 
-
                     _backgroundColor[0] = int.Parse(tr3.ReadLine());
                     _backgroundColor[1] = int.Parse(tr3.ReadLine());
                     _backgroundColor[2] = int.Parse(tr3.ReadLine());
@@ -197,36 +195,15 @@ namespace TV_show_Renamer
                     _buttonColor[1] = int.Parse(tr3.ReadLine());
                     _buttonColor[2] = int.Parse(tr3.ReadLine());
                     _buttonColor[3] = int.Parse(tr3.ReadLine());
-
-                    _movieFolder = tr3.ReadLine();
-                    _movieFolder2 = tr3.ReadLine();
-                    _trailersFolder = tr3.ReadLine();
-                    _musicVidFolder = tr3.ReadLine();
-                    _otherVidFolder = tr3.ReadLine();                    
-
+                    string lastUpdateTime = tr3.ReadLine();
+                    if (DateTime.Today.Date.ToString() != lastUpdateTime)
+                        _checkForUpdates = true;
+                    
                     tr3.Close();//close reader stream 
-
-                    if (!(System.IO.Directory.Exists(_movieFolder)))
-                    {
-                        _movieFolder = "0000";
-                    }
-                    if (!(System.IO.Directory.Exists(_movieFolder2)))
-                    {
-                        _movieFolder2 = "0000";
-                    }
-                    if (!(System.IO.Directory.Exists(_trailersFolder)))
-                    {
-                        _trailersFolder = "0000";
-                    }
-                    if (!(System.IO.Directory.Exists(_musicVidFolder)))
-                    {
-                        _musicVidFolder = "0000";
-                    }
-                    if (!(System.IO.Directory.Exists(_otherVidFolder)))
-                    {
-                        _otherVidFolder = "0000";
-                    }
+                                       
                 }//end of if. 
+
+                //Read TV show folders
                 if (File.Exists(_dataFolder + "//TVFolder.seh"))
                 {
                     StreamReader tv2 = new StreamReader(_dataFolder + "//TVFolder.seh");
@@ -245,6 +222,35 @@ namespace TV_show_Renamer
                     }//end of for loop  
                     tv2.Close();
                 }//end of if
+
+                //Read Other folders 
+                if (File.Exists(_dataFolder + "//OtherFolders.seh"))//see if file exists
+                {
+                    StreamReader tv3 = new StreamReader(_dataFolder + "//OtherFolders.seh");
+                    int length = Int32.Parse(tv3.ReadLine());
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (length == 0)
+                        {
+                            break;
+                        }
+                        string readLine = tv3.ReadLine();
+                        if ((i % 2) == 0)
+                        {
+                            _otherFolders.Add(readLine);
+                        }
+                        else if (System.IO.Directory.Exists(readLine))
+                        {
+                            _otherFolders.Add(readLine);
+                        }
+                        else {
+                            _otherFolders.RemoveAt(_otherFolders.Count - 1);
+                        }
+                        
+                    }//end of for loop  
+                    tv3.Close();
+                
+                }
             }
             catch (Exception e)
             {
@@ -254,11 +260,14 @@ namespace TV_show_Renamer
 
             return true;
         }
+
+        //Add folder to TV folder list 
         public void moveFolderAdd(string folder) 
         {
             _moveFolder.Add(folder);
         }
-        
+       
+        //public declartions
         public bool RemoveDash
         {
             get { return _removeDash; }
@@ -329,6 +338,11 @@ namespace TV_show_Renamer
             get { return _closedForUpdates; }
             set { _closedForUpdates = value; }
         }
+        public bool CheckForUpdates
+        {
+            get { return _checkForUpdates; }
+            set { _checkForUpdates = value; }
+        }
 
         public int SeasonOffset
         {
@@ -381,31 +395,7 @@ namespace TV_show_Renamer
             get { return _buttonColor; }
             set { _buttonColor = value; }
         }
-        public string OtherVidFolder
-        {
-            get { return _otherVidFolder; }
-            set { _otherVidFolder = value; }
-        }
-        public string MusicVidFolder
-        {
-            get { return _musicVidFolder; }
-            set { _musicVidFolder = value; }
-        }
-        public string TrailersFolder
-        {
-            get { return _trailersFolder; }
-            set { _trailersFolder = value; }
-        }   
-        public string MovieFolder2
-        {
-            get { return _movieFolder2; }
-            set { _movieFolder2 = value; }
-        }   
-        public string MovieFolder
-        {
-            get { return _movieFolder; }
-            set { _movieFolder = value; }
-        }
+       
         public string DataFolder
         {
             get { return _dataFolder; }
@@ -414,6 +404,12 @@ namespace TV_show_Renamer
         {
             get { return _moveFolder; }
             set { _moveFolder = value; }
+        }
+
+        public List<string> OtherFolders
+        {
+            get { return _otherFolders; }
+            set { _otherFolders = value; }
         }
     }//end of class
 }//end of namespace
