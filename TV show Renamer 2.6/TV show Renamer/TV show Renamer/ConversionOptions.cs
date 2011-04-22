@@ -116,11 +116,15 @@ namespace TV_show_Renamer
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemovePeriod = checkBox1.Checked;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveUnderscore = checkBox2.Checked;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -140,21 +144,29 @@ namespace TV_show_Renamer
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveDash = checkBox3.Checked;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }
 
         private void checkBox6_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveYear = checkBox6.Checked;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveBracket = checkBox4.Checked;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveCrap = checkBox5.Checked;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }        
 
     }//end of class
