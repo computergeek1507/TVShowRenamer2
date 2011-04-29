@@ -258,13 +258,13 @@
             // moveToToolStripMenuItem1
             // 
             this.moveToToolStripMenuItem1.Name = "moveToToolStripMenuItem1";
-            this.moveToToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.moveToToolStripMenuItem1.Size = new System.Drawing.Size(121, 22);
             this.moveToToolStripMenuItem1.Text = "Move To";
             // 
             // copyToToolStripMenuItem
             // 
             this.copyToToolStripMenuItem.Name = "copyToToolStripMenuItem";
-            this.copyToToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyToToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.copyToToolStripMenuItem.Text = "Copy To";
             // 
             // otherOptionsToolStripMenuItem
@@ -583,7 +583,7 @@
             this.viewFolderToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 232);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(182, 210);
             // 
             // saveNameToolStripMenuItem
             // 
@@ -723,7 +723,7 @@
             this.MinimumSize = new System.Drawing.Size(500, 130);
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "TV Show Renamer 2.7 BETA";
+            this.Text = "TV Show Renamer 2.7 ALPHA";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
