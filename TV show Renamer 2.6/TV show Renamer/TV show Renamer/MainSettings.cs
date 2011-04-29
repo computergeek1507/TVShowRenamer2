@@ -207,9 +207,7 @@ namespace TV_show_Renamer
                     {
                         if (length == 0)                        
                             break;                        
-                        string readLine = tv2.ReadLine();
-                        if (System.IO.Directory.Exists(readLine))                       
-                            _moveFolder.Add(readLine);                                                
+                       _moveFolder.Add(tv2.ReadLine());                                                
                     }//end of for loop  
                     tv2.Close();
                 }//end of if
@@ -223,17 +221,9 @@ namespace TV_show_Renamer
                     {
                         if (length == 0)                        
                             break;                        
-                        string readLine = tv3.ReadLine();
-                        if ((i % 2) == 0)                        
-                            _otherFolders.Add(readLine);                        
-                        else if (System.IO.Directory.Exists(readLine))                        
-                            _otherFolders.Add(readLine);                        
-                        else 
-                            _otherFolders.RemoveAt(_otherFolders.Count - 1);                        
-                        
+                        _otherFolders.Add(tv3.ReadLine());                 
                     }//end of for loop  
-                    tv3.Close();
-                
+                    tv3.Close();                
                 }
             }
             catch (Exception e)

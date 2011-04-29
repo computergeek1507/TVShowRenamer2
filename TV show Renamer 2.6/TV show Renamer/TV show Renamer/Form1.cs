@@ -34,7 +34,10 @@ namespace TV_show_Renamer
             }
             InitializeComponent();
             dataGridView1.DataSource = fileList;
-            getFiles(args);
+            if (args.GetLength(0) != 0)
+            {
+                getFiles(args);
+            }            
         }
 
         //Constructor
@@ -86,7 +89,7 @@ namespace TV_show_Renamer
             openFileDialog2.CheckPathExists = true;
 
             if (openFileDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
+            {                
                 Thread h = new Thread(delegate() { getFiles(openFileDialog2.FileNames); });
                 h.Start();
             }//end of if
@@ -2838,6 +2841,10 @@ namespace TV_show_Renamer
         //add files 
         private void getFiles(string[] fileList2)
         {
+            if (fileList2 == null)
+            {
+                return;
+            }
             //loop for each file in array
             foreach (String file3 in fileList2)
             {
@@ -2860,6 +2867,8 @@ namespace TV_show_Renamer
                     archiveExtrector(file3, fi3.Name, true);                
                 else
                 {
+                    if (fi3.Extension == "" || fi3.Extension == null)
+                        break;
                     MethodInvoker action = delegate
                     {
                         fileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension));

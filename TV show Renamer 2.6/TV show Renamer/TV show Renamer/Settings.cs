@@ -76,7 +76,14 @@ namespace TV_show_Renamer
                 this.Close();            
         }
 
+        //button color settings
         private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //change auto update setting
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
 
         }
