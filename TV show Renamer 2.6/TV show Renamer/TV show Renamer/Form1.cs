@@ -20,8 +20,7 @@ namespace TV_show_Renamer
     {
         //Constructor with arguments
         public Form1(string[] args)
-        {
-            //check to see if program is already running
+        {//check to see if program is already running
             bool isDupeFound = false;
             foreach (Process myProcess in Process.GetProcesses())
             {
@@ -34,16 +33,13 @@ namespace TV_show_Renamer
             }
             InitializeComponent();
             dataGridView1.DataSource = fileList;
-            if (args.GetLength(0) != 0)
-            {
-                getFiles(args);
-            }            
+            if (args.GetLength(0) != 0)            
+                getFiles(args);                        
         }
 
         //Constructor
         public Form1()
-        {            
-            //check to see if program is already running
+        {//check to see if program is already running
             bool isDupeFound = false;
             foreach (Process myProcess in Process.GetProcesses())
             {
@@ -202,7 +198,6 @@ namespace TV_show_Renamer
                         continue;
                     }
                 }//end of for loop
-
                 Thread t = new Thread(new ThreadStart(autoConvert));
                 t.Start();
             }
@@ -630,14 +625,12 @@ namespace TV_show_Renamer
             if (fileList.Count != 0) //if files are selected
             {
                 int format = -1;
-                //1x01
                 format = newMainSettings.SeasonFormat + 1;
                 Thread h = new Thread(delegate() { autoTitleTVDB(format, true); });
                 h.Start();            
             }
             else//catch if nothing is selected
-                MessageBox.Show("No Files Selected");
-                        
+                MessageBox.Show("No Files Selected");                        
         }
         
         #endregion
@@ -646,7 +639,6 @@ namespace TV_show_Renamer
         private void MenuItemClickHandler1(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-            //clickedItem.Tag
             if (dataGridView1.CurrentRow != null)
             {
                 //open folder browser
@@ -689,7 +681,6 @@ namespace TV_show_Renamer
                         Log.WriteLog(t.ToString());
                         continue;
                     }
-
                 }
             }
             else//catch if nothing is selected
@@ -699,8 +690,6 @@ namespace TV_show_Renamer
         private void MenuItemClickHandler2(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-
-            //clickedItem.Tag
             if (dataGridView1.CurrentRow != null)
             {
                 if (clickedItem.Name == "browserMenu")
@@ -709,7 +698,6 @@ namespace TV_show_Renamer
                         clickedItem.Tag = folderBrowserDialog2.SelectedPath;
                     else
                         return;
-
                 }
 
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -742,7 +730,6 @@ namespace TV_show_Renamer
                         Log.WriteLog(t.ToString());
                         continue;
                     }
-
                 }
             }
             else//catch if nothing is selected
@@ -751,9 +738,7 @@ namespace TV_show_Renamer
 
         private void MenuItemClickHandler3(object sender, EventArgs e)
         {
-
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-            //clickedItem.Tag
             if (dataGridView1.CurrentRow != null)
             {
                 //open folder browser
@@ -763,7 +748,6 @@ namespace TV_show_Renamer
                         clickedItem.Tag = folderBrowserDialog2.SelectedPath;
                     else
                         return;
-
                 }
 
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -881,7 +865,6 @@ namespace TV_show_Renamer
             menu1[menu1.Count - 1].Click += new EventHandler(MenuItemClickHandler1);
 
             moveToToolStripMenuItem1.DropDownItems.AddRange(menu1.ToArray());
-
 
             menu2.Add(new ToolStripMenuItem());
             menu2[menu2.Count - 1].Name = "copy" + (menu2.Count - 1).ToString();
@@ -1092,7 +1075,7 @@ namespace TV_show_Renamer
         }//update complete method
 
         //check for updates silently
-        private void checkForUpdateSilent()
+        public void checkForUpdateSilent()
         {
             if (this.ConnectionExists())
             {
@@ -3471,7 +3454,6 @@ namespace TV_show_Renamer
             int[] temp3 = { 255, 240, 240, 240 };
             if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
             {
-                MessageBox.Show(temp3[2].ToString() + "\n" + newMainSettings.ButtonColor[2].ToString());
                 changeButtoncolor(temp1);
             }
                 

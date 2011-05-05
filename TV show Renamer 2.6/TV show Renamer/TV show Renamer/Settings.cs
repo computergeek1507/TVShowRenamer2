@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace TV_show_Renamer
 {
@@ -112,6 +113,11 @@ namespace TV_show_Renamer
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             Main.newMainSettings.AutoUpdates = checkBox2.Checked;
+            if (Main.newMainSettings.AutoUpdates) 
+            {
+                Thread updateChecker = new Thread(new ThreadStart(Main.checkForUpdateSilent));
+                updateChecker.Start();
+            }
         }     
 
     }//end of class
