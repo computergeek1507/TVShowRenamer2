@@ -23,6 +23,7 @@ namespace TV_show_Renamer
         bool _formClosed = false;
         bool _closedForUpdates = false;
         bool _checkForUpdates = false;
+        bool _autoUpdates = true;
 
         int _seasonOffset = 0;
         int _episodeOffset = 0;
@@ -34,7 +35,7 @@ namespace TV_show_Renamer
 
         int[] _backgroundColor = { 255, 153, 180, 209 };
         int[] _foregroundColor = { 255, 0, 0, 0 };
-        int[] _buttonColor = { 255, 153, 180, 209 };
+        int[] _buttonColor = { 255, 240, 240, 240 };
 
         string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer";
 
@@ -66,6 +67,8 @@ namespace TV_show_Renamer
             _shownb4 = false;
             _formClosed = false;
             _closedForUpdates = false;
+            _checkForUpdates = false;
+            _autoUpdates = true;
 
             _seasonOffset = 0;
             _episodeOffset = 0;
@@ -124,7 +127,8 @@ namespace TV_show_Renamer
                 pw.WriteLine(_buttonColor[1]);
                 pw.WriteLine(_buttonColor[2]);
                 pw.WriteLine(_buttonColor[3]);
-                pw.WriteLine(DateTime.Today.Date.ToString()); 
+                pw.WriteLine(DateTime.Today.Date.ToString());
+                pw.WriteLine(_autoUpdates);
 
                 pw.Close();//close writer stream
 
@@ -191,10 +195,11 @@ namespace TV_show_Renamer
                     _buttonColor[1] = int.Parse(tr3.ReadLine());
                     _buttonColor[2] = int.Parse(tr3.ReadLine());
                     _buttonColor[3] = int.Parse(tr3.ReadLine());
-                    string lastUpdateTime = tr3.ReadLine();
-                    if (DateTime.Today.Date.ToString() != lastUpdateTime)
+                    string lastUpdateTime = tr3.ReadLine();                    
+                    _autoUpdates = bool.Parse(tr3.ReadLine());
+                    if (DateTime.Today.Date.ToString() != lastUpdateTime&&_autoUpdates)
                         _checkForUpdates = true;
-                    
+
                     tr3.Close();//close reader stream                                        
                 }//end of if. 
 
@@ -314,7 +319,11 @@ namespace TV_show_Renamer
         public bool CheckForUpdates
         {
             get { return _checkForUpdates; }
-            set { _checkForUpdates = value; }
+        }
+        public bool AutoUpdates
+        {
+            get { return _autoUpdates; }
+            set { _autoUpdates = value; }
         }
 
         public int SeasonOffset
