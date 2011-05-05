@@ -3452,11 +3452,8 @@ namespace TV_show_Renamer
             ForeColor = System.Drawing.Color.FromArgb(newMainSettings.ForegroundColor[0], newMainSettings.ForegroundColor[1], newMainSettings.ForegroundColor[2], newMainSettings.ForegroundColor[3]);
             Color temp1 = System.Drawing.Color.FromArgb(newMainSettings.ButtonColor[0], newMainSettings.ButtonColor[1], newMainSettings.ButtonColor[2], newMainSettings.ButtonColor[3]);
             int[] temp3 = { 255, 240, 240, 240 };
-            if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
-            {
-                changeButtoncolor(temp1);
-            }
-                
+            if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])            
+                changeButtoncolor(temp1);      
 
         }//end of load command
 
