@@ -72,7 +72,7 @@ namespace TV_show_Renamer
         junk_words userJunk = new junk_words();        
         Text_Converter textConvert = new Text_Converter();
         LogWrite Log = new LogWrite();//log object
-        MainSettings newMainSettings = new MainSettings();//new settings object
+        public MainSettings newMainSettings = new MainSettings();//new settings object
 
         #endregion
 
@@ -1282,6 +1282,14 @@ namespace TV_show_Renamer
         #region Other Methods
 
         #region Public Mehtods
+
+        public void changeButtoncolor(Color newColor) 
+        {
+            button1.BackColor = newColor;
+            button2.BackColor = newColor;
+            button5.BackColor = newColor;
+            button6.BackColor = newColor;        
+        }
                 
         //get selected titles off IMDB
         public void getTVDBTitles()
@@ -1372,9 +1380,9 @@ namespace TV_show_Renamer
                         continue;                    
                     //zip fix
                     if ((exten == ".zip" || exten == ".rar" || exten == ".r01" || exten == ".7z") && newMainSettings.OpenZIPs)
-                        continue;                    
+                        continue;
                     //check if its a legal file type
-                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v" || exten == ".mpeg" || exten == ".mov" || exten == ".rm"||exten == ".rmvb"))
+                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v" || exten == ".mpeg" || exten == ".mov" || exten == ".rm"||exten == ".rmvb"||exten==".wmv"))
                     {
                         //if dialog was shown b4 dont show again
                         if (!newMainSettings.Shownb4)
@@ -3456,6 +3464,18 @@ namespace TV_show_Renamer
                 AddFolder(newMainSettings.OtherFolders[i], newMainSettings.OtherFolders[i + 1]);
             userJunk.junk_adder(junklist, newMainSettings.DataFolder, this);
             textConvert.setUp(this, newMainSettings.DataFolder);
+            BackColor = System.Drawing.Color.FromArgb(newMainSettings.BackgroundColor[0], newMainSettings.BackgroundColor[1], newMainSettings.BackgroundColor[2], newMainSettings.BackgroundColor[3]);
+            MainMenuStrip.BackColor = BackColor;
+            ForeColor = System.Drawing.Color.FromArgb(newMainSettings.ForegroundColor[0], newMainSettings.ForegroundColor[1], newMainSettings.ForegroundColor[2], newMainSettings.ForegroundColor[3]);
+            Color temp1 = System.Drawing.Color.FromArgb(newMainSettings.ButtonColor[0], newMainSettings.ButtonColor[1], newMainSettings.ButtonColor[2], newMainSettings.ButtonColor[3]);
+            int[] temp3 = { 255, 240, 240, 240 };
+            if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
+            {
+                MessageBox.Show(temp3[2].ToString() + "\n" + newMainSettings.ButtonColor[2].ToString());
+                changeButtoncolor(temp1);
+            }
+                
+
         }//end of load command
 
         //create preference file when program closes and close log
