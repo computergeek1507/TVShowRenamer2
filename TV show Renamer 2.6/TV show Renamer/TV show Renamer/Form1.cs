@@ -80,7 +80,7 @@ namespace TV_show_Renamer
             openFileDialog2.Title = "Select Media files";
             openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg;*.mov;*.mpeg;*.rm;*.rmvb;*.wmv)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg;*.mov;*.mpeg;*.rm;*.rmvb;*.wmv|Archive Files (*.zip;*.rar;*.r01;*.7z;)|*.zip;*.rar;*.r01;*.7z;|All Files (*.*)|*.*";
             openFileDialog2.FileName = "";
-            openFileDialog2.FilterIndex = 0;
+            openFileDialog2.FilterIndex = 1;
             openFileDialog2.CheckFileExists = true;
             openFileDialog2.CheckPathExists = true;
 
