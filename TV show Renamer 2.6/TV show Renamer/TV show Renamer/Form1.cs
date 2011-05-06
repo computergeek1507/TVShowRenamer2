@@ -2055,15 +2055,13 @@ namespace TV_show_Renamer
 
             //Text converter            
             textConverter = textConvert.getText();
-
             for (int x = 0; x < textConverter.Count(); x += 2)            
                 newfilename = newfilename.Replace(textConverter[x], textConverter[x + 1]);           
 
             //user junk list
             if (newMainSettings.RemoveCrap)
             {
-                //make user junk list
-                
+                //make user junk list                
                 userjunklist = userJunk.getjunk();
                 if (userjunklist.Count() != 0)
                 {
