@@ -79,7 +79,7 @@ namespace TV_show_Renamer
             _extFormat = 0;
             int[] temp1 = { 255, 153, 180, 209 };
             int[] temp2 = { 255, 0, 0, 0 };
-            int[] temp3 = { 255, 153, 180, 209 };
+            int[] temp3 = { 255, 240, 240, 240 };
             _backgroundColor = temp1;
             _foregroundColor = temp2;
             _buttonColor = temp3;
@@ -89,16 +89,16 @@ namespace TV_show_Renamer
         }
 
         //save settings
-        public bool saveStettings() 
+        public bool saveStettings()
         {
+            bool returnValue = true;
             try
-            {
+            {//write newpreferences file
                 StreamWriter pw = new StreamWriter(_dataFolder + "//newpreferences.seh");
-
                 pw.WriteLine(_removePeriod);
                 pw.WriteLine(_removeUnderscore);
                 pw.WriteLine(_removeDash);
-                pw.WriteLine(_removeBracket);                
+                pw.WriteLine(_removeBracket);
                 pw.WriteLine(_removeCrap);
 
                 pw.WriteLine(_dashSeason);
@@ -131,33 +131,45 @@ namespace TV_show_Renamer
                 pw.WriteLine(_autoUpdates);
 
                 pw.Close();//close writer stream
-
-                //write tv folder locations
-                pw = new StreamWriter(_dataFolder + "//TVFolder.seh");
-                pw.WriteLine(_moveFolder.Count());
-                for (int i = 0; i < _moveFolder.Count(); i++)                
-                    pw.WriteLine(_moveFolder[i]);                
-                pw.Close();
-
-                //write other folder locations
-                pw = new StreamWriter(_dataFolder + "//OtherFolders.seh");
-                pw.WriteLine(_otherFolders.Count());
-                for (int i = 0; i < _otherFolders.Count(); i++)                
-                    pw.WriteLine(_otherFolders[i]);                
-                pw.Close();
-
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _main.WriteLog("Preference Write Falure");
-                return false;
+                _main.WriteLog("newpreferences.seh Write Falure \n" + e.ToString());
+                returnValue = false;
             }
-            return true;        
+            try
+            {//write tv folder locations
+                StreamWriter pw2 = new StreamWriter(_dataFolder + "//TVFolder.seh");
+                pw2.WriteLine(_moveFolder.Count());
+                for (int i = 0; i < _moveFolder.Count(); i++)
+                    pw2.WriteLine(_moveFolder[i]);
+                pw2.Close();
+            }
+            catch (Exception e)
+            {
+                _main.WriteLog("TVFolder.seh Falure \n" + e.ToString());
+                returnValue = false;
+            }
+            try
+            {//write other folder locations
+                StreamWriter pw3 = new StreamWriter(_dataFolder + "//OtherFolders.seh");
+                pw3.WriteLine(_otherFolders.Count());
+                for (int i = 0; i < _otherFolders.Count(); i++)
+                    pw3.WriteLine(_otherFolders[i]);
+                pw3.Close();
+            }
+            catch (Exception e)
+            {
+                _main.WriteLog("OtherFolders.seh Falure \n" + e.ToString());
+                returnValue = false;
+            }
+            return returnValue;
         }
 
         //load settings file
         public bool loadStettings()
         {
+            bool returnValue = true;
             try
             {
                 if (File.Exists(_dataFolder + "//newpreferences.seh"))//see if file exists
@@ -165,19 +177,19 @@ namespace TV_show_Renamer
                     StreamReader tr3 = new StreamReader(_dataFolder + "//newpreferences.seh");
                     _removePeriod = bool.Parse(tr3.ReadLine());
                     _removeUnderscore = bool.Parse(tr3.ReadLine());
-                    _removeDash= bool.Parse(tr3.ReadLine());
-                    _removeBracket= bool.Parse(tr3.ReadLine());
-                    _removeCrap= bool.Parse(tr3.ReadLine());
+                    _removeDash = bool.Parse(tr3.ReadLine());
+                    _removeBracket = bool.Parse(tr3.ReadLine());
+                    _removeCrap = bool.Parse(tr3.ReadLine());
 
                     _dashSeason = bool.Parse(tr3.ReadLine());
-                    _dashTitle= bool.Parse(tr3.ReadLine());
-                    _removeYear= bool.Parse(tr3.ReadLine());
-                    _openZIPs= bool.Parse(tr3.ReadLine());
-                    _autoTitle= bool.Parse(tr3.ReadLine());
+                    _dashTitle = bool.Parse(tr3.ReadLine());
+                    _removeYear = bool.Parse(tr3.ReadLine());
+                    _openZIPs = bool.Parse(tr3.ReadLine());
+                    _autoTitle = bool.Parse(tr3.ReadLine());
 
-                    _seasonOffset= int.Parse(tr3.ReadLine());
+                    _seasonOffset = int.Parse(tr3.ReadLine());
                     _episodeOffset = int.Parse(tr3.ReadLine());
-                    _programFormat= int.Parse(tr3.ReadLine());
+                    _programFormat = int.Parse(tr3.ReadLine());
                     _seasonFormat = int.Parse(tr3.ReadLine());
                     _titleFormat = int.Parse(tr3.ReadLine());
                     _junkFormat = int.Parse(tr3.ReadLine());
@@ -195,49 +207,61 @@ namespace TV_show_Renamer
                     _buttonColor[1] = int.Parse(tr3.ReadLine());
                     _buttonColor[2] = int.Parse(tr3.ReadLine());
                     _buttonColor[3] = int.Parse(tr3.ReadLine());
-                    string lastUpdateTime = tr3.ReadLine();                    
+                    string lastUpdateTime = tr3.ReadLine();
                     _autoUpdates = bool.Parse(tr3.ReadLine());
-                    if (DateTime.Today.Date.ToString() != lastUpdateTime&&_autoUpdates)
+                    if (DateTime.Today.Date.ToString() != lastUpdateTime && _autoUpdates)
                         _checkForUpdates = true;
 
                     tr3.Close();//close reader stream                                        
                 }//end of if. 
-
-                //Read TV show folders
+            }
+            catch (Exception e)
+            {
+                _main.WriteLog("newpreferences.seh Read Error \n" + e.ToString());
+                returnValue = false;
+            }
+            try
+            {//Read TV show folders
                 if (File.Exists(_dataFolder + "//TVFolder.seh"))
                 {
                     StreamReader tv2 = new StreamReader(_dataFolder + "//TVFolder.seh");
                     int length = Int32.Parse(tv2.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
-                        if (length == 0)                        
-                            break;                        
-                       _moveFolder.Add(tv2.ReadLine());                                                
+                        if (length == 0)
+                            break;
+                        _moveFolder.Add(tv2.ReadLine());
                     }//end of for loop  
                     tv2.Close();
                 }//end of if
-
-                //Read Other folders 
+            }
+            catch (Exception e)
+            {
+                _main.WriteLog("TVFolder.seh Read Error \n" + e.ToString());
+                returnValue = false;
+            }
+            try
+            {//Read Other folders 
                 if (File.Exists(_dataFolder + "//OtherFolders.seh"))//see if file exists
                 {
                     StreamReader tv3 = new StreamReader(_dataFolder + "//OtherFolders.seh");
                     int length = Int32.Parse(tv3.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
-                        if (length == 0)                        
-                            break;                        
-                        _otherFolders.Add(tv3.ReadLine());                 
+                        if (length == 0)
+                            break;
+                        _otherFolders.Add(tv3.ReadLine());
                     }//end of for loop  
-                    tv3.Close();                
+                    tv3.Close();
                 }
             }
             catch (Exception e)
             {
-                _main.WriteLog("Reading Preference Error \n" + e.ToString());
-                return false;
+                _main.WriteLog("OtherFolders.seh Read Error \n" + e.ToString());
+                returnValue = false;
             }
-            return true;
-        }
+            return returnValue;
+        }//end of loadsettings methods
 
         //Add folder to TV folder list 
         public void moveFolderAdd(string folder) 
