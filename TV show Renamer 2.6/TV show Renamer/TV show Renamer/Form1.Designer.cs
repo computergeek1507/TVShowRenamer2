@@ -723,7 +723,7 @@
             this.MinimumSize = new System.Drawing.Size(500, 130);
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "TV Show Renamer 2.7 ALPHA";
+            this.Text = "TV Show Renamer 2.7 Beta";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
