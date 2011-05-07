@@ -12,7 +12,6 @@ namespace TV_show_Renamer
 {
     public partial class ConversionOptions : Form
     {
-
         MainSettings newMainSettings;
         Form1 Main;
         string[] seasonSettings = { "1x01", "0101", "S01E01", "101", "1-1-2011", "None" };
@@ -45,6 +44,10 @@ namespace TV_show_Renamer
             comboBox7.SelectedIndex = newMainSettings.ExtFormat;
             checkBox1.Checked = newMainSettings.RemovePeriod;
             checkBox2.Checked = newMainSettings.RemoveUnderscore;
+            checkBox3.Checked = newMainSettings.RemoveDash;
+            checkBox4.Checked = newMainSettings.RemoveBracket;
+            checkBox5.Checked = newMainSettings.RemoveCrap;
+            checkBox6.Checked = newMainSettings.RemoveYear;
             numericUpDown1.Value = newMainSettings.SeasonOffset;
             numericUpDown2.Value = newMainSettings.EpisodeOffset;
 
@@ -56,90 +59,70 @@ namespace TV_show_Renamer
             this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
             this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
             this.Show();
-
         }
-
+        //ProgramFormat
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.ProgramFormat = comboBox1.SelectedIndex;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
-
+        //SeasonFormat
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.SeasonFormat = comboBox2.SelectedIndex;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
-        }
-
-        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        }       
+        //TitleFormat
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            newMainSettings.DashSeason = Convert.ToBoolean(comboBox4.SelectedIndex);
+            newMainSettings.TitleFormat=comboBox3.SelectedIndex;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
+        }        
+        //JunkFormat
+        private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            newMainSettings.JunkFormat = comboBox6.SelectedIndex;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
-
-        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            newMainSettings.DashTitle = Convert.ToBoolean(comboBox5.SelectedIndex);
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
-        }
-
+        //ExtFormat
         private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.ExtFormat = comboBox7.SelectedIndex;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
-
-        private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
+        //DashSeason
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
-           newMainSettings.JunkFormat = comboBox6.SelectedIndex;
-           Thread t = new Thread(new ThreadStart(convert));
-           t.Start();
-        }
-
-        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            newMainSettings.TitleFormat=comboBox3.SelectedIndex;
+            newMainSettings.DashSeason = Convert.ToBoolean(comboBox4.SelectedIndex);
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
-
-        private void convert()
+        //DashTitle
+        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Main.autoConvert();
+            newMainSettings.DashTitle = Convert.ToBoolean(comboBox5.SelectedIndex);
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
         }
-
+        //remove period
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemovePeriod = checkBox1.Checked;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
-
+        //remove underscore
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveUnderscore = checkBox2.Checked;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
-        }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            newMainSettings.SeasonOffset = (int)numericUpDown1.Value;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
-        }
-
-        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
-        {
-            newMainSettings.EpisodeOffset = (int)numericUpDown2.Value;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
-        }
+        }        
         //remove dash
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
@@ -147,27 +130,46 @@ namespace TV_show_Renamer
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
-
+        //remove year
         private void checkBox6_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveYear = checkBox6.Checked;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
-
+        //remove bracket
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveBracket = checkBox4.Checked;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
-
+        //remove crap
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveCrap = checkBox5.Checked;
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
-        }        
+        }
+        //SeasonOffset
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            newMainSettings.SeasonOffset = (int)numericUpDown1.Value;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
+        }
+        //EpisodeOffset
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            newMainSettings.EpisodeOffset = (int)numericUpDown2.Value;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
+        }
+        //autoconvert
+        private void convert()
+        {
+            Main.autoConvert();
+        }
 
     }//end of class
 }//end of namespace

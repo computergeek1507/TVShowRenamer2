@@ -56,7 +56,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 265;//2.7Beta
+        const int appVersion = 270;//2.7Beta
         const int HowDeepToScan = 4;
         
         BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
@@ -1235,13 +1235,9 @@ namespace TV_show_Renamer
 
         //full Update
         private void fullUpdate()
-        {
-            WebClient webClient = new WebClient();
-            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed3);
-            webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/test.exe"), newMainSettings.DataFolder + "\\update.exe");
-
-            //download update = new download(newMainSettings.DataFolder, this);
-            //update.Show();
+        {            
+            download update = new download(newMainSettings.DataFolder, this);
+            update.Show();
 
             //MethodInvoker action5 = delegate
             // {
@@ -1249,14 +1245,6 @@ namespace TV_show_Renamer
             // };
             //this.BeginInvoke(action5);// dataGridView1.BeginInvoke(action5);
 
-            //this.Hide();
-        }
-
-        //finish update program downloader
-        private void Completed3(object sender, AsyncCompletedEventArgs e)
-        {
-            download update = new download(newMainSettings.DataFolder, this);
-            update.Show();
             this.Hide();
         }
 
@@ -1266,6 +1254,7 @@ namespace TV_show_Renamer
 
         #region Public Mehtods
 
+        //change Buttons color
         public void changeButtoncolor(Color newColor) 
         {
             button1.BackColor = newColor;
@@ -1278,7 +1267,7 @@ namespace TV_show_Renamer
         public void getTVDBTitles()
         {
             int format = -1;
-            format = newMainSettings.SeasonFormat - 1;
+            format = newMainSettings.SeasonFormat + 1;
             
             Thread h = new Thread(delegate() { autoTitleTVDB(format, false); });
             h.Start();
@@ -1667,7 +1656,7 @@ namespace TV_show_Renamer
             }
             return u;
         }
-             
+
         //Move All Files
         public void moveAllFiles(string Outputfolder)
         {
@@ -2038,11 +2027,65 @@ namespace TV_show_Renamer
             return s.ToString();
         }
 
+        //uppercase stuff with parameters
+        private string UpperCaseing(string orig, int start, int end)
+        {//make every thing lowercase for crap remover to work
+            StringBuilder s = new StringBuilder(orig);
+            for (int l = start; l < end; l++)
+                s[l] = char.ToUpper(s[l]);
+            return s.ToString();
+        }
+
+        //uppercase stuff after spaces with parameters
+        private string UpperCaseingAfterSpace(string orig,int start,int end,bool first)
+        {
+            StringBuilder s2 = new StringBuilder(orig);
+                int size3 = orig.Length;
+
+                //make first letter capital
+            if(first)
+                s2[start] = char.ToUpper(s2[start]);                
+                
+                    //Finds Letter after spaces and capitalizes them
+                    for (int i = start + 1; i < end; i++)
+                    {
+                        if (s2[i] == ' ' || s2[i] == '.')
+                        {
+                            char strTemp2 = char.ToUpper(s2[i + 1]);
+                            s2[i + 1] = strTemp2;
+                        }
+                    }//end of for loop
+                
+                return s2.ToString();
+        }
+        //uppercase first thing after space
+        private string UpperCaseFirstAfterSpace(string orig, int start, int end)
+        {
+            StringBuilder s2 = new StringBuilder(orig);
+            int size3 = orig.Length;
+                        
+            //Finds Letter after spaces and capitalizes them
+            for (int i = start + 1; i < end; i++)
+            {
+                if (s2[i] == ' ' || s2[i] == '.')
+                {
+                    char strTemp2 = char.ToUpper(s2[i + 1]);
+                    s2[i + 1] = strTemp2;
+                    break;
+                }
+            }//end of for loop
+
+            return s2.ToString();
+        }
+
         //rename method
         private string fileRenamer(string newfilename, int index, string extend)
         {//make temp function
             string temp = null;
             string seasonDash = "";
+            int startIndex = -1;
+            int endIndex = -1;
+
             if (!newMainSettings.DashSeason)             
                 seasonDash = "- ";            
             if (newMainSettings.RemovePeriod)            
@@ -2144,35 +2187,7 @@ namespace TV_show_Renamer
             {
                 newfilename = newfilename.Replace(tempspace[k], " ");
                 newfilename = newfilename.Replace(tempper[k], ".");
-            }//end of for
-
-            //Capitalize Function
-            if (newMainSettings.ProgramFormat < 2)
-            {
-                StringBuilder s2 = new StringBuilder(newfilename);
-                int size3 = newfilename.Length;
-
-                //make first letter capital
-                char strTemp = char.ToUpper(s2[0]);
-                s2[0] = strTemp;
-                if (newMainSettings.ProgramFormat==0)
-                {
-                    //Finds Letter after spaces and capitalizes them
-                    for (int i = 2; i < size3 - 4; i++)
-                    {
-                        if (s2[i] == ' ' || s2[i] == '.')
-                        {
-                            char strTemp2 = char.ToUpper(s2[i + 1]);
-                            s2[i + 1] = strTemp2;
-                        }
-                    }//end of for loop
-                }
-                //adds changes to newfilename
-                newfilename = s2.ToString();
-            }//end of capilization
-
-            if (newMainSettings.ProgramFormat == 2)
-                newfilename = UpperCaseing(newfilename);            
+            }//end of for                          
 
             //add dash if the title exists or add one 
             string tempTitle = null;
@@ -2223,96 +2238,92 @@ namespace TV_show_Renamer
                     //1x01 format 
                     if (newMainSettings.SeasonFormat==0)
                     {
-                        output = (i + newMainSettings.SeasonOffset).ToString() + "x" + newj2;
-                        output2 = i.ToString() + "x" + newj;
+                        output2 = (i + newMainSettings.SeasonOffset).ToString() + "x" + newj2;
+                        output = i.ToString() + "x" + newj;
                        
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
-                        newfilename = newfilename.Replace(newi + newj, output);//0101
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
-                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + newj + temp, output + temp);//S1e01                        
+                        newfilename = newfilename.Replace(newi + newj, output);//0101                        
+                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1               
                         newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
-                        newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
                         newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
-                        newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
                         newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output + temp);//Season 1 Episode 01
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
-                        newfilename = newfilename.Replace("0" + output2, output);//01x01 fix might be unnessitarry
-                        newfilename = newfilename.Replace(output2, seasonDash + output + tempTitle);//1x01 add title
+                        newfilename = newfilename.Replace("0" + output, output);//01x01 fix might be unnessitarry
+                        newfilename = newfilename.Replace(output, seasonDash + output2 + tempTitle);//1x01 add title
+                        startIndex = newfilename.IndexOf(output2);//find index                        
+                        if (startIndex != -1)
+                        {
+                            if (i > 9) { endIndex = startIndex + 5; } else { endIndex = startIndex + 4; }
+                            //endIndex = startIndex + 4;
+                        }
+                        
                     }
                     //0101 format
                     if (newMainSettings.SeasonFormat == 1)
                     {
-                        output = newi2 + newj2;
-                        output2 = newi + newj;
+                        output2 = newi2 + newj2;
+                        output = newi + newj;
 
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101 
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
-                        newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
                         newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
-                        newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
                         newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
                         newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + newj + temp, output + temp);//S1e01
                         newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output + temp);//Season 1 Episode 01
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
-                        newfilename = newfilename.Replace(output2, seasonDash + output + tempTitle);//0101 add title
+                        newfilename = newfilename.Replace(output, seasonDash + output2 + tempTitle);//0101 add title
+                        startIndex = newfilename.IndexOf(output2);//find index
+                        if (startIndex != -1)
+                            endIndex = startIndex + 4;
                     }
                     //S01E01 format
                     if (newMainSettings.SeasonFormat == 2)
                     {
-                        output = "S" + newi2 + "E" + newj2;
-                        output2 = "S" + newi + "E" + newj;
+                        output2 = "S" + newi2 + "E" + newj2;
+                        output = "S" + newi + "E" + newj;
 
                         newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
                         newfilename = newfilename.Replace(newi + newj, output);//0101
                         newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01E01
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
                         newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + newj + temp, output + temp);//S1e01
                         newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
-                        newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
                         newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output + temp);//Season 1 Episode 01
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
-                        newfilename = newfilename.Replace("S" + newi + "E" + newj, seasonDash + output + tempTitle);//S01E01 add title
-                        newfilename = newfilename.Replace("S" + newi + "e" + newj, seasonDash + output + tempTitle);//S01E01 add title if second time
+                        newfilename = newfilename.Replace("S" + newi + "E" + newj, seasonDash + output2 + tempTitle);//S01E01 add title
+                        newfilename = newfilename.Replace("s" + newi + "e" + newj, seasonDash + output2 + tempTitle);//S01E01 add title if second time
+                        startIndex = newfilename.IndexOf(output2);//find index
+                        if (startIndex != -1)
+                            endIndex = startIndex + 6;
                     }
                     //101 format
                     if (newMainSettings.SeasonFormat == 3)
                     {
-                        output = (i + newMainSettings.SeasonOffset).ToString() + newj2;
-                        output2 = i.ToString() + newj;
+                        output2 = (i + newMainSettings.SeasonOffset).ToString() + newj2;
+                        output = i.ToString() + newj;
 
                         newfilename = newfilename.Replace(newi + newj, output);//0101
                         newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
-                        newfilename = newfilename.Replace("S" + newi + "e" + newj, output);//S01E01
                         newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
-                        newfilename = newfilename.Replace("S" + newi + " E" + newj, output);//S01 E01
                         newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + j.ToString() + temp, output + temp);//S1e1
                         newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
-                        newfilename = newfilename.Replace("S" + i.ToString() + "e" + newj + temp, output + temp);//S1e01
                         newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + newj + temp, output + temp);//Season 1 Episode 01
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
-                        newfilename = newfilename.Replace("Season " + i.ToString() + " Episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                         newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                         newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
-                        newfilename = newfilename.Replace(output2, seasonDash + output + tempTitle);//0101 add title
+                        newfilename = newfilename.Replace(output, seasonDash + output2 + tempTitle);//0101 add title
+                        startIndex = newfilename.IndexOf(output2);//find index
+                        if (startIndex != -1)
+                        {
+                            if (i > 9) { endIndex = startIndex + 4; } else { endIndex = startIndex + 3; }
+                            //endIndex = startIndex + 3;
+                        }                        
                     }
 
                     //stop loop when name is change                    
@@ -2368,12 +2379,27 @@ namespace TV_show_Renamer
                                 newday = "0" + day.ToString();                           
                             string kk = "20" + newyear;
 
-                            newfilename = newfilename.Replace(kk + " " + month + " " + day, month + "-" + day + "-" + kk);
+                            newfilename = newfilename.Replace(kk + " " + month + " " + day, month.ToString() + "-" + day.ToString() + "-" + kk);
                             newfilename = newfilename.Replace(kk + " " + newmonth + " " + newday, month.ToString() + "-" + day.ToString() + "-" + kk);
 
-                            newfilename = newfilename.Replace( month + "-" + day + "-" + kk, month + "-" + day + "-" + kk + dateTitle);//add title
-                            newfilename = newfilename.Replace( month + " " + day + " " + kk, month + "-" + day + "-" + kk + dateTitle);//add title
-
+                            newfilename = newfilename.Replace(month + "-" + day + "-" + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
+                            newfilename = newfilename.Replace(month + " " + day + " " + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
+                            startIndex = newfilename.IndexOf(month + "-" + day + "-" + kk);//find index
+                            if (startIndex != -1)
+                            {
+                                if (day > 9 && month > 9) 
+                                { 
+                                    endIndex = startIndex + 10;
+                                }
+                                else if (day > 9 || month > 9)
+                                {
+                                    endIndex = startIndex + 9;
+                                }
+                                else 
+                                {
+                                    endIndex = startIndex + 8;
+                                }                                
+                            }
                             if (startnewname != newfilename)
                             {
                                 end = true;
@@ -2384,10 +2410,52 @@ namespace TV_show_Renamer
                             break;                        
                     }//end of for loop month
                     if (end)
-                        break;
-                    
+                        break;                    
                 }//end of for loop year
             }//end of if for date check box
+
+            if (startIndex == -1)
+                startIndex = newfilename.Length - 1;
+            switch (newMainSettings.ProgramFormat)
+            {
+                case 0:
+                    newfilename = UpperCaseingAfterSpace(newfilename, 0, startIndex,true);
+                    break;
+                case 1:
+                    newfilename = UpperCaseing(newfilename, 0, 1);
+                    break;
+                case 2:
+                    newfilename = UpperCaseing(newfilename, 0, startIndex);
+                    break;
+                default:
+                    break;
+            }
+
+            if (endIndex != -1)
+            {
+                switch (newMainSettings.TitleFormat)
+                {
+                    case 0:
+                        newfilename = UpperCaseingAfterSpace(newfilename, endIndex, newfilename.Length,false);
+                        break;
+                    case 1:
+                        newfilename = UpperCaseFirstAfterSpace(newfilename, endIndex, newfilename.Length);
+                        break;
+                    case 2:
+                        newfilename = UpperCaseing(newfilename, endIndex, newfilename.Length);
+                        break;
+                    case 4:
+                        StringBuilder filenameOld = new StringBuilder(newfilename);
+                        StringBuilder filenameNew = new StringBuilder();
+                        filenameNew.Length = endIndex;
+                        for (int q = 0; q < endIndex; q++)
+                            filenameNew[q] = filenameOld[q];                        
+                        newfilename = filenameNew.ToString() + temp + "&&&&";
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             switch (newMainSettings.ExtFormat)
             {
