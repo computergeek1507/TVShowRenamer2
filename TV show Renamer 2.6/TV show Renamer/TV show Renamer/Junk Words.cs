@@ -70,7 +70,7 @@ namespace TV_show_Renamer
         {
             string newword = textBox1.Text;
 
-            if (newword == "" || newword == " " || newword == "  ")            
+            if (newword == "" || newword == " " || newword == "  "||newword ==null)            
                 return;            
 
             //check to see if new word is in main library
@@ -166,6 +166,53 @@ namespace TV_show_Renamer
             this.Hide();
             Thread t = new Thread(new ThreadStart(convert));
             t.Start(); 
-        }        
+        }
+
+        private void CheckKeys(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                string newword = textBox1.Text;
+
+                if (newword == "" || newword == " " || newword == "  " || newword == null)
+                    return;
+
+                //check to see if new word is in main library
+                for (int i = 0; i < junkwords.Count; i++)
+                {
+                    if (newword == junkwords[i])
+                    {
+                        MessageBox.Show("Word already in Junk Library");
+                        return;
+                    }
+                }//end of for
+                //check to see if new word has been added b4
+                if (!(userwords.Count == 0))
+                {
+                    for (int i = 0; i < userwords.Count; i++)
+                    {
+                        if (newword == userwords[i])
+                        {
+                            MessageBox.Show("Word already in Junk Library");
+                            return;
+                        }//end of if
+                    }//end of for
+                }//end of if
+                //add word
+                userwords.Add(newword);//add junkword
+
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < userwords.Count(); i++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = userwords[i];
+                }
+
+                textBox1.Text = null;//clear box
+
+                Thread t = new Thread(new ThreadStart(convert));
+                t.Start();
+            }
+        }
     }//end of partial class 
 }//end of namespace

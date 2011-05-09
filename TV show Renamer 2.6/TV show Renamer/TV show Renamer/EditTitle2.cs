@@ -9,10 +9,10 @@ using System.Windows.Forms;
 
 namespace TV_show_Renamer
 {
-    public partial class EditTitle : Form
+    public partial class EditTitle2 : Form
     {
         string title = "";
-        public EditTitle(string temptitle)
+        public EditTitle2(string temptitle)
         {
             InitializeComponent();
             textBox1.Text = title = temptitle;
@@ -20,12 +20,23 @@ namespace TV_show_Renamer
 
         public string getTitle()
         {
-            return title;        
+            return title;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             title = textBox1.Text;
+        }
+        private void CheckKeys(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                MessageBox.Show(title);
+                if (title != "" || title != " "||title != null)
+                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                else
+                    this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            }
         }
     }//end of class
 }//end of namespace
