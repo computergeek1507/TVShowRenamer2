@@ -173,5 +173,31 @@ namespace TV_show_Renamer
             t.Start();
             this.Hide();
         }
+        private void CheckKeys(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                if ((textBox1.Text != "") && (textBox1.Text != "0000") && (textBox1.Text != " ") && (textBox1.Text != null))
+                {
+                    textConvert.Add(textBox1.Text);
+                    textConvert.Add(textBox2.Text);
+
+                    textBox1.Text = null;
+                    textBox2.Text = null;
+                    if (button2.Text == "Save") button2.Text = "Add";
+
+                    dataGridView1.Rows.Clear();
+                    for (int i = 0; i < textConvert.Count(); i = i + 2)
+                    {
+                        dataGridView1.Rows.Add();
+                        dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                        dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                        dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
+                    }
+                    Thread t = new Thread(new ThreadStart(convert));
+                    t.Start();
+                }
+            }
+        }
     }//end of class
 }//end of namespace

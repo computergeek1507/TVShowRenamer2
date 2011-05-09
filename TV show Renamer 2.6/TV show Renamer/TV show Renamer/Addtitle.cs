@@ -63,5 +63,20 @@ namespace TV_show_Renamer
                 t.Start();
             }
         }
+        private void CheckKeys(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                if (textBox1.Text != "" || textBox1.Text != " " || textBox1.Text != "  ")
+                {
+                    if (Main.addTitle(textBox1.Text))
+                    {
+                        textBox1.Text = null;
+                        Thread t = new Thread(new ThreadStart(convert));
+                        t.Start();
+                    }
+                }
+            }
+        }
     }
 }

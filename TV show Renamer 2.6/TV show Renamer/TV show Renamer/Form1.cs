@@ -84,6 +84,7 @@ namespace TV_show_Renamer
             openFileDialog2.CheckFileExists = true;
             openFileDialog2.CheckPathExists = true;
 
+
             if (openFileDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {                
                 Thread h = new Thread(delegate() { getFiles(openFileDialog2.FileNames); });
@@ -124,24 +125,28 @@ namespace TV_show_Renamer
         private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
         {
             ConversionOptions MainSettings = new ConversionOptions(this, newMainSettings);
+            MainSettings.Location = new Point(this.Location.X + ((this.Size.Width - MainSettings.Size.Width) / 2), this.Location.Y + ((this.Size.Height - MainSettings.Size.Height) / 2));
         }
 
         //User junk word menu
         private void addJunkWordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             userJunk.Show();
+            userJunk.Location = new Point(this.Location.X + ((this.Size.Width - userJunk.Size.Width) / 2), this.Location.Y + ((this.Size.Height - userJunk.Size.Height) / 2));
         }
 
         //text converter menu
         private void textConverterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             textConvert.Show();
+            textConvert.Location = new Point(this.Location.X + ((this.Size.Width - textConvert.Size.Width) / 2), this.Location.Y + ((this.Size.Height - textConvert.Size.Height) / 2));
         }
 
         //add title menu
         private void addTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Addtitle titles = new Addtitle(fileList, this);                      
+            Addtitle titles = new Addtitle(fileList, this);
+            titles.Location = new Point(this.Location.X + ((this.Size.Width - titles.Size.Width) / 2), this.Location.Y + ((this.Size.Height - titles.Size.Height) / 2));       
         }
 
         //default setting method 
@@ -164,12 +169,14 @@ namespace TV_show_Renamer
         {
             About info = new About(appVersion);
             info.Show();
+            info.Location = new Point(this.Location.X + ((this.Size.Width - info.Size.Width) / 2), this.Location.Y + ((this.Size.Height - info.Size.Height) / 2));
         }
 
         //settings menu
         private void settingsMenuItem_Click(object sender, EventArgs e)
         {
             Settings MainSettings = new Settings(this, newMainSettings.OpenZIPs, newMainSettings.MoveFolder);
+            MainSettings.Location = new Point(this.Location.X + ((this.Size.Width - MainSettings.Size.Width) / 2), this.Location.Y + ((this.Size.Height - MainSettings.Size.Height) / 2));
         }
 
         //hidden save
@@ -240,8 +247,9 @@ namespace TV_show_Renamer
                         {
                             if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
-                                EditTitle mainEdit = new EditTitle(info[3]);
+                                EditTitle2 mainEdit = new EditTitle2(info[3]);
                                 mainEdit.Text = "Edit Folder Name";
+                                mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
                                 if (mainEdit.ShowDialog() == DialogResult.OK)
                                 {
                                     string methodGet = mainEdit.getTitle();
@@ -420,8 +428,9 @@ namespace TV_show_Renamer
                         {
                             if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
-                                EditTitle mainEdit = new EditTitle(info[3]);
+                                EditTitle2 mainEdit = new EditTitle2(info[3]);
                                 mainEdit.Text = "Edit Folder Name";
+                                mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
                                 if (mainEdit.ShowDialog() == DialogResult.OK)
                                 {
                                     //mainEdit.getTitle();
@@ -2047,7 +2056,7 @@ namespace TV_show_Renamer
                 s2[start] = char.ToUpper(s2[start]);                
                 
                     //Finds Letter after spaces and capitalizes them
-                    for (int i = start + 1; i < end; i++)
+                    for (int i = start ; i < end; i++)
                     {
                         if (s2[i] == ' ' || s2[i] == '.')
                         {
@@ -2065,7 +2074,7 @@ namespace TV_show_Renamer
             int size3 = orig.Length;
                         
             //Finds Letter after spaces and capitalizes them
-            for (int i = start + 1; i < end; i++)
+            for (int i = start; i < end; i++)
             {
                 if (s2[i] == ' ' || s2[i] == '.')
                 {
@@ -2416,6 +2425,9 @@ namespace TV_show_Renamer
 
             if (startIndex == -1)
                 startIndex = newfilename.Length - 1;
+            if (endIndex != 1 && !newMainSettings.DashTitle)
+                endIndex += 2;
+
             switch (newMainSettings.ProgramFormat)
             {
                 case 0:
@@ -2974,12 +2986,19 @@ namespace TV_show_Renamer
         }
 
         //drag and drop
-        private void Form1_DragDrop(object sender, DragEventArgs e)
+        private void dragTo_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
-                e.Effect = DragDropEffects.All;
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            this.getFiles(files);
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+        private void dragTo_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                getFiles(files);            
+            }           
         }
 
         #endregion
@@ -3045,8 +3064,9 @@ namespace TV_show_Renamer
                              {
                                  if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                                  {
-                                     EditTitle mainEdit = new EditTitle(info[3]);
+                                     EditTitle2 mainEdit = new EditTitle2(info[3]);
                                      mainEdit.Text = "Edit Folder Name";
+                                     mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
                                      if (mainEdit.ShowDialog() == DialogResult.OK)
                                      {
                                          //mainEdit.getTitle();
@@ -3234,8 +3254,9 @@ namespace TV_show_Renamer
                             {
                                 if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
                                 {
-                                    EditTitle mainEdit = new EditTitle(info[3]);
+                                    EditTitle2 mainEdit = new EditTitle2(info[3]);
                                     mainEdit.Text = "Edit Folder Name";
+                                    mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
                                     if (mainEdit.ShowDialog() == DialogResult.OK)
                                     {
                                         //mainEdit.getTitle();
@@ -3451,7 +3472,8 @@ namespace TV_show_Renamer
                         {
                             continue;
                         }
-                        EditTitle mainEdit = new EditTitle(fileList[i].FileTitle);
+                        EditTitle2 mainEdit = new EditTitle2(fileList[i].FileTitle);
+                        mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
                         if (mainEdit.ShowDialog() == DialogResult.OK)
                         {
                             fileList[i].FileTitle = mainEdit.getTitle();
@@ -3473,8 +3495,9 @@ namespace TV_show_Renamer
                 {
                     if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        EditTitle mainEdit = new EditTitle(fileList[i].NewFileName);
+                        EditTitle2 mainEdit = new EditTitle2(fileList[i].NewFileName);
                         mainEdit.Text = "Edit Pending File Name";
+                        mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
                         if (mainEdit.ShowDialog() == DialogResult.OK)
                         {
                             fileList[i].NewFileName = mainEdit.getTitle();
@@ -3542,6 +3565,11 @@ namespace TV_show_Renamer
             newMainSettings.saveStettings();
             //write log
             Log.closeLog();
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+
         }
             
     }//end of form1 partial class    

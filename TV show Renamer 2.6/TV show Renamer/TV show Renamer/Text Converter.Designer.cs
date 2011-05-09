@@ -71,6 +71,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(154, 20);
             this.textBox1.TabIndex = 20;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckKeys);
             // 
             // textBox2
             // 
@@ -80,6 +81,8 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(151, 20);
             this.textBox2.TabIndex = 21;
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckKeys);
+
             // 
             // button2
             // 
@@ -187,6 +190,7 @@
             this.Name = "Text_Converter";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Text Converter";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Text_Converter_FormClosing);
