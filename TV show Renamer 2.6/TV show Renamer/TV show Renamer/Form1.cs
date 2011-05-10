@@ -597,6 +597,7 @@ namespace TV_show_Renamer
                 {
                     try
                     {
+                        if (fileList[y].FileName == fileList[y].NewFileName) continue;
                         FileSystem.MoveFile((fileList[y].FullFileName), (fileList[y].NewFullFileName), true);
                         //System.IO.File.Move((fileList[y].FullFileName), (fileList[y].NewFullFileName));
                         Log.WriteLog(fileList[y].FileName, fileList[y].NewFileName);
@@ -2046,27 +2047,24 @@ namespace TV_show_Renamer
         }
 
         //uppercase stuff after spaces with parameters
-        private string UpperCaseingAfterSpace(string orig,int start,int end,bool first)
+        private string UpperCaseingAfterSpace(string orig, int start, int end, bool first)
         {
             StringBuilder s2 = new StringBuilder(orig);
-                int size3 = orig.Length;
 
-                //make first letter capital
-            if(first)
-                s2[start] = char.ToUpper(s2[start]);                
-                
-                    //Finds Letter after spaces and capitalizes them
-                    for (int i = start ; i < end; i++)
-                    {
-                        if (s2[i] == ' ' || s2[i] == '.')
-                        {
-                            char strTemp2 = char.ToUpper(s2[i + 1]);
-                            s2[i + 1] = strTemp2;
-                        }
-                    }//end of for loop
-                
-                return s2.ToString();
+            //make first letter capital
+            if (first)
+                s2[start] = char.ToUpper(s2[start]);
+
+            //Finds Letter after spaces and capitalizes them
+            for (int i = start; i < end; i++)
+            {
+                if (s2[i] == ' ' || s2[i] == '.')
+                    s2[i + 1] = char.ToUpper(s2[i + 1]);
+            }//end of for loop
+
+            return s2.ToString();
         }
+
         //uppercase first thing after space
         private string UpperCaseFirstAfterSpace(string orig, int start, int end)
         {
@@ -2076,10 +2074,9 @@ namespace TV_show_Renamer
             //Finds Letter after spaces and capitalizes them
             for (int i = start; i < end; i++)
             {
-                if (s2[i] == ' ' || s2[i] == '.')
+                if ((s2[i] == ' ' || s2[i] == '.') && s2[i + 1]!='-')
                 {
-                    char strTemp2 = char.ToUpper(s2[i + 1]);
-                    s2[i + 1] = strTemp2;
+                    s2[i + 1]  = char.ToUpper(s2[i + 1]);
                     break;
                 }
             }//end of for loop
@@ -2113,12 +2110,12 @@ namespace TV_show_Renamer
             //user junk list
             if (newMainSettings.RemoveCrap)
             {
-                //make user junk list                
+                //make user junk list
                 userjunklist = userJunk.getjunk();
                 if (userjunklist.Count() != 0)
                 {
                     for (int x = 0; x < userjunklist.Count(); x++)                    
-                        newfilename = newfilename.Replace(userjunklist[x], "");                    
+                        newfilename = newfilename.Replace(userjunklist[x], "");
                 }//end of if
             }//end of removeExtraCrapToolStripMenuItem if
 
@@ -2127,7 +2124,7 @@ namespace TV_show_Renamer
                 newfilename = newfilename.Replace(".", temp);            
 
             //Replace "_" with spaces
-            if (newMainSettings.RemoveUnderscore)            
+            if (newMainSettings.RemoveUnderscore)
                 newfilename = newfilename.Replace("_", temp);            
 
             //Replace "-" with spaces
@@ -2332,7 +2329,7 @@ namespace TV_show_Renamer
                         {
                             if (i > 9) { endIndex = startIndex + 4; } else { endIndex = startIndex + 3; }
                             //endIndex = startIndex + 3;
-                        }                        
+                        }
                     }
 
                     //stop loop when name is change                    
@@ -2424,9 +2421,7 @@ namespace TV_show_Renamer
             }//end of if for date check box
 
             if (startIndex == -1)
-                startIndex = newfilename.Length - 1;
-            if (endIndex != 1 && !newMainSettings.DashTitle)
-                endIndex += 2;
+                startIndex = newfilename.Length - 1;            
 
             switch (newMainSettings.ProgramFormat)
             {
@@ -2491,7 +2486,6 @@ namespace TV_show_Renamer
             newfilename = newfilename.Replace(temp + "&&&&", extend);
 
             //Random fixes
-
             //newfilename = newfilename.Replace("-.", ".");
             newfilename = newfilename.Replace(" .", ".");
             newfilename = newfilename.Replace("- -", "-");
@@ -3567,10 +3561,5 @@ namespace TV_show_Renamer
             Log.closeLog();
         }
 
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-            
     }//end of form1 partial class    
 }//end of namespace
