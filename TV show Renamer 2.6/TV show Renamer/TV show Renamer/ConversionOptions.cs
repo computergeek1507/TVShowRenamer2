@@ -163,6 +163,8 @@ namespace TV_show_Renamer
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             newMainSettings.SeasonOffset = (int)numericUpDown1.Value;
+            if (newMainSettings.AutoGetTitle)
+                Main.clearTitles();
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
@@ -170,6 +172,8 @@ namespace TV_show_Renamer
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
             newMainSettings.EpisodeOffset = (int)numericUpDown2.Value;
+            if (newMainSettings.AutoGetTitle)
+                Main.clearTitles();
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
