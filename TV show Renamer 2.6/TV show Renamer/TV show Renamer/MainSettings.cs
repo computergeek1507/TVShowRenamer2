@@ -24,6 +24,7 @@ namespace TV_show_Renamer
         bool _closedForUpdates = false;
         bool _checkForUpdates = false;
         bool _autoUpdates = true;
+        bool _autoGetTitle = true;
 
         int _seasonOffset = 0;
         int _episodeOffset = 0;
@@ -69,6 +70,7 @@ namespace TV_show_Renamer
             _closedForUpdates = false;
             _checkForUpdates = false;
             _autoUpdates = true;
+            _autoGetTitle = true;
 
             _seasonOffset = 0;
             _episodeOffset = 0;
@@ -129,6 +131,7 @@ namespace TV_show_Renamer
                 pw.WriteLine(_buttonColor[3]);
                 pw.WriteLine(DateTime.Today.Date.ToString());
                 pw.WriteLine(_autoUpdates);
+                pw.WriteLine(_autoGetTitle);
 
                 pw.Close();//close writer stream
             }
@@ -211,7 +214,8 @@ namespace TV_show_Renamer
                     _autoUpdates = bool.Parse(tr3.ReadLine());
                     if (DateTime.Today.Date.ToString() != lastUpdateTime && _autoUpdates)
                         _checkForUpdates = true;
-
+                    bool readtemp = bool.Parse(tr3.ReadLine());
+                    if (readtemp != null) _autoGetTitle = readtemp;
                     tr3.Close();//close reader stream                                        
                 }//end of if. 
             }
@@ -348,6 +352,11 @@ namespace TV_show_Renamer
         {
             get { return _autoUpdates; }
             set { _autoUpdates = value; }
+        }
+        public bool AutoGetTitle
+        {
+            get { return _autoGetTitle; }
+            set { _autoGetTitle = value; }
         }
 
         public int SeasonOffset

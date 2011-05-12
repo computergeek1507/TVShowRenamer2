@@ -2207,9 +2207,16 @@ namespace TV_show_Renamer
             }
             else
             {
-                tempTitle = fileList[index].FileTitle;
+                tempTitle =temp+ fileList[index].FileTitle;
                 //tempTitle = "";
             }//end of if-else
+
+            StringBuilder tempCharTitle = new StringBuilder(tempTitle);
+            for (int tempCharTitleIndex = 0; tempCharTitleIndex < tempTitle.Length; tempCharTitleIndex++)
+                tempCharTitle[tempCharTitleIndex] = char.ToLower(tempCharTitle[tempCharTitleIndex]);
+
+            //reassign edited name 
+            tempTitle = tempCharTitle.ToString();
 
             //loop for seasons
             for (int i = 0; i < 40; i++)
@@ -2462,6 +2469,20 @@ namespace TV_show_Renamer
                     default:
                         break;
                 }
+                if (newMainSettings.TitleFormat != 4 && newMainSettings.AutoGetTitle)
+                {
+                    StringBuilder titleSting = new StringBuilder(newfilename);
+                    string temp1 = (titleSting[endIndex].ToString() + titleSting[endIndex + 1].ToString() + titleSting[endIndex + 2].ToString() + titleSting[endIndex + 3].ToString() + titleSting[endIndex + 4].ToString());
+                    if (temp1 == (temp + "&&&&") || temp1 == (" - &&") || temp1 == (temp + temp + "&&&"))
+                    {
+                        int format3 = -1;
+                        format3 = newMainSettings.SeasonFormat + 1;
+                        List<int> onlyOne = new List<int>();
+                        onlyOne.Add(index);
+                        TVDB InternetTest = new TVDB(this, fileList, onlyOne, newMainSettings.DataFolder, format3);
+                        //MessageBox.Show("wORKS");
+                    }
+                }
             }
 
             switch (newMainSettings.ExtFormat)
@@ -2480,13 +2501,12 @@ namespace TV_show_Renamer
                 default:                    
                     break;
             }
-
-
+            
             //add file extention back on 
             newfilename = newfilename.Replace(temp + "&&&&", extend);
 
             //Random fixes
-            //newfilename = newfilename.Replace("-.", ".");
+            newfilename = newfilename.Replace("..", ".");
             newfilename = newfilename.Replace(" .", ".");
             newfilename = newfilename.Replace("- -", "-");
             newfilename = newfilename.Replace(".-.", ".");
