@@ -59,6 +59,12 @@ namespace TV_show_Renamer
                     continue;                                
                 m_cacheProvider = new XmlCacheProvider(folder);
                 m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
+                if (fileList[z].TVShowID != -1)
+                {
+                    getTitle(fileList[z].TVShowID, z);
+                    continue;
+                }
+
                 List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(tvdbTitle);
                 if (list != null && list.Count > 0)
                 {
@@ -115,25 +121,9 @@ namespace TV_show_Renamer
                     }
 
                     if (selectedSeriesId == -1) return;   //return if nothing is found
-                    TvdbSeries s = m_tvdbHandler.GetSeries(selectedSeriesId, TvdbLanguage.DefaultLanguage, true, false, false);
-                    List<String> epList = new List<string>();
-                    string newTitle = null;
-                    foreach (TvdbEpisode esp in s.Episodes)
-                    {
-                        if (season == esp.SeasonNumber && episode == esp.EpisodeNumber)
-                        {
-                            newTitle = esp.EpisodeName;
-                            break;
-                        }
-                    }
-                    if (newTitle == null)                    
-                        continue;                    
-                    newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
-               
-                    if (renameWorked)                    
-                        main.addTitle(newTitle, z);                    
-                    else                    
-                        renameWorked = main.addTitle(newTitle, z);                                     
+                    fileList[z].TVShowID = selectedSeriesId;
+
+                    getTitle(selectedSeriesId, z);
                 }
             }//end of for loop
             if (renameWorked)
@@ -155,6 +145,12 @@ namespace TV_show_Renamer
 
                 m_cacheProvider = new XmlCacheProvider(folder);
                 m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
+                if (fileList[x].TVShowID != -1) 
+                {
+                    getTitle(fileList[x].TVShowID, x);
+                    continue;
+                }
+
                 List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(tvdbTitle);
                 if (list != null && list.Count > 0)
                 {
@@ -215,26 +211,11 @@ namespace TV_show_Renamer
                         }
                     }
 
-                    if (selectedSeriesId == -1) return;   //return if nothing is found
-                    TvdbSeries s = m_tvdbHandler.GetSeries(selectedSeriesId, TvdbLanguage.DefaultLanguage, true, false, false);
-                    List<String> epList = new List<string>();
-                    string newTitle = null;
-                    foreach (TvdbEpisode esp in s.Episodes)
-                    {
-                        if (season == esp.SeasonNumber && episode == esp.EpisodeNumber)
-                        {
-                            newTitle = esp.EpisodeName;
-                            break;
-                        }
-                    }
-                    if (newTitle == null)
-                        continue;                    
-                    newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
-               
-                    if (renameWorked)                    
-                        main.addTitle(newTitle, x);
-                    else                    
-                        renameWorked = main.addTitle(newTitle, x);                    
+                    if (selectedSeriesId == -1) continue;   //return if nothing is found
+                    fileList[x].TVShowID = selectedSeriesId;
+
+                    getTitle(selectedSeriesId, x);
+                                        
                 }
             }//end of for loop
             if (renameWorked)
@@ -310,6 +291,30 @@ namespace TV_show_Renamer
         private void convert()
         {
             main.autoConvert();
-        }             
+        }
+
+        private void getTitle(int seriesID,int index)
+        {
+            TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+            List<String> epList = new List<string>();
+            string newTitle = null;
+            foreach (TvdbEpisode esp in s.Episodes)
+            {
+                if (season == esp.SeasonNumber && episode == esp.EpisodeNumber)
+                {
+                    newTitle = esp.EpisodeName;
+                    break;
+                }
+            }
+            if (newTitle == null)
+                return;
+            newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
+
+            if (renameWorked)
+                main.addTitle(newTitle, index);
+            else
+                renameWorked = main.addTitle(newTitle, index);        
+        
+        }
     }//end of class
 }//end of namespace
