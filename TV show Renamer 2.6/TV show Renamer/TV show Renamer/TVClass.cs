@@ -13,6 +13,7 @@ namespace TV_show_Renamer
         string _fileTitle="";//Title files        
         string _newFileName;//new file name
         bool _auto = true;//autoconvert
+        int _tvShowID = -1;//TVDB id number
 
         public TVClass(string fileFolder, string fileName, string fileExtention)
         {
@@ -68,6 +69,12 @@ namespace TV_show_Renamer
         {
             get { return _auto; }
             set { _auto = value; }
+        }
+
+        public int TVShowID
+        {
+            get { return _tvShowID; }
+            set { _tvShowID = value; }
         }
 
     }//end of class

@@ -48,6 +48,7 @@ namespace TV_show_Renamer
             checkBox4.Checked = newMainSettings.RemoveBracket;
             checkBox5.Checked = newMainSettings.RemoveCrap;
             checkBox6.Checked = newMainSettings.RemoveYear;
+            checkBox7.Checked = newMainSettings.AutoGetTitle;
             numericUpDown1.Value = newMainSettings.SeasonOffset;
             numericUpDown2.Value = newMainSettings.EpisodeOffset;
 
@@ -151,6 +152,13 @@ namespace TV_show_Renamer
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();
         }
+        //autoGetTitle
+        private void checkBox7_CheckedChanged(object sender, EventArgs e)
+        {
+            newMainSettings.AutoGetTitle = checkBox7.Checked;
+            Thread t = new Thread(new ThreadStart(convert));
+            t.Start();
+        }
         //SeasonOffset
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
@@ -170,6 +178,5 @@ namespace TV_show_Renamer
         {
             Main.autoConvert();
         }
-
     }//end of class
 }//end of namespace
