@@ -12,6 +12,7 @@ namespace TV_show_Renamer
     public partial class FolderControl : Form
     {
         Form1 Main;
+        string[] outputOptions = { "\\root", "\\root\\Show Name", "\\root\\Show Name\\Season #" };
         //List<ToolStripMenuItem> menu = new List<ToolStripMenuItem>();
         //List<string> folderList = new List<string>();
 
@@ -36,6 +37,7 @@ namespace TV_show_Renamer
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
                     dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Tag.ToString();
+                    //dataGridView1.Rows[i].Cells[2].Value=
                 }
                 textBox1.Text = "";
                 textBox2.Text = "";
@@ -56,11 +58,17 @@ namespace TV_show_Renamer
         private void FolderControl_Load(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
+            
+
             for (int i = 0; i < Main.menu1.Count(); i ++)
             {
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
                 dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Tag.ToString();
+                DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                cell.Items.AddRange(outputOptions);
+                cell.Value = cell.Items[2];
+
             }
         }
 
@@ -92,6 +100,12 @@ namespace TV_show_Renamer
                 //Main.AddBrowserMenu();
 
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(dataGridView1.Rows[0].Cells[2].Value.ToString());
+            
         }//end of method
     }//end of class
 }//end of namespace
