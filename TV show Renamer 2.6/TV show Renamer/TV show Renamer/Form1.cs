@@ -1058,7 +1058,7 @@ namespace TV_show_Renamer
             List<string> localInfo = this.localXmlRead();
             if (Convert.ToInt32(webInfo[0]) > Convert.ToInt32(localInfo[0]))
             {   //global update crap
-                if (MessageBox.Show("There is an update available, Would you like to update?\nNOTE: This will reinstall the program", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("There is an update available, Would you like to update?\nNOTE: This will reinstall the program", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     MethodInvoker action5 = delegate
                     {
@@ -1071,14 +1071,14 @@ namespace TV_show_Renamer
                 {
                     if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
                     {   //libaray update crap
-                        if (MessageBox.Show("There is a library update available, Would you like to update?\nNOTE: This will just replace certain files", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        if (MessageBox.Show("There is a library update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             this.libarayUpdate();
                     }
                 }
             }
             else if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
             {   //libaray update crap
-                if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     this.libarayUpdate();
             }
             else  //no updats available
@@ -1122,7 +1122,7 @@ namespace TV_show_Renamer
             List<string> localInfo = this.localXmlRead();
             if (Convert.ToInt32(webInfo[0]) > Convert.ToInt32(localInfo[0]))
             {   //global update crap
-                if (MessageBox.Show("There is an update available, Would you like to update?\nNOTE: This will reinstall the program", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("There is an update available, Would you like to update?\nNOTE: This will reinstall the program", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     MethodInvoker action5 = delegate
                     {
@@ -1134,14 +1134,14 @@ namespace TV_show_Renamer
                 {
                     if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
                     {   //libaray update crap
-                        if (MessageBox.Show("There is a library update available, Would you like to update?\nNOTE: This will just replace certain files", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        if (MessageBox.Show("There is a library update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             this.libarayUpdate();
                     }
                 }
             }
             else if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
             {   //libaray update crap
-                if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     this.libarayUpdate();
             }
         }//update complete method silently
