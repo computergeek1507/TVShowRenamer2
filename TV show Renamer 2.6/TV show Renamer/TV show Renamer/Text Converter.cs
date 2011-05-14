@@ -199,5 +199,12 @@ namespace TV_show_Renamer
                 }
             }
         }
+
+        private void Text_Converter_Resize(object sender, EventArgs e)
+        {
+            textBox1.Width = (this.Width / 2) - 39;
+            textBox2.Location =new Point( (this.Width / 2) + 10,33);
+            textBox2.Width = (this.Width / 2) - 39;
+        }
     }//end of class
 }//end of namespace
