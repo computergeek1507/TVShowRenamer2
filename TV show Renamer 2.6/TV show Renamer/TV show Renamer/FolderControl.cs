@@ -37,7 +37,10 @@ namespace TV_show_Renamer
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
                     dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Tag.ToString();
-                    //dataGridView1.Rows[i].Cells[2].Value=
+                    dataGridView1.Rows[i].Cells[3].Value = true.ToString();
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    cell.Items.AddRange(outputOptions);
+                    cell.Value = cell.Items[0];
                 }
                 textBox1.Text = "";
                 textBox2.Text = "";
@@ -65,10 +68,10 @@ namespace TV_show_Renamer
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
                 dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Tag.ToString();
+                dataGridView1.Rows[i].Cells[3].Value = true.ToString();
                 DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
                 cell.Items.AddRange(outputOptions);
                 cell.Value = cell.Items[2];
-
             }
         }
 
