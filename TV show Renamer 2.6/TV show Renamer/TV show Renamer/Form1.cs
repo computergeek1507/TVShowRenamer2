@@ -56,7 +56,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 271;//2.7Beta
+        const int appVersion = 272;//2.7Beta
         const int HowDeepToScan = 4;
 
         BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
@@ -2474,9 +2474,11 @@ namespace TV_show_Renamer
                     {
                         int format3 = -1;
                         format3 = newMainSettings.SeasonFormat + 1;
-                        List<int> onlyOne = new List<int>();
-                        onlyOne.Add(index);
-                        TVDB InternetTest = new TVDB(this, fileList, onlyOne, newMainSettings.DataFolder, format3);
+                        //List<int> onlyOne = new List<int>();
+                        //onlyOne.Add(index);
+                        //newfilename
+                        //public TVDB(Form1 temp, string filename,int index, string newFolder, int newFormat)
+                        TVDB InternetTest = new TVDB(this, newfilename, index, fileList, newMainSettings.DataFolder, format3);
                     }
                 }
             }
