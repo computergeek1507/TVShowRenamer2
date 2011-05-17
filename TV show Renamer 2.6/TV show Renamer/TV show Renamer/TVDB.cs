@@ -48,6 +48,16 @@ namespace TV_show_Renamer
             main = temp;
             findTitleselected(newSelected);
         }
+
+        public TVDB(Form1 temp, string filename, int index, BindingList<TVClass> newFileList, string newFolder, int newFormat)
+        {
+            InitializeComponent();
+            folder = newFolder;
+            format = newFormat;
+            fileList = newFileList;
+            main = temp;
+            findTitleOnlyOne(filename, index);
+        }
         
         private void findTitleAll()
         {
@@ -218,6 +228,97 @@ namespace TV_show_Renamer
                                         
                 }
             }//end of for loop
+            if (renameWorked)
+            {
+                Thread t = new Thread(new ThreadStart(convert));
+                t.Start();
+            }
+            this.Close();
+        }
+
+        private void findTitleOnlyOne(string filename,int indexSelected)
+        {
+
+            infoFinder(filename);
+
+                if (tvdbTitle == null)
+                    return;
+
+                m_cacheProvider = new XmlCacheProvider(folder);
+                m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
+                if (fileList[indexSelected].TVShowID != -1)
+                {
+                    getTitle(fileList[indexSelected].TVShowID, indexSelected);
+                    return;
+                }
+
+                List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(tvdbTitle);
+                if (list != null && list.Count > 0)
+                {
+                    List<int> seriesId = new List<int>();
+                    List<string> seriesName = new List<string>();
+                    for (int i = 0; i < list.Count(); i++)
+                    {
+                        if (list[i].Overview != "")
+                        {
+                            seriesId.Add(list[i].Id);   // = list[i].Id;
+                            seriesName.Add(list[i].SeriesName);
+                            //break;
+                        }
+                    }
+                    if (seriesId.Count() == 0) return;  //return if nothing found
+                    int selectedSeriesId = -1;
+                    if (seriesId.Count() == 1)
+                        selectedSeriesId = seriesId[0];
+                    else
+                    {
+                        if (selectionList.Count() == 0)
+                        {
+                            SelectMenu SelectMain = new SelectMenu(seriesName);
+                            if (SelectMain.ShowDialog() == DialogResult.OK)
+                            {
+                                int selectedid = SelectMain.selected;
+                                if (selectedid == -1) return;
+                                selectionList.Add(new SearchInfo(tvdbTitle, selectedid));
+                                selectedSeriesId = seriesId[selectedid];
+                                SelectMain.Close();
+                            }
+                        }
+                        else
+                        {
+                            int idNumber = -1;
+                            foreach (SearchInfo testIdem in selectionList)
+                            {
+                                if (testIdem.Title == tvdbTitle)
+                                {
+                                    idNumber = testIdem.SelectedValue;
+                                    break;
+                                }
+                            }
+                            if (idNumber == -1)
+                            {
+                                SelectMenu SelectMain = new SelectMenu(seriesName);
+                                if (SelectMain.ShowDialog() == DialogResult.OK)
+                                {
+                                    int selectedid = SelectMain.selected;
+                                    if (selectedid == -1) return;
+                                    selectionList.Add(new SearchInfo(tvdbTitle, selectedid));
+                                    selectedSeriesId = seriesId[selectedid];
+                                    SelectMain.Close();
+                                }
+                            }
+                            else
+                                selectedSeriesId = seriesId[idNumber];
+                        }
+                    }
+
+                    if (selectedSeriesId == -1) return;   //return if nothing is found
+                    fileList[indexSelected].TVShowID = selectedSeriesId;
+
+                    getTitle(selectedSeriesId, indexSelected);
+
+                
+            }
             if (renameWorked)
             {
                 Thread t = new Thread(new ThreadStart(convert));
