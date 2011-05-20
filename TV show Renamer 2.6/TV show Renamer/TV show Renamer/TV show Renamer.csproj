@@ -144,12 +144,6 @@
     </Compile>
     <Compile Include="LogWrite.cs" />
     <Compile Include="MainSettings.cs" />
-    <Compile Include="move folder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="move folder.Designer.cs">
-      <DependentUpon>move folder.cs</DependentUpon>
-    </Compile>
     <Compile Include="password.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,9 +194,6 @@
     <EmbeddedResource Include="Junk Words.resx">
       <DependentUpon>Junk Words.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="move folder.resx">
-      <DependentUpon>move folder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="password.resx">
       <DependentUpon>password.cs</DependentUpon>

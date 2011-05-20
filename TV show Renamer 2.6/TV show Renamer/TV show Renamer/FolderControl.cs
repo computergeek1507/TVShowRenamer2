@@ -12,7 +12,7 @@ namespace TV_show_Renamer
     public partial class FolderControl : Form
     {
         Form1 Main;
-        //string[] outputOptions = { "\\root", "\\root\\Show Name", "\\root\\Show Name\\Season #" };
+        string[] outputOptions = { "\\root", "\\root\\Show Name", "\\root\\Show Name\\Season #" };
         //List<ToolStripMenuItem> menu = new List<ToolStripMenuItem>();
         //List<string> folderList = new List<string>();
 
@@ -28,7 +28,7 @@ namespace TV_show_Renamer
             if (textBox1.Text != "")
             {
                 //Main.AddTVFolderMenu();
-                Main.AddFolder(textBox1.Text, textBox2.Text);
+                Main.AddFolder(textBox1.Text, textBox2.Text,1,false);
                 Main.ClearOtherFolder();
 
                 dataGridView1.Rows.Clear();
@@ -36,11 +36,12 @@ namespace TV_show_Renamer
                 {
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
-                    dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Tag.ToString();
-                    //dataGridView1.Rows[i].Cells[3].Value = true.ToString();
-                    //DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
-                    //cell.Items.AddRange(outputOptions);
-                    //cell.Value = cell.Items[0];
+                    string[] words = Main.menu1[i].Tag.ToString().Split('?');
+                    dataGridView1.Rows[i].Cells[1].Value = words[1];
+                    dataGridView1.Rows[i].Cells[3].Value = false.ToString();
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    cell.Items.AddRange(outputOptions);
+                    cell.Value = cell.Items[int.Parse(words[0])-1];
                 }
                 textBox1.Text = "";
                 textBox2.Text = "";
@@ -60,18 +61,18 @@ namespace TV_show_Renamer
 
         private void FolderControl_Load(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
-            
+            dataGridView1.Rows.Clear();            
 
             for (int i = 0; i < Main.menu1.Count(); i ++)
             {
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
-                dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Tag.ToString();
-                //dataGridView1.Rows[i].Cells[3].Value = true.ToString();
-                //DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
-                //cell.Items.AddRange(outputOptions);
-                //cell.Value = cell.Items[2];
+                string[] words = Main.menu1[i].Tag.ToString().Split('?');
+                dataGridView1.Rows[i].Cells[1].Value = words[1];
+                dataGridView1.Rows[i].Cells[3].Value = false.ToString();
+                DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                cell.Items.AddRange(outputOptions);
+                cell.Value = cell.Items[int.Parse(words[0]) - 1];
             }
         }
 
@@ -92,11 +93,16 @@ namespace TV_show_Renamer
                 }
                 dataGridView1.Rows.Clear();
 
-                for (int i = 0; i < Main.menu1.Count(); i ++)
+                for (int i = 0; i < Main.menu1.Count(); i++)
                 {
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
-                    dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Tag.ToString();
+                    string[] words = Main.menu1[i].Tag.ToString().Split('?');
+                    dataGridView1.Rows[i].Cells[1].Value = words[1];
+                    dataGridView1.Rows[i].Cells[3].Value = false.ToString();
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    cell.Items.AddRange(outputOptions);
+                    cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
                 //Main.AddTVFolderMenu();
                 Main.ClearOtherFolder();
@@ -105,10 +111,39 @@ namespace TV_show_Renamer
             }
         }
 
+        //save button
         private void button4_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(dataGridView1.Rows[0].Cells[2].Value.ToString());
-            
-        }//end of method
+            List<string> newFolderInfo = new List<string>();
+            List<bool> newFolderDefaults = new List<bool>();
+            for (int i = 0; i < Main.menu1.Count(); i++)
+            {
+                switch (dataGridView1.Rows[i].Cells[2].Value.ToString())
+                {                         
+                    case "\\root\\Show Name":
+                        newFolderInfo.Add("2?" + dataGridView1.Rows[i].Cells[1].Value.ToString());
+                        break;
+                    case "\\root\\Show Name\\Season #":
+                        newFolderInfo.Add("3?" + dataGridView1.Rows[i].Cells[1].Value.ToString());
+                        break;                        
+                    default:
+                        newFolderInfo.Add("1?" + dataGridView1.Rows[i].Cells[1].Value.ToString());
+                        break;
+                }
+                newFolderDefaults.Add(bool.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString()));            
+            }
+            Main.SaveFolders(newFolderInfo, newFolderDefaults);
+        }
+
+        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            //MessageBox.Show("CellBeginEdit");
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //MessageBox.Show(e.RowIndex.ToString());
+        }
+
     }//end of class
 }//end of namespace

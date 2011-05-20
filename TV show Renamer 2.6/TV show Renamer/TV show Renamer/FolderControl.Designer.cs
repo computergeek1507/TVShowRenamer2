@@ -162,6 +162,8 @@
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.Size = new System.Drawing.Size(495, 332);
             this.dataGridView1.TabIndex = 13;
+            this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Column1
             // 
@@ -185,14 +187,12 @@
             this.Column3.Name = "Column3";
             this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Column3.Visible = false;
             this.Column3.Width = 169;
             // 
             // Column4
             // 
             this.Column4.HeaderText = "Default";
             this.Column4.Name = "Column4";
-            this.Column4.Visible = false;
             this.Column4.Width = 47;
             // 
             // button4
@@ -201,9 +201,8 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 22;
-            this.button4.Text = "button4";
+            this.button4.Text = "Save";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // FolderControl
