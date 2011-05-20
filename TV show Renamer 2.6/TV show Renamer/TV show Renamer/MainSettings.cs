@@ -42,8 +42,7 @@ namespace TV_show_Renamer
 
         LogWrite _main;
 
-        List<string> _moveFolder = new List<string>();//TV Show folders
-        List<string> _otherFolders = new List<string>();//Other folders
+        List<string> _moveFolder = new List<string>();//TV Show folders       
 
         //get log object to write too
         public void Start(LogWrite main) 
@@ -87,7 +86,6 @@ namespace TV_show_Renamer
             _buttonColor = temp3;
 
             _moveFolder.Clear();
-            _otherFolders.Clear();
         }
 
         //save settings
@@ -142,7 +140,7 @@ namespace TV_show_Renamer
             }
             try
             {//write tv folder locations
-                StreamWriter pw2 = new StreamWriter(_dataFolder + "//TVFolder.seh");
+                StreamWriter pw2 = new StreamWriter(_dataFolder + "//Folders.seh");
                 pw2.WriteLine(_moveFolder.Count());
                 for (int i = 0; i < _moveFolder.Count(); i++)
                     pw2.WriteLine(_moveFolder[i]);
@@ -150,20 +148,7 @@ namespace TV_show_Renamer
             }
             catch (Exception e)
             {
-                _main.WriteLog("TVFolder.seh Falure \n" + e.ToString());
-                returnValue = false;
-            }
-            try
-            {//write other folder locations
-                StreamWriter pw3 = new StreamWriter(_dataFolder + "//OtherFolders.seh");
-                pw3.WriteLine(_otherFolders.Count());
-                for (int i = 0; i < _otherFolders.Count(); i++)
-                    pw3.WriteLine(_otherFolders[i]);
-                pw3.Close();
-            }
-            catch (Exception e)
-            {
-                _main.WriteLog("OtherFolders.seh Falure \n" + e.ToString());
+                _main.WriteLog("Folders.seh Falure \n" + e.ToString());
                 returnValue = false;
             }
             return returnValue;
@@ -214,8 +199,8 @@ namespace TV_show_Renamer
                     _autoUpdates = bool.Parse(tr3.ReadLine());
                     if (DateTime.Today.Date.ToString() != lastUpdateTime && _autoUpdates)
                         _checkForUpdates = true;
-                    bool readtemp = bool.Parse(tr3.ReadLine());
-                    if (readtemp != null) _autoGetTitle = readtemp;
+                    var readtemp = tr3.ReadLine();
+                    if (readtemp != null) _autoGetTitle = bool.Parse(readtemp);
                     tr3.Close();//close reader stream                                        
                 }//end of if. 
             }
@@ -224,6 +209,8 @@ namespace TV_show_Renamer
                 _main.WriteLog("newpreferences.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
+
+
             try
             {//Read TV show folders
                 if (File.Exists(_dataFolder + "//TVFolder.seh"))
@@ -235,8 +222,14 @@ namespace TV_show_Renamer
                         if (length == 0)
                             break;
                         _moveFolder.Add(tv2.ReadLine());
+                        if (i % 2 == 1) 
+                        {
+                            _moveFolder.Add("3");
+                            _moveFolder.Add("false");
+                        }
                     }//end of for loop  
                     tv2.Close();
+                    File.Delete(_dataFolder + "//TVFolder.seh");
                 }//end of if
             }
             catch (Exception e)
@@ -254,9 +247,15 @@ namespace TV_show_Renamer
                     {
                         if (length == 0)
                             break;
-                        _otherFolders.Add(tv3.ReadLine());
+                        _moveFolder.Add(tv3.ReadLine());
+                        if (i % 2 == 1)
+                        {
+                            _moveFolder.Add("1");
+                            _moveFolder.Add("false");
+                        }
                     }//end of for loop  
                     tv3.Close();
+                    File.Delete(_dataFolder + "//OtherFolders.seh");
                 }
             }
             catch (Exception e)
@@ -264,15 +263,29 @@ namespace TV_show_Renamer
                 _main.WriteLog("OtherFolders.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
+            try
+            {//Read TV show folders
+                if (File.Exists(_dataFolder + "//Folders.seh"))
+                {
+                    StreamReader tv2 = new StreamReader(_dataFolder + "//Folders.seh");
+                    int length = Int32.Parse(tv2.ReadLine());
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (length == 0)
+                            break;
+                        _moveFolder.Add(tv2.ReadLine());
+                        }//end of for loop  
+                    tv2.Close();
+                }//end of if
+            }
+            catch (Exception e)
+            {
+                _main.WriteLog("Folders.seh Read Error \n" + e.ToString());
+                returnValue = false;
+            }
             return returnValue;
         }//end of loadsettings methods
-
-        //Add folder to TV folder list 
-        public void moveFolderAdd(string folder) 
-        {
-            _moveFolder.Add(folder);
-        }
-       
+                
         //public declartions
         public bool RemoveDash
         {
@@ -415,15 +428,10 @@ namespace TV_show_Renamer
         {
             get { return _dataFolder; }
         }
-        public List<string> MoveFolder 
+        public List<string> MoveFolder
         {
             get { return _moveFolder; }
             set { _moveFolder = value; }
-        }
-        public List<string> OtherFolders
-        {
-            get { return _otherFolders; }
-            set { _otherFolders = value; }
-        }
+        }        
     }//end of class
 }//end of namespace

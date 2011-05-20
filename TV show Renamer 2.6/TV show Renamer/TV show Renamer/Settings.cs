@@ -13,17 +13,17 @@ namespace TV_show_Renamer
     public partial class Settings : Form
     {
         Form1 Main;
-        List<string> tvFolder;
+        //List<string> tvFolder;
         //List<ToolStripMenuItem> menu = new List<ToolStripMenuItem>();
 
-        public Settings(Form1 test, bool zipCheck, List<string> tvfolderLoc)
+        public Settings(Form1 test, bool zipCheck)
         {
             InitializeComponent();
             Main = test;
             checkBox1.Checked = zipCheck;
             checkBox2.Checked = Main.newMainSettings.AutoUpdates;
 
-            tvFolder = tvfolderLoc;
+            //tvFolder = tvfolderLoc;
             //menu = tempMenu;
             this.Show();
         }
@@ -78,16 +78,7 @@ namespace TV_show_Renamer
         {
             Main.changeZIPstate( checkBox1.Checked);
         }        
-
-        //TV Folders Button
-        private void button5_Click(object sender, EventArgs e)
-        {
-            move_folder tvshow = new move_folder(Main, tvFolder);
-            this.Hide();
-            if (tvshow.ShowDialog() == DialogResult.OK)            
-                this.Close();            
-        }
-                
+                      
         private void button4_Click(object sender, EventArgs e)
         {
             FolderControl folderAdd = new FolderControl(Main);
