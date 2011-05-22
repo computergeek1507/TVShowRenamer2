@@ -13,8 +13,6 @@ namespace TV_show_Renamer
     public partial class Settings : Form
     {
         Form1 Main;
-        //List<string> tvFolder;
-        //List<ToolStripMenuItem> menu = new List<ToolStripMenuItem>();
 
         public Settings(Form1 test, bool zipCheck)
         {
@@ -22,9 +20,6 @@ namespace TV_show_Renamer
             Main = test;
             checkBox1.Checked = zipCheck;
             checkBox2.Checked = Main.newMainSettings.AutoUpdates;
-
-            //tvFolder = tvfolderLoc;
-            //menu = tempMenu;
             this.Show();
         }
 
@@ -82,6 +77,7 @@ namespace TV_show_Renamer
         private void button4_Click(object sender, EventArgs e)
         {
             FolderControl folderAdd = new FolderControl(Main);
+            folderAdd.Location = new Point(this.Location.X + ((this.Size.Width - folderAdd.Size.Width) / 2), this.Location.Y + ((this.Size.Height - folderAdd.Size.Height) / 2));
             this.Hide();
             if (folderAdd.ShowDialog() == DialogResult.OK)            
                 this.Close();            
