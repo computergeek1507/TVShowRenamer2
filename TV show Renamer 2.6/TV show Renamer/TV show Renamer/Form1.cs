@@ -231,14 +231,162 @@ namespace TV_show_Renamer
 
         //Move Button
         private void button1_Click(object sender, EventArgs e)
-        {
+        {           
+                if (dataGridView1.CurrentRow != null)
+                {
+                    if (menu1.Count() != 0)
+                    {
+                        string[] folderSettings = menu1[0].Tag.ToString().Split('?');
+                        if (int.Parse(folderSettings[0]) == 1)
+                        {
+                            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                            {
+                                if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
+                                    fileList[i].FileFolder = folderSettings[1];
+                            }
+                        }
+                        else if (int.Parse(folderSettings[0]) > 1)
+                        {
+                            List<string> folderlist = folderFinder(folderSettings[1]);
+                            List<string> info = new List<string>();
+                            for (int z = 0; z < fileList.Count; z++)
+                            {
+                                string fullFileName = fileList[z].FullFileName;
+                                info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist);
+
+                                if (info[0] == "no folder")
+                                {
+                                    if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                    {
+                                        EditTitle2 mainEdit = new EditTitle2(info[2]);
+                                        mainEdit.Text = "Edit Folder Name";
+                                        mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
+                                        if (mainEdit.ShowDialog() == DialogResult.OK)
+                                        {
+                                            string methodGet = mainEdit.getTitle();
+                                            System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + methodGet);
+                                            folderlist.Add(methodGet);
+                                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist);
+                                            info[0] = methodGet;
+                                            mainEdit.Close();
+                                        }
+                                        else
+                                        {
+                                            if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
+                                                fileList[z].FileFolder = (folderSettings[1]);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
+                                            fileList[z].FileFolder = (folderSettings[1]);
+                                    }
+                                }
+
+                                if (info[1] != "0" && int.Parse(folderSettings[0]) == 3)
+                                {
+                                    if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + info[0] + "\\Season " + info[1])))
+                                        System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + info[0] + "\\Season " + info[1]);
+
+                                    if (MoveFile(fullFileName, folderSettings[1] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileList[z].FileName))
+                                        fileList[z].FileFolder = (folderSettings[1] + "\\" + info[0] + "\\Season " + info[1]);
+                                }
+                                else//if no season is selected 
+                                {
+                                    if (MoveFile(fullFileName, folderSettings[1] + "\\" + info[0] + "\\" + fileList[z].FileName))
+                                        fileList[z].FileFolder = (folderSettings[1] + "\\" + info[0]);
+                                }//end of if-else                        
+                            }//end of for loop 
+                        }
+                    }
+                    else//catch if nothing is selected
+                    {
+                        if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
+                        {
+                            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                            {
+                                if (MoveFile(fileList[i].FullFileName, (folderBrowserDialog2.SelectedPath + "\\" + fileList[i].FileName)))
+                                    fileList[i].FileFolder = folderBrowserDialog2.SelectedPath;
+                            }
+                        }
+                        else
+                            return;                    
+                    }
+            }
+            else
+                MessageBox.Show("No Files Selected");
 
         }//end of move button method
 
         //copy button
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            if (dataGridView1.CurrentRow != null)
+            {
+                if (menu1.Count() != 0)
+                {
+                    string[] folderSettings = menu1[0].Tag.ToString().Split('?');
+                    if (int.Parse(folderSettings[0]) == 1)
+                    {
+                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                            CopyFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName));
+                    }
+                    else if (int.Parse(folderSettings[0]) > 1)
+                    {
+                        List<string> folderlist = folderFinder(folderSettings[1]);
+                        List<string> info = new List<string>();
+                        for (int z = 0; z < fileList.Count; z++)
+                        {
+                            string fullFileName = fileList[z].FullFileName;
+                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist);
+
+                            if (info[0] == "no folder")
+                            {
+                                if (MessageBox.Show("There is No Such TV Show in the TV Show Folder, Would you like to Create One?", "Create folder", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                {
+                                    EditTitle2 mainEdit = new EditTitle2(info[2]);
+                                    mainEdit.Text = "Edit Folder Name";
+                                    mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
+                                    if (mainEdit.ShowDialog() == DialogResult.OK)
+                                    {
+                                        string methodGet = mainEdit.getTitle();
+                                        System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + methodGet);
+                                        folderlist.Add(methodGet);
+                                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist);
+                                        info[0] = methodGet;
+                                        mainEdit.Close();
+                                    }
+                                    else
+                                        CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));
+                                }
+                                else
+                                    CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));
+                            }
+
+                            if (info[1] != "0" && int.Parse(folderSettings[0]) == 3)
+                            {
+                                if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + info[0] + "\\Season " + info[1])))
+                                    System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + info[0] + "\\Season " + info[1]);
+                                CopyFile(fullFileName, folderSettings[1] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileList[z].FileName);
+                            }
+                            else//if no season is selected 
+                                CopyFile(fullFileName, folderSettings[1] + "\\" + info[0] + "\\" + fileList[z].FileName);
+                        }//end of for loop 
+                    }
+                }
+                else//catch if nothing is selected
+                {
+                    if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
+                    {
+                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                            CopyFile(fileList[i].FullFileName, (folderBrowserDialog2.SelectedPath + "\\" + fileList[i].FileName));                      
+                    }
+                    else
+                        return;                
+                }                    
+            }
+            else
+                MessageBox.Show("No Files Selected");
         }//end of copy button method
 
         //save button
@@ -247,7 +395,7 @@ namespace TV_show_Renamer
             if (fileList.Count != 0) //if files are selected
             {
                 for (int y = 0; y < fileList.Count(); y++)
-                {
+                {                    
                     try
                     {
                         if (fileList[y].FileName == fileList[y].NewFileName) continue;
@@ -614,10 +762,8 @@ namespace TV_show_Renamer
         ToolStripMenuItem browserMenu2 = new ToolStripMenuItem();
         ToolStripMenuItem browserMenu3 = new ToolStripMenuItem();
         ToolStripMenuItem browserMenu4 = new ToolStripMenuItem();
-        ToolStripMenuItem tvMenu1 = new ToolStripMenuItem();
-        ToolStripMenuItem tvMenu2 = new ToolStripMenuItem();
                 
-        public bool AddFolder(string folderName, string folderDestination,int format,bool main)
+        public void AddFolder(string folderName, string folderDestination,int format)
         {
             moveToToolStripMenuItem1.DropDownItems.Clear();//Move all Menu Item
             copyToToolStripMenuItem.DropDownItems.Clear();//Copy all Menu Item
@@ -660,24 +806,19 @@ namespace TV_show_Renamer
             copyToToolStripMenuItem.DropDownItems.Add(browserMenu2);
             moveSelectedToolStripMenuItem.DropDownItems.Add(browserMenu3);
             copySelectedToolStripMenuItem.DropDownItems.Add(browserMenu4);
-
-            return true;
         }
-
-        public bool SaveFolders(List<string> newFolderInfo, List<bool> newFolderDefaults)
+                
+        public void SaveFolder(string newFolderInfo,int index)
         {
             moveToToolStripMenuItem1.DropDownItems.Clear();//Move all Menu Item
             copyToToolStripMenuItem.DropDownItems.Clear();//Copy all Menu Item
             moveSelectedToolStripMenuItem.DropDownItems.Clear();//Move selected Menu Item
             copySelectedToolStripMenuItem.DropDownItems.Clear();//copy selected Menu Item
 
-            for (int i = 0; i < menu1.Count(); i++)
-            {
-                menu1[i].Tag = newFolderInfo[i];
-                menu2[i].Tag = newFolderInfo[i];
-                menu3[i].Tag = newFolderInfo[i];
-                menu4[i].Tag = newFolderInfo[i]; 
-            }
+            menu1[index].Tag = newFolderInfo;
+            menu2[index].Tag = newFolderInfo;
+            menu3[index].Tag = newFolderInfo;
+            menu4[index].Tag = newFolderInfo;            
 
             moveToToolStripMenuItem1.DropDownItems.AddRange(menu1.ToArray());
             copyToToolStripMenuItem.DropDownItems.AddRange(menu2.ToArray());
@@ -688,11 +829,30 @@ namespace TV_show_Renamer
             copyToToolStripMenuItem.DropDownItems.Add(browserMenu2);
             moveSelectedToolStripMenuItem.DropDownItems.Add(browserMenu3);
             copySelectedToolStripMenuItem.DropDownItems.Add(browserMenu4);
+        }
+               
+        public void MoveFolders(int index, int way) 
+        {
+            ToolStripMenuItem temp1 = menu1[index + way];
+            menu1[index + way] = menu1[index];
+            menu1[index] = temp1;
 
-            return true;
+            ToolStripMenuItem temp2 = menu2[index + way];
+            menu2[index + way] = menu2[index];
+            menu2[index] = temp2;
+
+            ToolStripMenuItem temp3 = menu3[index + way];
+            menu3[index + way] = menu3[index];
+            menu3[index] = temp3;
+
+            ToolStripMenuItem temp4 = menu4[index + way];
+            menu4[index + way] = menu4[index];
+            menu4[index] = temp4;
+            button1.Text = "Move To " + menu1[0].Text;
+            button2.Text = "Copy To " + menu1[0].Text;
         }
 
-        public bool AddBrowserMenu()
+        public void AddBrowserMenu()
         {
             browserMenu1.Name = "browserMenu";
             browserMenu1.Text = "Open Folder Browser...";
@@ -721,7 +881,6 @@ namespace TV_show_Renamer
                 moveSelectedToolStripMenuItem.DropDownItems.Add(browserMenu3);
                 copySelectedToolStripMenuItem.DropDownItems.Add(browserMenu4);
             }
-            return true;
         }
 
         public void ClearOtherFolder()
@@ -737,13 +896,20 @@ namespace TV_show_Renamer
             copyToToolStripMenuItem.DropDownItems.AddRange(menu2.ToArray());
             copyToToolStripMenuItem.DropDownItems.Add(browserMenu2);
 
-            moveSelectedToolStripMenuItem.DropDownItems.Add(tvMenu1);
             moveSelectedToolStripMenuItem.DropDownItems.AddRange(menu3.ToArray());
             moveSelectedToolStripMenuItem.DropDownItems.Add(browserMenu3);
-
-            copySelectedToolStripMenuItem.DropDownItems.Add(tvMenu2);
+            
             copySelectedToolStripMenuItem.DropDownItems.AddRange(menu4.ToArray());
             copySelectedToolStripMenuItem.DropDownItems.Add(browserMenu4);
+            if (menu1.Count() != 0)
+            {
+                button1.Text = "Move To " + menu1[0].Text;
+                button2.Text = "Copy To " + menu1[0].Text;
+            }
+            else {
+                button1.Text = "Move To Folder";
+                button2.Text = "Copy To Folder";
+            }
         }
         #endregion
 
@@ -2979,9 +3145,14 @@ namespace TV_show_Renamer
                 updateChecker.Start();
             }
             AddBrowserMenu();
-            for (int i = 0; i < newMainSettings.MoveFolder.Count(); i = i + 4)
-                AddFolder(newMainSettings.MoveFolder[i], newMainSettings.MoveFolder[i + 1], int.Parse(newMainSettings.MoveFolder[i + 2]),bool.Parse(newMainSettings.MoveFolder[i + 3]));
-            
+            for (int i = 0; i < newMainSettings.MoveFolder.Count(); i = i + 3)
+                AddFolder(newMainSettings.MoveFolder[i], newMainSettings.MoveFolder[i + 1], int.Parse(newMainSettings.MoveFolder[i + 2]));
+
+            if (menu1.Count() != 0)
+            {
+                button1.Text = "Move To " + menu1[0].Text;
+                button2.Text = "Copy To " + menu1[0].Text;
+            }
             userJunk.junk_adder(junklist, newMainSettings.DataFolder, this);
             textConvert.setUp(this, newMainSettings.DataFolder);
             BackColor = System.Drawing.Color.FromArgb(newMainSettings.BackgroundColor[0], newMainSettings.BackgroundColor[1], newMainSettings.BackgroundColor[2], newMainSettings.BackgroundColor[3]);
@@ -3005,7 +3176,6 @@ namespace TV_show_Renamer
                 string[] words = menuItem.Tag.ToString().Split('?');
                 menuidemlist.Add(words[1]);
                 menuidemlist.Add(words[0]);
-                menuidemlist.Add(false.ToString());
             }
             newMainSettings.MoveFolder = menuidemlist;
             newMainSettings.saveStettings();

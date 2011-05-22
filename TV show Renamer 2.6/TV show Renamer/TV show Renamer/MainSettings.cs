@@ -221,12 +221,9 @@ namespace TV_show_Renamer
                     {
                         if (length == 0)
                             break;
-                        _moveFolder.Add(tv2.ReadLine());
-                        if (i % 2 == 1) 
-                        {
-                            _moveFolder.Add("3");
-                            _moveFolder.Add("false");
-                        }
+                        _moveFolder.Add("TV Folder "+(i+1).ToString());
+                        _moveFolder.Add(tv2.ReadLine());                        
+                        _moveFolder.Add("3");                        
                     }//end of for loop  
                     tv2.Close();
                     File.Delete(_dataFolder + "//TVFolder.seh");
@@ -250,8 +247,7 @@ namespace TV_show_Renamer
                         _moveFolder.Add(tv3.ReadLine());
                         if (i % 2 == 1)
                         {
-                            _moveFolder.Add("1");
-                            _moveFolder.Add("false");
+                            _moveFolder.Add("1");                            
                         }
                     }//end of for loop  
                     tv3.Close();

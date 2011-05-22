@@ -13,8 +13,7 @@ namespace TV_show_Renamer
     {
         Form1 Main;
         string[] outputOptions = { "\\root", "\\root\\Show Name", "\\root\\Show Name\\Season #" };
-        //List<ToolStripMenuItem> menu = new List<ToolStripMenuItem>();
-        //List<string> folderList = new List<string>();
+        int addIndex = 1;
 
         public FolderControl(Form1 tempMain)
         {            
@@ -27,8 +26,8 @@ namespace TV_show_Renamer
         {
             if (textBox1.Text != "")
             {
-                //Main.AddTVFolderMenu();
-                Main.AddFolder(textBox1.Text, textBox2.Text,1,false);
+                int x = dataGridView1.CurrentCell.ColumnIndex;
+                Main.AddFolder(textBox1.Text, textBox2.Text, addIndex);
                 Main.ClearOtherFolder();
 
                 dataGridView1.Rows.Clear();
@@ -38,49 +37,32 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
                     string[] words = Main.menu1[i].Tag.ToString().Split('?');
                     dataGridView1.Rows[i].Cells[1].Value = words[1];
-                    dataGridView1.Rows[i].Cells[3].Value = false.ToString();
                     DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
                     cell.Items.AddRange(outputOptions);
                     cell.Value = cell.Items[int.Parse(words[0])-1];
                 }
                 textBox1.Text = "";
                 textBox2.Text = "";
+                if (button1.Text == "Save Folder") button1.Text = "Add Folder";
+                addIndex = 1;
+                this.dataGridView1.CurrentCell = this.dataGridView1[x, dataGridView1.RowCount-1];
             }
         }
 
+        //folder dialog button
         private void button2_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)            
                 textBox2.Text = folderBrowserDialog1.SelectedPath;            
-        }
-
-        private void FolderControl_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
-        }
-
-        private void FolderControl_Load(object sender, EventArgs e)
-        {
-            dataGridView1.Rows.Clear();            
-
-            for (int i = 0; i < Main.menu1.Count(); i ++)
-            {
-                dataGridView1.Rows.Add();
-                dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
-                string[] words = Main.menu1[i].Tag.ToString().Split('?');
-                dataGridView1.Rows[i].Cells[1].Value = words[1];
-                dataGridView1.Rows[i].Cells[3].Value = false.ToString();
-                DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
-                cell.Items.AddRange(outputOptions);
-                cell.Value = cell.Items[int.Parse(words[0]) - 1];
-            }
-        }
+        }       
 
         //remove folder button
         private void button3_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
             {
+                int y = dataGridView1.CurrentCell.RowIndex - 1;
+                int x = dataGridView1.CurrentCell.ColumnIndex;
                 for (int i = Main.menu1.Count() - 1; i >= 0; i--)
                 {
                     if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
@@ -99,51 +81,153 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
                     string[] words = Main.menu1[i].Tag.ToString().Split('?');
                     dataGridView1.Rows[i].Cells[1].Value = words[1];
-                    dataGridView1.Rows[i].Cells[3].Value = false.ToString();
                     DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
                     cell.Items.AddRange(outputOptions);
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
-                //Main.AddTVFolderMenu();
                 Main.ClearOtherFolder();
-                //Main.AddBrowserMenu();
-
+                this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
             }
         }
 
-        //save button
-        private void button4_Click(object sender, EventArgs e)
+        //edit folder button
+        private void button5_Click(object sender, EventArgs e)
         {
-            List<string> newFolderInfo = new List<string>();
-            List<bool> newFolderDefaults = new List<bool>();
-            for (int i = 0; i < Main.menu1.Count(); i++)
+            if (dataGridView1.CurrentRow != null)
             {
-                switch (dataGridView1.Rows[i].Cells[2].Value.ToString())
+                int y = dataGridView1.CurrentCell.RowIndex - 1;
+                int x = dataGridView1.CurrentCell.ColumnIndex;
+                int u = dataGridView1.CurrentRow.Index;
+
+                textBox1.Text = Main.menu1[u].Text.ToString();
+                string[] words2 = Main.menu1[u].Tag.ToString().Split('?');
+                textBox2.Text = words2[1];
+                Main.menu1.RemoveAt(u);
+                Main.menu2.RemoveAt(u);
+                Main.menu3.RemoveAt(u);
+                Main.menu4.RemoveAt(u);
+                addIndex = int.Parse(words2[0]);
+
+                button1.Text = "Save Folder";
+
+                dataGridView1.Rows.Clear();
+
+                for (int i = 0; i < Main.menu1.Count(); i++)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                    string[] words = Main.menu1[i].Tag.ToString().Split('?');
+                    dataGridView1.Rows[i].Cells[1].Value = words[1];
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    cell.Items.AddRange(outputOptions);
+                    cell.Value = cell.Items[int.Parse(words[0]) - 1];
+                }
+                Main.ClearOtherFolder();
+                this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
+            }
+        }
+        
+        //combox index changed
+        void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataGridViewComboBoxEditingControl temp = (DataGridViewComboBoxEditingControl)sender;
+            int rowIndex = temp.EditingControlRowIndex;            
+            int selectedIndex = ((ComboBox)sender).SelectedIndex;
+
+            switch (selectedIndex)
                 {                         
-                    case "\\root\\Show Name":
-                        newFolderInfo.Add("2?" + dataGridView1.Rows[i].Cells[1].Value.ToString());
+                    case 1:
+                        Main.SaveFolder("2?" + dataGridView1.Rows[rowIndex].Cells[1].Value.ToString(), rowIndex);
                         break;
-                    case "\\root\\Show Name\\Season #":
-                        newFolderInfo.Add("3?" + dataGridView1.Rows[i].Cells[1].Value.ToString());
+                    case 2:
+                        Main.SaveFolder("3?" + dataGridView1.Rows[rowIndex].Cells[1].Value.ToString(), rowIndex);
                         break;                        
                     default:
-                        newFolderInfo.Add("1?" + dataGridView1.Rows[i].Cells[1].Value.ToString());
+                        Main.SaveFolder("1?" + dataGridView1.Rows[rowIndex].Cells[1].Value.ToString(), rowIndex);
                         break;
                 }
-                newFolderDefaults.Add(bool.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString()));            
+        }
+                
+        private void FolderControl_Load(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+
+            for (int i = 0; i < Main.menu1.Count(); i++)
+            {
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                string[] words = Main.menu1[i].Tag.ToString().Split('?');
+                dataGridView1.Rows[i].Cells[1].Value = words[1];
+                DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                cell.Items.AddRange(outputOptions);
+                cell.Value = cell.Items[int.Parse(words[0]) - 1];
             }
-            Main.SaveFolders(newFolderInfo, newFolderDefaults);
         }
 
-        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        private void FolderControl_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //MessageBox.Show("CellBeginEdit");
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            //MessageBox.Show(e.RowIndex.ToString());
+            if (dataGridView1.CurrentCell.ColumnIndex == 2)
+            {
+                // Check box column
+                ComboBox comboBox = e.Control as ComboBox;
+                comboBox.SelectedIndexChanged -= new EventHandler(comboBox_SelectedIndexChanged);
+                comboBox.SelectedIndexChanged += new EventHandler(comboBox_SelectedIndexChanged);
+            }
         }
 
+        //up button
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index!=0)
+            {
+                int u = dataGridView1.CurrentRow.Index;
+                Main.MoveFolders(u, -1);
+                //dataGridView1.Rows.Clear();
+
+                for (int i = 0; i < Main.menu1.Count(); i++)
+                {
+                    //dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                    string[] words = Main.menu1[i].Tag.ToString().Split('?');
+                    dataGridView1.Rows[i].Cells[1].Value = words[1];
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    cell.Items.AddRange(outputOptions);
+                    cell.Value = cell.Items[int.Parse(words[0]) - 1];
+                }
+                Main.ClearOtherFolder();
+                this.dataGridView1.CurrentCell = this.dataGridView1[dataGridView1.CurrentCell.ColumnIndex, dataGridView1.CurrentCell.RowIndex - 1];
+
+            }
+        }
+
+        //down button
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index != dataGridView1.RowCount-1)
+            {
+                int u = dataGridView1.CurrentRow.Index;
+                Main.MoveFolders(u, 1);
+                //dataGridView1.Rows.Clear();
+
+                for (int i = 0; i < Main.menu1.Count(); i++)
+                {
+                    //dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                    string[] words = Main.menu1[i].Tag.ToString().Split('?');
+                    dataGridView1.Rows[i].Cells[1].Value = words[1];
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    cell.Items.AddRange(outputOptions);
+                    cell.Value = cell.Items[int.Parse(words[0]) - 1];
+                }
+                Main.ClearOtherFolder();
+                this.dataGridView1.CurrentCell = this.dataGridView1[dataGridView1.CurrentCell.ColumnIndex, dataGridView1.CurrentCell.RowIndex + 1];
+            }
+        }
+        
     }//end of class
 }//end of namespace
