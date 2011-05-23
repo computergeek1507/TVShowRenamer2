@@ -34,10 +34,11 @@ namespace TV_show_Renamer
                 for (int i = 0; i < Main.menu1.Count(); i ++)
                 {
                     dataGridView1.Rows.Add();
-                    dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                    dataGridView1.Rows[i].Cells[0].Value = (i+1).ToString();
+                    dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Text.ToString();
                     string[] words = Main.menu1[i].Tag.ToString().Split('?');
-                    dataGridView1.Rows[i].Cells[1].Value = words[1];
-                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    dataGridView1.Rows[i].Cells[2].Value = words[1];
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[3]);
                     cell.Items.AddRange(outputOptions);
                     cell.Value = cell.Items[int.Parse(words[0])-1];
                 }
@@ -65,7 +66,7 @@ namespace TV_show_Renamer
                 int x = dataGridView1.CurrentCell.ColumnIndex;
                 for (int i = Main.menu1.Count() - 1; i >= 0; i--)
                 {
-                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
+                    if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected || dataGridView1.Rows[i].Cells[2].Selected)
                     {
                         Main.menu1.RemoveAt(i);
                         Main.menu2.RemoveAt(i);
@@ -78,10 +79,11 @@ namespace TV_show_Renamer
                 for (int i = 0; i < Main.menu1.Count(); i++)
                 {
                     dataGridView1.Rows.Add();
-                    dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                    dataGridView1.Rows[i].Cells[0].Value = (i + 1).ToString();
+                    dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Text.ToString();
                     string[] words = Main.menu1[i].Tag.ToString().Split('?');
-                    dataGridView1.Rows[i].Cells[1].Value = words[1];
-                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    dataGridView1.Rows[i].Cells[2].Value = words[1];
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[3]);
                     cell.Items.AddRange(outputOptions);
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
@@ -115,10 +117,11 @@ namespace TV_show_Renamer
                 for (int i = 0; i < Main.menu1.Count(); i++)
                 {
                     dataGridView1.Rows.Add();
-                    dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                    dataGridView1.Rows[i].Cells[0].Value = (i + 1).ToString();
+                    dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Text.ToString();
                     string[] words = Main.menu1[i].Tag.ToString().Split('?');
-                    dataGridView1.Rows[i].Cells[1].Value = words[1];
-                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    dataGridView1.Rows[i].Cells[2].Value = words[1];
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[3]);
                     cell.Items.AddRange(outputOptions);
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
@@ -155,10 +158,11 @@ namespace TV_show_Renamer
             for (int i = 0; i < Main.menu1.Count(); i++)
             {
                 dataGridView1.Rows.Add();
-                dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                dataGridView1.Rows[i].Cells[0].Value = (i + 1).ToString();
+                dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Text.ToString();
                 string[] words = Main.menu1[i].Tag.ToString().Split('?');
-                dataGridView1.Rows[i].Cells[1].Value = words[1];
-                DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                dataGridView1.Rows[i].Cells[2].Value = words[1];
+                DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[3]);
                 cell.Items.AddRange(outputOptions);
                 cell.Value = cell.Items[int.Parse(words[0]) - 1];
             }
@@ -171,7 +175,7 @@ namespace TV_show_Renamer
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if (dataGridView1.CurrentCell.ColumnIndex == 2)
+            if (dataGridView1.CurrentCell.ColumnIndex == 3)
             {
                 // Check box column
                 ComboBox comboBox = e.Control as ComboBox;
@@ -192,10 +196,11 @@ namespace TV_show_Renamer
                 for (int i = 0; i < Main.menu1.Count(); i++)
                 {
                     //dataGridView1.Rows.Add();
-                    dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                    dataGridView1.Rows[i].Cells[0].Value = (i + 1).ToString();
+                    dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Text.ToString();
                     string[] words = Main.menu1[i].Tag.ToString().Split('?');
-                    dataGridView1.Rows[i].Cells[1].Value = words[1];
-                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    dataGridView1.Rows[i].Cells[2].Value = words[1];
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[3]);
                     cell.Items.AddRange(outputOptions);
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
@@ -217,10 +222,11 @@ namespace TV_show_Renamer
                 for (int i = 0; i < Main.menu1.Count(); i++)
                 {
                     //dataGridView1.Rows.Add();
-                    dataGridView1.Rows[i].Cells[0].Value = Main.menu1[i].Text.ToString();
+                    dataGridView1.Rows[i].Cells[0].Value = (i + 1).ToString();
+                    dataGridView1.Rows[i].Cells[1].Value = Main.menu1[i].Text.ToString();
                     string[] words = Main.menu1[i].Tag.ToString().Split('?');
-                    dataGridView1.Rows[i].Cells[1].Value = words[1];
-                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[2]);
+                    dataGridView1.Rows[i].Cells[2].Value = words[1];
+                    DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[3]);
                     cell.Items.AddRange(outputOptions);
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
