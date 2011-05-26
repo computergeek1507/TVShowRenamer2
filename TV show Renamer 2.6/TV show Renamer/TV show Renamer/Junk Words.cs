@@ -103,7 +103,7 @@ namespace TV_show_Renamer
             }
 
             textBox1.Text = null;//clear box
-
+            this.dataGridView1.CurrentCell = this.dataGridView1[0, dataGridView1.RowCount - 1];
             Thread t = new Thread(new ThreadStart(convert));
             t.Start();                       
          }
@@ -129,13 +129,13 @@ namespace TV_show_Renamer
                 {
                     if (dataGridView1.Rows[i].Cells[0].Selected)                    
                         userwords.RemoveAt(i);                    
-                }
+                }                
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < userwords.Count(); i++)
                 {
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = userwords[i];
-                }
+                }                
                 Thread t = new Thread(new ThreadStart(convert));
                 t.Start();
             }
