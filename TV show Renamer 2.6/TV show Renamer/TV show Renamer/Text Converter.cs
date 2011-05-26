@@ -78,7 +78,7 @@ namespace TV_show_Renamer
                 textBox1.Text = null;
                 textBox2.Text = null;
                 if (button2.Text == "Save") button2.Text = "Add";
-
+                int x = dataGridView1.CurrentCell.ColumnIndex;
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < textConvert.Count(); i = i + 2)
                 {
@@ -87,6 +87,7 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i / 2].Cells[1].Value = "to";
                     dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
                 }
+                this.dataGridView1.CurrentCell = this.dataGridView1[x, dataGridView1.RowCount - 1];
                 Thread t = new Thread(new ThreadStart(convert));
                 t.Start();
             }
@@ -96,7 +97,7 @@ namespace TV_show_Renamer
         private void button4_Click_1(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
-            {
+            {                
                 int u = dataGridView1.CurrentRow.Index;
 
                 textBox2.Text = textConvert[(u * 2) + 1];
@@ -131,6 +132,8 @@ namespace TV_show_Renamer
                         textConvert.RemoveAt(i-1);
                     }
                 }
+                //int y = dataGridView1.CurrentCell.RowIndex - 1;
+                //int x = dataGridView1.CurrentCell.ColumnIndex;
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < textConvert.Count(); i = i + 2)
                 {
@@ -138,7 +141,7 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
                     dataGridView1.Rows[i / 2].Cells[1].Value = "to";
                     dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
-                }
+                }                
                 Thread t = new Thread(new ThreadStart(convert));
                 t.Start();
             }

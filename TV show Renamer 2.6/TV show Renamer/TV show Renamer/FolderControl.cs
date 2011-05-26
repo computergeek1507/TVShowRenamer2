@@ -88,6 +88,7 @@ namespace TV_show_Renamer
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
                 Main.ClearOtherFolder();
+                if (y < 0) y = 0;
                 if (dataGridView1.Rows.Count!=0)
                     this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
             }
@@ -127,6 +128,7 @@ namespace TV_show_Renamer
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
                 Main.ClearOtherFolder();
+                if (y < 0) y = 0;
                 if (dataGridView1.Rows.Count != 0)
                     this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
             }
