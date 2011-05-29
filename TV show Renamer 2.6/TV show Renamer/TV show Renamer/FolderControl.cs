@@ -62,7 +62,7 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                int y = dataGridView1.CurrentCell.RowIndex - 1;
+                int y = -1;
                 int x = dataGridView1.CurrentCell.ColumnIndex;
                 for (int i = Main.menu1.Count() - 1; i >= 0; i--)
                 {
@@ -72,6 +72,7 @@ namespace TV_show_Renamer
                         Main.menu2.RemoveAt(i);
                         Main.menu3.RemoveAt(i);
                         Main.menu4.RemoveAt(i);
+                        y = i-1;
                     }
                 }
                 dataGridView1.Rows.Clear();
@@ -88,8 +89,7 @@ namespace TV_show_Renamer
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
                 Main.ClearOtherFolder();
-                if (y < 0) y = 0;
-                if (dataGridView1.Rows.Count!=0)
+                if (y != -1)
                     this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
             }
         }

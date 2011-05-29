@@ -125,17 +125,24 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
+                int y = -1;
+                int x = dataGridView1.CurrentCell.ColumnIndex;
                 for (int i = userwords.Count() - 1; i >= 0; i--)
                 {
-                    if (dataGridView1.Rows[i].Cells[0].Selected)                    
-                        userwords.RemoveAt(i);                    
+                    if (dataGridView1.Rows[i].Cells[0].Selected)
+                    {
+                        userwords.RemoveAt(i);
+                        y = i - 1;
+                    }                   
                 }                
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < userwords.Count(); i++)
                 {
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = userwords[i];
-                }                
+                }
+                if (y != -1)
+                    this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
                 Thread t = new Thread(new ThreadStart(convert));
                 t.Start();
             }
