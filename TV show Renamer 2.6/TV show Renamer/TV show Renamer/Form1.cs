@@ -56,7 +56,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 272;//2.7Beta
+        const int appVersion = 273;//2.7Beta
         const int HowDeepToScan = 4;
 
         BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
@@ -3162,7 +3162,6 @@ namespace TV_show_Renamer
             int[] temp3 = { 255, 240, 240, 240 };
             if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
                 changeButtoncolor(temp1);
-            MessageBox.Show(newMainSettings.DataFolder);
         }//end of load command
 
         //create preference file when program closes and close log
