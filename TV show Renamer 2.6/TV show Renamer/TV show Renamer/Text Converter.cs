@@ -97,7 +97,9 @@ namespace TV_show_Renamer
         private void button4_Click_1(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
-            {                
+            {
+                int y = dataGridView1.CurrentCell.RowIndex - 1;
+                int x = dataGridView1.CurrentCell.ColumnIndex;
                 int u = dataGridView1.CurrentRow.Index;
 
                 textBox2.Text = textConvert[(u * 2) + 1];
@@ -114,6 +116,9 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i / 2].Cells[1].Value = "to";
                     dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
                 }
+                if (y < 0) y = 0;
+                if (dataGridView1.Rows.Count != 0)
+                    this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
                 Thread t = new Thread(new ThreadStart(convert));
                 t.Start();
             }
@@ -124,16 +129,17 @@ namespace TV_show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
+                int y = -1;
+                int x = dataGridView1.CurrentCell.ColumnIndex;
                 for (int i = textConvert.Count() - 1; i >= 0; i=i-2)
                 {
                     if (dataGridView1.Rows[i / 2].Cells[0].Selected || dataGridView1.Rows[i / 2].Cells[1].Selected || dataGridView1.Rows[i / 2].Cells[2].Selected)
                     {
                         textConvert.RemoveAt(i);
                         textConvert.RemoveAt(i-1);
+                        y = (i / 2) - 1;
                     }
                 }
-                //int y = dataGridView1.CurrentCell.RowIndex - 1;
-                //int x = dataGridView1.CurrentCell.ColumnIndex;
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < textConvert.Count(); i = i + 2)
                 {
@@ -141,7 +147,9 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
                     dataGridView1.Rows[i / 2].Cells[1].Value = "to";
                     dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
-                }                
+                }
+                if (y != -1)
+                    this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
                 Thread t = new Thread(new ThreadStart(convert));
                 t.Start();
             }

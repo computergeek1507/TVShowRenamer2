@@ -3162,7 +3162,7 @@ namespace TV_show_Renamer
             int[] temp3 = { 255, 240, 240, 240 };
             if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
                 changeButtoncolor(temp1);
-
+            MessageBox.Show(newMainSettings.DataFolder);
         }//end of load command
 
         //create preference file when program closes and close log
