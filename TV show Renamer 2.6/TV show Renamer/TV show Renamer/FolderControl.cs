@@ -26,7 +26,7 @@ namespace TV_show_Renamer
         {
             if (textBox1.Text != "")
             {
-                int x = dataGridView1.CurrentCell.ColumnIndex;
+                //int x = dataGridView1.CurrentCell.ColumnIndex;
                 Main.AddFolder(textBox1.Text, textBox2.Text, addIndex);
                 Main.ClearOtherFolder();
 
@@ -46,7 +46,7 @@ namespace TV_show_Renamer
                 textBox2.Text = "";
                 if (button1.Text == "Save Folder") button1.Text = "Add Folder";
                 addIndex = 1;
-                this.dataGridView1.CurrentCell = this.dataGridView1[x, dataGridView1.RowCount-1];
+                this.dataGridView1.CurrentCell = this.dataGridView1[0, dataGridView1.RowCount-1];
             }
         }
 
