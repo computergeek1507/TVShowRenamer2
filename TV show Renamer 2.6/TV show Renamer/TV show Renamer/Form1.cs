@@ -274,12 +274,14 @@ namespace TV_show_Renamer
                                         {
                                             if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
                                                 fileList[z].FileFolder = (folderSettings[1]);
+                                            continue; 
                                         }
                                     }
                                     else
                                     {
                                         if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
                                             fileList[z].FileFolder = (folderSettings[1]);
+                                        continue; 
                                     }
                                 }
 
@@ -357,10 +359,16 @@ namespace TV_show_Renamer
                                         mainEdit.Close();
                                     }
                                     else
+                                    {
                                         CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));
+                                        continue;
+                                    }
                                 }
                                 else
+                                {
                                     CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));
+                                    continue; 
+                                }
                             }
 
                             if (info[1] != "0" && int.Parse(folderSettings[0]) == 3)
@@ -497,13 +505,15 @@ namespace TV_show_Renamer
                                 else
                                 {
                                     if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                        fileList[z].FileFolder = (folderSettings[1]);                                   
+                                        fileList[z].FileFolder = (folderSettings[1]);
+                                    continue; 
                                 }
                             }
                             else
                             {
                                 if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                    fileList[z].FileFolder = (folderSettings[1]);                                   
+                                    fileList[z].FileFolder = (folderSettings[1]);
+                                continue; 
                             }
                         }
 
@@ -571,11 +581,17 @@ namespace TV_show_Renamer
                                     info[0] = methodGet;
                                     mainEdit.Close();
                                 }
-                                else                                
-                                    CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));                                
+                                else
+                                {
+                                    CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));
+                                    continue;
+                                }
                             }
-                            else                            
-                                CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));                            
+                            else
+                            {
+                                CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));
+                                continue; 
+                            }                   
                         }
 
                         if (info[1] != "0" && int.Parse(folderSettings[0]) == 3)
@@ -649,12 +665,14 @@ namespace TV_show_Renamer
                                     {
                                         if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
                                             fileList[z].FileFolder = (folderSettings[1]);
+                                        continue; 
                                     }
                                 }
                                 else
                                 {
                                     if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
                                         fileList[z].FileFolder = (folderSettings[1]);
+                                    continue; 
                                 }
                             }
 
@@ -731,10 +749,16 @@ namespace TV_show_Renamer
                                         mainEdit.Close();
                                     }
                                     else
+                                    {
                                         CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));
+                                        continue;
+                                    }
                                 }
                                 else
+                                {
                                     CopyFile(fileList[z].FullFileName, (folderSettings[1] + "\\" + fileList[z].FileName));
+                                    continue; 
+                                }
                             }
 
                             if (info[1] != "0" && int.Parse(folderSettings[0]) == 3)

@@ -78,7 +78,7 @@ namespace TV_show_Renamer
                 textBox1.Text = null;
                 textBox2.Text = null;
                 if (button2.Text == "Save") button2.Text = "Add";
-                int x = dataGridView1.CurrentCell.ColumnIndex;
+                //int x = dataGridView1.CurrentCell.ColumnIndex;
                 dataGridView1.Rows.Clear();
                 for (int i = 0; i < textConvert.Count(); i = i + 2)
                 {
@@ -87,7 +87,7 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i / 2].Cells[1].Value = "to";
                     dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
                 }
-                this.dataGridView1.CurrentCell = this.dataGridView1[x, dataGridView1.RowCount - 1];
+                this.dataGridView1.CurrentCell = this.dataGridView1[0, dataGridView1.RowCount - 1];
                 Thread t = new Thread(new ThreadStart(convert));
                 t.Start();
             }
