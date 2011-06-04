@@ -56,7 +56,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 274;//2.7Beta
+        const int appVersion = 275;//2.7Beta
         const int HowDeepToScan = 4;
 
         BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
