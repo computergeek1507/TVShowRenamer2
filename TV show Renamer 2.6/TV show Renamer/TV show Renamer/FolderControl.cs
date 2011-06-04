@@ -144,13 +144,13 @@ namespace TV_show_Renamer
             switch (selectedIndex)
                 {                         
                     case 1:
-                        Main.SaveFolder("2?" + dataGridView1.Rows[rowIndex].Cells[1].Value.ToString(), rowIndex);
+                        Main.SaveFolder("2?" + dataGridView1.Rows[rowIndex].Cells[2].Value.ToString(), rowIndex);
                         break;
                     case 2:
-                        Main.SaveFolder("3?" + dataGridView1.Rows[rowIndex].Cells[1].Value.ToString(), rowIndex);
+                        Main.SaveFolder("3?" + dataGridView1.Rows[rowIndex].Cells[2].Value.ToString(), rowIndex);
                         break;                        
                     default:
-                        Main.SaveFolder("1?" + dataGridView1.Rows[rowIndex].Cells[1].Value.ToString(), rowIndex);
+                        Main.SaveFolder("1?" + dataGridView1.Rows[rowIndex].Cells[2].Value.ToString(), rowIndex);
                         break;
                 }
         }
