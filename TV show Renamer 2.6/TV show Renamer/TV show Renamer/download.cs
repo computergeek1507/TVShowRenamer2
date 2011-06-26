@@ -80,10 +80,10 @@ namespace TV_show_Renamer
             catch (Exception q)
             {
                 window.writeLog("Error when deleting files before update" + q.ToString());
-            }
+            }            
 
             ProcessStartInfo startInfo2 = new ProcessStartInfo(label1.Text);
-            startInfo2.Verb = "runas";
+            //startInfo2.Verb = "runas";
             Process.Start(startInfo2);
             
             window.CloseForUpdates();            

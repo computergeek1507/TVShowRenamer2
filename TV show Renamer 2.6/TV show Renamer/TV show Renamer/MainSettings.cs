@@ -279,6 +279,8 @@ namespace TV_show_Renamer
                 _main.WriteLog("Folders.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
+
+
             return returnValue;
         }//end of loadsettings methods
                 
@@ -367,7 +369,7 @@ namespace TV_show_Renamer
             get { return _autoGetTitle; }
             set { _autoGetTitle = value; }
         }
-
+       
         public int SeasonOffset
         {
             get { return _seasonOffset; }
@@ -428,6 +430,6 @@ namespace TV_show_Renamer
         {
             get { return _moveFolder; }
             set { _moveFolder = value; }
-        }        
+        }
     }//end of class
 }//end of namespace

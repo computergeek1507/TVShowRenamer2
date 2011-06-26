@@ -51,6 +51,7 @@ namespace TV_show_Renamer
 
         public TVDB(Form1 temp, string filename, int index, BindingList<TVClass> newFileList, string newFolder, int newFormat)
         {
+           
             InitializeComponent();
             folder = newFolder;
             format = newFormat;
@@ -417,5 +418,6 @@ namespace TV_show_Renamer
                 renameWorked = main.addTitle(newTitle, index);        
         
         }
+
     }//end of class
 }//end of namespace
