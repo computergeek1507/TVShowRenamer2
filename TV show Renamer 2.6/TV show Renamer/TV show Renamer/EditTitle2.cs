@@ -16,6 +16,8 @@ namespace TV_show_Renamer
         {
             InitializeComponent();
             textBox1.Text = title = temptitle;
+            this.button2.Location = new System.Drawing.Point(93, 38);
+            this.button1.Location = new System.Drawing.Point(12, 38);
         }
 
         public string getTitle()

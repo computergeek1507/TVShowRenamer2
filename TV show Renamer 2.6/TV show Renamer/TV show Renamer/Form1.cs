@@ -58,6 +58,7 @@ namespace TV_show_Renamer
         //initiate varibles  
         const int appVersion = 275;//2.7Beta
         const int HowDeepToScan = 4;
+        string firstWord = "";
 
         BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
         List<string> junklist = new List<string>();//junk word list
@@ -78,7 +79,7 @@ namespace TV_show_Renamer
         private void addFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog2.Title = "Select Media files";
-            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg;*.mov;*.mpeg;*.rm;*.rmvb;*.wmv)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg;*.mov;*.mpeg;*.rm;*.rmvb;*.wmv|Archive Files (*.zip;*.rar;*.r01;*.7z;)|*.zip;*.rar;*.r01;*.7z;|All Files (*.*)|*.*";
+            openFileDialog2.Filter = "Video Files (*.avi;*.mkv;*.mp4;*.m4v;*.mpg;*.mov;*.mpeg;*.rm;*.rmvb;*.wmv;*.webm)|*.avi;*.mkv;*.mp4;*.m4v;*.mpg;*.mov;*.mpeg;*.rm;*.rmvb;*.wmv;*.webm|Archive Files (*.zip;*.rar;*.r01;*.7z;)|*.zip;*.rar;*.r01;*.7z;|All Files (*.*)|*.*";
             openFileDialog2.FileName = "";
             openFileDialog2.FilterIndex = 1;
             openFileDialog2.CheckFileExists = true;
@@ -441,7 +442,7 @@ namespace TV_show_Renamer
         //TVDB
         private void button6_Click(object sender, EventArgs e)
         {
-            if (fileList.Count != 0) //if files are selected
+            if (fileList.Count != 0 && ConnectionExists()) //if files are selected
             {
                 int format = -1;
                 format = newMainSettings.SeasonFormat + 1;
@@ -1297,11 +1298,14 @@ namespace TV_show_Renamer
         //get selected titles off IMDB
         public void getTVDBTitles()
         {
-            int format = -1;
-            format = newMainSettings.SeasonFormat + 1;
+            if (fileList.Count != 0 && ConnectionExists()) //if files are selected
+            {
+                int format = -1;
+                format = newMainSettings.SeasonFormat + 1;
 
-            Thread h = new Thread(delegate() { autoTitleTVDB(format, false); });
-            h.Start();
+                Thread h = new Thread(delegate() { autoTitleTVDB(format, false); });
+                h.Start();
+            }
         }
 
         //method for thread TVDB
@@ -1340,6 +1344,8 @@ namespace TV_show_Renamer
             if (fileList.Count != 0) //if files are selected
             {
                 List<int> autoTileList = new List<int>();
+                bool online =  ConnectionExists();
+            
                 for (int z = 0; z < fileList.Count; z++)
                 {
                     if (!fileList[z].AutoEdit)
@@ -1347,8 +1353,9 @@ namespace TV_show_Renamer
                     //call fileRenamer method
                     fileList[z].NewFileName = this.fileRenamer(fileList[z].FileName, z, fileList[z].FileExtention, autoTileList);
                 }//end of for loop
-                
-                if (autoTileList.Count() != 0)
+                //firstWord = "";
+
+                if (autoTileList.Count() != 0&&online)
                 {
                     TVDB InternetTest = new TVDB(this, fileList, autoTileList, newMainSettings.DataFolder, newMainSettings.SeasonFormat + 1);
                 }
@@ -1391,7 +1398,7 @@ namespace TV_show_Renamer
                     if ((exten == ".zip" || exten == ".rar" || exten == ".r01" || exten == ".7z") && newMainSettings.OpenZIPs)
                         continue;
                     //check if its a legal file type
-                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v" || exten == ".mpeg" || exten == ".mov" || exten == ".rm" || exten == ".rmvb" || exten == ".wmv"))
+                    if (!(exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v" || exten == ".mpeg" || exten == ".mov" || exten == ".rm" || exten == ".rmvb" || exten == ".wmv" || exten == ".webm"))
                     {
                         //if dialog was shown b4 dont show again
                         if (!newMainSettings.Shownb4)
@@ -2115,6 +2122,11 @@ namespace TV_show_Renamer
             //remove extention
             newfilename = newfilename.Replace(extend, temp + "&&&&");
 
+            //add word at begining
+            if (firstWord != "") {
+                newfilename = firstWord + temp + newfilename;
+            }
+
             //Text converter            
             textConverter = textConvert.getText();
             for (int x = 0; x < textConverter.Count(); x += 2)
@@ -2679,7 +2691,7 @@ namespace TV_show_Renamer
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
-                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000").Replace(".mpeg", "0000").Replace(".mov", "0000").Replace(".rm", "0000").Replace(".rmvb", "0000");
+                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000").Replace(".mpeg", "0000").Replace(".mov", "0000").Replace(".rm", "0000").Replace(".rmvb", "0000").Replace(".wmv", "0000").Replace(".webm", "0000");
 
                 if (testArchiveName != archiveName)
                 {
@@ -2833,7 +2845,7 @@ namespace TV_show_Renamer
             for (int j = 0; j < sizeOfArchive; j++)
             {
                 archiveName = mainExtrector.ArchiveFileNames[j];
-                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000").Replace(".mpeg", "0000").Replace(".mov", "0000").Replace(".rm", "0000").Replace(".rmvb", "0000");
+                string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000").Replace(".mpeg", "0000").Replace(".mov", "0000").Replace(".rm", "0000").Replace(".rmvb", "0000").Replace(".wmv", "0000").Replace(".webm", "0000");
 
                 if (testArchiveName != archiveName)
                 {
@@ -3210,6 +3222,27 @@ namespace TV_show_Renamer
             }
             //write log
             Log.closeLog();
+        }
+
+        //add word to begining
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            EditTitle2 mainEdit = new EditTitle2(firstWord);
+            mainEdit.Text = "Add Text To Begining";
+            mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
+            if (mainEdit.ShowDialog() == DialogResult.OK)
+            {
+                firstWord = mainEdit.getTitle();
+                mainEdit.Close();
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
+            }
+            else {
+                firstWord = "";
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
+            }
         }//end of form closing
+
     }//end of form1 partial class    
 }//end of namespace
