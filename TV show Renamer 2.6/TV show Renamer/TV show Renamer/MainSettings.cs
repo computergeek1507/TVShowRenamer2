@@ -38,6 +38,7 @@ namespace TV_show_Renamer
         int[] _foregroundColor = { 255, 0, 0, 0 };
         int[] _buttonColor = { 255, 240, 240, 240 };
 
+        string _firstWord = "";
         string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer";
 
         LogWrite _main;
@@ -85,6 +86,7 @@ namespace TV_show_Renamer
             _foregroundColor = temp2;
             _buttonColor = temp3;
 
+            _firstWord = "";
             _moveFolder.Clear();
         }
 
@@ -425,6 +427,11 @@ namespace TV_show_Renamer
         public string DataFolder
         {
             get { return _dataFolder; }
+        }
+        public string FirstWord
+        {
+            get { return _firstWord; }
+            set { _firstWord = value; }
         }
         public List<string> MoveFolder
         {

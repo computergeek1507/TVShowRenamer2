@@ -205,7 +205,7 @@ namespace TV_show_Renamer
                     string[] words = Main.menu1[i].Tag.ToString().Split('?');
                     dataGridView1.Rows[i].Cells[2].Value = words[1];
                     DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[3]);
-                    cell.Items.AddRange(outputOptions);
+                    //cell.Items.AddRange(outputOptions);
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
                 Main.ClearOtherFolder();
@@ -231,7 +231,7 @@ namespace TV_show_Renamer
                     string[] words = Main.menu1[i].Tag.ToString().Split('?');
                     dataGridView1.Rows[i].Cells[2].Value = words[1];
                     DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)(dataGridView1.Rows[i].Cells[3]);
-                    cell.Items.AddRange(outputOptions);
+                    //cell.Items.AddRange(outputOptions);
                     cell.Value = cell.Items[int.Parse(words[0]) - 1];
                 }
                 Main.ClearOtherFolder();

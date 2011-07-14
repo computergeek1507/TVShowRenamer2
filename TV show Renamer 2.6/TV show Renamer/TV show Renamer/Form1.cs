@@ -58,7 +58,7 @@ namespace TV_show_Renamer
         //initiate varibles  
         const int appVersion = 275;//2.7Beta
         const int HowDeepToScan = 4;
-        string firstWord = "";
+        
 
         BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
         List<string> junklist = new List<string>();//junk word list
@@ -150,6 +150,27 @@ namespace TV_show_Renamer
             titles.Location = new Point(this.Location.X + ((this.Size.Width - titles.Size.Width) / 2), this.Location.Y + ((this.Size.Height - titles.Size.Height) / 2));
         }
 
+        //add word to begining
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            EditTitle2 mainEdit = new EditTitle2(newMainSettings.FirstWord);
+            mainEdit.Text = "Add Text To Begining";
+            mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
+            if (mainEdit.ShowDialog() == DialogResult.OK)
+            {
+                newMainSettings.FirstWord = mainEdit.getTitle();
+                mainEdit.Close();
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
+            }
+            else
+            {
+                newMainSettings.FirstWord = "";
+                Thread t = new Thread(new ThreadStart(autoConvert));
+                t.Start();
+            }
+        }//end of form closing
+        
         //default setting method 
         private void defaultSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -940,12 +961,13 @@ namespace TV_show_Renamer
 
         #region Update Stuff
         //check to see if internet is avilible
-        bool ConnectionExists()
+        bool ConnectionExists2()
         {
             try
             {
-                System.Net.Sockets.TcpClient clnt = new System.Net.Sockets.TcpClient("www.google.com", 80);
-                clnt.Close();
+                System.Net.IPHostEntry objIPHE = System.Net.Dns.GetHostByName("www.google.com");
+                //System.Net.Sockets.TcpClient clnt = new System.Net.Sockets.TcpClient("www.google.com", 80);
+                //clnt.Close();
                 return true;
             }
             catch (Exception)
@@ -953,6 +975,30 @@ namespace TV_show_Renamer
                 return false;
             }
         }//end of ConnectionExists class
+
+        //check to see if internet is avilible
+        bool ConnectionExists()
+        {
+            System.Uri Url = new System.Uri("http://www.microsoft.com");
+
+            System.Net.WebRequest WebReq;
+            System.Net.WebResponse Resp;
+            WebReq = System.Net.WebRequest.Create(Url);
+
+            try
+            {
+                Resp = WebReq.GetResponse();
+                Resp.Close();
+                WebReq = null;
+                return true;
+            }
+
+            catch
+            {
+                WebReq = null;
+                return false;
+            }
+        }
 
         //check to see if website is avilible
         bool websiteExists()
@@ -2123,8 +2169,10 @@ namespace TV_show_Renamer
             newfilename = newfilename.Replace(extend, temp + "&&&&");
 
             //add word at begining
-            if (firstWord != "") {
-                newfilename = firstWord + temp + newfilename;
+            if (newMainSettings.FirstWord != "")
+            {
+                newfilename = newMainSettings.FirstWord + temp + newfilename;
+                newMainSettings.FirstWord = "";
             }
 
             //Text converter            
@@ -2544,6 +2592,10 @@ namespace TV_show_Renamer
             newfilename = newfilename.Replace("Viii", "VIII");
             newfilename = newfilename.Replace("Vii", "VII");
             newfilename = newfilename.Replace("Vi" + temp, "VI" + temp);
+            newfilename = newfilename.Replace("Xi" + temp, "XI" + temp);
+            newfilename = newfilename.Replace("Xii" + temp, "XII" + temp);
+            newfilename = newfilename.Replace("Xiii" + temp, "XIII" + temp);
+            newfilename = newfilename.Replace("Xiiii" + temp, "XIIII" + temp);
             newfilename = newfilename.Replace("Iii", "III");
             newfilename = newfilename.Replace("Ii", "II");
             newfilename = newfilename.Replace("X Files", "X-Files");
@@ -3223,26 +3275,6 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();
         }
-
-        //add word to begining
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            EditTitle2 mainEdit = new EditTitle2(firstWord);
-            mainEdit.Text = "Add Text To Begining";
-            mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
-            if (mainEdit.ShowDialog() == DialogResult.OK)
-            {
-                firstWord = mainEdit.getTitle();
-                mainEdit.Close();
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
-            }
-            else {
-                firstWord = "";
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
-            }
-        }//end of form closing
-
+                
     }//end of form1 partial class    
 }//end of namespace
