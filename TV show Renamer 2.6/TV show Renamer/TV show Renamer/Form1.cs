@@ -56,7 +56,7 @@ namespace TV_show_Renamer
 
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 275;//2.7Beta
+        const int appVersion = 276;//2.7Beta
         const int HowDeepToScan = 4;
         
 
@@ -1603,8 +1603,8 @@ namespace TV_show_Renamer
             startlist.Add("gnarly");
             startlist.Add("krs");
             startlist.Add("goat");
-            startlist.Add("buck");
             startlist.Add("bucktv");
+            startlist.Add("buck");
             startlist.Add("orpheus");
             startlist.Add("720p");
             startlist.Add("x264");
@@ -1614,6 +1614,15 @@ namespace TV_show_Renamer
             startlist.Add("mspaint");
             startlist.Add("siso");
             startlist.Add("reward");
+            startlist.Add("qcf");
+            startlist.Add("p2p");
+            startlist.Add("h264");
+            startlist.Add("vodo");
+            startlist.Add("wrcr");
+            startlist.Add("brrip");
+            startlist.Add("fever");
+            startlist.Add("twiz");
+            startlist.Add("diverge");
             startlist.Add("www.directlinkspot.com");
             startlist.Add("www directlinkspot com");
             startlist.Add("onelinkmoviez.com");
@@ -1621,6 +1630,9 @@ namespace TV_show_Renamer
             startlist.Add("asap");
             startlist.Add("dd5.1");
             startlist.Add("dd5 1");
+            startlist.Add("web-dl");
+            startlist.Add("web dl");
+            startlist.Add("web.dl");
 
 
             //startlist.Add("tv");
