@@ -1943,26 +1943,6 @@ namespace TV_show_Renamer
             Application.Exit();
         }
 
-        public void changeButtonFontSize(string text) 
-        {
-            text = "Move To " + text;
-            bool runLoop = true;
-            while (runLoop)
-            {
-                Graphics cg = this.CreateGraphics();
-                SizeF size = cg.MeasureString(text, this.button1.Font);
-                //this.button1.Width = (int)size.Width;
-                if (button1.Width > ((int)size.Width+12)) //|| button1.Font.SizeInPoints>1)
-                {
-                    button1.Text = text;
-                    button1.Refresh();
-                    runLoop = false;
-                    break;
-                }
-                button1.Font = new Font(button1.Font.FontFamily, button1.Font.Size - 1, button1.Font.Style);
-            }        
-        }
-
         #endregion
 
         #region Private Methods
@@ -3050,13 +3030,22 @@ namespace TV_show_Renamer
                     MethodInvoker action = delegate
                     {
                         fileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension));
-                        Thread p = new Thread(new ThreadStart(autoConvert));
-                        p.Start();
-                        dataGridView1.Refresh();
+                        //Thread p = new Thread(new ThreadStart(autoConvert));
+                        //p.Start();
+                        //dataGridView1.Refresh();
                     };
                     dataGridView1.BeginInvoke(action);
                 }
-            }//end of loop             
+            }//end of loop
+            Thread p = new Thread(new ThreadStart(autoConvert));
+            p.Start();
+
+            //MethodInvoker action2 = delegate
+            //{           
+
+            //dataGridView1.Refresh();
+            //};
+            //dataGridView1.BeginInvoke(action2);
         }
 
         //add files from folder
@@ -3306,11 +3295,6 @@ namespace TV_show_Renamer
             }
             //write log
             Log.closeLog();
-        }
-
-        private void testToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.changeButtonFontSize(menu1[0].Text);
         }
                 
     }//end of form1 partial class    
