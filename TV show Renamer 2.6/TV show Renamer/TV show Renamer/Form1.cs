@@ -34,7 +34,14 @@ namespace TV_show_Renamer
             InitializeComponent();
             dataGridView1.DataSource = fileList;
             if (args.GetLength(0) != 0)
-                getFiles(args);
+            {
+                ThreadAdd FilesToAdd = new ThreadAdd();
+                FilesToAdd.AddType = "files";
+                FilesToAdd.ObjectToAdd = args;
+                if (!AddFilesThread.IsBusy)
+                    AddFilesThread.RunWorkerAsync(FilesToAdd);
+                //AddFilesThread.RunWorkerAsync(FilesToAdd);
+            }
         }
 
         //Constructor
@@ -53,12 +60,12 @@ namespace TV_show_Renamer
             InitializeComponent();
             dataGridView1.DataSource = fileList;
         }
-
+        
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 276;//2.7Beta
+        const int appVersion = 280;//2.8 ALPHA
         const int HowDeepToScan = 4;
-        
+        bool rerun = false;
 
         BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
         List<string> junklist = new List<string>();//junk word list
@@ -70,6 +77,7 @@ namespace TV_show_Renamer
         Text_Converter textConvert = new Text_Converter();
         LogWrite Log = new LogWrite();//log object
         public MainSettings newMainSettings = new MainSettings();//new settings object
+        public class ThreadAdd { public string AddType; public object ObjectToAdd;};
 
         #endregion
 
@@ -88,8 +96,14 @@ namespace TV_show_Renamer
 
             if (openFileDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                Thread h = new Thread(delegate() { getFiles(openFileDialog2.FileNames); });
-                h.Start();
+                ThreadAdd FilesToAdd = new ThreadAdd();
+                FilesToAdd.AddType= "files";
+                FilesToAdd.ObjectToAdd = openFileDialog2.FileNames;
+                AddFilesThread.RunWorkerAsync(FilesToAdd);
+
+                //AddFilesThread.RunWorkerAsync(FilesToAdd);
+                //Thread h = new Thread(delegate() { getFiles(openFileDialog2.FileNames); });
+                //h.Start();
             }//end of if
         }//end of file button
 
@@ -98,8 +112,12 @@ namespace TV_show_Renamer
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                Thread u = new Thread(delegate() { getFilesInFolder(folderBrowserDialog1.SelectedPath); });
-                u.Start();
+                ThreadAdd FolderToAdd = new ThreadAdd();
+                FolderToAdd.AddType = "folder";
+                FolderToAdd.ObjectToAdd = folderBrowserDialog1.SelectedPath;
+                AddFilesThread.RunWorkerAsync(FolderToAdd);
+                //Thread u = new Thread(delegate() { getFilesInFolder(folderBrowserDialog1.SelectedPath); });
+                //u.Start();
             }//end of if
         }//end of folder button
 
@@ -113,6 +131,7 @@ namespace TV_show_Renamer
         private void clearListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fileList.Clear();
+            rerun = false;
             dataGridView1.Refresh();
         }
 
@@ -160,14 +179,12 @@ namespace TV_show_Renamer
             {
                 newMainSettings.FirstWord = mainEdit.getTitle();
                 mainEdit.Close();
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
+                autoConvert();
             }
             else
             {
                 newMainSettings.FirstWord = "";
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
+                autoConvert();
             }
         }//end of form closing
         
@@ -227,8 +244,7 @@ namespace TV_show_Renamer
                         continue;
                     }
                 }//end of for loop
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
+                autoConvert();
             }
         }
 
@@ -242,8 +258,7 @@ namespace TV_show_Renamer
                     if (dataGridView1.Rows[u].Cells[0].Selected || dataGridView1.Rows[u].Cells[1].Selected)
                         fileList[u].AutoEdit = true;
                 }
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
+                autoConvert();
             }
         }
 
@@ -452,8 +467,7 @@ namespace TV_show_Renamer
                 newMainSettings.SeasonOffset = 0;
                 newMainSettings.EpisodeOffset = 0;
 
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
+                autoConvert();
             }
             else//catch if nothing is selected
                 MessageBox.Show("No Files Selected");
@@ -465,10 +479,15 @@ namespace TV_show_Renamer
         {
             if (fileList.Count != 0 && ConnectionExists()) //if files are selected
             {
-                int format = -1;
-                format = newMainSettings.SeasonFormat + 1;
-                Thread h = new Thread(delegate() { autoTitleTVDB(format, true); });
-                h.Start();
+                List<int> selected = new List<int>();
+                for (int i = 0; i < fileList.Count; i++)
+                {
+                    if (fileList[i].FileTitle == "@@@@")                    
+                        selected.Add(i);                    
+                }
+                //TestTitle(selected);
+                if (!TitleThread.IsBusy)
+                    TitleThread.RunWorkerAsync(selected);                
             }
             else//catch if nothing is selected
                 MessageBox.Show("No Files Selected");
@@ -1341,80 +1360,14 @@ namespace TV_show_Renamer
             button6.BackColor = newColor;
         }
 
-        //get selected titles off IMDB
-        public void getTVDBTitles()
-        {
-            if (fileList.Count != 0 && ConnectionExists()) //if files are selected
-            {
-                int format = -1;
-                format = newMainSettings.SeasonFormat + 1;
-
-                Thread h = new Thread(delegate() { autoTitleTVDB(format, false); });
-                h.Start();
-            }
-        }
-
-        //method for thread TVDB
-        public void autoTitleTVDB(int format2, bool all)
-        {
-            if (all && fileList.Count != 0)
-            {
-                TVDB InternetTest = new TVDB(this, fileList, newMainSettings.DataFolder, format2);
-            }
+        public void autoConvert() {
+            if (fileList.Count == 0)
+                return;
+            if (!AddFilesThread.IsBusy)
+                AddFilesThread.RunWorkerAsync();
             else
-                if (dataGridView1.CurrentRow != null)
-                {
-                    List<int> z = new List<int>();
-
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
-                            z.Add(i);
-                    }
-                    if (z.Count() != 0)
-                    {
-                        TVDB InternetTest = new TVDB(this, fileList, z, newMainSettings.DataFolder, format2);
-                    }
-                }
-            MethodInvoker action = delegate
-            {
-                dataGridView1.Refresh();
-                dataGridView1.AutoResizeColumns();
-            };
-            dataGridView1.BeginInvoke(action);
+                rerun = true;
         }
-
-        //new convert method
-        public void autoConvert()
-        {
-            if (fileList.Count != 0) //if files are selected
-            {
-                List<int> autoTileList = new List<int>();
-                bool online =  ConnectionExists();
-            
-                for (int z = 0; z < fileList.Count; z++)
-                {
-                    if (!fileList[z].AutoEdit)
-                        continue;
-                    //call fileRenamer method
-                    fileList[z].NewFileName = this.fileRenamer(fileList[z].FileName, z, fileList[z].FileExtention, autoTileList);
-                }//end of for loop
-                //firstWord = "";
-
-                if (autoTileList.Count() != 0&&online)
-                {
-                    TVDB InternetTest = new TVDB(this, fileList, autoTileList, newMainSettings.DataFolder, newMainSettings.SeasonFormat + 1);
-                }
-
-                MethodInvoker action = delegate
-                {
-                    dataGridView1.Refresh();
-                    dataGridView1.AutoResizeColumns();
-                };
-                if (!newMainSettings.FormClosed)
-                    dataGridView1.BeginInvoke(action);
-            }
-        }//end of convert method
 
         //write log called by download form
         public void writeLog(string error)
@@ -1696,25 +1649,12 @@ namespace TV_show_Renamer
             return worked;
         }
 
-        //add title 
-        public bool addTitle(string title, int which)
-        {
-            bool worked = false;
-            if (fileList.Count > which)
-            {
-                worked = true;
-                fileList[which].FileTitle = title;
-            }
-            return worked;
-        }
-
         //clear titles
         public void clearTitles()
         {
             for (int i = 0; i < fileList.Count(); i++)
                 fileList[i].FileTitle = "";
-            Thread t = new Thread(new ThreadStart(autoConvert));
-            t.Start();
+            autoConvert();
         }
 
         //remove selected titles
@@ -1915,13 +1855,12 @@ namespace TV_show_Renamer
                 {
                     if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        if (fileList[i].FileTitle == "")
+                        if (fileList[i].FileTitle == "" || fileList[i].FileTitle == "@@@@" || fileList[i].FileTitle == "%%%%")
                             continue;
-                        fileList[i].FileTitle = "";
+                        fileList[i].FileTitle = "@@@@";
                     }
                 }
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
+                autoConvert();
             }
         }
 
@@ -2163,459 +2102,477 @@ namespace TV_show_Renamer
         }
 
         //rename method
-        private string fileRenamer(string newfilename, int index, string extend,List<int>selected)
+        private bool fileRenamer(BindingList<TVClass> EditFileList)
         {//make temp function
-            string temp = null;
-            string seasonDash = "";
-            int startIndex = -1;
-            int endIndex = -1;
-
-            if (!newMainSettings.DashSeason)
-                seasonDash = "- ";
-            if (newMainSettings.RemovePeriod)
-                temp = " ";
-            else
-                temp = ".";
-
-            //remove extention
-            newfilename = newfilename.Replace(extend, temp + "&&&&");
-
-            //add word at begining
-            if (newMainSettings.FirstWord != "")
+            for (int index = 0; index < EditFileList.Count(); index++)
             {
-                newfilename = newMainSettings.FirstWord + temp + newfilename;
-                newMainSettings.FirstWord = "";
-            }
-
-            //Text converter            
-            textConverter = textConvert.getText();
-            for (int x = 0; x < textConverter.Count(); x += 2)
-                newfilename = newfilename.Replace(textConverter[x], textConverter[x + 1]);
-
-            //user junk list
-            if (newMainSettings.RemoveCrap)
-            {
-                //make user junk list
-                userjunklist = userJunk.getjunk();
-                if (userjunklist.Count() != 0)
+                bool findTitle = true;
+                if (EditFileList[index].FileTitle == "%%%%")
                 {
-                    for (int x = 0; x < userjunklist.Count(); x++)
-                        newfilename = newfilename.Replace(userjunklist[x], "");
-                }//end of if
-            }//end of removeExtraCrapToolStripMenuItem if
+                    findTitle = false;
+                    EditFileList[index].FileTitle = "";
+                }
+                if (!EditFileList[index].AutoEdit)
+                    continue;
+                if (EditFileList[index].FileTitle == "@@@@")
+                    EditFileList[index].FileTitle = "";
+                string newfilename = EditFileList[index].FileName;
+                string extend = EditFileList[index].FileExtention;
+                string temp = null;
+                string seasonDash = "";
+                int startIndex = -1;
+                int endIndex = -1;
 
-            //replace periods(".") with spaces 
-            if (newMainSettings.RemovePeriod)
-                newfilename = newfilename.Replace(".", temp);
-
-            //Replace "_" with spaces
-            if (newMainSettings.RemoveUnderscore)
-                newfilename = newfilename.Replace("_", temp);
-
-            //Replace "-" with spaces
-            if (newMainSettings.RemoveDash)
-                newfilename = newfilename.Replace("-", temp);
-
-            //Replace (), {}, and [] with spaces
-            if (newMainSettings.RemoveBracket)
-                newfilename = newfilename.Replace("(", temp).Replace(")", temp).Replace("{", temp).Replace("}", temp).Replace("[", temp).Replace("]", temp);
-
-            //make every thing lowercase for crap remover to work
-            StringBuilder s = new StringBuilder(newfilename);
-            for (int l = 0; l < newfilename.Length; l++)
-                s[l] = char.ToLower(s[l]);
-
-            //reassign edited name 
-            newfilename = s.ToString();
-
-            //remove extra crap 
-            if (newMainSettings.RemoveCrap)
-            {
-                //new way with file input
-                for (int x = 0; x < junklist.Count(); x++)
-                    newfilename = newfilename.Replace(junklist[x] + temp, temp);
-            }//end of removeExtraCrapToolStripMenuItem if
-
-            //remove begining space
-            StringBuilder space = new StringBuilder(newfilename);
-            if (space[0] == ' ')
-            {
-                for (int p = 0; p < (newfilename.Length - 1); p++)
-                    space[p] = space[p + 1];
-            }
-
-            //reassign edited name 
-            newfilename = space.ToString();
-            newfilename = newfilename.Replace("&&&&&", "&&&&");//fix that i hope works
-
-            //remove year function
-            if (newMainSettings.RemoveYear && (!(newMainSettings.SeasonFormat == 4)))
-            {
-                int curyear = System.DateTime.Now.Year;
-                for (; curyear > 1980; curyear--)
-                {
-                    string before = newfilename;
-                    newfilename = newfilename.Replace(curyear.ToString(), "");
-                    //break if value found
-                    if (before != newfilename)
-                        break;
-                }//end of for loop
-            }//end of remove year function
-
-            //Removes extra Spaces and periods
-            string[] tempspace = new string[newfilename.Length];
-            string[] tempper = new string[newfilename.Length];
-            tempspace[0] = " ";
-            tempper[0] = ".";
-            //loop to create arrays of periods/spaces
-            for (int i = 1; i < newfilename.Length; i++)
-            {
-                tempspace[i] = tempspace[i - 1] + " ";
-                tempper[i] = tempper[i - 1] + ".";
-            }//end of for 
-
-            for (int k = newfilename.Length - 1; k > 0; k--)
-            {
-                newfilename = newfilename.Replace(tempspace[k], " ");
-                newfilename = newfilename.Replace(tempper[k], ".");
-            }//end of for                          
-
-            //add dash if the title exists or add one 
-            string tempTitle = null;
-            if (!newMainSettings.DashTitle)
-            {
-                //bool titleAvil = titles.checkTitle(index);
-                if (fileList[index].FileTitle != "")
-                    tempTitle = " - " + fileList[index].FileTitle;
+                if (!newMainSettings.DashSeason)
+                    seasonDash = "- ";
+                if (newMainSettings.RemovePeriod)
+                    temp = " ";
                 else
-                    tempTitle = " -";
-            }
-            else
-            {
-                tempTitle = temp + fileList[index].FileTitle;
-                //tempTitle = "";
-            }//end of if-else
+                    temp = ".";
 
-            StringBuilder tempCharTitle = new StringBuilder(tempTitle);
-            for (int tempCharTitleIndex = 0; tempCharTitleIndex < tempTitle.Length; tempCharTitleIndex++)
-                tempCharTitle[tempCharTitleIndex] = char.ToLower(tempCharTitle[tempCharTitleIndex]);
+                //remove extention
+                newfilename = newfilename.Replace(extend, temp + "&&&&");
 
-            //reassign edited name 
-            tempTitle = tempCharTitle.ToString();
-
-            //loop for seasons
-            for (int i = 0; i < 40; i++)
-            {
-                //varable for break command later
-                bool end = false;
-
-                //loop for episodes
-                for (int j = 0; j < 100; j++)
+                //add word at begining
+                if (newMainSettings.FirstWord != "")
                 {
-                    string newi = i.ToString();
-                    string newi2 = (i + newMainSettings.SeasonOffset).ToString();
-                    string newj = j.ToString();
-                    string newj2 = (j + newMainSettings.EpisodeOffset).ToString();
-                    string output = null;
-                    string output2 = null;
-                    //check if i is less than 10
-                    if (i < 10)
-                        newi = "0" + i.ToString();
-                    //check if j is less than 10
-                    if (j < 10)
-                        newj = "0" + j.ToString();
-                    if ((i + newMainSettings.SeasonOffset) < 10)
-                        newi2 = "0" + (i + newMainSettings.SeasonOffset).ToString();
-                    //check if j is less than 10
-                    if ((j + newMainSettings.EpisodeOffset) < 10)
-                        newj2 = "0" + (j + newMainSettings.EpisodeOffset).ToString();
+                    newfilename = newMainSettings.FirstWord + temp + newfilename;
+                    //newMainSettings.FirstWord = "";
+                }
 
-                    //make string to compare changed name too
-                    string startnewname = newfilename;
+                //Text converter            
+                textConverter = textConvert.getText();
+                for (int x = 0; x < textConverter.Count(); x += 2)
+                    newfilename = newfilename.Replace(textConverter[x], textConverter[x + 1]);
 
-                    //1x01 format 
-                    if (newMainSettings.SeasonFormat == 0)
+                //user junk list
+                if (newMainSettings.RemoveCrap)
+                {
+                    //make user junk list
+                    userjunklist = userJunk.getjunk();
+                    if (userjunklist.Count() != 0)
                     {
-                        output2 = (i + newMainSettings.SeasonOffset).ToString() + "x" + newj2;
-                        output = i.ToString() + "x" + newj;
+                        for (int x = 0; x < userjunklist.Count(); x++)
+                            newfilename = newfilename.Replace(userjunklist[x], "");
+                    }//end of if
+                }//end of removeExtraCrapToolStripMenuItem if
 
-                        newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
-                        newfilename = newfilename.Replace(newi + newj, output);//0101                        
-                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1               
-                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
-                        newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
-                        newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
-                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
-                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
-                        newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
-                        newfilename = newfilename.Replace("0" + output, output);//01x01 fix might be unnessitarry
-                        newfilename = newfilename.Replace(output, seasonDash + output2 + tempTitle);//1x01 add title
-                        startIndex = newfilename.IndexOf(output2);//find index                        
-                        if (startIndex != -1)
-                        {
-                            if (i > 9) { endIndex = startIndex + 5; } else { endIndex = startIndex + 4; }
-                            //endIndex = startIndex + 4;
-                        }
+                //replace periods(".") with spaces 
+                if (newMainSettings.RemovePeriod)
+                    newfilename = newfilename.Replace(".", temp);
 
-                    }
-                    //0101 format
-                    if (newMainSettings.SeasonFormat == 1)
+                //Replace "_" with spaces
+                if (newMainSettings.RemoveUnderscore)
+                    newfilename = newfilename.Replace("_", temp);
+
+                //Replace "-" with spaces
+                if (newMainSettings.RemoveDash)
+                    newfilename = newfilename.Replace("-", temp);
+
+                //Replace (), {}, and [] with spaces
+                if (newMainSettings.RemoveBracket)
+                    newfilename = newfilename.Replace("(", temp).Replace(")", temp).Replace("{", temp).Replace("}", temp).Replace("[", temp).Replace("]", temp);
+
+                //make every thing lowercase for crap remover to work
+                StringBuilder s = new StringBuilder(newfilename);
+                for (int l = 0; l < newfilename.Length; l++)
+                    s[l] = char.ToLower(s[l]);
+
+                //reassign edited name 
+                newfilename = s.ToString();
+
+                //remove extra crap 
+                if (newMainSettings.RemoveCrap)
+                {
+                    //new way with file input
+                    for (int x = 0; x < junklist.Count(); x++)
+                        newfilename = newfilename.Replace(junklist[x] + temp, temp);
+                }//end of removeExtraCrapToolStripMenuItem if
+
+                //remove begining space
+                StringBuilder space = new StringBuilder(newfilename);
+                if (space[0] == ' ')
+                {
+                    for (int p = 0; p < (newfilename.Length - 1); p++)
+                        space[p] = space[p + 1];
+                }
+
+                //reassign edited name 
+                newfilename = space.ToString();
+                newfilename = newfilename.Replace("&&&&&", "&&&&");//fix that i hope works
+
+                //remove year function
+                if (newMainSettings.RemoveYear && (!(newMainSettings.SeasonFormat == 4)))
+                {
+                    int curyear = System.DateTime.Now.Year;
+                    for (; curyear > 1980; curyear--)
                     {
-                        output2 = newi2 + newj2;
-                        output = newi + newj;
+                        string before = newfilename;
+                        newfilename = newfilename.Replace(curyear.ToString(), "");
+                        //break if value found
+                        if (before != newfilename)
+                            break;
+                    }//end of for loop
+                }//end of remove year function
 
-                        newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101 
-                        newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
-                        newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
-                        newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
-                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
-                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
-                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
-                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
-                        newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
-                        newfilename = newfilename.Replace(output, seasonDash + output2 + tempTitle);//0101 add title
-                        startIndex = newfilename.IndexOf(output2);//find index
-                        if (startIndex != -1)
-                            endIndex = startIndex + 4;
-                    }
-                    //S01E01 format
-                    if (newMainSettings.SeasonFormat == 2)
-                    {
-                        output2 = "S" + newi2 + "E" + newj2;
-                        output = "S" + newi + "E" + newj;
+                //Removes extra Spaces and periods
+                string[] tempspace = new string[newfilename.Length];
+                string[] tempper = new string[newfilename.Length];
+                tempspace[0] = " ";
+                tempper[0] = ".";
+                //loop to create arrays of periods/spaces
+                for (int i = 1; i < newfilename.Length; i++)
+                {
+                    tempspace[i] = tempspace[i - 1] + " ";
+                    tempper[i] = tempper[i - 1] + ".";
+                }//end of for 
 
-                        newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
-                        newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
-                        newfilename = newfilename.Replace(newi + newj, output);//0101
-                        newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01E01
-                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
-                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
-                        newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
-                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
-                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
-                        newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
-                        newfilename = newfilename.Replace("S" + newi + "E" + newj, seasonDash + output2 + tempTitle);//S01E01 add title
-                        newfilename = newfilename.Replace("s" + newi + "e" + newj, seasonDash + output2 + tempTitle);//S01E01 add title if second time
-                        startIndex = newfilename.IndexOf(output2);//find index
-                        if (startIndex != -1)
-                            endIndex = startIndex + 6;
-                    }
-                    //101 format
-                    if (newMainSettings.SeasonFormat == 3)
-                    {
-                        output2 = (i + newMainSettings.SeasonOffset).ToString() + newj2;
-                        output = i.ToString() + newj;
+                for (int k = newfilename.Length - 1; k > 0; k--)
+                {
+                    newfilename = newfilename.Replace(tempspace[k], " ");
+                    newfilename = newfilename.Replace(tempper[k], ".");
+                }//end of for                          
 
-                        newfilename = newfilename.Replace(newi + newj, output);//0101
-                        newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
-                        newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
-                        newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
-                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
-                        newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
-                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
-                        newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
-                        newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
-                        newfilename = newfilename.Replace(output, seasonDash + output2 + tempTitle);//0101 add title
-                        startIndex = newfilename.IndexOf(output2);//find index
-                        if (startIndex != -1)
-                        {
-                            if (i > 9) { endIndex = startIndex + 4; } else { endIndex = startIndex + 3; }
-                            //endIndex = startIndex + 3;
-                        }
-                    }
-
-                    //stop loop when name is change                    
-                    if (startnewname != newfilename)
-                    {
-                        end = true;
-                        break;
-                    }
-
-                }//end of episode loop
-
-                //stop loop when name is change
-                if (end)
-                    break;
-
-            }//end of season loop
-
-            //Date format
-            if (newMainSettings.SeasonFormat == 4)
-            {
                 //add dash if the title exists or add one 
-                string dateTitle = null;
+                string tempTitle = null;
                 if (!newMainSettings.DashTitle)
                 {
-                    if (fileList[index].FileTitle != "")
-                        dateTitle = " - " + fileList[index].FileTitle;
+                    //bool titleAvil = titles.checkTitle(index);
+                    if (EditFileList[index].FileTitle != "")
+                        tempTitle = " - " + EditFileList[index].FileTitle;
                     else
-                        dateTitle = " -";
+                        tempTitle = " -";
                 }
                 else
-                    dateTitle = fileList[index].FileTitle;
-
-                for (int year = 0; year < 20; year++)
                 {
+                    tempTitle = temp + EditFileList[index].FileTitle;
+                    //tempTitle = "";
+                }//end of if-else
+
+                StringBuilder tempCharTitle = new StringBuilder(tempTitle);
+                for (int tempCharTitleIndex = 0; tempCharTitleIndex < tempTitle.Length; tempCharTitleIndex++)
+                    tempCharTitle[tempCharTitleIndex] = char.ToLower(tempCharTitle[tempCharTitleIndex]);
+
+                //reassign edited name 
+                tempTitle = tempCharTitle.ToString();
+
+                //loop for seasons
+                for (int i = 0; i < 40; i++)
+                {
+                    //varable for break command later
                     bool end = false;
-                    for (int month = 12; month > 0; month--)
+
+                    //loop for episodes
+                    for (int j = 0; j < 100; j++)
                     {
-                        for (int day = 31; day > 0; day--)
+                        string newi = i.ToString();
+                        string newi2 = (i + newMainSettings.SeasonOffset).ToString();
+                        string newj = j.ToString();
+                        string newj2 = (j + newMainSettings.EpisodeOffset).ToString();
+                        string output = null;
+                        string output2 = null;
+                        //check if i is less than 10
+                        if (i < 10)
+                            newi = "0" + i.ToString();
+                        //check if j is less than 10
+                        if (j < 10)
+                            newj = "0" + j.ToString();
+                        if ((i + newMainSettings.SeasonOffset) < 10)
+                            newi2 = "0" + (i + newMainSettings.SeasonOffset).ToString();
+                        //check if j is less than 10
+                        if ((j + newMainSettings.EpisodeOffset) < 10)
+                            newj2 = "0" + (j + newMainSettings.EpisodeOffset).ToString();
+
+                        //make string to compare changed name too
+                        string startnewname = newfilename;
+
+                        //1x01 format 
+                        if (newMainSettings.SeasonFormat == 0)
                         {
-                            string startnewname = newfilename;
-                            string newyear = year.ToString();
-                            string newmonth = month.ToString();
-                            string newday = day.ToString();
+                            output2 = (i + newMainSettings.SeasonOffset).ToString() + "x" + newj2;
+                            output = i.ToString() + "x" + newj;
 
-                            //check if i is less than 10
-                            if (year < 10)
-                                newyear = "0" + year.ToString();
-                            //check if j is less than 10
-                            if (month < 10)
-                                newmonth = "0" + month.ToString();
-                            //check if k is less than 10
-                            if (day < 10)
-                                newday = "0" + day.ToString();
-                            string kk = "20" + newyear;
-
-                            newfilename = newfilename.Replace(kk + " " + month + " " + day, month.ToString() + "-" + day.ToString() + "-" + kk);
-                            newfilename = newfilename.Replace(kk + " " + newmonth + " " + newday, month.ToString() + "-" + day.ToString() + "-" + kk);
-
-                            newfilename = newfilename.Replace(month + "-" + day + "-" + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
-                            newfilename = newfilename.Replace(month + " " + day + " " + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
-                            startIndex = newfilename.IndexOf(month + "-" + day + "-" + kk);//find index
+                            newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
+                            newfilename = newfilename.Replace(newi + newj, output);//0101                        
+                            newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1               
+                            newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
+                            newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
+                            newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
+                            newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
+                            newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
+                            newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
+                            newfilename = newfilename.Replace("0" + output, output);//01x01 fix might be unnessitarry
+                            newfilename = newfilename.Replace(output, seasonDash + output2 + tempTitle);//1x01 add title
+                            startIndex = newfilename.IndexOf(output2);//find index                        
                             if (startIndex != -1)
                             {
-                                if (day > 9 && month > 9)
-                                    endIndex = startIndex + 10;
-                                else if (day > 9 || month > 9)
-                                    endIndex = startIndex + 9;
-                                else
-                                    endIndex = startIndex + 8;
+                                if (i > 9) { endIndex = startIndex + 5; } else { endIndex = startIndex + 4; }
+                                //endIndex = startIndex + 4;
                             }
-                            if (startnewname != newfilename)
+
+                        }
+                        //0101 format
+                        if (newMainSettings.SeasonFormat == 1)
+                        {
+                            output2 = newi2 + newj2;
+                            output = newi + newj;
+
+                            newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101 
+                            newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
+                            newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
+                            newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
+                            newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
+                            newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
+                            newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
+                            newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
+                            newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
+                            newfilename = newfilename.Replace(output, seasonDash + output2 + tempTitle);//0101 add title
+                            startIndex = newfilename.IndexOf(output2);//find index
+                            if (startIndex != -1)
+                                endIndex = startIndex + 4;
+                        }
+                        //S01E01 format
+                        if (newMainSettings.SeasonFormat == 2)
+                        {
+                            output2 = "S" + newi2 + "E" + newj2;
+                            output = "S" + newi + "E" + newj;
+
+                            newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
+                            newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
+                            newfilename = newfilename.Replace(newi + newj, output);//0101
+                            newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01E01
+                            newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
+                            newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
+                            newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
+                            newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
+                            newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
+                            newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
+                            newfilename = newfilename.Replace("S" + newi + "E" + newj, seasonDash + output2 + tempTitle);//S01E01 add title
+                            newfilename = newfilename.Replace("s" + newi + "e" + newj, seasonDash + output2 + tempTitle);//S01E01 add title if second time
+                            startIndex = newfilename.IndexOf(output2);//find index
+                            if (startIndex != -1)
+                                endIndex = startIndex + 6;
+                        }
+                        //101 format
+                        if (newMainSettings.SeasonFormat == 3)
+                        {
+                            output2 = (i + newMainSettings.SeasonOffset).ToString() + newj2;
+                            output = i.ToString() + newj;
+
+                            newfilename = newfilename.Replace(newi + newj, output);//0101
+                            newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj, temp + output);//1x01
+                            newfilename = newfilename.Replace("s" + newi + "e" + newj, output);//s01e01
+                            newfilename = newfilename.Replace("s" + newi + " e" + newj, output);//s01 e01
+                            newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
+                            newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
+                            newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
+                            newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
+                            newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
+                            newfilename = newfilename.Replace(output, seasonDash + output2 + tempTitle);//0101 add title
+                            startIndex = newfilename.IndexOf(output2);//find index
+                            if (startIndex != -1)
                             {
-                                end = true;
-                                break;
+                                if (i > 9) { endIndex = startIndex + 4; } else { endIndex = startIndex + 3; }
+                                //endIndex = startIndex + 3;
                             }
-                        }//end of for loop day
-                        if (end)
+                        }
+
+                        //stop loop when name is change                    
+                        if (startnewname != newfilename)
+                        {
+                            end = true;
                             break;
-                    }//end of for loop month
+                        }
+
+                    }//end of episode loop
+
+                    //stop loop when name is change
                     if (end)
                         break;
-                }//end of for loop year
-            }//end of if for date check box
 
-            if (startIndex == -1)
-                startIndex = newfilename.Length - 1;
+                }//end of season loop
 
-            switch (newMainSettings.ProgramFormat)
-            {
-                case 0:
-                    newfilename = UpperCaseingAfterSpace(newfilename, 0, startIndex, true);
-                    break;
-                case 1:
-                    newfilename = UpperCaseing(newfilename, 0, 1);
-                    break;
-                case 2:
-                    newfilename = UpperCaseing(newfilename, 0, startIndex);
-                    break;
-                default:
-                    break;
-            }
+                //Date format
+                if (newMainSettings.SeasonFormat == 4)
+                {
+                    //add dash if the title exists or add one 
+                    string dateTitle = null;
+                    if (!newMainSettings.DashTitle)
+                    {
+                        if (fileList[index].FileTitle != "")
+                            dateTitle = " - " + EditFileList[index].FileTitle;
+                        else
+                            dateTitle = " -";
+                    }
+                    else
+                        dateTitle = EditFileList[index].FileTitle;
 
-            if (endIndex != -1)
-            {
-                switch (newMainSettings.TitleFormat)
+                    for (int year = 0; year < 20; year++)
+                    {
+                        bool end = false;
+                        for (int month = 12; month > 0; month--)
+                        {
+                            for (int day = 31; day > 0; day--)
+                            {
+                                string startnewname = newfilename;
+                                string newyear = year.ToString();
+                                string newmonth = month.ToString();
+                                string newday = day.ToString();
+
+                                //check if i is less than 10
+                                if (year < 10)
+                                    newyear = "0" + year.ToString();
+                                //check if j is less than 10
+                                if (month < 10)
+                                    newmonth = "0" + month.ToString();
+                                //check if k is less than 10
+                                if (day < 10)
+                                    newday = "0" + day.ToString();
+                                string kk = "20" + newyear;
+
+                                newfilename = newfilename.Replace(kk + " " + month + " " + day, month.ToString() + "-" + day.ToString() + "-" + kk);
+                                newfilename = newfilename.Replace(kk + " " + newmonth + " " + newday, month.ToString() + "-" + day.ToString() + "-" + kk);
+
+                                newfilename = newfilename.Replace(month + "-" + day + "-" + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
+                                newfilename = newfilename.Replace(month + " " + day + " " + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
+                                startIndex = newfilename.IndexOf(month + "-" + day + "-" + kk);//find index
+                                if (startIndex != -1)
+                                {
+                                    if (day > 9 && month > 9)
+                                        endIndex = startIndex + 10;
+                                    else if (day > 9 || month > 9)
+                                        endIndex = startIndex + 9;
+                                    else
+                                        endIndex = startIndex + 8;
+                                }
+                                if (startnewname != newfilename)
+                                {
+                                    end = true;
+                                    break;
+                                }
+                            }//end of for loop day
+                            if (end)
+                                break;
+                        }//end of for loop month
+                        if (end)
+                            break;
+                    }//end of for loop year
+                }//end of if for date check box
+
+                if (startIndex == -1)
+                    startIndex = newfilename.Length - 1;
+
+                switch (newMainSettings.ProgramFormat)
                 {
                     case 0:
-                        newfilename = UpperCaseingAfterSpace(newfilename, endIndex, newfilename.Length, false);
+                        newfilename = UpperCaseingAfterSpace(newfilename, 0, startIndex, true);
                         break;
                     case 1:
-                        newfilename = UpperCaseFirstAfterSpace(newfilename, endIndex, newfilename.Length);
+                        newfilename = UpperCaseing(newfilename, 0, 1);
                         break;
                     case 2:
-                        newfilename = UpperCaseing(newfilename, endIndex, newfilename.Length);
-                        break;
-                    case 4:
-                        StringBuilder filenameOld = new StringBuilder(newfilename);
-                        StringBuilder filenameNew = new StringBuilder();
-                        filenameNew.Length = endIndex;
-                        for (int q = 0; q < endIndex; q++)
-                            filenameNew[q] = filenameOld[q];
-                        newfilename = filenameNew.ToString() + temp + "&&&&";
+                        newfilename = UpperCaseing(newfilename, 0, startIndex);
                         break;
                     default:
                         break;
                 }
-                if (newMainSettings.TitleFormat != 4 && newMainSettings.AutoGetTitle)
+
+                if (endIndex != -1)
                 {
-                    StringBuilder titleSting = new StringBuilder(newfilename);
-                    string temp1 = (titleSting[endIndex].ToString() + titleSting[endIndex + 1].ToString() + titleSting[endIndex + 2].ToString() + titleSting[endIndex + 3].ToString() + titleSting[endIndex + 4].ToString());
-                    if (temp1 == (temp + "&&&&") || temp1 == (" - &&") || temp1 == (temp + temp + "&&&"))
+                    switch (newMainSettings.TitleFormat)
                     {
-                        selected.Add(index);
-                        //int format3 = -1;
-                        //format3 = newMainSettings.SeasonFormat + 1;                        
-                        //TVDB InternetTest = new TVDB(this, newfilename, index, fileList, newMainSettings.DataFolder, format3);
+                        case 0:
+                            newfilename = UpperCaseingAfterSpace(newfilename, endIndex, newfilename.Length, false);
+                            break;
+                        case 1:
+                            newfilename = UpperCaseFirstAfterSpace(newfilename, endIndex, newfilename.Length);
+                            break;
+                        case 2:
+                            newfilename = UpperCaseing(newfilename, endIndex, newfilename.Length);
+                            break;
+                        case 4:
+                            StringBuilder filenameOld = new StringBuilder(newfilename);
+                            StringBuilder filenameNew = new StringBuilder();
+                            filenameNew.Length = endIndex;
+                            for (int q = 0; q < endIndex; q++)
+                                filenameNew[q] = filenameOld[q];
+                            newfilename = filenameNew.ToString() + temp + "&&&&";
+                            break;
+                        default:
+                            break;
+                    }
+                    if (newMainSettings.TitleFormat != 4 && findTitle)// && newMainSettings.AutoGetTitle)
+                    {
+                        StringBuilder titleSting = new StringBuilder(newfilename);
+                        string temp1 = (titleSting[endIndex].ToString() + titleSting[endIndex + 1].ToString() + titleSting[endIndex + 2].ToString() + titleSting[endIndex + 3].ToString() + titleSting[endIndex + 4].ToString());
+                        if (temp1 == (temp + "&&&&") || temp1 == (" - &&") || temp1 == (temp + temp + "&&&"))
+                        {
+                            EditFileList[index].FileTitle = "@@@@";
+                            //AddTitle.Add(index);
+                            //int format3 = -1;
+                            //format3 = newMainSettings.SeasonFormat + 1;                        
+                            //TVDB InternetTest = new TVDB(this, newfilename, index, fileList, newMainSettings.DataFolder, format3);
+                        }
                     }
                 }
+                if (!findTitle)
+                    EditFileList[index].FileTitle = "%%%%";
+                switch (newMainSettings.ExtFormat)
+                {
+                    case 0:
+                        extend = lowering(extend);
+                        break;
+                    case 1:
+                        StringBuilder ext1 = new StringBuilder(extend);
+                        ext1[1] = char.ToUpper(ext1[1]);
+                        extend = ext1.ToString();
+                        break;
+                    case 2:
+                        extend = UpperCaseing(extend);
+                        break;
+                    default:
+                        break;
+                }
+                //add file extention back on 
+                newfilename = newfilename.Replace(temp + "&&&&", extend);
+
+                //Random fixes
+                newfilename = newfilename.Replace("..", ".");
+                newfilename = newfilename.Replace(" .", ".");
+                newfilename = newfilename.Replace("- -", "-");
+                newfilename = newfilename.Replace(".-.", ".");
+                newfilename = newfilename.Replace("-.", ".");
+                newfilename = newfilename.Replace(" .", ".");
+                newfilename = newfilename.Replace("Vs", "vs");
+                newfilename = newfilename.Replace("O C ", "O.C. ");
+                newfilename = newfilename.Replace("T O ", "T.O. ");
+                newfilename = newfilename.Replace("Csi", "CSI");
+                newfilename = newfilename.Replace("Wwii", "WWII");
+                newfilename = newfilename.Replace("Hd", "HD");
+                newfilename = newfilename.Replace("Tosh 0", "Tosh.0");
+                newfilename = newfilename.Replace("O Brien", "O'Brien");
+                newfilename = newfilename.Replace("Nbc", "NBC");
+                newfilename = newfilename.Replace("Abc", "ABC");
+                newfilename = newfilename.Replace("Cbs", "CBS");
+                newfilename = newfilename.Replace("Iv" + temp, "IV" + temp);
+                newfilename = newfilename.Replace("Ix" + temp, "IX" + temp);
+                newfilename = newfilename.Replace("Viii", "VIII");
+                newfilename = newfilename.Replace("Vii", "VII");
+                newfilename = newfilename.Replace("Vi" + temp, "VI" + temp);
+                newfilename = newfilename.Replace("Xi" + temp, "XI" + temp);
+                newfilename = newfilename.Replace("Xii" + temp, "XII" + temp);
+                newfilename = newfilename.Replace("Xiii" + temp, "XIII" + temp);
+                newfilename = newfilename.Replace("Xiiii" + temp, "XIIII" + temp);
+                newfilename = newfilename.Replace("Iii", "III");
+                newfilename = newfilename.Replace("Ii", "II");
+                newfilename = newfilename.Replace("X Files", "X-Files");
+                newfilename = newfilename.Replace("La ", "LA ");
+                newfilename = newfilename.Replace("Nba", "NBA");
+
+                EditFileList[index].NewFileName = newfilename;
             }
-
-            switch (newMainSettings.ExtFormat)
-            {
-                case 0:
-                    extend = lowering(extend);
-                    break;
-                case 1:
-                    StringBuilder ext1 = new StringBuilder(extend);
-                    ext1[1] = char.ToUpper(ext1[1]);
-                    extend = ext1.ToString();
-                    break;
-                case 2:
-                    extend = UpperCaseing(extend);
-                    break;
-                default:
-                    break;
-            }
-            //add file extention back on 
-            newfilename = newfilename.Replace(temp + "&&&&", extend);
-
-            //Random fixes
-            newfilename = newfilename.Replace("..", ".");
-            newfilename = newfilename.Replace(" .", ".");
-            newfilename = newfilename.Replace("- -", "-");
-            newfilename = newfilename.Replace(".-.", ".");
-            newfilename = newfilename.Replace("-.", ".");
-            newfilename = newfilename.Replace(" .", ".");
-            newfilename = newfilename.Replace("Vs", "vs");
-            newfilename = newfilename.Replace("O C ", "O.C. ");
-            newfilename = newfilename.Replace("T O ", "T.O. ");
-            newfilename = newfilename.Replace("Csi", "CSI");
-            newfilename = newfilename.Replace("Wwii", "WWII");
-            newfilename = newfilename.Replace("Hd", "HD");
-            newfilename = newfilename.Replace("Tosh 0", "Tosh.0");
-            newfilename = newfilename.Replace("O Brien", "O'Brien");
-            newfilename = newfilename.Replace("Nbc", "NBC");
-            newfilename = newfilename.Replace("Abc", "ABC");
-            newfilename = newfilename.Replace("Cbs", "CBS");
-            newfilename = newfilename.Replace("Iv" + temp, "IV" + temp);
-            newfilename = newfilename.Replace("Ix" + temp, "IX" + temp);
-            newfilename = newfilename.Replace("Viii", "VIII");
-            newfilename = newfilename.Replace("Vii", "VII");
-            newfilename = newfilename.Replace("Vi" + temp, "VI" + temp);
-            newfilename = newfilename.Replace("Xi" + temp, "XI" + temp);
-            newfilename = newfilename.Replace("Xii" + temp, "XII" + temp);
-            newfilename = newfilename.Replace("Xiii" + temp, "XIII" + temp);
-            newfilename = newfilename.Replace("Xiiii" + temp, "XIIII" + temp);
-            newfilename = newfilename.Replace("Iii", "III");
-            newfilename = newfilename.Replace("Ii", "II");
-            newfilename = newfilename.Replace("X Files", "X-Files");
-            newfilename = newfilename.Replace("La ", "LA ");
-            newfilename = newfilename.Replace("Nba", "NBA");
-
             // return converted file name
-            return newfilename;
+           return true;
         }//end of file rename function
 
         //This XmlWrite method creates a new XML File
@@ -2832,8 +2789,7 @@ namespace TV_show_Renamer
                 progressBar1.BeginInvoke(action3);
                 return;
             }
-            Thread p = new Thread(new ThreadStart(autoConvert));
-            p.Start();
+            autoConvert();
             mainExtrector.Extracting -= extr_Extracting;
             mainExtrector.Dispose();
             MethodInvoker action4 = delegate
@@ -2988,8 +2944,7 @@ namespace TV_show_Renamer
                 progressBar1.BeginInvoke(action3);
                 return;
             }
-            Thread p = new Thread(new ThreadStart(autoConvert));
-            p.Start();
+            autoConvert();
             mainExtrector.Extracting -= extr_Extracting;
             mainExtrector.Dispose();
             MethodInvoker action4 = delegate
@@ -2998,68 +2953,7 @@ namespace TV_show_Renamer
             };
             progressBar1.BeginInvoke(action4);
         }
-
-        //add files 
-        private void getFiles(string[] fileList2)
-        {
-            if (fileList2 == null)
-                return;
-            //loop for each file in array
-            foreach (String file3 in fileList2)
-            {
-                bool stopall = false;
-                FileInfo fi3 = new FileInfo(file3);
-
-                //check if file is already in list
-                for (int i = 0; i < fileList.Count(); i++)
-                {
-                    if (fi3.Name == fileList[i].FileName)
-                    {
-                        stopall = true;
-                        break;
-                    }
-                }
-                if (stopall)
-                    continue;
-                if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
-                    archiveExtrector(file3, fi3.Name, true);
-                else
-                {
-                    if (fi3.Extension == "" || fi3.Extension == null)
-                        break;
-                    MethodInvoker action = delegate
-                    {
-                        fileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension));
-                        //Thread p = new Thread(new ThreadStart(autoConvert));
-                        //p.Start();
-                        //dataGridView1.Refresh();
-                    };
-                    dataGridView1.BeginInvoke(action);
-                }
-            }//end of loop
-            Thread p = new Thread(new ThreadStart(autoConvert));
-            p.Start();
-
-            //MethodInvoker action2 = delegate
-            //{           
-
-            //dataGridView1.Refresh();
-            //};
-            //dataGridView1.BeginInvoke(action2);
-        }
-
-        //add files from folder
-        private void getFilesInFolder(string folder)
-        {
-            //unzip everything then process all of the unziped file created by the unzipping
-            if (newMainSettings.OpenZIPs)
-                ProcessDirZIP(folder);
-            ProcessDir(folder, 0);
-
-            Thread p = new Thread(new ThreadStart(autoConvert));
-            p.Start();
-        }
-
+        
         private void extr_Extracting(object sender, ProgressEventArgs e)
         {
             int progress = e.PercentDone;
@@ -3091,13 +2985,17 @@ namespace TV_show_Renamer
             else
                 e.Effect = DragDropEffects.None;
         }
-
+        //drag and drop
         private void dragTo_DragDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                getFiles(files);
+                ThreadAdd FilesToAdd = new ThreadAdd();
+                FilesToAdd.AddType = "files";
+                FilesToAdd.ObjectToAdd = files;
+                AddFilesThread.RunWorkerAsync(FilesToAdd);
+                //getFiles(files);
             }
         }
 
@@ -3137,8 +3035,7 @@ namespace TV_show_Renamer
                     newMainSettings.SeasonOffset = 0;
                     newMainSettings.EpisodeOffset = 0;
 
-                    Thread t = new Thread(new ThreadStart(autoConvert));
-                    t.Start();
+                    autoConvert();
                 }
             }
         }
@@ -3176,7 +3073,7 @@ namespace TV_show_Renamer
         //right click to get titles off IMDB
         private void getTitlesOffIMBDOfSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.getTVDBTitles();
+
         }
 
         //remove selected titles
@@ -3194,7 +3091,7 @@ namespace TV_show_Renamer
                 {
                     if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        if (fileList[i].FileTitle == "")                        
+                        if (fileList[i].FileTitle == "" || fileList[i].FileTitle == "@@@@" || fileList[i].FileTitle == "%%%%")                        
                             continue;                        
                         EditTitle2 mainEdit = new EditTitle2(fileList[i].FileTitle);
                         mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
@@ -3205,8 +3102,7 @@ namespace TV_show_Renamer
                         }
                     }
                 }
-                Thread t = new Thread(new ThreadStart(autoConvert));
-                t.Start();
+                autoConvert();
             }
         }
 
@@ -3296,6 +3192,177 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();
         }
+        
+        private void AddFilesThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            rerun = false;
+            //BindingList<TVClass> NewFileList = new BindingList<TVClass>();
+            //List<int> addTitleTo= new List<int>();
+            //foreach (TVClass TempForClone in fileList) {
+                
+                //EditFileList.Add();
+            //}
+
+            ThreadAdd tempInfo = (ThreadAdd)e.Argument;
+            if (tempInfo == null) {
+                tempInfo = new ThreadAdd();
+                tempInfo.AddType = "convert";
+            }
+                
+
+            switch (tempInfo.AddType)
+            {
+                case "files":
+                    string[] files= (string[])tempInfo.ObjectToAdd;
+                    BindingList<TVClass> NewFileList = new BindingList<TVClass>();
+                    
+                    if (files == null)
+                        return;
+                    foreach (string pendingFileName in files) {
+
+                        FileInfo fi3 = new FileInfo(pendingFileName);
+
+                        if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
+                            archiveExtrector(pendingFileName, fi3.Name, true);
+                        else
+                        {
+                            if (fi3.Extension == "" || fi3.Extension == null)
+                                break;
+
+                            NewFileList.Add(new TVClass(fi3.DirectoryName, fi3.Name, fi3.Extension));
+
+                            fileRenamer(NewFileList);                                 
+                        }
+                    }
+
+                    MethodInvoker action = delegate
+                    {
+                        foreach(TVClass addobject in NewFileList)
+                            fileList.Add(addobject);
+                        dataGridView1.Refresh();
+                        dataGridView1.AutoResizeColumns();
+                    };
+                    dataGridView1.BeginInvoke(action);                    
+                    break;
+                case "folder":
+                    string folder = (string)tempInfo.ObjectToAdd;
+                    
+                    break;
+                case "convert":
+                    //MessageBox.Show("convert");                    
+                    fileRenamer(fileList);
+                    MethodInvoker action3 = delegate
+                    {                        
+                        dataGridView1.Refresh();
+                        dataGridView1.AutoResizeColumns();
+                    };
+                    dataGridView1.BeginInvoke(action3);                   
+                    break;
+                default:
+                    MessageBox.Show("default");
+                    break;
+            }
+        }
+
+        private void AddFilesThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (rerun)
+                autoConvert();
+            else
+            {
+                if (newMainSettings.AutoGetTitle&&fileList.Count!=0)
+                {
+                    List<int> selected = new List<int>();
+                    for (int i = 0; i < fileList.Count; i++)
+                    {
+                        if (fileList[i].FileTitle == "@@@@")                        
+                            selected.Add(i);                        
+                    }
+                    //TestTitle(selected);
+                    if (!TitleThread.IsBusy)
+                        TitleThread.RunWorkerAsync(selected);
+                    //TitleThread.RunWorkerAsync(selected);
+                }
+            }
+        }
+
+        private void TitleThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            List<int> selected4 =(List<int>)e.Argument;
+            if (selected4 == null)
+                return;
+            if (selected4.Count() == 0)
+                return;
+            List<string> filename = new List<string>();
+            List<int> TVID = new List<int>();
+            List<int> selected2 = new List<int>();
+            int format = -1;
+            string folder = "";
+            //MethodInvoker action = delegate
+            //{
+                format = newMainSettings.SeasonFormat + 1;
+                folder = newMainSettings.DataFolder;
+                for (int numberOne=0;numberOne<selected4.Count();numberOne++)
+                {
+                    selected2.Add(selected4[numberOne]);
+                    filename.Add(fileList[selected4[numberOne]].NewFileName);
+                    TVID.Add(fileList[selected4[numberOne]].TVShowID);
+                }
+            //};
+            //dataGridView1.BeginInvoke(action);              
+            //List<int> selected = (List<int>)e.Argument;
+            //NewTVDB GetTitles = new NewTVDB(fileList, selected2, newMainSettings.DataFolder, newMainSettings.SeasonFormat + 1);
+                for (int mainindex = 0; mainindex < selected2.Count; mainindex++)
+                {
+                    NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
+                    string newTitleReturn = GetTitles.findTitle();
+                    if (newTitleReturn != "")
+                    {
+                        fileList[selected4[mainindex]].FileTitle = newTitleReturn;
+                    }
+
+                }
+                autoConvert();                                   
+        }
+        private void TestTitle(List<int> selected4)
+        {
+            //List<int> selected4 = (List<int>)e.Argument;
+            if (selected4 == null)
+                return;
+            if (selected4.Count() == 0)
+                return;
+            List<string> filename = new List<string>();
+            List<int> TVID = new List<int>();
+            List<int> selected2 = new List<int>();
+            int format = -1;
+            string folder = "";
+            
+                format = newMainSettings.SeasonFormat + 1;
+                folder = newMainSettings.DataFolder;
+                for (int numberOne = 0; numberOne < selected4.Count(); numberOne++)
+                {
+                    selected2.Add(selected4[numberOne]);
+                    filename.Add(fileList[selected4[numberOne]].NewFileName);
+                    TVID.Add(fileList[selected4[numberOne]].TVShowID);
+                }
+            
+            //List<int> selected = (List<int>)e.Argument;
+            //NewTVDB GetTitles = new NewTVDB(fileList, selected2, newMainSettings.DataFolder, newMainSettings.SeasonFormat + 1);
+            for (int mainindex=0;mainindex<selected2.Count;mainindex++)
+            {
+                NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
+                string newTitleReturn = GetTitles.findTitle();
+                if (newTitleReturn != "")
+                {
+                    fileList[selected4[mainindex]].FileTitle = newTitleReturn;                    
+                }
+
+            }
+            autoConvert();
+
+        }
+
+
                 
     }//end of form1 partial class    
 }//end of namespace

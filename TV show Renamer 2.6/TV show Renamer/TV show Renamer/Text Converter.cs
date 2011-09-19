@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
-using System.Threading;
+//using System.Threading;
 
 namespace TV_show_Renamer
 {
@@ -88,8 +88,7 @@ namespace TV_show_Renamer
                     dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
                 }
                 this.dataGridView1.CurrentCell = this.dataGridView1[0, dataGridView1.RowCount - 1];
-                Thread t = new Thread(new ThreadStart(convert));
-                t.Start();
+                convert();
             }
         }
        
@@ -119,8 +118,7 @@ namespace TV_show_Renamer
                 if (y < 0) y = 0;
                 if (dataGridView1.Rows.Count != 0)
                     this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
-                Thread t = new Thread(new ThreadStart(convert));
-                t.Start();
+                convert();
             }
         }
 
@@ -150,8 +148,7 @@ namespace TV_show_Renamer
                 }
                 if (y != -1)
                     this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
-                Thread t = new Thread(new ThreadStart(convert));
-                t.Start();
+                convert();
             }
         }
 
@@ -180,8 +177,7 @@ namespace TV_show_Renamer
                 sw.WriteLine(textConvert[j]);            
             sw.Close();//close writer stream
             this.Hide();
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
             this.Hide();
         }
         private void CheckKeys(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -205,8 +201,7 @@ namespace TV_show_Renamer
                         dataGridView1.Rows[i / 2].Cells[1].Value = "to";
                         dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
                     }
-                    Thread t = new Thread(new ThreadStart(convert));
-                    t.Start();
+                    convert();
                 }
             }
         }
