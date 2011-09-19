@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Threading;
+//using System.Threading;
 
 namespace TV_show_Renamer
 {
@@ -59,105 +59,100 @@ namespace TV_show_Renamer
             this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
             this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
+            this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
+            this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             this.Show();
         }
         //ProgramFormat
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.ProgramFormat = comboBox1.SelectedIndex;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //SeasonFormat
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.SeasonFormat = comboBox2.SelectedIndex;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }       
         //TitleFormat
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.TitleFormat=comboBox3.SelectedIndex;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }        
         //JunkFormat
         private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.JunkFormat = comboBox6.SelectedIndex;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //ExtFormat
         private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.ExtFormat = comboBox7.SelectedIndex;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //DashSeason
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.DashSeason = Convert.ToBoolean(comboBox4.SelectedIndex);
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //DashTitle
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.DashTitle = Convert.ToBoolean(comboBox5.SelectedIndex);
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //remove period
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemovePeriod = checkBox1.Checked;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //remove underscore
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveUnderscore = checkBox2.Checked;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }        
         //remove dash
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveDash = checkBox3.Checked;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //remove year
         private void checkBox6_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveYear = checkBox6.Checked;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //remove bracket
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveBracket = checkBox4.Checked;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //remove crap
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.RemoveCrap = checkBox5.Checked;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //autoGetTitle
         private void checkBox7_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.AutoGetTitle = checkBox7.Checked;
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert(); ;
         }
         //SeasonOffset
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -165,8 +160,7 @@ namespace TV_show_Renamer
             newMainSettings.SeasonOffset = (int)numericUpDown1.Value;
             if (newMainSettings.AutoGetTitle)
                 Main.clearTitles();
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //EpisodeOffset
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
@@ -174,8 +168,7 @@ namespace TV_show_Renamer
             newMainSettings.EpisodeOffset = (int)numericUpDown2.Value;
             if (newMainSettings.AutoGetTitle)
                 Main.clearTitles();
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            convert();
         }
         //autoconvert
         private void convert()

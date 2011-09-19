@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Threading;
+//using System.Threading;
 
 namespace TV_show_Renamer
 {
@@ -38,8 +38,7 @@ namespace TV_show_Renamer
                     if (Main.addTitle(textBox1.Text))
                     {
                         textBox1.Text = null;
-                        Thread t = new Thread(new ThreadStart(convert));
-                        t.Start();
+                        convert();
                     }
                 }            
         }
@@ -59,8 +58,7 @@ namespace TV_show_Renamer
         {
             if (names.Count() != 0)
             {
-                Thread t = new Thread(new ThreadStart(convert));
-                t.Start();
+                convert();
             }
         }
         private void CheckKeys(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -72,8 +70,7 @@ namespace TV_show_Renamer
                     if (Main.addTitle(textBox1.Text))
                     {
                         textBox1.Text = null;
-                        Thread t = new Thread(new ThreadStart(convert));
-                        t.Start();
+                        convert();
                     }
                 }
             }

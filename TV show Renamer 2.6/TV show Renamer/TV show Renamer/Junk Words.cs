@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Threading;
+//using System.Threading;
 
 namespace TV_show_Renamer
 {
@@ -104,8 +104,7 @@ namespace TV_show_Renamer
 
             textBox1.Text = null;//clear box
             this.dataGridView1.CurrentCell = this.dataGridView1[0, dataGridView1.RowCount - 1];
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();                       
+            convert();                       
          }
         
         //autoconvert method 
@@ -143,8 +142,7 @@ namespace TV_show_Renamer
                 }
                 if (y != -1)
                     this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
-                Thread t = new Thread(new ThreadStart(convert));
-                t.Start();
+                convert();
             }
         }
 
@@ -171,8 +169,7 @@ namespace TV_show_Renamer
                 sw.WriteLine(userwords[j]);
             sw.Close();//close writer stream
             this.Hide();
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start(); 
+            convert(); 
         }
 
         private void CheckKeys(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -217,8 +214,7 @@ namespace TV_show_Renamer
 
                 textBox1.Text = null;//clear box
 
-                Thread t = new Thread(new ThreadStart(convert));
-                t.Start();
+                convert();
             }
         }
     }//end of partial class 

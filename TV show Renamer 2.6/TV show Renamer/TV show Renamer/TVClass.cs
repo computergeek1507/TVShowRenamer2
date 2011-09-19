@@ -23,6 +23,15 @@ namespace TV_show_Renamer
             _auto = true;
         }
 
+        public TVClass(string fileFolder, string fileName,string newFileName, string fileExtention)
+        {
+            _fileFolder = fileFolder;
+            _fileName =  fileName;
+            _newFileName = newFileName;
+            _fileExtention = fileExtention;
+            _auto = true;
+        }
+
         public string FileName
         {
             get { return _fileName; }
