@@ -64,6 +64,8 @@
             this.addJunkWordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.defaultSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -280,6 +282,8 @@
             this.addJunkWordsToolStripMenuItem,
             this.toolStripMenuItem3,
             this.toolStripSeparator3,
+            this.toolStripMenuItem4,
+            this.toolStripSeparator11,
             this.defaultSettingsToolStripMenuItem});
             this.otherOptionsToolStripMenuItem.Name = "otherOptionsToolStripMenuItem";
             this.otherOptionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -334,6 +338,18 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(196, 6);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(199, 22);
+            this.toolStripMenuItem4.Text = "XBMC Support...";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(196, 6);
             // 
             // defaultSettingsToolStripMenuItem
             // 
@@ -690,6 +706,7 @@
             this.titles.HeaderText = "titles";
             this.titles.Name = "titles";
             this.titles.ReadOnly = true;
+            this.titles.Visible = false;
             this.titles.Width = 53;
             // 
             // filefolder
@@ -836,6 +853,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.ComponentModel.BackgroundWorker AddFilesThread;
         private System.ComponentModel.BackgroundWorker TitleThread;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.DataGridViewTextBoxColumn oldName;
         private System.Windows.Forms.DataGridViewTextBoxColumn newname;
         private System.Windows.Forms.DataGridViewTextBoxColumn edittitle;
