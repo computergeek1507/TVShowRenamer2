@@ -3362,6 +3362,11 @@ namespace TV_show_Renamer
 
         }
 
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            XBMC MainXBMC = new XBMC(fileList,newMainSettings.SeasonFormat);
+        }
+
 
                 
     }//end of form1 partial class    
