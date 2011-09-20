@@ -1923,13 +1923,14 @@ namespace TV_show_Renamer
                     if (newMainSettings.SeasonFormat == 1)
                         you = test.IndexOf(newi + newj);//0101 add title                    
                     //101 format
-                    if (newMainSettings.SeasonFormat == 2)
+                    if (newMainSettings.SeasonFormat == 3)
                         you = test.IndexOf(i.ToString() + newj);//0101 add title                    
                     //S01E01 format
-                    if (newMainSettings.SeasonFormat == 3)
+                    if (newMainSettings.SeasonFormat == 2)
                     {
                         you = test.IndexOf("S" + newi + "E" + newj);//S01E01 add title
-                        you = test.IndexOf("S" + newi + "e" + newj);//S01E01 add title if second time
+                        if(you==-1)
+                            you = test.IndexOf("S" + newi + "e" + newj);//S01E01 add title if second time
                     }
                     //stop loop when name is change                    
                     if (you != -1)
@@ -2011,10 +2012,10 @@ namespace TV_show_Renamer
         }//end of infofinder method
 
         //get list of folders
-        private List<string> folderFinder(String folderwatch)
+        private List<string> folderFinder(string folderwatch)
         {
-            List<String> foldersIn = new List<String>();
-            List<String> revFoldersIn = new List<String>();
+            List<string> foldersIn = new List<string>();
+            List<string> revFoldersIn = new List<string>();
            
                 System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch);
                 try
@@ -3364,7 +3365,12 @@ namespace TV_show_Renamer
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
-            XBMC MainXBMC = new XBMC(fileList,newMainSettings.SeasonFormat);
+            string[] folderSettings = menu1[0].Tag.ToString().Split('?');
+            //folderSettings[1]
+            if (int.Parse(folderSettings[0]) > 1)
+            {
+                XBMC MainXBMC = new XBMC(fileList, newMainSettings.SeasonFormat, folderSettings[1]);
+            }
         }
 
 
