@@ -157,12 +157,12 @@ namespace TV_show_Renamer
                             you = test.IndexOf(newi + newj);
                             break;
                         case 3:
-                            you = test.IndexOf(i.ToString() + newj);
-                            break;
-                        case 4:
                             you = test.IndexOf("S" + newi + "E" + newj);
                             //you = test.IndexOf("S" + newi + "e" + newj);
                             break;
+                        case 4:
+                            you = test.IndexOf(i.ToString() + newj);
+                            break;                        
                     }
                     //stop loop when name is change                    
                     if (you != -1)
