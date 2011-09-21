@@ -43,7 +43,29 @@ namespace TV_show_Renamer
 
         LogWrite _main;
 
-        List<string> _moveFolder = new List<string>();//TV Show folders       
+        List<string> _moveFolder = new List<string>();//TV Show folders
+        public class TVShowID {
+            string _TVShowName;
+            int _TVID;
+            public TVShowID(string tVShowName, int tVID)
+            {
+                _TVShowName = tVShowName;
+                _TVID = tVID;
+            }
+            public string TVShowName
+            {
+                get { return _TVShowName; }
+                set { _TVShowName = value; }
+            }
+            public int TVID
+            {
+                get { return _TVID; }
+                set { _TVID = value; }
+            }
+        
+        };
+        List<TVShowID> _TVShowIDList = new List<TVShowID>();//TV Show ID       
+
 
         //get log object to write too
         public void Start(LogWrite main) 
@@ -141,7 +163,7 @@ namespace TV_show_Renamer
                 returnValue = false;
             }
             try
-            {//write tv folder locations
+            {//write all folder locations
                 StreamWriter pw2 = new StreamWriter(_dataFolder + "//Folders.seh");
                 pw2.WriteLine(_moveFolder.Count());
                 for (int i = 0; i < _moveFolder.Count(); i++)
@@ -151,6 +173,22 @@ namespace TV_show_Renamer
             catch (Exception e)
             {
                 _main.WriteLog("Folders.seh Falure \n" + e.ToString());
+                returnValue = false;
+            }
+            try
+            {//write TV SHOW IDs
+                StreamWriter pw2 = new StreamWriter(_dataFolder + "//TVShowID.seh");
+                pw2.WriteLine(_TVShowIDList.Count() * 2);
+                for (int i = 0; i < _TVShowIDList.Count(); i++)
+                {
+                    pw2.WriteLine(_TVShowIDList[i].TVShowName);
+                    pw2.WriteLine(_TVShowIDList[i].TVID);
+                }                
+                pw2.Close();
+            }
+            catch (Exception e)
+            {
+                _main.WriteLog("TVShowID.seh Falure \n" + e.ToString());
                 returnValue = false;
             }
             return returnValue;
@@ -262,18 +300,18 @@ namespace TV_show_Renamer
                 returnValue = false;
             }
             try
-            {//Read TV show folders
+            {//Read all folders
                 if (File.Exists(_dataFolder + "//Folders.seh"))
                 {
-                    StreamReader tv2 = new StreamReader(_dataFolder + "//Folders.seh");
-                    int length = Int32.Parse(tv2.ReadLine());
+                    StreamReader tv5 = new StreamReader(_dataFolder + "//Folders.seh");
+                    int length = Int32.Parse(tv5.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
                         if (length == 0)
                             break;
-                        _moveFolder.Add(tv2.ReadLine());
+                        _moveFolder.Add(tv5.ReadLine());
                         }//end of for loop  
-                    tv2.Close();
+                    tv5.Close();
                 }//end of if
             }
             catch (Exception e)
@@ -281,7 +319,27 @@ namespace TV_show_Renamer
                 _main.WriteLog("Folders.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
-
+            try
+            {//Read ID List folders
+                if (File.Exists(_dataFolder + "//TVShowID.seh"))
+                {
+                    StreamReader tv4 = new StreamReader(_dataFolder + "//TVShowID.seh");
+                    int length = Int32.Parse(tv4.ReadLine());
+                    if ((length % 2 == 0) && length != 0)
+                    {
+                        for (int i = 0; i < length+1; i = i + 2)
+                        {
+                            _TVShowIDList.Add(new TVShowID(tv4.ReadLine(), int.Parse(tv4.ReadLine())));
+                        }//end of for loop  
+                        tv4.Close();
+                    }//end of if
+                }
+            }
+            catch (Exception e)
+            {
+                _main.WriteLog("TVShowID.seh Read Error \n" + e.ToString());
+                returnValue = false;
+            }
 
             return returnValue;
         }//end of loadsettings methods
@@ -438,5 +496,10 @@ namespace TV_show_Renamer
             get { return _moveFolder; }
             set { _moveFolder = value; }
         }
+        public List<TVShowID> TVShowIDList
+        {
+            get { return _TVShowIDList; }
+            set { _TVShowIDList = value; }
+        }        
     }//end of class
 }//end of namespace

@@ -40,7 +40,7 @@ namespace TV_show_Renamer
                 List<string> fileData = infoFinder(TVfile.NewFileName, TVfile.FileExtention);
                 //MessageBox.Show(fileData[0]+"\n"+fileData[1]+"\n"+fileData[2]+"\n"+fileData[3]);
                 string nfoFile = TVfile.NewFullFileName.Replace(TVfile.FileExtention, ".nfo");
-                EpisodeWrite(nfoFile, fileData[3], Convert.ToInt32(fileData[1]), Convert.ToInt32(fileData[2]));
+                EpisodeWrite(nfoFile, fileData[3], (Convert.ToInt32(fileData[1])), Convert.ToInt32(fileData[2]), Convert.ToInt32(fileData[1]) + (int)numericUpDown1.Value, Convert.ToInt32(fileData[2]) + (int)numericUpDown2.Value);
                 //MessageBox.Show(nfoFile);
             }
         }
@@ -53,7 +53,7 @@ namespace TV_show_Renamer
             int episode = -1;
             string Title = null;
             string test = fileName;
-            string test2 = fileName;
+            string test2 = fileName.Replace(ext,"&&&&");
             string Eptitle = null;
             int you = -1;
 
@@ -63,7 +63,7 @@ namespace TV_show_Renamer
                 bool end = false;
 
                 //loop for episodes
-                for (int j = 1; j < 100; j++)
+                for (int j = 1; j < 150; j++)
                 {
                     string newi = i.ToString();
                     string newj = j.ToString();
@@ -105,7 +105,7 @@ namespace TV_show_Renamer
                             Title = test.Remove(you - 1, test.Length - (you - 1));
                         //tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
                         Eptitle=  test2.Remove(0, you+3);
-                        Eptitle = Eptitle.Replace(ext, "");
+                        Eptitle = Eptitle.Replace("&&&&", "");
 
                         end = true;
                         break;
@@ -116,6 +116,9 @@ namespace TV_show_Renamer
                 if (end)
                     break;
             }//end of season loop
+            if (Eptitle == "&&" || Eptitle == "&")
+                Eptitle = "Episode " + episode;
+
             stuff.Add(Title);
             stuff.Add(season.ToString());
             stuff.Add(episode.ToString());
@@ -245,12 +248,11 @@ namespace TV_show_Renamer
             ShowWrite(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\tvshow.nfo", folderList[comboBox1.SelectedIndex],totalSize);
         }
 
-        public void EpisodeWrite(string fileName,string title, int season,int episode)
+        public void EpisodeWrite(string fileName, string title, int season, int episode, int displayseason, int displayepisode)
         {
             var doc = new XDocument();
 
             var emp = new XElement("episodedetails", "");
-
             emp.Add(new XElement("title", title));
             emp.Add(new XElement("rating", ""));
             emp.Add(new XElement("season", season.ToString()));
@@ -264,8 +266,8 @@ namespace TV_show_Renamer
             emp.Add(new XElement("aired", ""));
             emp.Add(new XElement("premiered", ""));
             emp.Add(new XElement("studio", ""));
-            emp.Add(new XElement("displayseason", season.ToString()));
-            emp.Add(new XElement("displayepisode", episode.ToString()));
+            emp.Add(new XElement("displayseason", displayseason.ToString()));
+            emp.Add(new XElement("displayepisode", displayepisode.ToString()));
 
             doc.Add(emp);
 
