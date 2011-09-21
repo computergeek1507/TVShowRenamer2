@@ -3317,12 +3317,12 @@ namespace TV_show_Renamer
                 for (int mainindex = 0; mainindex < selected2.Count; mainindex++)
                 {
                     NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
-                    string newTitleReturn = GetTitles.findTitle();
-                    if (newTitleReturn != "")
+                    string[] newTitleReturn = GetTitles.findTitle();
+                    if (newTitleReturn[0] != "")
                     {
-                        fileList[selected4[mainindex]].FileTitle = newTitleReturn;
+                        fileList[selected4[mainindex]].FileTitle = newTitleReturn[0];
+                        fileList[selected4[mainindex]].TVShowID = int.Parse(newTitleReturn[1]);
                     }
-
                 }
                 autoConvert();                                   
         }
@@ -3350,18 +3350,18 @@ namespace TV_show_Renamer
             
             //List<int> selected = (List<int>)e.Argument;
             //NewTVDB GetTitles = new NewTVDB(fileList, selected2, newMainSettings.DataFolder, newMainSettings.SeasonFormat + 1);
-            for (int mainindex=0;mainindex<selected2.Count;mainindex++)
-            {
-                NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
-                string newTitleReturn = GetTitles.findTitle();
-                if (newTitleReturn != "")
+                for (int mainindex = 0; mainindex < selected2.Count; mainindex++)
                 {
-                    fileList[selected4[mainindex]].FileTitle = newTitleReturn;                    
+                    NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
+                    string[] newTitleReturn = GetTitles.findTitle();
+                    if (newTitleReturn[0] != "")
+                    {
+                        fileList[selected4[mainindex]].FileTitle = newTitleReturn[0];
+                        fileList[selected4[mainindex]].TVShowID = int.Parse(newTitleReturn[1]);
+                    }
+
                 }
-
-            }
-            autoConvert();
-
+                autoConvert();
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)

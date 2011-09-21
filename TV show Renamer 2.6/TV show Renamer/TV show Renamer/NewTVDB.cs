@@ -36,21 +36,21 @@ namespace TV_show_Renamer
             TVShowID = newTVShowID;
         }        
         
-        public string findTitle()
+        public string[] findTitle()
         {
-
-            string finalTitle = "%%%%";
+            string[] returnValue = new string[2] { "%%%%", TVShowID.ToString()};
+            //string finalTitle = "%%%%";
 
                 infoFinder(fileName);
 
                 if (tvdbTitle == null)
-                    return "";                                
+                    return returnValue;                                
                 m_cacheProvider = new XmlCacheProvider(folder);
                 m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
                 if (TVShowID != -1)
-                {
-                    getTitle(TVShowID);
-                    return "%%%%";
+                {                    
+                    returnValue[0] = getTitle(TVShowID);
+                    return returnValue;
                 }
 
                 List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(tvdbTitle);
@@ -66,7 +66,7 @@ namespace TV_show_Renamer
                             seriesName.Add(list[i].SeriesName);
                         }
                     }
-                    if (seriesId.Count() == 0) return "%%%%";  //return if nothing found
+                    if (seriesId.Count() == 0) return returnValue;  //return if nothing found
                     int selectedSeriesId = -1;
                     if (seriesId.Count() == 1)                    
                         selectedSeriesId = seriesId[0];                    
@@ -78,7 +78,7 @@ namespace TV_show_Renamer
                             if (SelectMain.ShowDialog() == DialogResult.OK)
                             {
                                 int selectedid = SelectMain.selected;
-                                if (selectedid == -1) return "%%%%";
+                                if (selectedid == -1) return returnValue;
                                 selectionList.Add(new SearchInfo(tvdbTitle, selectedid));
                                 selectedSeriesId = seriesId[selectedid];
                                 SelectMain.Close();
@@ -98,7 +98,7 @@ namespace TV_show_Renamer
                                 if (SelectMain2.ShowDialog() == DialogResult.OK)
                                 {
                                     int selectedid = SelectMain2.selected;
-                                    if (selectedid == -1) return "";
+                                    if (selectedid == -1) return returnValue;
                                     selectionList.Add(new SearchInfo(tvdbTitle, selectedid));
                                     selectedSeriesId = seriesId[selectedid];
                                     SelectMain2.Close();
@@ -108,16 +108,19 @@ namespace TV_show_Renamer
                         }
                     }
 
-                    if (selectedSeriesId == -1) return "%%%%";   //return if nothing is found
+                    if (selectedSeriesId == -1) return returnValue;   //return if nothing is found
                     TVShowID = selectedSeriesId;
 
-                    finalTitle = getTitle(selectedSeriesId);
-                    if (finalTitle == "")
-                        return "%%%%";
+                    returnValue[0] = getTitle(selectedSeriesId);
+                    if (returnValue[0] == "")
+                    {
+                        returnValue[0] = "%%%%";
+                        return returnValue;
+                    }
                     //fileList[z].FileTitle= finalTitle;
                 }
-           
-            return finalTitle;
+                returnValue[1] = TVShowID.ToString();
+                return returnValue;
         }
        
         private void infoFinder(string fileName) {
