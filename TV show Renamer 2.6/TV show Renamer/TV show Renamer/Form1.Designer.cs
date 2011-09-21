@@ -751,6 +751,7 @@
             this.TVShowID.HeaderText = "TVShowID";
             this.TVShowID.Name = "TVShowID";
             this.TVShowID.ReadOnly = true;
+            this.TVShowID.Visible = false;
             this.TVShowID.Width = 84;
             // 
             // Form1
