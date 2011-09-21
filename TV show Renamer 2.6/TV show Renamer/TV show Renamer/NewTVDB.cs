@@ -6,12 +6,9 @@ using TvdbLib;
 using TvdbLib.Data;
 using System.IO;
 using TvdbLib.Cache;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace TV_show_Renamer
@@ -137,7 +134,7 @@ namespace TV_show_Renamer
                 bool end = false;
 
                 //loop for episodes
-                for (int j = 1; j < 100; j++)
+                for (int j = 1; j < 150; j++)
                 {
                     string newi = i.ToString();
                     string newj = j.ToString();
