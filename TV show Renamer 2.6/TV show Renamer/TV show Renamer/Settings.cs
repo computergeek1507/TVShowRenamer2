@@ -14,12 +14,17 @@ namespace TV_show_Renamer
     {
         Form1 Main;
 
+        string[] TVSearch = { "TVDB.com", "TVRage.com" };
+
         public Settings(Form1 test, bool zipCheck)
         {
             InitializeComponent();
             Main = test;
             checkBox1.Checked = zipCheck;
             checkBox2.Checked = Main.newMainSettings.AutoUpdates;
+            comboBox1.DataSource = TVSearch;
+            comboBox1.SelectedIndex=Main.newMainSettings.TVDataBase;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             this.Show();
         }
 
@@ -105,6 +110,11 @@ namespace TV_show_Renamer
                 Thread updateChecker = new Thread(new ThreadStart(Main.checkForUpdateSilent));
                 updateChecker.Start();
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Main.newMainSettings.TVDataBase = comboBox1.SelectedIndex;
         }     
 
     }//end of class

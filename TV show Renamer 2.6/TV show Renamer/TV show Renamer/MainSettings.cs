@@ -33,6 +33,7 @@ namespace TV_show_Renamer
         int _titleFormat = 0;
         int _junkFormat = 0;
         int _extFormat = 0;
+        int _tvDataBase = 0;
 
         int[] _backgroundColor = { 255, 153, 180, 209 };
         int[] _foregroundColor = { 255, 0, 0, 0 };
@@ -65,8 +66,7 @@ namespace TV_show_Renamer
         
         };
         List<TVShowID> _TVShowIDList = new List<TVShowID>();//TV Show ID       
-
-
+        
         //get log object to write too
         public void Start(LogWrite main) 
         {
@@ -107,6 +107,7 @@ namespace TV_show_Renamer
             _backgroundColor = temp1;
             _foregroundColor = temp2;
             _buttonColor = temp3;
+            _tvDataBase = 0;
 
             _firstWord = "";
             _moveFolder.Clear();
@@ -465,7 +466,12 @@ namespace TV_show_Renamer
             get { return _extFormat; }
             set { _extFormat = value; }
         }
-
+        public int TVDataBase
+        {
+            get { return _tvDataBase; }
+            set { _tvDataBase = value; }
+        }
+        
         public int[] BackgroundColor
         {
             get { return _backgroundColor; }

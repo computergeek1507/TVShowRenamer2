@@ -161,6 +161,7 @@
       <DependentUpon>SelectMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="TVClass.cs" />
+    <Compile Include="TVRage.cs" />
     <Compile Include="XBMC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -295,9 +296,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <None Include="Resources\Program1.png" />
-    <Content Include="Resources\TvdbLib.dll">
+    <Resource Include="Resources\TvdbLib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
