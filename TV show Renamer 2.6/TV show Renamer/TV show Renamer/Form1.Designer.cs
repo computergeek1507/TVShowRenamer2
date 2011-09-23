@@ -625,7 +625,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(115, 23);
             this.button6.TabIndex = 31;
-            this.button6.Text = "Get Title(s) off TVDB";
+            this.button6.Text = "Get TV Show(s) Title";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -751,7 +751,6 @@
             this.TVShowID.HeaderText = "TVShowID";
             this.TVShowID.Name = "TVShowID";
             this.TVShowID.ReadOnly = true;
-            this.TVShowID.Visible = false;
             this.TVShowID.Width = 84;
             // 
             // Form1

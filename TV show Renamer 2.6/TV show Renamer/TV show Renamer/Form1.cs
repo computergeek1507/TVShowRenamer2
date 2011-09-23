@@ -14,6 +14,7 @@ using Microsoft.VisualBasic.FileIO;
 using System.Threading;
 using SevenZip;
 
+
 namespace TV_show_Renamer
 {
     public partial class Form1 : Form
@@ -3314,15 +3315,31 @@ namespace TV_show_Renamer
             //dataGridView1.BeginInvoke(action);              
             //List<int> selected = (List<int>)e.Argument;
             //NewTVDB GetTitles = new NewTVDB(fileList, selected2, newMainSettings.DataFolder, newMainSettings.SeasonFormat + 1);
-                for (int mainindex = 0; mainindex < selected2.Count; mainindex++)
+                if (newMainSettings.TVDataBase==0)
                 {
-                    NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
-                    string[] newTitleReturn = GetTitles.findTitle();
-                    if (newTitleReturn[0] != "")
+                    for (int mainindex = 0; mainindex < selected2.Count; mainindex++)
                     {
-                        fileList[selected4[mainindex]].FileTitle = newTitleReturn[0];
-                        fileList[selected4[mainindex]].TVShowID = int.Parse(newTitleReturn[1]);
+                        NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
+                        string[] newTitleReturn = GetTitles.findTitle();
+                        if (newTitleReturn[0] != "")
+                        {
+                            fileList[selected4[mainindex]].FileTitle = newTitleReturn[0];
+                            fileList[selected4[mainindex]].TVShowID = int.Parse(newTitleReturn[1]);
+                        }
                     }
+                }
+                else {
+
+                    for (int mainindex2 = 0; mainindex2 < selected2.Count; mainindex2++)
+                    {
+                        TVRage GetTitles = new TVRage(filename[mainindex2], format);
+                        string newTitleReturn = GetTitles.findTitle();
+                        if (newTitleReturn != "")
+                        {
+                            fileList[selected4[mainindex2]].FileTitle = newTitleReturn;
+
+                        }
+                    }           
                 }
                 autoConvert();                                   
         }
