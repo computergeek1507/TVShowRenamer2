@@ -483,7 +483,7 @@ namespace TV_show_Renamer
                 List<int> selected = new List<int>();
                 for (int i = 0; i < fileList.Count; i++)
                 {
-                    if (fileList[i].FileTitle == "@@@@")                    
+                    if (fileList[i].FileTitle == "@@@@" || fileList[i].FileTitle == "%%%%")                    
                         selected.Add(i);                    
                 }
                 //TestTitle(selected);
@@ -2382,6 +2382,8 @@ namespace TV_show_Renamer
                         //stop loop when name is change                    
                         if (startnewname != newfilename)
                         {
+                            EditFileList[index].SeasonNum = i;
+                            EditFileList[index].EpisodeNum = j;
                             end = true;
                             break;
                         }
@@ -3296,53 +3298,74 @@ namespace TV_show_Renamer
                 return;
             if (selected4.Count() == 0)
                 return;
-            List<string> filename = new List<string>();
-            List<int> TVID = new List<int>();
-            List<int> selected2 = new List<int>();
-            int format = -1;
-            string folder = "";
+            //List<string> filename = new List<string>();
+            //List<int> TVID = new List<int>();
+            //List<int> selected2 = new List<int>();
+            //int format = -1;
+            //string folder = "";
             //MethodInvoker action = delegate
             //{
-                format = newMainSettings.SeasonFormat + 1;
-                folder = newMainSettings.DataFolder;
-                for (int numberOne=0;numberOne<selected4.Count();numberOne++)
-                {
-                    selected2.Add(selected4[numberOne]);
-                    filename.Add(fileList[selected4[numberOne]].NewFileName);
-                    TVID.Add(fileList[selected4[numberOne]].TVShowID);
-                }
+                //format = newMainSettings.SeasonFormat + 1;
+                //folder = newMainSettings.DataFolder;
+               // for (int numberOne=0;numberOne<selected4.Count();numberOne++)
+                //{
+                    //selected2.Add(selected4[numberOne]);
+                    //filename.Add(fileList[selected4[numberOne]].NewFileName);
+                    //TVID.Add(fileList[selected4[numberOne]].TVShowID);
+                //}
             //};
             //dataGridView1.BeginInvoke(action);              
             //List<int> selected = (List<int>)e.Argument;
             //NewTVDB GetTitles = new NewTVDB(fileList, selected2, newMainSettings.DataFolder, newMainSettings.SeasonFormat + 1);
                 if (newMainSettings.TVDataBase==0)
                 {
-                    for (int mainindex = 0; mainindex < selected2.Count; mainindex++)
-                    {
-                        NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
-                        string[] newTitleReturn = GetTitles.findTitle();
-                        if (newTitleReturn[0] != "")
-                        {
-                            fileList[selected4[mainindex]].FileTitle = newTitleReturn[0];
-                            fileList[selected4[mainindex]].TVShowID = int.Parse(newTitleReturn[1]);
-                        }
+                    for (int mainindex = 0; mainindex < selected4.Count; mainindex++)
+                    {                        
+                        //NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
+                        NewTVDB GetTitles = new NewTVDB( newMainSettings.DataFolder);
+                        if (fileList[selected4[mainindex]].TVShowID != -1) { 
+                            fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(fileList[selected4[mainindex]].TVShowID,fileList[selected4[mainindex]].SeasonNum,fileList[selected4[mainindex]].EpisodeNum);
+                        }else{
+                            string TVDBName = null;
+                            TVDBName=GetTitles.infoFinder(fileList[selected4[mainindex]].NewFileName, newMainSettings.SeasonFormat + 1, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+                            int newID = SearchTVID(TVDBName);
+                            if (newID != -1)
+                            {
+                                fileList[selected4[mainindex]].TVShowID = newID;
+                                fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(fileList[selected4[mainindex]].TVShowID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+                            }
+                            else {
+                                newID = GetTitles.findTitle(TVDBName);
+                                if (newID != -1)
+                                {
+                                    fileList[selected4[mainindex]].TVShowID = newID;
+                                    fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(fileList[selected4[mainindex]].TVShowID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+                                    newMainSettings.TVShowIDList.Add(new TVShowID(TVDBName, newID));
+                                }
+                            }
+                        }                        
                     }
                 }
                 else {
 
-                    for (int mainindex2 = 0; mainindex2 < selected2.Count; mainindex2++)
+                    for (int mainindex2 = 0; mainindex2 < selected4.Count; mainindex2++)
                     {
-                        TVRage GetTitles = new TVRage(filename[mainindex2], format);
-                        string newTitleReturn = GetTitles.findTitle();
-                        if (newTitleReturn != "")
-                        {
-                            fileList[selected4[mainindex2]].FileTitle = newTitleReturn;
-
-                        }
+                        //TVRage GetTitles = new TVRage(fileList[selected4[mainindex2]].NewFileName, newMainSettings.SeasonFormat + 1);
+                        TVRage GetTitles = new TVRage();
+                        string tvTitle = GetTitles.infoFinder(fileList[selected4[mainindex2]].NewFileName, newMainSettings.SeasonFormat + 1, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
+                        if (tvTitle != null) {
+                            string newTitleReturn = GetTitles.findTitle(tvTitle, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
+                            if (newTitleReturn != "")
+                            {
+                                fileList[selected4[mainindex2]].FileTitle = newTitleReturn;
+                            }
+                        
+                        }                        
                     }           
                 }
                 autoConvert();                                   
         }
+        /*
         private void TestTitle(List<int> selected4)
         {
             //List<int> selected4 = (List<int>)e.Argument;
@@ -3379,7 +3402,7 @@ namespace TV_show_Renamer
 
                 }
                 autoConvert();
-        }
+        }*/
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
@@ -3391,7 +3414,14 @@ namespace TV_show_Renamer
             }
         }
 
-
-                
+        private int SearchTVID(string TVShowName) {
+            foreach (TVShowID SearchInfo in newMainSettings.TVShowIDList) {
+                if (TVShowName == SearchInfo.TVShowName) {
+                    return SearchInfo.TVID;                
+                }            
+            }
+            return -1;
+        }
+                        
     }//end of form1 partial class    
 }//end of namespace

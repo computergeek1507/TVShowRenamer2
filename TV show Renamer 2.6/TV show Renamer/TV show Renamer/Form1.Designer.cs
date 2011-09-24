@@ -108,6 +108,8 @@
             this.fullfolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileextention = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TVShowID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SeasonNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EpisodeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -485,7 +487,9 @@
             this.newfullfolder,
             this.fullfolder,
             this.fileextention,
-            this.TVShowID});
+            this.TVShowID,
+            this.SeasonNum,
+            this.EpisodeNum});
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
@@ -751,7 +755,28 @@
             this.TVShowID.HeaderText = "TVShowID";
             this.TVShowID.Name = "TVShowID";
             this.TVShowID.ReadOnly = true;
+            this.TVShowID.Visible = false;
             this.TVShowID.Width = 84;
+            // 
+            // SeasonNum
+            // 
+            this.SeasonNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.SeasonNum.DataPropertyName = "SeasonNum";
+            this.SeasonNum.HeaderText = "SeasonNum";
+            this.SeasonNum.Name = "SeasonNum";
+            this.SeasonNum.ReadOnly = true;
+            this.SeasonNum.Visible = false;
+            this.SeasonNum.Width = 5;
+            // 
+            // EpisodeNum
+            // 
+            this.EpisodeNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.EpisodeNum.DataPropertyName = "EpisodeNum";
+            this.EpisodeNum.HeaderText = "EpisodeNum";
+            this.EpisodeNum.Name = "EpisodeNum";
+            this.EpisodeNum.ReadOnly = true;
+            this.EpisodeNum.Visible = false;
+            this.EpisodeNum.Width = 5;
             // 
             // Form1
             // 
@@ -863,6 +888,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn fullfolder;
         private System.Windows.Forms.DataGridViewTextBoxColumn fileextention;
         private System.Windows.Forms.DataGridViewTextBoxColumn TVShowID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SeasonNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EpisodeNum;
     }
 }
 
