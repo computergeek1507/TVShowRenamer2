@@ -5,6 +5,27 @@ using System.Text;
 
 namespace TV_show_Renamer
 {
+    public class TVShowID
+    {
+        string _TVShowName;
+        int _TVID;
+        public TVShowID(string tVShowName, int tVID)
+        {
+            _TVShowName = tVShowName;
+            _TVID = tVID;
+        }
+        public string TVShowName
+        {
+            get { return _TVShowName; }
+            set { _TVShowName = value; }
+        }
+        public int TVID
+        {
+            get { return _TVID; }
+            set { _TVID = value; }
+        }
+
+    };
     public class TVClass
     {
         string _fileFolder;//origonal folder
@@ -14,20 +35,13 @@ namespace TV_show_Renamer
         string _newFileName;//new file name
         bool _auto = true;//autoconvert
         int _tvShowID = -1;//TVDB id number
+        int _seasonNum = -1;//Season Number 
+        int _episodeNum = -1;//Episode Number
 
         public TVClass(string fileFolder, string fileName, string fileExtention)
         {
             _fileFolder = fileFolder;
             _fileName = _newFileName = fileName;
-            _fileExtention = fileExtention;
-            _auto = true;
-        }
-
-        public TVClass(string fileFolder, string fileName,string newFileName, string fileExtention)
-        {
-            _fileFolder = fileFolder;
-            _fileName =  fileName;
-            _newFileName = newFileName;
             _fileExtention = fileExtention;
             _auto = true;
         }
@@ -64,14 +78,12 @@ namespace TV_show_Renamer
 
         public string FullFileName
         {
-            get { return _fileFolder +"\\"+ _fileName; }
-            
+            get { return _fileFolder +"\\"+ _fileName; }            
         }
 
         public string NewFullFileName
         {
             get { return _fileFolder + "\\" + _newFileName; }
-
         }
 
         public bool AutoEdit 
@@ -86,5 +98,16 @@ namespace TV_show_Renamer
             set { _tvShowID = value; }
         }
 
+        public int SeasonNum
+        {
+            get { return _seasonNum; }
+            set { _seasonNum = value; }
+        }
+
+        public int EpisodeNum
+        {
+            get { return _episodeNum; }
+            set { _episodeNum = value; }
+        }
     }//end of class
 }//end of namespace

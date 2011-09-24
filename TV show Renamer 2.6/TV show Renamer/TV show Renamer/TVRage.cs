@@ -11,98 +11,77 @@ namespace TV_show_Renamer
     public class TVRage
     {
         //string folder = null;
-        int format = -1;
-        int season = -1;
-        int episode = -1;
-        string tvdbTitle = null;
-        string fileName = "";
+        //int format = -1;
+        //int season = -1;
+        //int episode = -1;
+        //string tvdbTitle = null;
+        //string fileName = "";
         //int TVShowID = -1;
 
-        public TVRage(string newFileName,  int newFormat)
+        public string findTitle(string tvdbTitle, int season,int episode)
         {
-            format = newFormat;
-            fileName = newFileName;        
-        }
-
-        public string findTitle()
-        {
-
             string finalTitle = "%%%%";
-
-            infoFinder(fileName);
-
             if (tvdbTitle == null)
                 return finalTitle;
 
             Show MainInfo = this.FindShow(tvdbTitle);
-
-            finalTitle=MainInfo.Seasons[season-1].Episodes[episode-1].Title.ToString();
-
+            if (MainInfo.Seasons.Count >= season - 1) {
+                if (MainInfo.Seasons[season - 1].Episodes.Count >= episode - 1)
+                {
+                    finalTitle = MainInfo.Seasons[season - 1].Episodes[episode - 1].Title.ToString();
+                    finalTitle = finalTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");          
+                }            
+            }
             return finalTitle;
         }
-
-        private void infoFinder(string fileName)
+        
+        public string infoFinder(string fileName, int format, int season, int episode)
         {
-            //rest globals
-            season = -1;
-            episode = -1;
-            tvdbTitle = null;
+            string tvdbTitle = null;
             string test = fileName;
             int you = -1;
+            int i = season;
+            int j = episode;
 
-            for (int i = 40; i >= 0; i--)
+            string newi = season.ToString();
+            string newj = j.ToString();
+            //check if i is less than 10
+            if (i < 10)
+                newi = "0" + i.ToString();
+            //check if j is less than 10
+            if (j < 10)
+                newj = "0" + j.ToString();
+            //make string to compare changed name too
+            switch (format)
             {
-                //varable for break command later
-                bool end = false;
-
-                //loop for episodes
-                for (int j = 1; j < 150; j++)
-                {
-                    string newi = i.ToString();
-                    string newj = j.ToString();
-                    //check if i is less than 10
-                    if (i < 10)
-                        newi = "0" + i.ToString();
-                    //check if j is less than 10
-                    if (j < 10)
-                        newj = "0" + j.ToString();
-                    //make string to compare changed name too
-                    switch (format)
-                    {
-                        case 1:
-                            you = test.IndexOf(i.ToString() + "x" + newj);
-                            break;
-                        case 2:
-                            you = test.IndexOf(newi + newj);
-                            break;
-                        case 3:
-                            you = test.IndexOf("S" + newi + "E" + newj);
-                            //you = test.IndexOf("S" + newi + "e" + newj);
-                            break;
-                        case 4:
-                            you = test.IndexOf(i.ToString() + newj);
-                            break;
-                    }
-                    //stop loop when name is change                    
-                    if (you != -1)
-                    {
-                        season = i;
-                        episode = j;
-                        if (you == 0)
-                            tvdbTitle = test.Remove(you, test.Length - (you));
-                        else
-                            tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
-                        //tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
-                        end = true;
-                        break;
-                    }
-                }//end of episode loop
-
-                //stop loop when name is change
-                if (end)
+                case 1:
+                    you = test.IndexOf(i.ToString() + "x" + newj);
                     break;
-            }//end of season loop
+                case 2:
+                    you = test.IndexOf(newi + newj);
+                    break;
+                case 3:
+                    you = test.IndexOf("S" + newi + "E" + newj);
+                    //you = test.IndexOf("S" + newi + "e" + newj);
+                    break;
+                case 4:
+                    you = test.IndexOf(i.ToString() + newj);
+                    break;
+            }
+            //stop loop when name is change                    
+            if (you != -1)
+            {
+                season = i;
+                episode = j;
+                if (you == 0)
+                    tvdbTitle = test.Remove(you, test.Length - (you));
+                else
+                    tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
+                //tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
+            }
+            return tvdbTitle;
         }
+        
         private List<Show> Cache = new List<Show>();
 
         private Show FindShow(string showName)
@@ -153,6 +132,7 @@ namespace TV_show_Renamer
             return show;
         }
     }
+
     public class Show : IEnumerable
     {
         public string Name;
@@ -193,7 +173,6 @@ namespace TV_show_Renamer
             return Seasons.GetEnumerator();
         }
     }
-
     public class Season : IEnumerable
     {
         public int SeasonNumber;
@@ -223,7 +202,6 @@ namespace TV_show_Renamer
             return Episodes.GetEnumerator();
         }
     }
-
     public class Episode
     {
         public string EpisodeNumber;

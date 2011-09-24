@@ -45,26 +45,7 @@ namespace TV_show_Renamer
         LogWrite _main;
 
         List<string> _moveFolder = new List<string>();//TV Show folders
-        public class TVShowID {
-            string _TVShowName;
-            int _TVID;
-            public TVShowID(string tVShowName, int tVID)
-            {
-                _TVShowName = tVShowName;
-                _TVID = tVID;
-            }
-            public string TVShowName
-            {
-                get { return _TVShowName; }
-                set { _TVShowName = value; }
-            }
-            public int TVID
-            {
-                get { return _TVID; }
-                set { _TVID = value; }
-            }
-        
-        };
+       
         List<TVShowID> _TVShowIDList = new List<TVShowID>();//TV Show ID       
         
         //get log object to write too

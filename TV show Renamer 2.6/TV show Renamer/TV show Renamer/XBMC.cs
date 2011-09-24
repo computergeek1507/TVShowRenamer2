@@ -40,8 +40,13 @@ namespace TV_show_Renamer
                 List<string> fileData = infoFinder(TVfile.NewFileName, TVfile.FileExtention);
                 //MessageBox.Show(fileData[0]+"\n"+fileData[1]+"\n"+fileData[2]+"\n"+fileData[3]);
                 string nfoFile = TVfile.NewFullFileName.Replace(TVfile.FileExtention, ".nfo");
-                EpisodeWrite(nfoFile, fileData[3], (Convert.ToInt32(fileData[1])), Convert.ToInt32(fileData[2]), Convert.ToInt32(fileData[1]) + (int)numericUpDown1.Value, Convert.ToInt32(fileData[2]) + (int)numericUpDown2.Value);
+
+                //old way
+                //EpisodeWrite(nfoFile, fileData[3], (Convert.ToInt32(fileData[1])), Convert.ToInt32(fileData[2]), Convert.ToInt32(fileData[1]) + (int)numericUpDown1.Value, Convert.ToInt32(fileData[2]) + (int)numericUpDown2.Value);
                 //MessageBox.Show(nfoFile);
+
+                //new way
+                CreateEpisodeNfoFile(nfoFile, fileData[3], (Convert.ToInt32(fileData[1])), Convert.ToInt32(fileData[2]), (Convert.ToInt32(fileData[1])), Convert.ToInt32(fileData[2]));
             }
         }
         
@@ -243,9 +248,13 @@ namespace TV_show_Renamer
         //make TV Show NFO
         private void button2_Click(object sender, EventArgs e)
         {
-            int totalSize = ProcessDir(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\", 0, 0);
+            //old way
+            //int totalSize = ProcessDir(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\", 0, 0);
             //MessageBox.Show(totalSize.ToString());
-            ShowWrite(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\tvshow.nfo", folderList[comboBox1.SelectedIndex],totalSize);
+            //ShowWrite(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\tvshow.nfo", folderList[comboBox1.SelectedIndex],totalSize);
+
+            //new way
+            CreateTVShowNfoFile(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\tvshow.nfo", folderList[comboBox1.SelectedIndex]);
         }
 
         public void EpisodeWrite(string fileName, string title, int season, int episode, int displayseason, int displayepisode)
@@ -345,5 +354,102 @@ namespace TV_show_Renamer
             }
             return size;
         }
+
+        public void CreateEpisodeNfoFile(string fileName, string title, int season, int episode, int displayseason, int displayepisode)
+        {
+            // create document
+            XDocument infoDoc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"));
+            XElement rootElem = new XElement("episodedetails");
+
+
+            // populate with correct nodes from series info and episode info
+            rootElem.Add(new XElement("title", title ?? string.Empty));
+            rootElem.Add(new XElement("rating",  string.Empty));
+            rootElem.Add(new XElement("season", season));
+
+            rootElem.Add(new XElement("episode", episode));
+            
+
+            rootElem.Add(new XElement("plot", string.Empty));
+            rootElem.Add(new XElement("thumb", string.Empty));
+            rootElem.Add(new XElement("playcount", 0));
+            rootElem.Add(new XElement("lastplayed", string.Empty));
+            rootElem.Add(new XElement("credits", string.Empty));
+            rootElem.Add(new XElement("director", string.Empty));
+            rootElem.Add(new XElement("aired", string.Empty));
+            //rootElem.Add(new XElement("premiered", episodeInfo.FirstAired ?? string.Empty));
+            rootElem.Add(new XElement("mpaa", string.Empty));
+            rootElem.Add(new XElement("premiered",  string.Empty));
+            rootElem.Add(new XElement("studio", string.Empty));
+
+            // actors from series
+            
+                XElement actorElem = new XElement("actor");
+                actorElem.Add(new XElement("name", string.Empty));
+                actorElem.Add(new XElement("role", string.Empty));
+                actorElem.Add(new XElement("thumb", string.Empty));
+                rootElem.Add(actorElem);         
+
+            
+
+            infoDoc.Add(rootElem);            
+            infoDoc.Save(fileName);
+            
+        }
+        //<episodedetails>
+        //<title>My TV Episode</title>
+        //<rating>10.00</rating>
+        //<season>2</season>
+        //<episode>1</episode>
+        //<plot>he best episode in the world</plot>
+        //<thumb>http://thetvdb.com/banners/episodes/164981/2528821.jpg</thumb>
+        //<playcount>0</playcount>
+        //<lastplayed></lastplayed>
+        //<credits>Writer</credits>
+        //<director>Mr. Vision</director>
+        //<aired>2000-12-31</aired>
+        //<premiered>2010-09-24</premiered>
+        //<studio>Production studio or channel</studio>
+        //<mpaa>MPAA certification</mpaa>
+        //<epbookmark>200</epbookmark>  <!-- For media files containing multiple episodes,
+        //                                where value is the time where the next episode begins in seconds  -->
+        //<displayseason>3</displayseason>  <!-- For TV show specials, determines how the episode is sorted in the series  -->
+        //<displayepisode>4096</displayepisode>
+        //<actor>
+        //  <name>Little Suzie</name>
+        //  <role>Pole Jumper/Dancer</role>
+        //</actor>
+
+        public void CreateTVShowNfoFile(string fileName, string title)
+        {
+            // create document
+            XDocument infoDoc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"));
+            XElement rootElem = new XElement("tvshow", new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"), new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"));
+            
+
+            // populate with correct nodes from series info
+
+            rootElem.Add(new XElement("title", title ?? string.Empty));
+
+            rootElem.Add(new XElement("id", string.Empty));
+            rootElem.Add(new XElement("rating",  string.Empty));
+            rootElem.Add(new XElement("mpaa",  string.Empty));
+            rootElem.Add(new XElement("premiered",  string.Empty));
+            rootElem.Add(new XElement("studio",  string.Empty));
+            rootElem.Add(new XElement("plot",  string.Empty));
+            // actors
+            
+                XElement actorElem = new XElement("actor");
+                actorElem.Add(new XElement("name", string.Empty));
+                actorElem.Add(new XElement("role", string.Empty));
+                actorElem.Add(new XElement("thumb", string.Empty));
+                rootElem.Add(actorElem);
+            
+
+            infoDoc.Add(rootElem);           
+            infoDoc.Save(fileName);
+           
+        }
+
     }
 }
