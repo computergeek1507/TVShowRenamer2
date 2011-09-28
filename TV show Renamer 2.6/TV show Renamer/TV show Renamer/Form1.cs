@@ -1949,7 +1949,7 @@ namespace TV_show_Renamer
                 tempTitle = tempCharTitle.ToString();
 
                 //loop for seasons
-                for (int i = 0; i < 40; i++)
+                for (int i = 1; i < 40; i++)
                 {
                     //varable for break command later
                     bool end = false;
@@ -1985,7 +1985,7 @@ namespace TV_show_Renamer
                             output = i.ToString() + "x" + newj;
 
                             newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
-                            newfilename = newfilename.Replace(newi + newj + temp, output + temp);//0101                        
+                            newfilename = newfilename.Replace(temp + newi + newj + temp, temp + output + temp);//0101                        
                             newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1               
                             newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
                             newfilename = newfilename.Replace("s" + newi + "e" + newj + temp, output + temp);//s01e01
@@ -1993,15 +1993,14 @@ namespace TV_show_Renamer
                             newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
                             newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                             newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
-                            newfilename = newfilename.Replace("0" + output + temp, output + temp);//01x01 fix might be unnessitarry
-                            newfilename = newfilename.Replace(output + temp, seasonDash + output2 + tempTitle + temp);//1x01 add title
+                            //newfilename = newfilename.Replace("0" + output + temp, output + temp);//01x01 fix might be unnessitarry
+                            newfilename = newfilename.Replace(temp + output + temp, temp + seasonDash + output2 + tempTitle + temp);//1x01 add title
                             startIndex = newfilename.IndexOf(output2);//find index                        
                             if (startIndex != -1)
                             {
                                 if (i > 9) { endIndex = startIndex + 5; } else { endIndex = startIndex + 4; }
                                 //endIndex = startIndex + 4;
                             }
-
                         }
                         //0101 format
                         if (newMainSettings.SeasonFormat == 1)
@@ -2018,7 +2017,7 @@ namespace TV_show_Renamer
                             newfilename = newfilename.Replace("season " + i.ToString() + " episode " + newj + temp, output + temp);//season 1 episode 01
                             newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                             newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
-                            newfilename = newfilename.Replace(output + temp, seasonDash + output2 + tempTitle + temp);//0101 add title
+                            newfilename = newfilename.Replace(temp + output + temp, temp + seasonDash + output2 + tempTitle + temp);//0101 add title
                             startIndex = newfilename.IndexOf(output2);//find index
                             if (startIndex != -1)
                                 endIndex = startIndex + 4;
@@ -2072,8 +2071,8 @@ namespace TV_show_Renamer
                         //stop loop when name is change                    
                         if (startnewname != newfilename)
                         {
-                            EditFileList[index].SeasonNum = i;
-                            EditFileList[index].EpisodeNum = j;
+                            EditFileList[index].SeasonNum = i + newMainSettings.SeasonOffset;
+                            EditFileList[index].EpisodeNum = j + newMainSettings.EpisodeOffset;
                             end = true;
                             break;
                         }
@@ -3256,13 +3255,12 @@ namespace TV_show_Renamer
                 {
                     if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
                     {
-                        selectedFiles = fileList[i].FileFolder;
+                        selectedFiles = fileList[i].FullFileName;
                         break;
                     }
                 }
-                //selectedFiles = fileList[0].FileFolder;
-                Process.Start("explorer.exe", selectedFiles);
-                //Display publibb = new Display(u);
+
+                System.Diagnostics.Process.Start("explorer.exe", @"/select, " + selectedFiles);
             }
         }
 

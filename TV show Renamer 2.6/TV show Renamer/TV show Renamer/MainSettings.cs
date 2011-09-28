@@ -231,8 +231,6 @@ namespace TV_show_Renamer
                 _main.WriteLog("newpreferences.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
-
-
             try
             {//Read TV show folders
                 if (File.Exists(_dataFolder + "//TVFolder.seh"))
@@ -309,7 +307,7 @@ namespace TV_show_Renamer
                     int length = Int32.Parse(tv4.ReadLine());
                     if ((length % 2 == 0) && length != 0)
                     {
-                        for (int i = 0; i < length+1; i = i + 2)
+                        for (int i = 0; i < length; i = i + 2)
                         {
                             _TVShowIDList.Add(new TVShowID(tv4.ReadLine(), int.Parse(tv4.ReadLine())));
                         }//end of for loop  
