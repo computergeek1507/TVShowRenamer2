@@ -497,15 +497,13 @@ namespace TV_show_Renamer
                 List<int> selected = new List<int>();
                 for (int i = 0; i < fileList.Count; i++)
                 {
-                    if (fileList[i].FileTitle == "@@@@" || fileList[i].FileTitle == "%%%%")                    
+                    if (fileList[i].FileTitle == "@@@@" || fileList[i].FileTitle == "%%%%" || fileList[i].FileTitle == "")                    
                         selected.Add(i);                    
                 }
                 //TestTitle(selected);
                 if (!TitleThread.IsBusy)
                     TitleThread.RunWorkerAsync(selected);                
             }
-            else//catch if nothing is selected
-                MessageBox.Show("No Files Selected");
         }
 
         #endregion
@@ -1485,7 +1483,7 @@ namespace TV_show_Renamer
                     List<int> selected = new List<int>();
                     for (int i = 0; i < fileList.Count; i++)
                     {
-                        if (fileList[i].FileTitle == "@@@@")
+                        if (fileList[i].FileTitle == "@@@@" && fileList[i].SeasonNum != -1 && fileList[i].EpisodeNum != -1&&fileList[i].AutoEdit)
                             selected.Add(i);
                     }
                     //TestTitle(selected);
@@ -3267,7 +3265,23 @@ namespace TV_show_Renamer
         //right click to get titles off IMDB
         private void getTitlesOffIMBDOfSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (dataGridView1.CurrentRow != null)
+            {
+                if (fileList.Count != 0 && ConnectionExists()) //if files are selected
+                {
+                    List<int> selected = new List<int>();
+                    for (int i = 0; i < fileList.Count; i++)
+                    {
+                        if ((dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected) && fileList[i].SeasonNum != -1 && fileList[i].EpisodeNum != -1 && fileList[i].AutoEdit)
+                            selected.Add(i);
+                    }
+                    //TestTitle(selected);
+                    if (!TitleThread.IsBusy)
+                        TitleThread.RunWorkerAsync(selected);
+                }
+            }
+            else//catch if nothing is selected
+                MessageBox.Show("No Files Selected");
         }
 
         //remove selected titles
