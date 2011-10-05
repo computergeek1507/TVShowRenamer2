@@ -37,20 +37,20 @@ namespace TV_show_Renamer
         //save function calls 
         public void WriteLog( string oldName,string newName)
         {
-            log.WriteLine(DateTime.Now + " - " + oldName + " Saved as " + newName);
+            log.WriteLine(DateTime.Now + " - [" + oldName + "] Saved as [" + newName + "]");
         }
        
         //save function calls (List String)
-        public void convertWriteLog( List<string> oldName,List<string> newName )
-        {
-            for (int i = 0; i < oldName.Count(); i++)             
-                log.WriteLine(DateTime.Now + " - " + oldName[i] + " Saved as " + newName[i]);
-        }
+        //public void convertWriteLog2( List<string> oldName,List<string> newName )
+        //{
+         //   for (int i = 0; i < oldName.Count(); i++)             
+         //       log.WriteLine(DateTime.Now + " - [" + oldName[i] + "] Saved as [" + newName[i]+"]");
+        //}
         
         //move function calls
         public void moveWriteLog(string oldName, string directory)
         {
-            log.WriteLine(DateTime.Now + " - " + oldName + " Moved to " + directory);            
+            log.WriteLine(DateTime.Now + " - [" + oldName + "] Moved to [" + directory + "]");            
         }
         
         //write string

@@ -196,7 +196,7 @@ namespace TV_show_Renamer
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
             string[] folderSettings = menu1[0].Tag.ToString().Split('?');
-            //folderSettings[1]
+
             if (int.Parse(folderSettings[0]) > 1)
             {
                 XBMC MainXBMC = new XBMC(fileList, newMainSettings.SeasonFormat, folderSettings[1]);
@@ -212,8 +212,7 @@ namespace TV_show_Renamer
 
         //check for updates
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //new thread for update
+        {   //new thread for update
             Thread t = new Thread(new ThreadStart(checkForUpdate));
             t.Start();
         }
