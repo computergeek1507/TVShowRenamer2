@@ -13,6 +13,7 @@ using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 using System.Threading;
 using SevenZip;
+using System.Collections;
 
 namespace TV_show_Renamer
 {
@@ -38,9 +39,7 @@ namespace TV_show_Renamer
                 ThreadAdd FilesToAdd = new ThreadAdd();
                 FilesToAdd.AddType = "files";
                 FilesToAdd.ObjectToAdd = args;
-                if (!AddFilesThread.IsBusy)
-                    AddFilesThread.RunWorkerAsync(FilesToAdd);
-                //AddFilesThread.RunWorkerAsync(FilesToAdd);
+                addFilesToThread(FilesToAdd);
             }
         }
 
@@ -65,12 +64,13 @@ namespace TV_show_Renamer
         //initiate varibles  
         const int appVersion = 280;//2.8 ALPHA
         const int HowDeepToScan = 4;
-        bool rerun = false;
 
-        BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
-        List<string> junklist = new List<string>();//junk word list
-        List<string> userjunklist = new List<string>();//user junk word list
-        List<string> textConverter = new List<string>();//textConverter word list
+        static BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
+        static List<string> junklist = new List<string>();//junk word list
+        static List<string> userjunklist = new List<string>();//user junk word list
+        static List<string> textConverter = new List<string>();//textConverter word list
+
+        static Queue convertionQueue = new Queue();
 
         //create other forms
         junk_words userJunk = new junk_words();
@@ -99,7 +99,7 @@ namespace TV_show_Renamer
                 ThreadAdd FilesToAdd = new ThreadAdd();
                 FilesToAdd.AddType= "files";
                 FilesToAdd.ObjectToAdd = openFileDialog2.FileNames;
-                AddFilesThread.RunWorkerAsync(FilesToAdd);
+                addFilesToThread(FilesToAdd);
 
                 //AddFilesThread.RunWorkerAsync(FilesToAdd);
                 //Thread h = new Thread(delegate() { getFiles(openFileDialog2.FileNames); });
@@ -115,9 +115,7 @@ namespace TV_show_Renamer
                 ThreadAdd FolderToAdd = new ThreadAdd();
                 FolderToAdd.AddType = "folder";
                 FolderToAdd.ObjectToAdd = folderBrowserDialog1.SelectedPath;
-                AddFilesThread.RunWorkerAsync(FolderToAdd);
-                //Thread u = new Thread(delegate() { getFilesInFolder(folderBrowserDialog1.SelectedPath); });
-                //u.Start();
+                addFilesToThread(FolderToAdd);                
             }//end of if
         }//end of folder button
 
@@ -135,7 +133,7 @@ namespace TV_show_Renamer
             AddFilesThread.CancelAsync();
             TitleThread.CancelAsync();
             fileList.Clear();
-            rerun = false;
+            convertionQueue.Clear();
             dataGridView1.Refresh();
         }
 
@@ -991,22 +989,7 @@ namespace TV_show_Renamer
         #endregion
 
         #region Update Stuff
-        //check to see if internet is avilible
-        bool ConnectionExists2()
-        {
-            try
-            {
-                System.Net.IPHostEntry objIPHE = System.Net.Dns.GetHostByName("www.google.com");
-                //System.Net.Sockets.TcpClient clnt = new System.Net.Sockets.TcpClient("www.google.com", 80);
-                //clnt.Close();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }//end of ConnectionExists class
-
+        
         //check to see if internet is avilible
         bool ConnectionExists()
         {
@@ -1310,10 +1293,10 @@ namespace TV_show_Renamer
         public void autoConvert() {
             if (fileList.Count == 0)
                 return;
-            if (!AddFilesThread.IsBusy)
-                AddFilesThread.RunWorkerAsync();
-            else
-                rerun = true;
+
+            ThreadAdd FolderToAdd = new ThreadAdd();
+            FolderToAdd.AddType = "convert";
+            addFilesToThread(FolderToAdd);
         }
 
         //write log called by download form
@@ -1400,22 +1383,32 @@ namespace TV_show_Renamer
 
         #region Private Methods
 
+        public void addFilesToThread(ThreadAdd newItems) 
+        { 
+            convertionQueue.Enqueue(newItems);
+            if (!AddFilesThread.IsBusy)
+                AddFilesThread.RunWorkerAsync();
+        }
+
+
         private void AddFilesThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            rerun = false;
+            if (convertionQueue.Count == 0)
+                return;
+            ThreadAdd tempInfo = (ThreadAdd)convertionQueue.Dequeue();
             //BindingList<TVClass> NewFileList = new BindingList<TVClass>();
             //List<int> addTitleTo= new List<int>();
             //foreach (TVClass TempForClone in fileList) {
 
             //EditFileList.Add();
             //}
-            if (AddFilesThread.CancellationPending) return;
-            ThreadAdd tempInfo = (ThreadAdd)e.Argument;
-            if (tempInfo == null)
-            {
-                tempInfo = new ThreadAdd();
-                tempInfo.AddType = "convert";
-            }
+            //if (AddFilesThread.CancellationPending) return;
+            //ThreadAdd tempInfo = (ThreadAdd)e.Argument;
+            //if (tempInfo == null)
+            //{
+            //    tempInfo = new ThreadAdd();
+             //   tempInfo.AddType = "convert";
+            //}
 
             switch (tempInfo.AddType)
             {
@@ -1473,8 +1466,8 @@ namespace TV_show_Renamer
 
         private void AddFilesThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (rerun)
-                autoConvert();
+            if (convertionQueue.Count != 0) 
+                TitleThread.RunWorkerAsync(); 
             else
             {
                 if (newMainSettings.AutoGetTitle && fileList.Count != 0)
@@ -1946,7 +1939,7 @@ namespace TV_show_Renamer
                 tempTitle = tempCharTitle.ToString();
 
                 //loop for seasons
-                for (int i = 1; i < 40; i++)
+                for (int i = 0; i < 40; i++)
                 {
                     //varable for break command later
                     bool end = false;
@@ -2602,9 +2595,9 @@ namespace TV_show_Renamer
                 string[] subdirEntries = Directory.GetDirectories(sourceDir);
                 foreach (string subdir in subdirEntries)
                 {
-                    if (subdir == "$RECYCLE.BIN")
+                    if (subdir.Contains("Program Files") || subdir.Contains("Program Files (x86)") || subdir.Contains("$Recycle.Bin") || subdir.Contains("$RECYCLE.BIN"))
                     {
-                        break;
+                        continue;
                     }
                     // Do not iterate through reparse points
                     if ((File.GetAttributes(subdir) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint)
@@ -3186,7 +3179,7 @@ namespace TV_show_Renamer
                 ThreadAdd FilesToAdd = new ThreadAdd();
                 FilesToAdd.AddType = "files";
                 FilesToAdd.ObjectToAdd = files;
-                AddFilesThread.RunWorkerAsync(FilesToAdd);
+                addFilesToThread(FilesToAdd);
                 //getFiles(files);
             }
         }
@@ -3399,6 +3392,6 @@ namespace TV_show_Renamer
             //write log
             Log.closeLog();
         }
-                  
+                       
     }//end of form1 partial class    
 }//end of namespace
