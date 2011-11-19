@@ -1390,7 +1390,6 @@ namespace TV_show_Renamer
                 AddFilesThread.RunWorkerAsync();
         }
 
-
         private void AddFilesThread_DoWork(object sender, DoWorkEventArgs e)
         {
             if (convertionQueue.Count == 0)
@@ -1573,10 +1572,8 @@ namespace TV_show_Renamer
         {
             foreach (TVShowID SearchInfo in newMainSettings.TVShowIDList)
             {
-                if (TVShowName == SearchInfo.TVShowName)
-                {
-                    return SearchInfo.TVID;
-                }
+                if (TVShowName == SearchInfo.TVShowName)                
+                    return SearchInfo.TVID;                
             }
             return -1;
         }
@@ -2611,7 +2608,6 @@ namespace TV_show_Renamer
         //extract zips and rar in folder
         private void ProcessDirZIP(string sourceDir)
         {
-
             System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(sourceDir);
             // Process the list of files found in the directory.
             foreach (System.IO.FileInfo fi in di.GetFiles("*"))
