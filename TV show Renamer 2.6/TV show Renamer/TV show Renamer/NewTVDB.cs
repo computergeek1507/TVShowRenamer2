@@ -33,6 +33,7 @@ namespace TV_show_Renamer
         public int findTitle(string ShowName)
         {
             int TVShowID = -1;
+            ShowName = ShowName.Replace("Gold Rush Alaska", "Gold Rush");
             //ICacheProvider m_cacheProvider = null;
             //TvdbHandler m_tvdbHandler = null;
             List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(ShowName);

@@ -1293,7 +1293,6 @@ namespace TV_show_Renamer
         public void autoConvert() {
             if (fileList.Count == 0)
                 return;
-
             ThreadAdd FolderToAdd = new ThreadAdd();
             FolderToAdd.AddType = "convert";
             addFilesToThread(FolderToAdd);
@@ -1446,7 +1445,7 @@ namespace TV_show_Renamer
                     if (newMainSettings.OpenZIPs)
                         ProcessDirZIP(folder);
                     ProcessDir(folder, 0);
-                    autoConvert();
+                    fileRenamer(fileList);
                     break;
                 case "convert":
                     fileRenamer(fileList);
@@ -1474,11 +1473,14 @@ namespace TV_show_Renamer
                     List<int> selected = new List<int>();
                     for (int i = 0; i < fileList.Count; i++)
                     {
-                        if (fileList[i].FileTitle == "@@@@" && fileList[i].SeasonNum != -1 && fileList[i].EpisodeNum != -1&&fileList[i].AutoEdit)
+                        if (fileList[i].FileTitle == "@@@@" && fileList[i].SeasonNum != -1 && fileList[i].EpisodeNum != -1 && fileList[i].AutoEdit)
+                        {
                             selected.Add(i);
+                            fileList[i].FileTitle = "%%%%";
+                        }
                     }
                     //TestTitle(selected);
-                    if (fileList.Count != 0)
+                    if (selected.Count != 0)
                     {
                         if (!TitleThread.IsBusy)
                             TitleThread.RunWorkerAsync(selected);
@@ -1936,7 +1938,7 @@ namespace TV_show_Renamer
                 tempTitle = tempCharTitle.ToString();
 
                 //loop for seasons
-                for (int i = 0; i < 40; i++)
+                for (int i = 1; i < 40; i++)
                 {
                     //varable for break command later
                     bool end = false;
@@ -2196,7 +2198,10 @@ namespace TV_show_Renamer
                     }
                 }
                 if (!findTitle)
+                {
                     EditFileList[index].FileTitle = "%%%%";
+                    //findTitle = true;
+                }
                 switch (newMainSettings.ExtFormat)
                 {
                     case 0:
@@ -2584,6 +2589,7 @@ namespace TV_show_Renamer
                     MethodInvoker action = delegate
                     {
                         fileList.Add(new TVClass(fi.DirectoryName, origName, exten));
+                        //autoConvert();
                     };
                     dataGridView1.BeginInvoke(action);
                 }
