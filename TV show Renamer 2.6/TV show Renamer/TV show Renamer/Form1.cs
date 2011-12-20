@@ -494,7 +494,7 @@ namespace TV_show_Renamer
                 List<int> selected = new List<int>();
                 for (int i = 0; i < fileList.Count; i++)
                 {
-                    if (fileList[i].FileTitle == "@@@@" || fileList[i].FileTitle == "%%%%" || fileList[i].FileTitle == "")                    
+                    //if (fileList[i].FileTitle == "@@@@" || fileList[i].FileTitle == "%%%%" || fileList[i].FileTitle == "")                    
                         selected.Add(i);                    
                 }
                 //TestTitle(selected);
@@ -1949,6 +1949,7 @@ namespace TV_show_Renamer
                         string newi = i.ToString();
                         string newi2 = (i + newMainSettings.SeasonOffset).ToString();
                         string newj = j.ToString();
+
                         string newj2 = (j + newMainSettings.EpisodeOffset).ToString();
                         string output = null;
                         string output2 = null;
@@ -2254,6 +2255,8 @@ namespace TV_show_Renamer
                 newfilename = newfilename.Replace("La ", "LA ");
                 newfilename = newfilename.Replace("Nba", "NBA");
                 newfilename = newfilename.Replace("Espn", "ESPN");
+                newfilename = newfilename.Replace("Web Dl", "WEB-DL");
+
 
                 EditFileList[index].NewFileName = newfilename;
             }
