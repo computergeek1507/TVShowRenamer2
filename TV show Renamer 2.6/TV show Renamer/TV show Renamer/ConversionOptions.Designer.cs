@@ -48,6 +48,7 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.comboBox8 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -138,7 +139,6 @@
             this.checkBox1.TabIndex = 8;
             this.checkBox1.Text = "Convert \".\" to \" \"";
             this.checkBox1.UseVisualStyleBackColor = true;
-            //this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // checkBox2
             // 
@@ -152,7 +152,6 @@
             this.checkBox2.TabIndex = 9;
             this.checkBox2.Text = "Convert \"_\" to \" \"";
             this.checkBox2.UseVisualStyleBackColor = true;
-            //this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // checkBox3
             // 
@@ -166,7 +165,6 @@
             this.checkBox3.TabIndex = 10;
             this.checkBox3.Text = "Remove \"-\"";
             this.checkBox3.UseVisualStyleBackColor = true;
-            //this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // checkBox4
             // 
@@ -180,7 +178,6 @@
             this.checkBox4.TabIndex = 11;
             this.checkBox4.Text = "Remove \"()\",\"{}\"and\"[]\" ";
             this.checkBox4.UseVisualStyleBackColor = true;
-            //this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // checkBox5
             // 
@@ -194,7 +191,6 @@
             this.checkBox5.TabIndex = 12;
             this.checkBox5.Text = "Remove Extra Crap";
             this.checkBox5.UseVisualStyleBackColor = true;
-            //this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
             // checkBox6
             // 
@@ -208,7 +204,6 @@
             this.checkBox6.TabIndex = 13;
             this.checkBox6.Text = "Remove Year";
             this.checkBox6.UseVisualStyleBackColor = true;
-            //this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
             // 
             // label2
             // 
@@ -241,7 +236,6 @@
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(36, 20);
             this.numericUpDown2.TabIndex = 17;
-            //this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             // 
             // numericUpDown1
             // 
@@ -254,7 +248,6 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(36, 20);
             this.numericUpDown1.TabIndex = 16;
-            //this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // label4
             // 
@@ -277,13 +270,22 @@
             this.checkBox7.TabIndex = 21;
             this.checkBox7.Text = "Auto Get Title";
             this.checkBox7.UseVisualStyleBackColor = true;
-            //this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+            // 
+            // comboBox8
+            // 
+            this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox8.FormattingEnabled = true;
+            this.comboBox8.Location = new System.Drawing.Point(385, 102);
+            this.comboBox8.Name = "comboBox8";
+            this.comboBox8.Size = new System.Drawing.Size(121, 21);
+            this.comboBox8.TabIndex = 22;
             // 
             // ConversionOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(438, 166);
+            this.ClientSize = new System.Drawing.Size(556, 166);
+            this.Controls.Add(this.comboBox8);
             this.Controls.Add(this.checkBox7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
@@ -342,5 +344,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.ComboBox comboBox8;
     }
 }
