@@ -77,7 +77,7 @@ namespace TV_show_Renamer
             for (int i = 0; i < junkwords.Count; i++) {
                 if (newword==junkwords[i]) {
                     MessageBox.Show("Word already in Junk Library");
-                    //return;                
+                    return;                
                 }
             }//end of for
             //check to see if new word has been added b4
@@ -198,7 +198,7 @@ namespace TV_show_Renamer
                         if (newword == userwords[i])
                         {
                             MessageBox.Show("Word already in Junk Library");
-                            return;
+                            //return;
                         }//end of if
                     }//end of for
                 }//end of if

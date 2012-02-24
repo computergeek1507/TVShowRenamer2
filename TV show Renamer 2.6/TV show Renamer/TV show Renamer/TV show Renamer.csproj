@@ -300,9 +300,6 @@
     <Resource Include="Resources\32-bit\7z.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\FolderBrowser.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Resources\SevenZipSharp.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
