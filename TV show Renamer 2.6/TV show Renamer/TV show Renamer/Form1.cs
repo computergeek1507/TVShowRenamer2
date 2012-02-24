@@ -92,8 +92,7 @@ namespace TV_show_Renamer
             openFileDialog2.FilterIndex = 1;
             openFileDialog2.CheckFileExists = true;
             openFileDialog2.CheckPathExists = true;
-
-
+            
             if (openFileDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 ThreadAdd FilesToAdd = new ThreadAdd();
@@ -494,7 +493,7 @@ namespace TV_show_Renamer
                 List<int> selected = new List<int>();
                 for (int i = 0; i < fileList.Count; i++)
                 {
-                    //if (fileList[i].FileTitle == "@@@@" || fileList[i].FileTitle == "%%%%" || fileList[i].FileTitle == "")                    
+                    if (fileList[i].FileTitle == "@@@@" || fileList[i].FileTitle == "%%%%" || fileList[i].FileTitle == "")                    
                         selected.Add(i);                    
                 }
                 //TestTitle(selected);
@@ -1297,6 +1296,14 @@ namespace TV_show_Renamer
             FolderToAdd.AddType = "convert";
             addFilesToThread(FolderToAdd);
         }
+        public void autoConvertNoTitle()
+        {
+            if (fileList.Count == 0)
+                return;
+            ThreadAdd FolderToAdd = new ThreadAdd();
+            FolderToAdd.AddType = "convertNoTitle";
+            addFilesToThread(FolderToAdd);
+        }
 
         //write log called by download form
         public void writeLog(string error)
@@ -1449,12 +1456,10 @@ namespace TV_show_Renamer
                     break;
                 case "convert":
                     fileRenamer(fileList);
-                    MethodInvoker action3 = delegate
-                    {
-                        dataGridView1.Refresh();
-                        dataGridView1.AutoResizeColumns();
-                    };
-                    dataGridView1.BeginInvoke(action3);
+                    break;
+                case "convertNoTitle":
+                    e.Result = "NoTitle";
+                    fileRenamer(fileList);
                     break;
                 default:
                     MessageBox.Show("default");
@@ -1464,11 +1469,23 @@ namespace TV_show_Renamer
 
         private void AddFilesThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            bool getTitle = true;
+            MethodInvoker action = delegate
+            {
+                dataGridView1.Refresh();
+                dataGridView1.AutoResizeColumns();
+            };
+            dataGridView1.BeginInvoke(action);            
+
+            if (e.Result != null) {
+                if (e.Result.ToString() == "NoTitle")
+                    getTitle = false;
+            }
             if (convertionQueue.Count != 0) 
                 TitleThread.RunWorkerAsync(); 
             else
             {
-                if (newMainSettings.AutoGetTitle && fileList.Count != 0)
+                if (newMainSettings.AutoGetTitle && fileList.Count != 0&&getTitle)
                 {
                     List<int> selected = new List<int>();
                     for (int i = 0; i < fileList.Count; i++)
@@ -1566,7 +1583,7 @@ namespace TV_show_Renamer
                     }
                 }
             }
-            autoConvert();
+            autoConvertNoTitle();
         }
 
         //Search TV Show ID List
@@ -3371,7 +3388,7 @@ namespace TV_show_Renamer
             Color temp1 = System.Drawing.Color.FromArgb(newMainSettings.ButtonColor[0], newMainSettings.ButtonColor[1], newMainSettings.ButtonColor[2], newMainSettings.ButtonColor[3]);
             int[] temp3 = { 255, 240, 240, 240 };
             if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
-                changeButtoncolor(temp1);
+                changeButtoncolor(temp1);            
         }//end of load command
 
         //create preference file when program closes and close log

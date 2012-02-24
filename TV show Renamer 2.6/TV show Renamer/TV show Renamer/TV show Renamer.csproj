@@ -73,6 +73,7 @@
       <HintPath>Resources\SevenZipSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -106,6 +107,7 @@
     <Compile Include="Addtitle.Designer.cs">
       <DependentUpon>Addtitle.cs</DependentUpon>
     </Compile>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="ConversionOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +126,9 @@
     <Compile Include="EditTitle2.Designer.cs">
       <DependentUpon>EditTitle2.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExceptionDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FolderControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +141,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HandledExceptionManager.cs" />
     <Compile Include="Junk Words.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,8 +166,10 @@
     <Compile Include="SelectMenu.Designer.cs">
       <DependentUpon>SelectMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="SimpleMail.cs" />
     <Compile Include="TVClass.cs" />
     <Compile Include="TVRage.cs" />
+    <Compile Include="UnhandledExceptionManager.cs" />
     <Compile Include="XBMC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditTitle2.resx">
       <DependentUpon>EditTitle2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExceptionDialogue.resx">
+      <DependentUpon>ExceptionDialogue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FolderControl.resx">
       <DependentUpon>FolderControl.cs</DependentUpon>
@@ -224,6 +235,9 @@
     <EmbeddedResource Include="XBMC.resx">
       <DependentUpon>XBMC.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
