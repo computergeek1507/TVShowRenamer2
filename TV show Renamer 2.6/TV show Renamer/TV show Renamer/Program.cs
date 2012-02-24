@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
+
 namespace TV_show_Renamer
 {
     static class Program
@@ -13,6 +14,7 @@ namespace TV_show_Renamer
         [STAThread]
         static void Main(string[] args)
         {
+            UnhandledExceptionManager.AddHandler();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1(args));
