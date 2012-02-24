@@ -48,7 +48,6 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -271,21 +270,11 @@
             this.checkBox7.Text = "Auto Get Title";
             this.checkBox7.UseVisualStyleBackColor = true;
             // 
-            // comboBox8
-            // 
-            this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Location = new System.Drawing.Point(385, 102);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(121, 21);
-            this.comboBox8.TabIndex = 22;
-            // 
             // ConversionOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(556, 166);
-            this.Controls.Add(this.comboBox8);
+            this.ClientSize = new System.Drawing.Size(428, 166);
             this.Controls.Add(this.checkBox7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
@@ -344,6 +333,5 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.ComboBox comboBox8;
     }
 }

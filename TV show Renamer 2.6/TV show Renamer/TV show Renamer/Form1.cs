@@ -62,7 +62,7 @@ namespace TV_show_Renamer
         
         #region Initiate Stuff
         //initiate varibles  
-        const int appVersion = 280;//2.8 ALPHA
+        const int appVersion = 281;//2.8 Beta
         const int HowDeepToScan = 4;
 
         static BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
@@ -92,7 +92,7 @@ namespace TV_show_Renamer
             openFileDialog2.FilterIndex = 1;
             openFileDialog2.CheckFileExists = true;
             openFileDialog2.CheckPathExists = true;
-            
+
             if (openFileDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 ThreadAdd FilesToAdd = new ThreadAdd();
@@ -285,6 +285,12 @@ namespace TV_show_Renamer
                     if (menu1.Count() != 0)
                     {
                         string[] folderSettings = menu1[0].Tag.ToString().Split('?');
+
+                        if (!(System.IO.Directory.Exists(folderSettings[1]))){
+                            MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
+                            return;
+                        }
+
                         if (int.Parse(folderSettings[0]) == 1)
                         {
                             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -300,7 +306,7 @@ namespace TV_show_Renamer
                             for (int z = 0; z < fileList.Count; z++)
                             {
                                 string fullFileName = fileList[z].FullFileName;
-                                info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist,fileList[z].SeasonNum,fileList[z].EpisodeNum);
+                                info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName,fileList[z].FileExtention);
 
                                 if (info[0] == "no folder")
                                 {
@@ -314,7 +320,7 @@ namespace TV_show_Renamer
                                             string methodGet = mainEdit.getTitle();
                                             System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + methodGet);
                                             folderlist.Add(methodGet);
-                                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName, fileList[z].FileExtention);
                                             info[0] = methodGet;
                                             mainEdit.Close();
                                         }
@@ -376,6 +382,11 @@ namespace TV_show_Renamer
                 if (menu1.Count() != 0)
                 {
                     string[] folderSettings = menu1[0].Tag.ToString().Split('?');
+                    if (!(System.IO.Directory.Exists(folderSettings[1])))
+                    {
+                        MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
+                        return;
+                    }
                     if (int.Parse(folderSettings[0]) == 1)
                     {
                         for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -388,7 +399,7 @@ namespace TV_show_Renamer
                         for (int z = 0; z < fileList.Count; z++)
                         {
                             string fullFileName = fileList[z].FullFileName;
-                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum,fileList[z].FileName, fileList[z].FileExtention);
 
                             if (info[0] == "no folder")
                             {
@@ -402,7 +413,7 @@ namespace TV_show_Renamer
                                         string methodGet = mainEdit.getTitle();
                                         System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + methodGet);
                                         folderlist.Add(methodGet);
-                                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName, fileList[z].FileExtention);
                                         info[0] = methodGet;
                                         mainEdit.Close();
                                     }
@@ -519,6 +530,11 @@ namespace TV_show_Renamer
                         return;
                 }
                 string[] folderSettings = clickedItem.Tag.ToString().Split('?');
+                if (!(System.IO.Directory.Exists(folderSettings[1])))
+                {
+                    MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
+                    return;
+                }
                 if (int.Parse(folderSettings[0]) == 1) 
                 {
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -534,7 +550,7 @@ namespace TV_show_Renamer
                     for (int z = 0; z < fileList.Count; z++)
                     {
                         string fullFileName = fileList[z].FullFileName;
-                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName, fileList[z].FileExtention);
 
                         if (info[0] == "no folder")
                         {
@@ -548,7 +564,7 @@ namespace TV_show_Renamer
                                     string methodGet = mainEdit.getTitle();
                                     System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + methodGet);
                                     folderlist.Add(methodGet);
-                                    info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                                    info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName, fileList[z].FileExtention);
                                     info[0] = methodGet;
                                     mainEdit.Close();
                                 }
@@ -601,6 +617,11 @@ namespace TV_show_Renamer
                         return;
                 }
                 string[] folderSettings = clickedItem.Tag.ToString().Split('?');
+                if (!(System.IO.Directory.Exists(folderSettings[1])))
+                {
+                    MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
+                    return;
+                }
                 if (int.Parse(folderSettings[0]) == 1)
                 {
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)                    
@@ -613,7 +634,7 @@ namespace TV_show_Renamer
                     for (int z = 0; z < fileList.Count; z++)
                     {
                         string fullFileName = fileList[z].FullFileName;
-                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName, fileList[z].FileExtention);
 
                         if (info[0] == "no folder")
                         {
@@ -627,7 +648,7 @@ namespace TV_show_Renamer
                                     string methodGet = mainEdit.getTitle();
                                     System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + methodGet);
                                     folderlist.Add(methodGet);
-                                    info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                                    info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum,  fileList[z].FileName, fileList[z].FileExtention);
                                     info[0] = methodGet;
                                     mainEdit.Close();
                                 }
@@ -673,6 +694,11 @@ namespace TV_show_Renamer
                         return;
                 }
                 string[] folderSettings = clickedItem.Tag.ToString().Split('?');
+                if (!(System.IO.Directory.Exists(folderSettings[1])))
+                {
+                    MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
+                    return;
+                }
                 if (int.Parse(folderSettings[0]) == 1)
                 {
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -693,7 +719,7 @@ namespace TV_show_Renamer
                         if (dataGridView1.Rows[z].Cells[0].Selected || dataGridView1.Rows[z].Cells[1].Selected)
                         {
                             string fullFileName = fileList[z].FullFileName;
-                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName, fileList[z].FileExtention);
 
                             if (info[0] == "no folder")
                             {
@@ -707,7 +733,7 @@ namespace TV_show_Renamer
                                         string methodGet = mainEdit.getTitle();
                                         System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + methodGet);
                                         folderlist.Add(methodGet);
-                                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName, fileList[z].FileExtention);
                                         info[0] = methodGet;
                                         mainEdit.Close();
                                     }
@@ -761,14 +787,17 @@ namespace TV_show_Renamer
                         return;
                 }
                 string[] folderSettings = clickedItem.Tag.ToString().Split('?');
+                if (!(System.IO.Directory.Exists(folderSettings[1])))
+                {
+                    MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
+                    return;
+                }
                 if (int.Parse(folderSettings[0]) == 1)
                 {
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)
-                        {
-                            CopyFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName));
-                        }
+                        if (dataGridView1.Rows[i].Cells[0].Selected || dataGridView1.Rows[i].Cells[1].Selected)                        
+                            CopyFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName));                        
                     }
                 }
                 else if (int.Parse(folderSettings[0]) > 1)
@@ -780,7 +809,7 @@ namespace TV_show_Renamer
                         if (dataGridView1.Rows[z].Cells[0].Selected || dataGridView1.Rows[z].Cells[1].Selected)
                         {
                             string fullFileName = fileList[z].FullFileName;
-                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                            info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName, fileList[z].FileExtention);
 
                             if (info[0] == "no folder")
                             {
@@ -794,7 +823,7 @@ namespace TV_show_Renamer
                                         string methodGet = mainEdit.getTitle();
                                         System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + methodGet);
                                         folderlist.Add(methodGet);
-                                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum);
+                                        info = infoFinder(fullFileName, fileList[z].FileFolder, folderlist, fileList[z].SeasonNum, fileList[z].EpisodeNum, fileList[z].FileName, fileList[z].FileExtention);
                                         info[0] = methodGet;
                                         mainEdit.Close();
                                     }
@@ -818,8 +847,7 @@ namespace TV_show_Renamer
                                 CopyFile(fullFileName, folderSettings[1] + "\\" + info[0] + "\\Season " + info[1] + "\\" + fileList[z].FileName);
                             }
                             else//if no season is selected 
-                                CopyFile(fullFileName, folderSettings[1] + "\\" + info[0] + "\\" + fileList[z].FileName);
-
+                                CopyFile(fullFileName, folderSettings[1] + "\\" + info[0] + "\\" + fileList[z].FileName);                            
                         }
                     }//end of for loop 
                 }
@@ -1389,7 +1417,7 @@ namespace TV_show_Renamer
 
         #region Private Methods
 
-        public void addFilesToThread(ThreadAdd newItems) 
+        private void addFilesToThread(ThreadAdd newItems) 
         { 
             convertionQueue.Enqueue(newItems);
             if (!AddFilesThread.IsBusy)
@@ -1598,7 +1626,7 @@ namespace TV_show_Renamer
         }
 
         //returns string list of info
-        private List<string> infoFinder(string oldfile, string oldfileLocation, List<string> folderlist, int season, int episode)
+        private List<string> infoFinder(string oldfile, string oldfileLocation, List<string> folderlist, int season, int episode,string oldFileName,string fileExt)
         {
             string fileName = lowering(oldfile);
             List<string> stuff = new List<string>();
@@ -1608,7 +1636,7 @@ namespace TV_show_Renamer
             string infoChanged = fileName;
             stuff.Add("no folder");
             stuff.Add("0");//season 
-            stuff.Add("New Folder");//show folder
+            stuff.Add(oldFileName.Replace(fileExt,""));//show folder
             string shortTitle = null;
             string test = fileName;
             int you = -1;//index to end of shows name
@@ -1955,10 +1983,12 @@ namespace TV_show_Renamer
                 tempTitle = tempCharTitle.ToString();
 
                 //loop for seasons
-                for (int i = 1; i < 40; i++)
+                for (int i = 1; i < 41; i++)
                 {
                     //varable for break command later
                     bool end = false;
+
+                    if (i == 40) i = 0;
 
                     //loop for episodes
                     for (int j = 0; j < 150; j++)
@@ -2085,11 +2115,11 @@ namespace TV_show_Renamer
                         }
 
                     }//end of episode loop
-
+                    
                     //stop loop when name is change
                     if (end)
                         break;
-
+                    if (i == 0) i = 40;
                 }//end of season loop
 
                 //Date format
