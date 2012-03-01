@@ -52,7 +52,7 @@ namespace TV_show_Renamer
             }
             catch (Exception q)
             {
-                window.writeLog("Error when deleting files before update" + q.ToString());
+                window.writeLog("Error when deleting library.seh before update" + q.ToString());
             }
             try
             {
@@ -61,7 +61,7 @@ namespace TV_show_Renamer
             }
             catch (Exception q)
             {
-                window.writeLog("Error when deleting files before update" + q.ToString());
+                window.writeLog("Error when deleting version.xml before update" + q.ToString());
             }
             try
             {
@@ -70,7 +70,7 @@ namespace TV_show_Renamer
             }
             catch (Exception q)
             {
-                window.writeLog("Error when deleting files before update" + q.ToString());
+                window.writeLog("Error when deleting webversion.xml before update" + q.ToString());
             }
             try
             {
@@ -79,7 +79,7 @@ namespace TV_show_Renamer
             }
             catch (Exception q)
             {
-                window.writeLog("Error when deleting files before update" + q.ToString());
+                window.writeLog("Error when deleting preferences.seh before update" + q.ToString());
             }            
 
             ProcessStartInfo startInfo2 = new ProcessStartInfo(label1.Text);

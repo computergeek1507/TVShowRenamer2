@@ -74,11 +74,13 @@ namespace TV_show_Renamer
             }
         }
 
+        //zip folder option
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             Main.changeZIPstate( checkBox1.Checked);
         }        
-                      
+        
+        //folder options     
         private void button4_Click(object sender, EventArgs e)
         {
             FolderControl folderAdd = new FolderControl(Main);
@@ -112,6 +114,7 @@ namespace TV_show_Renamer
             }
         }
 
+        //online database
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Main.newMainSettings.TVDataBase = comboBox1.SelectedIndex;

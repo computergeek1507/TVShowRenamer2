@@ -711,7 +711,6 @@
             this.titles.HeaderText = "titles";
             this.titles.Name = "titles";
             this.titles.ReadOnly = true;
-            this.titles.Visible = false;
             this.titles.Width = 53;
             // 
             // filefolder
@@ -766,7 +765,6 @@
             this.SeasonNum.HeaderText = "SeasonNum";
             this.SeasonNum.Name = "SeasonNum";
             this.SeasonNum.ReadOnly = true;
-            this.SeasonNum.Visible = false;
             this.SeasonNum.Width = 5;
             // 
             // EpisodeNum
@@ -776,7 +774,6 @@
             this.EpisodeNum.HeaderText = "EpisodeNum";
             this.EpisodeNum.Name = "EpisodeNum";
             this.EpisodeNum.ReadOnly = true;
-            this.EpisodeNum.Visible = false;
             this.EpisodeNum.Width = 5;
             // 
             // Form1
