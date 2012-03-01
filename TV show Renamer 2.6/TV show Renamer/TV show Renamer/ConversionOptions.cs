@@ -21,6 +21,8 @@ namespace TV_show_Renamer
         string[] titleSettings = { "Episode Title", "Episode title", "EPISODE TITLE", "episode title", "None" };
         string[] junkSettings = { "Junk Text", "Junk text", "JUNK TEXT", "junk text", "Original" };
         string[] extSettings = { ".ext", ".Ext",".EXT" };
+        string[] titleGetSettings = { "Use File then Online", "Use File", "Online Only" };
+        string[] TVSearch = { "TVDB.com", "TVRage.com" };
 
         public ConversionOptions(Form1 temp,MainSettings tempSettings)
         {            
@@ -33,15 +35,17 @@ namespace TV_show_Renamer
             comboBox3.DataSource = titleSettings;
             comboBox4.DataSource = dashSettings;
             comboBox5.DataSource = dashSettings2;
-            comboBox6.DataSource = junkSettings;
+            comboBox6.DataSource = titleGetSettings;
             comboBox7.DataSource = extSettings;
+            comboBox8.DataSource = TVSearch;
             comboBox1.SelectedIndex = newMainSettings.ProgramFormat;
             comboBox2.SelectedIndex = newMainSettings.SeasonFormat;
             comboBox3.SelectedIndex = newMainSettings.TitleFormat;
             comboBox4.SelectedIndex = Convert.ToInt32(newMainSettings.DashSeason);
             comboBox5.SelectedIndex = Convert.ToInt32(newMainSettings.DashTitle);
-            comboBox6.SelectedIndex = newMainSettings.JunkFormat;
+            comboBox6.SelectedIndex = newMainSettings.TitleSelection;
             comboBox7.SelectedIndex = newMainSettings.ExtFormat;
+            comboBox8.SelectedIndex = newMainSettings.TVDataBase;
             checkBox1.Checked = newMainSettings.RemovePeriod;
             checkBox2.Checked = newMainSettings.RemoveUnderscore;
             checkBox3.Checked = newMainSettings.RemoveDash;
@@ -59,6 +63,7 @@ namespace TV_show_Renamer
             this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
             this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
+            this.comboBox8.SelectedIndexChanged += new System.EventHandler(this.comboBox8_SelectedIndexChanged);
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
@@ -87,11 +92,11 @@ namespace TV_show_Renamer
         {
             newMainSettings.TitleFormat=comboBox3.SelectedIndex;
             convert();
-        }        
-        //JunkFormat
+        }
+        //TitleSelection
         private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
         {
-            newMainSettings.JunkFormat = comboBox6.SelectedIndex;
+            newMainSettings.TitleSelection = comboBox6.SelectedIndex;
             convert();
         }
         //ExtFormat
@@ -110,6 +115,12 @@ namespace TV_show_Renamer
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
             newMainSettings.DashTitle = Convert.ToBoolean(comboBox5.SelectedIndex);
+            convert();
+        }
+        //title server
+        private void comboBox8_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            newMainSettings.TVDataBase = comboBox8.SelectedIndex;
             convert();
         }
         //remove period
@@ -152,7 +163,7 @@ namespace TV_show_Renamer
         private void checkBox7_CheckedChanged(object sender, EventArgs e)
         {
             newMainSettings.AutoGetTitle = checkBox7.Checked;
-            convert(); ;
+            convert(); 
         }
         //SeasonOffset
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -169,7 +180,7 @@ namespace TV_show_Renamer
             if (newMainSettings.AutoGetTitle)
                 Main.clearTitles();
             convert();
-        }
+        }        
         //autoconvert
         private void convert()
         {

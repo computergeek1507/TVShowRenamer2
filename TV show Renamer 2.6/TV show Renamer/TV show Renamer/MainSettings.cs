@@ -34,6 +34,7 @@ namespace TV_show_Renamer
         int _junkFormat = 0;
         int _extFormat = 0;
         int _tvDataBase = 0;
+        int _titleSelection = 0;
 
         int[] _backgroundColor = { 255, 153, 180, 209 };
         int[] _foregroundColor = { 255, 0, 0, 0 };
@@ -98,9 +99,10 @@ namespace TV_show_Renamer
         public bool saveStettings()
         {
             bool returnValue = true;
+            StreamWriter pw = null;
             try
             {//write newpreferences file
-                StreamWriter pw = new StreamWriter(_dataFolder + "//newpreferences.seh");
+                pw = new StreamWriter(_dataFolder + "//newpreferences.seh");
                 pw.WriteLine(_removePeriod);
                 pw.WriteLine(_removeUnderscore);
                 pw.WriteLine(_removeDash);
@@ -136,7 +138,9 @@ namespace TV_show_Renamer
                 pw.WriteLine(DateTime.Today.Date.ToString());
                 pw.WriteLine(_autoUpdates);
                 pw.WriteLine(_autoGetTitle);
-
+                pw.WriteLine(_tvDataBase);
+                pw.WriteLine(_titleSelection);
+                
                 pw.Close();//close writer stream
             }
             catch (Exception e)
@@ -144,34 +148,49 @@ namespace TV_show_Renamer
                 _main.WriteLog("newpreferences.seh Write Falure \n" + e.ToString());
                 returnValue = false;
             }
+            finally
+            {
+                if (pw != null)
+                    pw.Close();
+            }
             try
             {//write all folder locations
-                StreamWriter pw2 = new StreamWriter(_dataFolder + "//Folders.seh");
-                pw2.WriteLine(_moveFolder.Count());
+                pw = new StreamWriter(_dataFolder + "//Folders.seh");
+                pw.WriteLine(_moveFolder.Count());
                 for (int i = 0; i < _moveFolder.Count(); i++)
-                    pw2.WriteLine(_moveFolder[i]);
-                pw2.Close();
+                    pw.WriteLine(_moveFolder[i]);
+                pw.Close();
             }
             catch (Exception e)
             {
                 _main.WriteLog("Folders.seh Falure \n" + e.ToString());
                 returnValue = false;
             }
+            finally
+            {
+                if (pw != null)
+                    pw.Close();
+            }
             try
             {//write TV SHOW IDs
-                StreamWriter pw2 = new StreamWriter(_dataFolder + "//TVShowID.seh");
-                pw2.WriteLine(_TVShowIDList.Count() * 2);
+                pw = new StreamWriter(_dataFolder + "//TVShowID.seh");
+                pw.WriteLine(_TVShowIDList.Count() * 2);
                 for (int i = 0; i < _TVShowIDList.Count(); i++)
                 {
-                    pw2.WriteLine(_TVShowIDList[i].TVShowName);
-                    pw2.WriteLine(_TVShowIDList[i].TVID);
-                }                
-                pw2.Close();
+                    pw.WriteLine(_TVShowIDList[i].TVShowName);
+                    pw.WriteLine(_TVShowIDList[i].TVID);
+                }
+                pw.Close();
             }
             catch (Exception e)
             {
                 _main.WriteLog("TVShowID.seh Falure \n" + e.ToString());
                 returnValue = false;
+            }
+            finally
+            {
+                if (pw != null)
+                    pw.Close();
             }
             return returnValue;
         }
@@ -180,11 +199,12 @@ namespace TV_show_Renamer
         public bool loadStettings()
         {
             bool returnValue = true;
+            StreamReader tr3 = null;
             try
             {
                 if (File.Exists(_dataFolder + "//newpreferences.seh"))//see if file exists
                 {
-                    StreamReader tr3 = new StreamReader(_dataFolder + "//newpreferences.seh");
+                    tr3 = new StreamReader(_dataFolder + "//newpreferences.seh");
                     _removePeriod = bool.Parse(tr3.ReadLine());
                     _removeUnderscore = bool.Parse(tr3.ReadLine());
                     _removeDash = bool.Parse(tr3.ReadLine());
@@ -223,6 +243,11 @@ namespace TV_show_Renamer
                         _checkForUpdates = true;
                     var readtemp = tr3.ReadLine();
                     if (readtemp != null) _autoGetTitle = bool.Parse(readtemp);
+                    readtemp = tr3.ReadLine();
+                    if (readtemp != null) _tvDataBase = int.Parse(readtemp);
+                    readtemp = tr3.ReadLine();
+                    if (readtemp != null) _titleSelection = int.Parse(readtemp);
+                    
                     tr3.Close();//close reader stream                                        
                 }//end of if. 
             }
@@ -231,21 +256,26 @@ namespace TV_show_Renamer
                 _main.WriteLog("newpreferences.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
+            finally
+            {
+                if (tr3 != null)
+                    tr3.Close();
+            }
             try
             {//Read TV show folders
                 if (File.Exists(_dataFolder + "//TVFolder.seh"))
                 {
-                    StreamReader tv2 = new StreamReader(_dataFolder + "//TVFolder.seh");
-                    int length = Int32.Parse(tv2.ReadLine());
+                    tr3 = new StreamReader(_dataFolder + "//TVFolder.seh");
+                    int length = Int32.Parse(tr3.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
                         if (length == 0)
                             break;
                         _moveFolder.Add("TV Folder "+(i+1).ToString());
-                        _moveFolder.Add(tv2.ReadLine());                        
+                        _moveFolder.Add(tr3.ReadLine());                        
                         _moveFolder.Add("3");                        
                     }//end of for loop  
-                    tv2.Close();
+                    tr3.Close();
                     File.Delete(_dataFolder + "//TVFolder.seh");
                 }//end of if
             }
@@ -254,23 +284,29 @@ namespace TV_show_Renamer
                 _main.WriteLog("TVFolder.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
+            finally
+            {
+                if(tr3!=null)
+                    tr3.Close();
+            }
+
             try
             {//Read Other folders 
                 if (File.Exists(_dataFolder + "//OtherFolders.seh"))//see if file exists
                 {
-                    StreamReader tv3 = new StreamReader(_dataFolder + "//OtherFolders.seh");
-                    int length = Int32.Parse(tv3.ReadLine());
+                    tr3 = new StreamReader(_dataFolder + "//OtherFolders.seh");
+                    int length = Int32.Parse(tr3.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
                         if (length == 0)
                             break;
-                        _moveFolder.Add(tv3.ReadLine());
+                        _moveFolder.Add(tr3.ReadLine());
                         if (i % 2 == 1)
                         {
                             _moveFolder.Add("1");                            
                         }
                     }//end of for loop  
-                    tv3.Close();
+                    tr3.Close();
                     File.Delete(_dataFolder + "//OtherFolders.seh");
                 }
             }
@@ -279,19 +315,24 @@ namespace TV_show_Renamer
                 _main.WriteLog("OtherFolders.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
+            finally
+            {
+                if(tr3!=null)
+                    tr3.Close();
+            }
             try
             {//Read all folders
                 if (File.Exists(_dataFolder + "//Folders.seh"))
                 {
-                    StreamReader tv5 = new StreamReader(_dataFolder + "//Folders.seh");
-                    int length = Int32.Parse(tv5.ReadLine());
+                    tr3 = new StreamReader(_dataFolder + "//Folders.seh");
+                    int length = Int32.Parse(tr3.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
                         if (length == 0)
                             break;
-                        _moveFolder.Add(tv5.ReadLine());
+                        _moveFolder.Add(tr3.ReadLine());
                         }//end of for loop  
-                    tv5.Close();
+                    tr3.Close();
                 }//end of if
             }
             catch (Exception e)
@@ -299,19 +340,24 @@ namespace TV_show_Renamer
                 _main.WriteLog("Folders.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
+            finally
+            {
+                if(tr3!=null)
+                    tr3.Close();
+            }
             try
             {//Read ID List folders
                 if (File.Exists(_dataFolder + "//TVShowID.seh"))
                 {
-                    StreamReader tv4 = new StreamReader(_dataFolder + "//TVShowID.seh");
-                    int length = Int32.Parse(tv4.ReadLine());
+                    tr3 = new StreamReader(_dataFolder + "//TVShowID.seh");
+                    int length = Int32.Parse(tr3.ReadLine());
                     if ((length % 2 == 0) && length != 0)
                     {
                         for (int i = 0; i < length; i = i + 2)
                         {
-                            _TVShowIDList.Add(new TVShowID(tv4.ReadLine(), int.Parse(tv4.ReadLine())));
+                            _TVShowIDList.Add(new TVShowID(tr3.ReadLine(), int.Parse(tr3.ReadLine())));
                         }//end of for loop  
-                        tv4.Close();
+                        tr3.Close();
                     }//end of if
                 }
             }
@@ -319,6 +365,11 @@ namespace TV_show_Renamer
             {
                 _main.WriteLog("TVShowID.seh Read Error \n" + e.ToString());
                 returnValue = false;
+            }
+            finally
+            {
+                if (tr3 != null)
+                    tr3.Close();
             }
 
             return returnValue;
@@ -450,7 +501,12 @@ namespace TV_show_Renamer
             get { return _tvDataBase; }
             set { _tvDataBase = value; }
         }
-        
+        public int TitleSelection
+        {
+            get { return _titleSelection; }
+            set { _titleSelection = value; }
+        }
+
         public int[] BackgroundColor
         {
             get { return _backgroundColor; }

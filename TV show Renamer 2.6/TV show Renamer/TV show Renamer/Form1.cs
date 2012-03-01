@@ -1513,7 +1513,7 @@ namespace TV_show_Renamer
                 TitleThread.RunWorkerAsync(); 
             else
             {
-                if (newMainSettings.AutoGetTitle && fileList.Count != 0&&getTitle)
+                if (newMainSettings.AutoGetTitle && fileList.Count != 0 && getTitle && newMainSettings.TitleSelection!=1)
                 {
                     List<int> selected = new List<int>();
                     for (int i = 0; i < fileList.Count; i++)
@@ -1833,6 +1833,10 @@ namespace TV_show_Renamer
             for (int index = 0; index < EditFileList.Count(); index++)
             {
                 bool findTitle = true;
+                if (newMainSettings.TitleSelection == 1)
+                {                    
+                    EditFileList[index].FileTitle = "";
+                }
                 if (EditFileList[index].FileTitle == "%%%%")
                 {
                     findTitle = false;
@@ -2209,6 +2213,42 @@ namespace TV_show_Renamer
 
                 if (endIndex != -1)
                 {
+                    
+                    if (newMainSettings.TitleFormat != 4 && findTitle)// && newMainSettings.AutoGetTitle)
+                    {
+                        switch (newMainSettings.TitleSelection)
+                        {
+                            case 0:
+                                StringBuilder titleSting = new StringBuilder(newfilename);
+                                string temp1 = (titleSting[endIndex].ToString() + titleSting[endIndex + 1].ToString() + titleSting[endIndex + 2].ToString() + titleSting[endIndex + 3].ToString() + titleSting[endIndex + 4].ToString());
+                                if (temp1 == (temp + "&&&&") || temp1 == (" - &&") || temp1 == (temp + temp + "&&&"))
+                                {
+                                    EditFileList[index].FileTitle = "@@@@";
+                                    //AddTitle.Add(index);
+                                    //int format3 = -1;
+                                    //format3 = newMainSettings.SeasonFormat + 1;                        
+                                    //TVDB InternetTest = new TVDB(this, newfilename, index, fileList, newMainSettings.DataFolder, format3);
+                                }
+                                break;
+                            case 1:
+                                //tempTitle = "";
+                                EditFileList[index].FileTitle = "@@@@";
+                                break;
+                            case 2:
+                                if (tempTitle == " -" || tempTitle == " ") tempTitle = "";
+                                StringBuilder filenameOld = new StringBuilder(newfilename);
+                                StringBuilder filenameNew = new StringBuilder();
+                                filenameNew.Length = endIndex;
+                                for (int q = 0; q < endIndex; q++)
+                                    filenameNew[q] = filenameOld[q];
+                                newfilename = filenameNew.ToString() + tempTitle + temp + "&&&&";
+                                EditFileList[index].FileTitle = "@@@@";
+                                break;
+                            default:
+                                break;
+                        }
+                        
+                    }
                     switch (newMainSettings.TitleFormat)
                     {
                         case 0:
@@ -2230,19 +2270,6 @@ namespace TV_show_Renamer
                             break;
                         default:
                             break;
-                    }
-                    if (newMainSettings.TitleFormat != 4 && findTitle)// && newMainSettings.AutoGetTitle)
-                    {
-                        StringBuilder titleSting = new StringBuilder(newfilename);
-                        string temp1 = (titleSting[endIndex].ToString() + titleSting[endIndex + 1].ToString() + titleSting[endIndex + 2].ToString() + titleSting[endIndex + 3].ToString() + titleSting[endIndex + 4].ToString());
-                        if (temp1 == (temp + "&&&&") || temp1 == (" - &&") || temp1 == (temp + temp + "&&&"))
-                        {
-                            EditFileList[index].FileTitle = "@@@@";
-                            //AddTitle.Add(index);
-                            //int format3 = -1;
-                            //format3 = newMainSettings.SeasonFormat + 1;                        
-                            //TVDB InternetTest = new TVDB(this, newfilename, index, fileList, newMainSettings.DataFolder, format3);
-                        }
                     }
                 }
                 if (!findTitle)

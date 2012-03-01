@@ -19,12 +19,10 @@ namespace TV_show_Renamer
         {
             logFolder = folder;                        
             // Create a writer and open the file:
-            if (!File.Exists(logFolder+"//logfile.txt"))            
-                log = new StreamWriter(logFolder + "//logfile.txt");            
-            else            
-                log = File.AppendText(logFolder + "//logfile.txt");            
+            log = File.AppendText(logFolder + "//logfile.txt");            
             // Write to the file:
             log.WriteLine(DateTime.Now + " - Program started :)");
+            //log.Close();
         }
 
         // Close Log
