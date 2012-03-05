@@ -1789,13 +1789,13 @@ namespace TV_show_Renamer
         }
 
         //uppercase stuff after spaces with parameters
-        private string UpperCaseingAfterSpace(string orig, int start, int end, bool first)
+        private string UpperCaseingAfterSpace(string orig, int start, int end)
         {
             if (orig == "") return "";
             StringBuilder s2 = new StringBuilder(orig);
 
             //make first letter capital
-            if (first)
+            //if (first)
                 s2[start] = char.ToUpper(s2[start]);
 
             //Finds Letter after spaces and capitalizes them
@@ -2088,7 +2088,7 @@ namespace TV_show_Renamer
                         }
 
                         //stop loop when name is change                    
-                        if (startnewname != newfilename)
+                        if (startIndex != -1)
                         {
                             EditFileList[index].SeasonNum = i + newMainSettings.SeasonOffset;
                             formattedSeason= newi2;
@@ -2188,7 +2188,7 @@ namespace TV_show_Renamer
                 switch (newMainSettings.ProgramFormat)
                 {
                     case 0:
-                        tvshowName = UpperCaseingAfterSpace(tvshowName, 0, tvshowName.Length - 1, true);
+                        tvshowName = UpperCaseingAfterSpace(tvshowName, 0, tvshowName.Length - 1);
                         break;
                     case 1:
                         tvshowName = UpperCaseing(tvshowName, 0, 1);
@@ -2209,7 +2209,7 @@ namespace TV_show_Renamer
                             {
                                 showTitle = "";
                                 if (endIndex != newfilename.Length - 5)
-                                    showTitle = newfilename.Substring(endIndex, newfilename.Length - 5).Trim();
+                                    showTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex+5)).Trim();
                                 if (showTitle != "")
                                     EditFileList[index].GetTitle = false;
                             }
@@ -2217,7 +2217,7 @@ namespace TV_show_Renamer
                         case 1:
                             EditFileList[index].GetTitle = false;
                             if (endIndex != newfilename.Length - 5)
-                                showTitle = newfilename.Substring(endIndex, newfilename.Length - 5).Trim();
+                                showTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex + 5)).Trim();
                             break;
                         case 2:
                             
@@ -2230,7 +2230,7 @@ namespace TV_show_Renamer
                     switch (newMainSettings.TitleFormat)
                     {
                         case 0:
-                            showTitle = UpperCaseingAfterSpace(showTitle, 0, showTitle.Length, false);
+                            showTitle = UpperCaseingAfterSpace(showTitle, 0, showTitle.Length);
                             break;
                         case 1:
                             showTitle = UpperCaseFirstAfterSpace(showTitle, 0, showTitle.Length);
@@ -3417,7 +3417,7 @@ namespace TV_show_Renamer
             newMainSettings.Start(Log);
 
             this.junkRemover();
-            this.fileChecker();
+            //this.fileChecker();
             newMainSettings.loadStettings();
             if (newMainSettings.CheckForUpdates)
             {
@@ -3441,7 +3441,8 @@ namespace TV_show_Renamer
             Color temp1 = System.Drawing.Color.FromArgb(newMainSettings.ButtonColor[0], newMainSettings.ButtonColor[1], newMainSettings.ButtonColor[2], newMainSettings.ButtonColor[3]);
             int[] temp3 = { 255, 240, 240, 240 };
             if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
-                changeButtoncolor(temp1);            
+                changeButtoncolor(temp1);
+            //this.fileChecker();
         }//end of load command
 
         //create preference file when program closes and close log
