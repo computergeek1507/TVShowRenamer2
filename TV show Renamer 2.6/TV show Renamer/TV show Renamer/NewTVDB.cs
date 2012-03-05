@@ -36,6 +36,7 @@ namespace TV_show_Renamer
             if (ShowName == null)
                 return TVShowID;
             ShowName = ShowName.Replace("Gold Rush Alaska", "Gold Rush");
+            ShowName = ShowName.Replace("Tosh 0", "Tosh.0");
             //ICacheProvider m_cacheProvider = null;
             //TvdbHandler m_tvdbHandler = null;
             List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(ShowName);
@@ -101,53 +102,6 @@ namespace TV_show_Renamer
                 TVShowID = selectedSeriesId;
             }
             return TVShowID;
-        }
-
-        public string infoFinder(string fileName, int format, int season, int episode)
-        {
-            string tvdbTitle = null;
-            string test = fileName;
-            int you = -1;
-            int i = season;
-            int j = episode;
-
-            string newi = season.ToString();
-            string newj = j.ToString();
-            //check if i is less than 10
-            if (i < 10)
-                newi = "0" + i.ToString();
-            //check if j is less than 10
-            if (j < 10)
-                newj = "0" + j.ToString();
-            //make string to compare changed name too
-            switch (format)
-            {
-                case 1:
-                    you = test.IndexOf(i.ToString() + "x" + newj);
-                    break;
-                case 2:
-                    you = test.IndexOf(newi + newj);
-                    break;
-                case 3:
-                    you = test.IndexOf("S" + newi + "E" + newj);
-                    //you = test.IndexOf("S" + newi + "e" + newj);
-                    break;
-                case 4:
-                    you = test.IndexOf(i.ToString() + newj);
-                    break;
-            }
-            //stop loop when name is change                    
-            if (you != -1)
-            {
-                season = i;
-                episode = j;
-                if (you == 0)
-                    tvdbTitle = test.Remove(you, test.Length - (you));
-                else
-                    tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
-                //tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
-            }
-            return tvdbTitle;
         }
 
         public string getTitle(int seriesID, int season, int episode)

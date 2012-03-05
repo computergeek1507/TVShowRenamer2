@@ -37,6 +37,8 @@ namespace TV_show_Renamer
         int _tvShowID = -1;//TVDB id number
         int _seasonNum = -1;//Season Number 
         int _episodeNum = -1;//Episode Number
+        string _TVShowName = ""; //Show Name
+        bool _getTitle = true;//autoGetTitle
 
         public TVClass(string fileFolder, string fileName, string fileExtention)
         {
@@ -98,6 +100,12 @@ namespace TV_show_Renamer
             set { _tvShowID = value; }
         }
 
+        public string TVShowName
+        {
+            get { return _TVShowName; }
+            set { _TVShowName = value; }
+        }
+
         public int SeasonNum
         {
             get { return _seasonNum; }
@@ -108,6 +116,12 @@ namespace TV_show_Renamer
         {
             get { return _episodeNum; }
             set { _episodeNum = value; }
+        }
+
+        public bool GetTitle
+        {
+            get { return _getTitle; }
+            set { _getTitle = value; }
         }
     }//end of class
 }//end of namespace
