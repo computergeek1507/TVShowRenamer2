@@ -2226,7 +2226,6 @@ namespace TV_show_Renamer
                             break;
                     }
 
-
                     switch (newMainSettings.TitleFormat)
                     {
                         case 0:

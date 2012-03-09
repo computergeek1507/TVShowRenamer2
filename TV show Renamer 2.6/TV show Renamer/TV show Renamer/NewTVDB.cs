@@ -28,6 +28,7 @@ namespace TV_show_Renamer
             folder = newFolder;
             m_cacheProvider = new XmlCacheProvider(folder);
             m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
+            m_tvdbHandler.InitCache();
         }
 
         public int findTitle(string ShowName)
@@ -106,17 +107,20 @@ namespace TV_show_Renamer
 
         public string getTitle(int seriesID, int season, int episode)
         {
-            TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
-            List<String> epList = new List<string>();
+            
+            TvdbEpisode e = m_tvdbHandler.GetEpisode(seriesID, season, episode, TvdbEpisode.EpisodeOrdering.DefaultOrder, TvdbLanguage.DefaultLanguage);
+            //TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+            //List<String> epList = new List<string>();
             string newTitle = null;
-            foreach (TvdbEpisode esp in s.Episodes)
-            {
-                if (season == esp.SeasonNumber && episode == esp.EpisodeNumber)
-                {
-                    newTitle = esp.EpisodeName;
-                    break;
-                }
-            }
+            //foreach (TvdbEpisode esp in s.Episodes)
+            //{
+            //    if (season == esp.SeasonNumber && episode == esp.EpisodeNumber)
+            //    {
+            //        newTitle = esp.EpisodeName;
+            //        break;
+            //    }
+            //}
+            newTitle = e.EpisodeName;
             if (newTitle == null)
                 return "";
             newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
