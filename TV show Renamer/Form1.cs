@@ -1995,7 +1995,7 @@ namespace TV_show_Renamer
                             newj2 = "0" + (j + newMainSettings.EpisodeOffset).ToString();
 
                         //make string to compare changed name too
-                        string startnewname = newfilename;
+                        //string startnewname = newfilename;
 
                         //1x01 format 
                         if (newMainSettings.SeasonFormat == 0)
@@ -2111,18 +2111,6 @@ namespace TV_show_Renamer
                 //Date format
                 if (newMainSettings.SeasonFormat == 4)
                 {
-                    //add dash if the title exists or add one 
-                    string dateTitle = null;
-                    if (!newMainSettings.DashTitle)
-                    {
-                        if (fileList[index].FileTitle != "")
-                            dateTitle = " - " + EditFileList[index].FileTitle;
-                        else
-                            dateTitle = " -";
-                    }
-                    else
-                        dateTitle = EditFileList[index].FileTitle;
-
                     for (int year = 0; year < 20; year++)
                     {
                         bool end = false;
@@ -2130,7 +2118,7 @@ namespace TV_show_Renamer
                         {
                             for (int day = 31; day > 0; day--)
                             {
-                                string startnewname = newfilename;
+                                //string startnewname = newfilename;
                                 string newyear = year.ToString();
                                 string newmonth = month.ToString();
                                 string newday = day.ToString();
@@ -2149,8 +2137,8 @@ namespace TV_show_Renamer
                                 newfilename = newfilename.Replace(kk + " " + month + " " + day, month.ToString() + "-" + day.ToString() + "-" + kk);
                                 newfilename = newfilename.Replace(kk + " " + newmonth + " " + newday, month.ToString() + "-" + day.ToString() + "-" + kk);
 
-                                newfilename = newfilename.Replace(month + "-" + day + "-" + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
-                                newfilename = newfilename.Replace(month + " " + day + " " + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
+                                //newfilename = newfilename.Replace(month + "-" + day + "-" + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
+                                //newfilename = newfilename.Replace(month + " " + day + " " + kk, seasonDash + month + "-" + day + "-" + kk + dateTitle);//add title
                                 startIndex = newfilename.IndexOf(month + "-" + day + "-" + kk);//find index
                                 if (startIndex != -1)
                                 {
@@ -2160,9 +2148,11 @@ namespace TV_show_Renamer
                                         endIndex = startIndex + 9;
                                     else
                                         endIndex = startIndex + 8;
-                                }
-                                if (startnewname != newfilename)
-                                {
+
+                                    EditFileList[index].SeasonNum = (month*100) + day;
+                                    formattedSeason = month.ToString() + "-" + day.ToString();
+                                    formattedEpisode = kk;
+                                    EditFileList[index].EpisodeNum = Int32.Parse(kk);
                                     end = true;
                                     break;
                                 }
@@ -2200,7 +2190,7 @@ namespace TV_show_Renamer
                         break;
                 }
 
-                if (newMainSettings.TitleFormat != 4)
+                if (newMainSettings.TitleFormat != 4&&EditFileList[index].GetTitle)
                 {
                     switch (newMainSettings.TitleSelection)
                     {
@@ -2208,7 +2198,7 @@ namespace TV_show_Renamer
                             if (!secondTime)
                             {
                                 showTitle = "";
-                                if (endIndex != newfilename.Length - 5)
+                                if (endIndex != newfilename.Length - 5 )
                                     showTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex+5)).Trim();
                                 if (showTitle != "")
                                     EditFileList[index].GetTitle = false;
@@ -2279,6 +2269,9 @@ namespace TV_show_Renamer
                             break;
                         case 3:
                             finalShowName = tvshowName + temp + seasonDash + EditFileList[index].SeasonNum.ToString()  + formattedEpisode + temp + titleDash + showTitle + extend;
+                            break;
+                        case 4:
+                            finalShowName = tvshowName + temp + seasonDash + formattedSeason+"-" + formattedEpisode + temp + titleDash + showTitle + extend;
                             break;
                         default:
                             break;
