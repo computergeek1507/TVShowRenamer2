@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public partial class SelectMenu : Form
     {
@@ -23,7 +23,17 @@ namespace TV_show_Renamer
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[z].Cells[0].Value = select[z];
             }
-        }        
+        }
+        public SelectMenu(List<TVShowID> select)
+        {
+            InitializeComponent();
+            dataGridView1.Rows.Clear();
+            for (int z = 0; z < select.Count; z++)
+            {
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[z].Cells[0].Value = select[z].TVShowName;
+            }
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {

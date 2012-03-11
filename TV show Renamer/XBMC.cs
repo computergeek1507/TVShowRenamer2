@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Linq;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public partial class XBMC : Form
     {

@@ -20,7 +20,7 @@ using System.Windows.Forms;
 //'--
 //'-- It's like MessageBox, but specific to handled exceptions, and supports email notifications
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public class HandledExceptionManager
     {

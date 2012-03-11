@@ -27,7 +27,7 @@ using System.Text.RegularExpressions;
 //'--  ** any command line arguments we have
 
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public class AppSettings
     {

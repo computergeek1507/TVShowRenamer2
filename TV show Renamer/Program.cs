@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     static class Program
     {

@@ -21,7 +21,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     internal class ExceptionDialog : System.Windows.Forms.Form
     {

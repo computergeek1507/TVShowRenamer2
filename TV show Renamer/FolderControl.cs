@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public partial class FolderControl : Form
     {

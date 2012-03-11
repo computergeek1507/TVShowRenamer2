@@ -1,4 +1,4 @@
-﻿namespace TV_show_Renamer
+﻿namespace TV_Show_Renamer
 {
     partial class Settings
     {

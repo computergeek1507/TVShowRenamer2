@@ -13,7 +13,7 @@ using System.Net.Mail;
 //
 //-- .NET 4 made this class worthless 
 //
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public class SimpleMail
     {

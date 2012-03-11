@@ -9,7 +9,7 @@ using System.IO;
 using System.Windows.Forms;
 //using System.Threading;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public partial class Text_Converter : Form
     {
