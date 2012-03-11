@@ -83,6 +83,9 @@ namespace TV_Show_Renamer
             _titleFormat = 0;
             _junkFormat = 0;
             _extFormat = 0;
+            _tvDataBase = 0;
+            _titleSelection = 0;
+
             int[] temp1 = { 255, 153, 180, 209 };
             int[] temp2 = { 255, 0, 0, 0 };
             int[] temp3 = { 255, 240, 240, 240 };
@@ -92,7 +95,7 @@ namespace TV_Show_Renamer
             _tvDataBase = 0;
 
             _firstWord = "";
-            _moveFolder.Clear();
+            //_moveFolder.Clear();
         }
 
         //save settings
