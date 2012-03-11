@@ -308,7 +308,7 @@
     </Resource>
     <None Include="Resources\Program1.png" />
     <Resource Include="Resources\TvdbLib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup />
