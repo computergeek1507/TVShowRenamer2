@@ -10,7 +10,6 @@ using System.Net;
 using System.IO;
 using System.Diagnostics;
 
-
 namespace TV_show_Renamer
 {
     public partial class download : Form
@@ -26,119 +25,80 @@ namespace TV_show_Renamer
         }
 
         //downlaod file after checks to see if it was there
-        public void downloadUpdate(string location2){
-            
+        public void downloadUpdate(string location2)
+        {            
             label1.Text = location2;
-            //check is not working
-           /* try
-            {
-                WebRequest request = WebRequest.Create(new Uri("http://update.scottnation.com/TV_Show_Renamer/TV Show Renamer Setup.msi"));
-                request.Method = "HEAD";
-                WebResponse response = request.GetResponse();
-                Console.WriteLine("{0} {1}", response.ContentLength, response.ContentType);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Problem with Server\nPlease Contact Admin");
-                return;
-            }*/
-            
+                        
             WebClient webClient = new WebClient();
             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
             webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
-            webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/TV Show Renamer Setup.msi"), location2);
+            webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/TV Show Renamer Setup.exe"), location2);
+            //webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/TV show Renamer.exe"), location2 );
         }
 
         //methoid for progress bar
-        private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e){
-            progressBar1.Value = e.ProgressPercentage;
-            
+        private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;            
         }
 
         //runs when download completes
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
-
             try
             {
-                if (File.Exists(commonAppData + "//library.seh"))
-                {
-                    File.Delete(commonAppData + "//library.seh");
-                }
+                if (File.Exists(commonAppData + "//library.seh"))               
+                    File.Delete(commonAppData + "//library.seh");                
             }
             catch (Exception q)
             {
-                window.writeLog("Error when deleting files before update" + q.ToString());
+                window.writeLog("Error when deleting library.seh before update" + q.ToString());
             }
             try
             {
                 if (File.Exists(commonAppData + "//version.xml"))
-                {
-                    File.Delete(commonAppData + "//version.xml");
-                }
+                    File.Delete(commonAppData + "//version.xml");                
             }
             catch (Exception q)
             {
-                window.writeLog("Error when deleting files before update" + q.ToString());
+                window.writeLog("Error when deleting version.xml before update" + q.ToString());
             }
             try
             {
                 if (File.Exists(commonAppData + "//webversion.xml"))
-                {
-                    File.Delete(commonAppData + "//webversion.xml");
-                }
+                    File.Delete(commonAppData + "//webversion.xml");                
             }
             catch (Exception q)
             {
-                window.writeLog("Error when deleting files before update" + q.ToString());
+                window.writeLog("Error when deleting webversion.xml before update" + q.ToString());
             }
             try
             {
                 if (File.Exists(commonAppData + "//preferences.seh"))
-                {
-                    File.Delete(commonAppData + "//preferences.seh");
-                }
+                    File.Delete(commonAppData + "//preferences.seh");               
             }
             catch (Exception q)
             {
-                window.writeLog("Error when deleting files before update" + q.ToString());
-            }
-            //string installdir = Directory.GetCurrentDirectory();
-            
-            MessageBox.Show("The uninstaller will run and when it is finished you will have to double click the installer you saved to:\n" + label1.Text);
-            ProcessStartInfo startInfo2 = new ProcessStartInfo("msiexec.exe", "/x {D0DA0E5E-92C4-4A2A-B1BF-EC7077B35217}");
+                window.writeLog("Error when deleting preferences.seh before update" + q.ToString());
+            }            
+
+            ProcessStartInfo startInfo2 = new ProcessStartInfo(label1.Text);
+            //startInfo2.Verb = "runas";
             Process.Start(startInfo2);
-            //startInfo2.FileName = label1.Text;
-            //startInfo.Arguments
             
-            //startInfo2.
-            //ProcessStartInfo startInfo = new ProcessStartInfo();
-            //startInfo.FileName = label1.Text;
-            //startInfo.Arguments
-            //Process.Start(startInfo);
-
-            //ProcessStartInfo startInfo2 = new ProcessStartInfo(commonAppData + "\\Intraller.exe", label1.Text + " " + installdir);
-            //Process.Start(startInfo2);
-            //System.Environment.Exit(0);
-
-            //ProcessStartInfo startInfo2 = new ProcessStartInfo(label1.Text);
-            //Process.Start(startInfo2);
-
-            Application.Exit();
-            //window.Close();
+            window.CloseForUpdates();            
         }
 
         //loads with form
         private void download_Load(object sender, EventArgs e)
-        {
-            
+        {            
             this.Show();
-            //string name=null;
-            saveFileDialog1.Filter = "Installer (*.msi)|*.msi";
-            saveFileDialog1.FilterIndex = 0;
+            //this.downloadUpdate(commonAppData);
+            saveFileDialog1.Filter = "Installer (*.exe)|*.exe";
+            saveFileDialog1.FilterIndex = 1;
             saveFileDialog1.RestoreDirectory = true;
-            saveFileDialog1.FileName = "TV Show Renamer Setup.msi";
-            saveFileDialog1.DefaultExt = ".msi";
+            saveFileDialog1.FileName = "TV Show Renamer Setup.exe";
+            saveFileDialog1.DefaultExt = ".exe";
             saveFileDialog1.OverwritePrompt = true;
             saveFileDialog1.Title = "Select Location to Download";
 
@@ -146,8 +106,7 @@ namespace TV_show_Renamer
             {
                 string name = saveFileDialog1.FileName;
                 this.downloadUpdate(name);
-            }         
-            
+            }
         }
 
         //cancel button
@@ -162,6 +121,5 @@ namespace TV_show_Renamer
         {
             window.Show();
         }  
-
-    }
-}
+    }//end of class
+}//end of namespace

@@ -60,9 +60,9 @@ namespace TV_show_Renamer.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap _56 {
+        internal static System.Drawing.Bitmap Program {
             get {
-                object obj = ResourceManager.GetObject("56", resourceCulture);
+                object obj = ResourceManager.GetObject("Program", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
