@@ -24,17 +24,17 @@ namespace TV_show_Renamer
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-           System.Diagnostics.Process.Start("http://scottnation.com");
+           System.Diagnostics.Process.Start("http://tvshowrenamer.codeplex.com");
         }
         
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://armorgames.com/play/4703/miami-shark");
+            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=RURURGGNBVHG6&lc=US&item_name=TV%20Show%20Renamer&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted");
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("scott@scottnation.com");
+            System.Diagnostics.Process.Start("mailto:scott@scottnation.com");
         }
     }//end of about class
 }//end of namespace

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
-using System.Threading;
+//using System.Threading;
 
 namespace TV_show_Renamer
 {
@@ -40,26 +40,19 @@ namespace TV_show_Renamer
                 sw.Close();//close writer stream
             }
             else
-            {
-                //read junk file 
+            {   //read junk file 
                 StreamReader tr = new StreamReader(commonAppData + "//convertlibrary.seh");
                 textConvert.Clear();//clear old list
 
                 int size = Int32.Parse(tr.ReadLine());//read number of lines
                 //if file is blank return nothing
-                if (size == 0)
-                {
-                    return;
-                }
+                if (size == 0)                
+                    return;                
                 //read words from file
-                for (int i = 0; i < size; i++)
-                {
-                    textConvert.Add(tr.ReadLine());
-                }//end of for
+                for (int i = 0; i < size; i++)                
+                    textConvert.Add(tr.ReadLine());               
                 tr.Close();//close reader stream
-
             }//end of method
-
         }//end of getTextConvert method
 
         //autoconvert method 
@@ -73,62 +66,151 @@ namespace TV_show_Renamer
         {
             return textConvert;
         }
-
-        //"close" window
-        private void button1_Click(object sender, EventArgs e)
-        {
-            StreamWriter sw = new StreamWriter(commonAppData + "//convertlibrary.seh");
-            sw.WriteLine(textConvert.Count());
-            for (int j = 0; j < textConvert.Count(); j++)
-            {
-                sw.WriteLine(textConvert[j]);
-            }//end of for
-            sw.Close();//close writer stream
-            this.Hide();
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
-        }
-
+               
         //add text to be converted
         private void button2_Click(object sender, EventArgs e)
         {
             if ((textBox1.Text != "") || (textBox1.Text != "0000"))
-                {
+            {
                 textConvert.Add(textBox1.Text);
                 textConvert.Add(textBox2.Text);
+
+                textBox1.Text = null;
+                textBox2.Text = null;
+                if (button2.Text == "Save") button2.Text = "Add";
+                //int x = dataGridView1.CurrentCell.ColumnIndex;
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < textConvert.Count(); i = i + 2)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                    dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                    dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
                 }
-            textBox1.Text = null;
-            textBox2.Text = null;
-            //Display newbox = new Display(textConvert, true);                
-            //newbox.Show();
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+                this.dataGridView1.CurrentCell = this.dataGridView1[0, dataGridView1.RowCount - 1];
+                convert();
+            }
         }
-
-        //view list
-        private void button3_Click(object sender, EventArgs e)
+       
+        //edit
+        private void button4_Click_1(object sender, EventArgs e)
         {
-            Display newbox = new Display(textConvert,this);                
+            if (dataGridView1.CurrentRow != null)
+            {
+                int y = dataGridView1.CurrentCell.RowIndex - 1;
+                int x = dataGridView1.CurrentCell.ColumnIndex;
+                int u = dataGridView1.CurrentRow.Index;
+
+                textBox2.Text = textConvert[(u * 2) + 1];
+                textBox1.Text = textConvert[(u * 2)];
+                textConvert.RemoveAt((u*2)+1);
+                textConvert.RemoveAt(u * 2);
+                button2.Text = "Save";
+
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < textConvert.Count(); i = i + 2)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                    dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                    dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
+                }
+                if (y < 0) y = 0;
+                if (dataGridView1.Rows.Count != 0)
+                    this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
+                convert();
+            }
         }
 
-        //clear list
-        private void button4_Click(object sender, EventArgs e)
+        //remove 
+        private void button3_Click_1(object sender, EventArgs e)
         {
-            textConvert.Clear();
-            StreamWriter sw = new StreamWriter(commonAppData + "//convertlibrary.seh");
-            sw.WriteLine("0");
-            sw.Close();//close writer stream
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+            if (dataGridView1.CurrentRow != null)
+            {
+                int y = -1;
+                int x = dataGridView1.CurrentCell.ColumnIndex;
+                for (int i = textConvert.Count() - 1; i >= 0; i=i-2)
+                {
+                    if (dataGridView1.Rows[i / 2].Cells[0].Selected || dataGridView1.Rows[i / 2].Cells[1].Selected || dataGridView1.Rows[i / 2].Cells[2].Selected)
+                    {
+                        textConvert.RemoveAt(i);
+                        textConvert.RemoveAt(i-1);
+                        y = (i / 2) - 1;
+                    }
+                }
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < textConvert.Count(); i = i + 2)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                    dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                    dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
+                }
+                if (y != -1)
+                    this.dataGridView1.CurrentCell = this.dataGridView1[x, y];
+                convert();
+            }
         }
 
-        //remove selected
-        public void removeSelected(int u) {
-            //textConvert.RemoveAt(u+1);
-            //textConvert.RemoveAt(u);
-            Thread t = new Thread(new ThreadStart(convert));
-            t.Start();
+        private void Text_Converter_Load(object sender, EventArgs e)
+        {
             
+            if (textConvert.Count() != 0)
+            {
+                dataGridView1.Rows.Clear();
+                for (int i = 0; i < textConvert.Count(); i = i + 2)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                    dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                    dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
+                }                
+            }
         }
-    }
-}
+
+        private void Text_Converter_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            StreamWriter sw = new StreamWriter(commonAppData + "//convertlibrary.seh");
+            sw.WriteLine(textConvert.Count());
+            for (int j = 0; j < textConvert.Count(); j++)            
+                sw.WriteLine(textConvert[j]);            
+            sw.Close();//close writer stream
+            this.Hide();
+            convert();
+            this.Hide();
+        }
+        private void CheckKeys(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                if ((textBox1.Text != "") && (textBox1.Text != "0000") && (textBox1.Text != " ") && (textBox1.Text != null))
+                {
+                    textConvert.Add(textBox1.Text);
+                    textConvert.Add(textBox2.Text);
+
+                    textBox1.Text = null;
+                    textBox2.Text = null;
+                    if (button2.Text == "Save") button2.Text = "Add";
+
+                    dataGridView1.Rows.Clear();
+                    for (int i = 0; i < textConvert.Count(); i = i + 2)
+                    {
+                        dataGridView1.Rows.Add();
+                        dataGridView1.Rows[i / 2].Cells[0].Value = textConvert[i];
+                        dataGridView1.Rows[i / 2].Cells[1].Value = "to";
+                        dataGridView1.Rows[i / 2].Cells[2].Value = textConvert[i + 1];
+                    }
+                    convert();
+                }
+            }
+        }
+
+        private void Text_Converter_Resize(object sender, EventArgs e)
+        {
+            textBox1.Width = (this.Width / 2) - 39;
+            textBox2.Location =new Point( (this.Width / 2) + 10,33);
+            textBox2.Width = (this.Width / 2) - 39;
+        }
+    }//end of class
+}//end of namespace

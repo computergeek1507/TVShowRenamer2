@@ -17,7 +17,7 @@
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ApplicationIcon>tv.ico</ApplicationIcon>
+    <ApplicationIcon>TVcustom.ico</ApplicationIcon>
     <SignAssembly>false</SignAssembly>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -39,7 +39,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>2.5.1.1</ApplicationVersion>
+    <ApplicationVersion>2.8.1.1</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -64,13 +64,16 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TV_show_Renamer.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="SevenZipSharp, Version=1.0.3537.37869, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\SevenZipSharp.dll</HintPath>
+    <Reference Include="SevenZipSharp">
+      <HintPath>Resources\SevenZipSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -86,6 +89,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TvdbLib, Version=0.8.8.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\TvdbLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.cs">
@@ -100,11 +107,12 @@
     <Compile Include="Addtitle.Designer.cs">
       <DependentUpon>Addtitle.cs</DependentUpon>
     </Compile>
-    <Compile Include="Display.cs">
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="ConversionOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Display.Designer.cs">
-      <DependentUpon>Display.cs</DependentUpon>
+    <Compile Include="ConversionOptions.Designer.cs">
+      <DependentUpon>ConversionOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="download.cs">
       <SubType>Form</SubType>
@@ -112,12 +120,28 @@
     <Compile Include="download.Designer.cs">
       <DependentUpon>download.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditTitle2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditTitle2.Designer.cs">
+      <DependentUpon>EditTitle2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExceptionDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FolderControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FolderControl.Designer.cs">
+      <DependentUpon>FolderControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HandledExceptionManager.cs" />
     <Compile Include="Junk Words.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,12 +149,8 @@
       <DependentUpon>Junk Words.cs</DependentUpon>
     </Compile>
     <Compile Include="LogWrite.cs" />
-    <Compile Include="move folder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="move folder.Designer.cs">
-      <DependentUpon>move folder.cs</DependentUpon>
-    </Compile>
+    <Compile Include="MainSettings.cs" />
+    <Compile Include="NewTVDB.cs" />
     <Compile Include="password.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +159,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchInfo.cs" />
+    <Compile Include="SelectMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectMenu.Designer.cs">
+      <DependentUpon>SelectMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleMail.cs" />
+    <Compile Include="TVClass.cs" />
+    <Compile Include="TVRage.cs" />
+    <Compile Include="UnhandledExceptionManager.cs" />
+    <Compile Include="XBMC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XBMC.Designer.cs">
+      <DependentUpon>XBMC.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -147,13 +184,21 @@
       <DependentUpon>Addtitle.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Display.resx">
-      <DependentUpon>Display.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="ConversionOptions.resx">
+      <DependentUpon>ConversionOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="download.resx">
       <DependentUpon>download.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditTitle2.resx">
+      <DependentUpon>EditTitle2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExceptionDialogue.resx">
+      <DependentUpon>ExceptionDialogue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FolderControl.resx">
+      <DependentUpon>FolderControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -163,9 +208,6 @@
       <DependentUpon>Junk Words.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="move folder.resx">
-      <DependentUpon>move folder.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="password.resx">
       <DependentUpon>password.cs</DependentUpon>
     </EmbeddedResource>
@@ -173,6 +215,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectMenu.resx">
+      <DependentUpon>SelectMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
@@ -187,6 +232,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="XBMC.resx">
+      <DependentUpon>XBMC.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -243,12 +294,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\56.bmp" />
+    <Content Include="TVcustom.ico" />
+    <Content Include="TVcustom.png" />
     <None Include="Resources\licence.rtf" />
     <Resource Include="Resources\32-bit\7z.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\FolderBrowser.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\SevenZipSharp.dll">
@@ -257,7 +306,10 @@
     <Resource Include="Resources\64-bit\7z.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Content Include="tv.ico" />
+    <None Include="Resources\Program1.png" />
+    <Resource Include="Resources\TvdbLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
