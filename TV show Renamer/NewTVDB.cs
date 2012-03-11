@@ -107,20 +107,34 @@ namespace TV_show_Renamer
 
         public string getTitle(int seriesID, int season, int episode)
         {
-            
-            TvdbEpisode e = m_tvdbHandler.GetEpisode(seriesID, season, episode, TvdbEpisode.EpisodeOrdering.DefaultOrder, TvdbLanguage.DefaultLanguage);
-            //TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
-            //List<String> epList = new List<string>();
             string newTitle = null;
-            //foreach (TvdbEpisode esp in s.Episodes)
-            //{
-            //    if (season == esp.SeasonNumber && episode == esp.EpisodeNumber)
-            //    {
-            //        newTitle = esp.EpisodeName;
-            //        break;
-            //    }
-            //}
-            newTitle = e.EpisodeName;
+            TvdbEpisode e;
+            try
+            {
+
+                if (season > 100)
+                {
+                    e = m_tvdbHandler.GetEpisode(seriesID, new DateTime(episode, season / 100, season % 100), TvdbLanguage.DefaultLanguage);
+                }
+                else
+                {
+                    e = m_tvdbHandler.GetEpisode(seriesID, season, episode, TvdbEpisode.EpisodeOrdering.DefaultOrder, TvdbLanguage.DefaultLanguage);
+                }
+                //TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+                //List<String> epList = new List<string>();
+
+                //foreach (TvdbEpisode esp in s.Episodes)
+                //{
+                //    if (season == esp.SeasonNumber && episode == esp.EpisodeNumber)
+                //    {
+                //        newTitle = esp.EpisodeName;
+                //        break;
+                //    }
+                //}
+                newTitle = e.EpisodeName;
+            }
+            catch (Exception) { }
+            
             if (newTitle == null)
                 return "";
             newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
