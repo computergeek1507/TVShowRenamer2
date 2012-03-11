@@ -1,4 +1,4 @@
-﻿namespace TV_show_Renamer
+﻿namespace TV_Show_Renamer
 {
     partial class About
     {
@@ -76,7 +76,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::TV_show_Renamer.Properties.Resources.Program;
+            this.pictureBox1.Image = global::TV_Show_Renamer.Properties.Resources.Program;
             this.pictureBox1.Location = new System.Drawing.Point(7, 71);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(248, 176);

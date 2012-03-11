@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public class MainSettings
     {

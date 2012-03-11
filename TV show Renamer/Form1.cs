@@ -15,7 +15,7 @@ using System.Threading;
 using SevenZip;
 using System.Collections;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public partial class Form1 : Form
     {
@@ -1601,12 +1601,17 @@ namespace TV_show_Renamer
                     if (TitleThread.CancellationPending) return;
                     //TVRage GetTitles = new TVRage(fileList[selected4[mainindex2]].NewFileName, newMainSettings.SeasonFormat + 1);
                     TVRage GetTitles = new TVRage();
-                    string tvTitle = GetTitles.infoFinder(fileList[selected4[mainindex2]].NewFileName, newMainSettings.SeasonFormat + 1, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
-                    if (tvTitle != null)
+                    if (fileList[selected4[mainindex2]].TVShowID != -1)
+                        fileList[selected4[mainindex2]].FileTitle = GetTitles.getTitle(fileList[selected4[mainindex2]].TVShowID, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
+                    else                    
                     {
-                        string newTitleReturn = GetTitles.findTitle(tvTitle, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
-                        if (newTitleReturn != "")                        
-                            fileList[selected4[mainindex2]].FileTitle = newTitleReturn;                        
+                        int newID = GetTitles.findTitle(fileList[selected4[mainindex2]].TVShowName);
+                        if (newID != -1)
+                        {
+                           fileList[selected4[mainindex2]].TVShowID = newID;
+                           fileList[selected4[mainindex2]].FileTitle = GetTitles.getTitle(fileList[selected4[mainindex2]].TVShowID, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
+                                //newMainSettings.TVShowIDList.Add(new TVShowID(fileList[selected4[mainindex2]].TVShowName, newID));
+                        }
                     }
                 }
             }
@@ -1764,6 +1769,7 @@ namespace TV_show_Renamer
         //lowercase stuff
         private string lowering(string orig)
         {//make every thing lowercase for crap remover to work
+            if (orig == "") return "";
             StringBuilder s = new StringBuilder(orig);
             for (int l = 0; l < orig.Length; l++)
                 s[l] = char.ToLower(s[l]);
@@ -1773,6 +1779,7 @@ namespace TV_show_Renamer
         //uppercase stuff
         private string UpperCaseing(string orig)
         {//make every thing lowercase for crap remover to work
+            if (orig == "") return "";
             StringBuilder s = new StringBuilder(orig);
             for (int l = 0; l < orig.Length; l++)
                 s[l] = char.ToUpper(s[l]);
@@ -1782,6 +1789,7 @@ namespace TV_show_Renamer
         //uppercase stuff with parameters
         private string UpperCaseing(string orig, int start, int end)
         {//make every thing lowercase for crap remover to work
+            if (orig == "") return "";
             StringBuilder s = new StringBuilder(orig);
             for (int l = start; l < end; l++)
                 s[l] = char.ToUpper(s[l]);
@@ -1803,25 +1811,6 @@ namespace TV_show_Renamer
             {
                 if (s2[i] == ' ' || s2[i] == '.')
                     s2[i + 1] = char.ToUpper(s2[i + 1]);
-            }//end of for loop
-
-            return s2.ToString();
-        }
-
-        //uppercase first thing after space
-        private string UpperCaseFirstAfterSpace(string orig, int start, int end)
-        {
-            StringBuilder s2 = new StringBuilder(orig);
-            int size3 = orig.Length;
-
-            //Finds Letter after spaces and capitalizes them
-            for (int i = start; i < end; i++)
-            {
-                if ((s2[i] == ' ' || s2[i] == '.') && s2[i + 1] != '-')
-                {
-                    s2[i + 1] = char.ToUpper(s2[i + 1]);
-                    break;
-                }
             }//end of for loop
 
             return s2.ToString();
@@ -2178,19 +2167,19 @@ namespace TV_show_Renamer
                 switch (newMainSettings.ProgramFormat)
                 {
                     case 0:
-                        tvshowName = UpperCaseingAfterSpace(tvshowName, 0, tvshowName.Length - 1);
+                        tvshowName = UpperCaseingAfterSpace(tvshowName, 0, tvshowName.Length-1);
                         break;
                     case 1:
                         tvshowName = UpperCaseing(tvshowName, 0, 1);
                         break;
                     case 2:
-                        tvshowName = UpperCaseing(tvshowName, 0, tvshowName.Length - 1);
+                        tvshowName = UpperCaseing(tvshowName, 0, tvshowName.Length);
                         break;
                     default:
                         break;
                 }
 
-                if (newMainSettings.TitleFormat != 4&&EditFileList[index].GetTitle)
+                if (newMainSettings.TitleFormat != 5&&EditFileList[index].GetTitle)
                 {
                     switch (newMainSettings.TitleSelection)
                     {
@@ -2206,6 +2195,7 @@ namespace TV_show_Renamer
                             break;
                         case 1:
                             EditFileList[index].GetTitle = false;
+                            showTitle = "";
                             if (endIndex != newfilename.Length - 5)
                                 showTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex + 5)).Trim();
                             break;
@@ -2219,14 +2209,22 @@ namespace TV_show_Renamer
                     switch (newMainSettings.TitleFormat)
                     {
                         case 0:
-                            showTitle = UpperCaseingAfterSpace(showTitle, 0, showTitle.Length);
+                            showTitle = UpperCaseingAfterSpace(showTitle, 0, showTitle.Length-1);
                             break;
                         case 1:
-                            showTitle = UpperCaseFirstAfterSpace(showTitle, 0, showTitle.Length);
+                            showTitle = lowering(showTitle);
+                            showTitle = UpperCaseingAfterSpace(showTitle, 0, showTitle.Length-1);
                             break;
                         case 2:
+                            showTitle = lowering(showTitle);
+                            showTitle = UpperCaseing(showTitle, 0, 1);
+                            break;                            
+                        case 3:
                             showTitle = UpperCaseing(showTitle, 0, showTitle.Length);
                             break;
+                        case 4:
+                            showTitle = lowering(showTitle);
+                            break;  
                         default:
                             break;
                     }

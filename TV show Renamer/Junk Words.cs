@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 //using System.Threading;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public partial class junk_words : Form
     {

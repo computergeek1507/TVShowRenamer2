@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 //using System.Threading;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public partial class ConversionOptions : Form
     {
@@ -18,7 +18,7 @@ namespace TV_show_Renamer
         string[] programSettings = { "Test Show", "Test show", "TEST SHOW", "test show"};
         string[] dashSettings = { "-"," "};
         string[] dashSettings2 = { "-", " " };
-        string[] titleSettings = { "Episode Title", "Episode title", "EPISODE TITLE", "episode title", "None" };
+        string[] titleSettings = { "Original", "Episode Title", "Episode title", "EPISODE TITLE", "episode title", "None" };
         string[] junkSettings = { "Junk Text", "Junk text", "JUNK TEXT", "junk text", "Original" };
         string[] extSettings = { ".ext", ".Ext",".EXT" };
         string[] titleGetSettings = { "Use File then Online", "Use File", "Online Only" };

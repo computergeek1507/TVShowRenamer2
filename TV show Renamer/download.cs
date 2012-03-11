@@ -10,7 +10,7 @@ using System.Net;
 using System.IO;
 using System.Diagnostics;
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public partial class download : Form
     {

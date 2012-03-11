@@ -32,7 +32,7 @@ using System.Windows.Forms;
 //'-- more background information on Exceptions at:
 //'--   http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnbda/html/exceptdotnet.asp
 
-namespace TV_show_Renamer
+namespace TV_Show_Renamer
 {
     public class UnhandledExceptionManager
     {
