@@ -69,6 +69,7 @@ namespace TV_Show_Renamer
         static List<string> junklist = new List<string>();//junk word list
         static List<string> userjunklist = new List<string>();//user junk word list
         static List<string> textConverter = new List<string>();//textConverter word list
+        List<TVShowInfo> TVShowInfoList = new List<TVShowInfo>();//tv show info
 
         static Queue convertionQueue = new Queue();
 
@@ -76,7 +77,7 @@ namespace TV_Show_Renamer
         junk_words userJunk = new junk_words();
         Text_Converter textConvert = new Text_Converter();
         LogWrite Log = new LogWrite();//log object
-        public MainSettings newMainSettings = new MainSettings();//new settings object
+        static public MainSettings newMainSettings = new MainSettings();//new settings object
         public class ThreadAdd { public string AddType; public object ObjectToAdd;};
 
         #endregion
@@ -1618,15 +1619,48 @@ namespace TV_Show_Renamer
             autoConvertNoTitle();
         }
 
-        //Search TV Show ID List
-        private int SearchTVID(string TVShowName)
+        //Search TV Show TVDB ID List
+        private int SearchTVDBID(string TVShowName)
         {
-            foreach (TVShowID SearchInfo in newMainSettings.TVShowIDList)
+            foreach (TVShowInfo SearchInfo in TVShowInfoList)
             {
                 if (TVShowName == SearchInfo.TVShowName)                
-                    return SearchInfo.TVID;                
+                    return SearchInfo.TVDBID;                
             }
             return -1;
+        }
+
+        //Search TV Show TVRage ID List
+        private int SearchTVRageID(string TVShowName)
+        {
+            foreach (TVShowInfo SearchInfo in TVShowInfoList)
+            {
+                if (TVShowName == SearchInfo.TVShowName)
+                    return SearchInfo.RageTVID;
+            }
+            return -1;
+        }
+
+        //Search TV Show Epguides ID List
+        private int SearchEpguidesID(string TVShowName)
+        {
+            foreach (TVShowInfo SearchInfo in TVShowInfoList)
+            {
+                if (TVShowName == SearchInfo.TVShowName)
+                    return SearchInfo.EpguidesID;
+            }
+            return -1;
+        }
+
+        //Search TV Show Real Name List
+        private string SearchRealName(string TVShowName)
+        {
+            foreach (TVShowInfo SearchInfo in TVShowInfoList)
+            {
+                if (TVShowName == SearchInfo.TVShowName)
+                    return SearchInfo.RealTVShowName;
+            }
+            return "";
         }
 
         //returns string list of info
@@ -3403,7 +3437,7 @@ namespace TV_Show_Renamer
         {
             if (!(System.IO.Directory.Exists(newMainSettings.DataFolder)))
                 System.IO.Directory.CreateDirectory(newMainSettings.DataFolder);
-            Log.startLog(newMainSettings.DataFolder);
+            Log.startLog(newMainSettings.DataFolder, TVShowInfoList);
             newMainSettings.Start(Log);
 
             this.junkRemover();

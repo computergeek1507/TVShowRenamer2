@@ -8,6 +8,7 @@ namespace TV_Show_Renamer
 {
     public class MainSettings
     {
+        #region init
         bool _removePeriod = true;
         bool _removeUnderscore = true;
         bool _removeDash = true;
@@ -46,13 +47,15 @@ namespace TV_Show_Renamer
         LogWrite _main;
 
         List<string> _moveFolder = new List<string>();//TV Show folders
-       
-        List<TVShowID> _TVShowIDList = new List<TVShowID>();//TV Show ID       
+
+        List<TVShowInfo> _TVShowInfoList = new List<TVShowInfo>();//TV Show Info  
+        #endregion     
         
         //get log object to write too
-        public void Start(LogWrite main) 
+        public void Start(LogWrite main, List<TVShowInfo> tvShowInfoList) 
         {
             _main = main;
+            _TVShowInfoList = tvShowInfoList;
         }
 
         //change to default settings
@@ -361,6 +364,7 @@ namespace TV_Show_Renamer
                             _TVShowIDList.Add(new TVShowID(tr3.ReadLine(), int.Parse(tr3.ReadLine())));
                         }//end of for loop  
                         tr3.Close();
+                        File.Delete(_dataFolder + "//OtherFolders.seh");
                     }//end of if
                 }
             }
@@ -377,7 +381,8 @@ namespace TV_Show_Renamer
 
             return returnValue;
         }//end of loadsettings methods
-                
+
+        #region declartions
         //public declartions
         public bool RemoveDash
         {
@@ -388,7 +393,7 @@ namespace TV_Show_Renamer
         {
             get { return _removeBracket; }
             set { _removeBracket = value; }
-        }        
+        }
         public bool RemoveCrap
         {
             get { return _removeCrap; }
@@ -463,7 +468,7 @@ namespace TV_Show_Renamer
             get { return _autoGetTitle; }
             set { _autoGetTitle = value; }
         }
-       
+
         public int SeasonOffset
         {
             get { return _seasonOffset; }
@@ -525,7 +530,7 @@ namespace TV_Show_Renamer
             get { return _buttonColor; }
             set { _buttonColor = value; }
         }
-       
+
         public string DataFolder
         {
             get { return _dataFolder; }
@@ -540,10 +545,11 @@ namespace TV_Show_Renamer
             get { return _moveFolder; }
             set { _moveFolder = value; }
         }
-        public List<TVShowID> TVShowIDList
-        {
-            get { return _TVShowIDList; }
-            set { _TVShowIDList = value; }
-        }        
+        //public List<TVShowID> TVShowIDList
+        //{
+        //   get { return _TVShowIDList; }
+        //    set { _TVShowIDList = value; }
+        //}   
+        #endregion      
     }//end of class
 }//end of namespace

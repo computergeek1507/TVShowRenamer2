@@ -131,6 +131,7 @@
     <Compile Include="EditTitle2.Designer.cs">
       <DependentUpon>EditTitle2.cs</DependentUpon>
     </Compile>
+    <Compile Include="EPGuides.cs" />
     <Compile Include="ExceptionDialogue.cs">
       <SubType>Form</SubType>
     </Compile>

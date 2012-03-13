@@ -4,27 +4,53 @@ using System.Linq;
 using System.Text;
 
 namespace TV_Show_Renamer
-{
-    public class TVShowID
+{    
+    public class TVShowInfo
     {
-        string _TVShowName;
-        int _TVID;
-        public TVShowID(string tVShowName, int tVID)
+        //public TVShowInfo() { }
+        public TVShowInfo(string tVShowName)
         {
             _TVShowName = tVShowName;
-            _TVID = tVID;
         }
+        public TVShowInfo(string tVShowName, string realTVShowName, int tvdbID, int rageTVID, int epguidesID)
+        {
+            _TVShowName = tVShowName;
+            if(realTVShowName!="")_realTVName = realTVShowName;
+            if (tvdbID != -1) _tvdbID = tvdbID;
+            if (rageTVID != -1) _rageTVID = rageTVID;
+            if (epguidesID != -1) _epguidesID = epguidesID;
+        }
+        string _TVShowName="";
+        string _realTVName="";
+        int _tvdbID=-1;
+        int _rageTVID=-1;
+        int _epguidesID=-1;
+
         public string TVShowName
         {
             get { return _TVShowName; }
             set { _TVShowName = value; }
         }
-        public int TVID
+        public string RealTVShowName
         {
-            get { return _TVID; }
-            set { _TVID = value; }
+            get { return _realTVName; }
+            set { _realTVName = value; }
         }
-
+        public int TVDBID
+        {
+            get { return _tvdbID; }
+            set { _tvdbID = value; }
+        }
+        public int RageTVID
+        {
+            get { return _rageTVID; }
+            set { _rageTVID = value; }
+        }
+        public int EpguidesID
+        {
+            get { return _epguidesID; }
+            set { _epguidesID = value; }
+        }
     };
     public class TVClass
     {
