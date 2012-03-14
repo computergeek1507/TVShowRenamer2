@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Xml.Linq;
 
 namespace TV_Show_Renamer
 {
@@ -178,19 +179,12 @@ namespace TV_Show_Renamer
                     pw.Close();
             }
             try
-            {//write TV SHOW IDs
-                pw = new StreamWriter(_dataFolder + "//TVShowID.seh");
-                pw.WriteLine(_TVShowIDList.Count() * 2);
-                for (int i = 0; i < _TVShowIDList.Count(); i++)
-                {
-                    pw.WriteLine(_TVShowIDList[i].TVShowName);
-                    pw.WriteLine(_TVShowIDList[i].TVID);
-                }
-                pw.Close();
+            {//write TV SHOW Infos
+                TVShowListSave(_dataFolder + "//TVShowInfo.xml", _TVShowInfoList);
             }
             catch (Exception e)
             {
-                _main.WriteLog("TVShowID.seh Falure \n" + e.ToString());
+                _main.WriteLog("TVShowInfo.xml Write Falure \n" + e.ToString());
                 returnValue = false;
             }
             finally
@@ -361,10 +355,10 @@ namespace TV_Show_Renamer
                     {
                         for (int i = 0; i < length; i = i + 2)
                         {
-                            _TVShowIDList.Add(new TVShowID(tr3.ReadLine(), int.Parse(tr3.ReadLine())));
+                            _TVShowInfoList.Add(new TVShowInfo(tr3.ReadLine(),"","", int.Parse(tr3.ReadLine()),-1,-1));
                         }//end of for loop  
                         tr3.Close();
-                        File.Delete(_dataFolder + "//OtherFolders.seh");
+                        File.Delete(_dataFolder + "//TVShowID.seh");
                     }//end of if
                 }
             }
@@ -379,8 +373,63 @@ namespace TV_Show_Renamer
                     tr3.Close();
             }
 
+            try
+            {
+                if (File.Exists(_dataFolder + "//TVShowInfo.xml"))//see if file exists
+                {
+                    TVShowListLoad(_dataFolder + "//TVShowInfo.xml", _TVShowInfoList);
+                }//end of if. 
+            }
+            catch (Exception e)
+            {
+                _main.WriteLog("TVShowInfo.xml Read Error \n" + e.ToString());
+                returnValue = false;
+            }
+
             return returnValue;
         }//end of loadsettings methods
+
+        //Write XML file with TVShowListLoad Names and such
+        private void TVShowListSave(string saveLocation, List<TVShowInfo> saveItem)
+        {
+            if (saveItem.Count == 0) return;
+            XDocument infoDoc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"));
+            XElement MainrootElem = new XElement("TVShows");
+            for (int i = 0; i < saveItem.Count(); i++)
+            {
+                XElement rootElem = new XElement("TVShow");
+                rootElem.Add(new XElement("TVShowName", saveItem[i].TVShowName));
+                rootElem.Add(new XElement("RealTVShowName", saveItem[i].RealTVShowName));
+                rootElem.Add(new XElement("TVShowFolder", saveItem[i].TVShowFolder));
+                rootElem.Add(new XElement("TVDBID", saveItem[i].TVDBID));
+                rootElem.Add(new XElement("RageTVID", saveItem[i].RageTVID));
+                rootElem.Add(new XElement("EpguidesID", saveItem[i].EpguidesID));
+
+                MainrootElem.Add(rootElem);
+            }
+            infoDoc.Add(MainrootElem);
+            infoDoc.Save(saveLocation);
+        }
+
+        //Read XML file with TVShowListLoad Names and such
+        private void TVShowListLoad(string FileLocation, List<TVShowInfo> loadedItem)
+        {
+            XDocument TVShowListXML = XDocument.Load(FileLocation);
+
+            var TVShowLists = from TVShowList in TVShowListXML.Descendants("category")
+                            select new
+                            {
+                                TVShowName = TVShowList.Element("TVShowName").Value,
+                                RealTVShowName = TVShowList.Element("RealTVShowName").Value,
+                                TVShowFolder = TVShowList.Element("TVShowFolder").Value,
+                                TVDBID = TVShowList.Element("TVDBID").Value,
+                                RageTVID = TVShowList.Element("RageTVID").Value,
+                                EpguidesID = TVShowList.Element("EpguidesID").Value
+                            };
+
+            foreach (var wd in TVShowLists)            
+                loadedItem.Add(new TVShowInfo(wd.TVShowName, wd.RealTVShowName, wd.TVShowFolder, Int32.Parse(wd.TVDBID),Int32.Parse(wd.RageTVID),Int32.Parse(wd.EpguidesID)));            
+        }
 
         #region declartions
         //public declartions

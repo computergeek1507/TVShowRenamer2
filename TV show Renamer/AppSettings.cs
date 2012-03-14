@@ -490,7 +490,7 @@ namespace TV_Show_Renamer
             {
                 return System.IO.File.GetLastWriteTime(objAssembly.Location);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return DateTime.MaxValue;
             }

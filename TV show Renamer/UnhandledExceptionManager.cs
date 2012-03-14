@@ -238,7 +238,7 @@ namespace TV_Show_Renamer
             {
                 return System.IO.File.GetLastWriteTime(objAssembly.Location);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return DateTime.MaxValue;
             }
@@ -429,7 +429,7 @@ namespace TV_Show_Renamer
                 if (_blnLogToEmail)
                     ExceptionToEmail();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 //-- generic catch because any exceptions inside the UEH
                 //-- will cause the code to terminate immediately
@@ -634,7 +634,7 @@ namespace TV_Show_Renamer
                 TakeScreenshotPrivate(GetApplicationPath() + _strScreenshotName);
                 _blnLogToScreenshotOK = true;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 _blnLogToScreenshotOK = false;
             }
@@ -650,7 +650,7 @@ namespace TV_Show_Renamer
                 System.Diagnostics.EventLog.WriteEntry(System.AppDomain.CurrentDomain.FriendlyName, Environment.NewLine + _strException, EventLogEntryType.Error);
                 _blnLogToEventLogOK = true;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 _blnLogToEventLogOK = false;
             }
@@ -681,7 +681,7 @@ namespace TV_Show_Renamer
                 objStreamWriter.Close();
                 _blnLogToFileOK = true;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 _blnLogToFileOK = false;
             }
@@ -708,7 +708,7 @@ namespace TV_Show_Renamer
                 objMail.SendMail(objMailMessage);
                 _blnLogToEmailOK = true;
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 _blnLogToEmailOK = false;
                 //-- don't do anything; sometimes SMTP isn't available, which generates an exception
@@ -739,7 +739,7 @@ namespace TV_Show_Renamer
                 //return System.Security.Principal.WindowsIdentity.GetCurrent().Name();
                 return WindowsIdentity.GetCurrent().Name;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "";
             }
@@ -754,7 +754,7 @@ namespace TV_Show_Renamer
             {
                 return System.Environment.UserDomainName + "\\" + System.Environment.UserName;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return "";
             }
@@ -1082,7 +1082,7 @@ namespace TV_Show_Renamer
                 string strIP = System.Net.Dns.GetHostByName(System.Net.Dns.GetHostName()).AddressList[0].ToString();
                 return strIP;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return "127.0.0.1";
             }
@@ -1146,7 +1146,7 @@ namespace TV_Show_Renamer
             {
                 strTemp = ConfigurationSettings.AppSettings.Get(_strClassName + "/" + strKey);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 if (blnDefault == null)
                 {

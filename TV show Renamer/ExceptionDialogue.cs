@@ -390,7 +390,7 @@ namespace TV_Show_Renamer
             {
                 System.Diagnostics.Process.Start(strUrl);
             }
-            catch (System.Security.SecurityException ex)
+            catch (System.Security.SecurityException)
             {
                 //-- do nothing; we can't launch without full trust.
             }
@@ -407,7 +407,7 @@ namespace TV_Show_Renamer
                 g.Dispose();
                 ctl.Height = Convert.ToInt32(objSizeF.Height) + 5;
             }
-            catch (System.Security.SecurityException ex)
+            catch (System.Security.SecurityException )
             {
                 //-- do nothing; we can't set control sizes without full trust
             }
@@ -428,28 +428,28 @@ namespace TV_Show_Renamer
             {
                 case "abort":
                     return System.Windows.Forms.DialogResult.Abort;
-                    break;
+                    //break;
                 case "cancel":
                     return System.Windows.Forms.DialogResult.Cancel;
-                    break;
+                    //break;
                 case "ignore":
                     return System.Windows.Forms.DialogResult.Ignore;
-                    break;
+                    //break;
                 case "no":
                     return System.Windows.Forms.DialogResult.No;
-                    break;
+                    //break;
                 case "none":
                     return System.Windows.Forms.DialogResult.None;
-                    break;
+                    //break;
                 case "ok":
                     return System.Windows.Forms.DialogResult.OK;
-                    break;
+                    //break;
                 case "retry":
                     return System.Windows.Forms.DialogResult.Retry;
-                    break;
+                    //break;
                 case "yes":
                     return System.Windows.Forms.DialogResult.Yes;
-                    break;
+                    //break;
             }
             return returnVal;
         }

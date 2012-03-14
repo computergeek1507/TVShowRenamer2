@@ -6,7 +6,6 @@ using System.Xml.Linq;
 using System.Collections;
 using System.Windows.Forms;
 
-
 namespace TV_Show_Renamer
 {
     public class TVRage
@@ -103,6 +102,5 @@ namespace TV_Show_Renamer
             newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
             return newTitle;
         }
-        }
-
+        }   
 }
