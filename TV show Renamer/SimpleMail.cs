@@ -36,8 +36,7 @@ namespace TV_Show_Renamer
 
             private bool _useSSL = true;
 
-            private string _strUserPassword = "computer";
-            private int _intRetries = 1;
+            private string _strUserPassword = "computer";            
 
             private string _strLastResponse;
 
