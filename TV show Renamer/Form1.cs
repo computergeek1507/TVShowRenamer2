@@ -3331,13 +3331,9 @@ namespace TV_Show_Renamer
             newMainSettings.Start(Log, TVShowInfoList);
 
             this.junkRemover();
-            //this.fileChecker();
+            this.fileChecker();
             newMainSettings.loadStettings();
-            if (newMainSettings.CheckForUpdates)
-            {
-                Thread updateChecker = new Thread(new ThreadStart(checkForUpdateSilent));
-                updateChecker.Start();
-            }
+            
             AddBrowserMenu();
             for (int i = 0; i < newMainSettings.MoveFolder.Count(); i = i + 3)
                 AddFolder(newMainSettings.MoveFolder[i], newMainSettings.MoveFolder[i + 1], int.Parse(newMainSettings.MoveFolder[i + 2]));
@@ -3357,6 +3353,11 @@ namespace TV_Show_Renamer
             if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
                 changeButtoncolor(temp1);
             //this.fileChecker();
+            if (newMainSettings.CheckForUpdates)
+            {
+                Thread updateChecker = new Thread(new ThreadStart(checkForUpdateSilent));
+                updateChecker.Start();
+            }
         }//end of load command
 
         //create preference file when program closes and close log
