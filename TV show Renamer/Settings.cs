@@ -12,9 +12,7 @@ namespace TV_Show_Renamer
 {
     public partial class Settings : Form
     {
-        Form1 Main;
-
-        string[] TVSearch = { "TVDB.com", "TVRage.com" };
+        Form1 Main;        
 
         public Settings(Form1 test, bool zipCheck)
         {
@@ -22,9 +20,6 @@ namespace TV_Show_Renamer
             Main = test;
             checkBox1.Checked = zipCheck;
             checkBox2.Checked = Main.newMainSettings.AutoUpdates;
-            comboBox1.DataSource = TVSearch;
-            comboBox1.SelectedIndex=Main.newMainSettings.TVDataBase;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             this.Show();
         }
 
@@ -113,12 +108,5 @@ namespace TV_Show_Renamer
                 updateChecker.Start();
             }
         }
-
-        //online database
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Main.newMainSettings.TVDataBase = comboBox1.SelectedIndex;
-        }     
-
     }//end of class
 }//end of namespace
