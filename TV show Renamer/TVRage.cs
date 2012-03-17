@@ -23,7 +23,7 @@ namespace TV_Show_Renamer
             //numericUpDown1.Value = decimal.Parse(emp.Element("application").Value);
             //numericUpDown2.Value = decimal.Parse(emp.Element("library").Value);
             //numericUpDown3.Value = decimal.Parse(emp.Element("settings").Value);
-            List<TVShowID> FinalList = new List<TVShowID>();
+            List<SearchInfo> FinalList = new List<SearchInfo>();
 
             XDocument ShowList = XDocument.Load("http://services.tvrage.com/feeds/search.php?show="+ShowName);
 
@@ -36,7 +36,7 @@ namespace TV_Show_Renamer
 
             foreach (var wd in Categorys)
             {
-                FinalList.Add(new TVShowID(wd.Name, Int32.Parse(wd.ShowID)));
+                FinalList.Add(new SearchInfo(wd.Name, Int32.Parse(wd.ShowID)));
             }
 
             if (FinalList != null && FinalList.Count > 0)
@@ -44,7 +44,7 @@ namespace TV_Show_Renamer
                 if (FinalList.Count() == 0) return TVShowID;  //return if nothing found
                 int selectedSeriesId = -1;
                 if (FinalList.Count() == 1)
-                    selectedSeriesId = FinalList[0].TVID;
+                    selectedSeriesId = FinalList[0].SelectedValue;
                 else
                 {
                     if (FinalList.Count() != 0)
@@ -54,7 +54,7 @@ namespace TV_Show_Renamer
                         {
                             int selectedid = SelectMain.selected;
                             if (selectedid == -1) return TVShowID;
-                            selectedSeriesId = FinalList[selectedid].TVID;
+                            selectedSeriesId = FinalList[selectedid].SelectedValue;
                             SelectMain.Close();
                         }
                     }            
