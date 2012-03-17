@@ -1549,16 +1549,11 @@ namespace TV_Show_Renamer
                                 if (newID != -1)
                                 {
                                     fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(newID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
-                                    if (TVShowID != -1)
-                                    {
-                                        TVShowInfoList[TVShowID].TVDBID = TVShowID;
-                                    }
-                                    else 
-                                    {
-                                        TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, "", "", TVShowID, -1, -1));
-                                    }
-                                }
-                            
+                                    if (TVShowID != -1)                                    
+                                        TVShowInfoList[TVShowID].TVDBID = newID;                                    
+                                    else                                     
+                                        TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, "", "", newID, -1, -1));                                    
+                                }                            
                         }
                     }
                     break;
@@ -1577,21 +1572,36 @@ namespace TV_Show_Renamer
                             if (newID != -1)
                             {
                                 fileList[selected4[mainindex2]].FileTitle = GetTitles.getTitle(newID, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
-                                if (TVShowID != -1)
-                                {
-                                    TVShowInfoList[TVShowID].RageTVID = TVShowID;
-                                }
-                                else
-                                {
-                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex2]].TVShowName, "", "", -1, TVShowID, -1));
-                                }
+                                if (TVShowID != -1)                                
+                                    TVShowInfoList[TVShowID].RageTVID = newID;                                
+                                else                                
+                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex2]].TVShowName, "", "", -1, newID, -1));                                
                             }
-
                         }
                     }
                     break;
                 case 2:
-                    MessageBox.Show("Sorry, Didn't Write This Class Yet");
+                    for (int mainindex = 0; mainindex < selected4.Count; mainindex++)
+                    {
+                        if (TitleThread.CancellationPending) return;
+                        //NewTVDB GetTitles = new NewTVDB(filename[mainindex], TVID[mainindex], folder, format);
+                        EPGuides GetTitles = new EPGuides(newMainSettings.DataFolder);
+                        int TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);
+                        if (TVShowID != -1 && TVShowInfoList[TVShowID].EpguidesID != -1)
+                            fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(TVShowID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+                        else
+                        {
+                            int newID = GetTitles.findTitle(fileList[selected4[mainindex]].TVShowName);
+                            if (newID != -1)
+                            {
+                                fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(newID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+                                if (TVShowID != -1)
+                                    TVShowInfoList[TVShowID].EpguidesID = newID;
+                                else
+                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, "", "", -1, -1, newID));
+                            }
+                        }
+                    }
                     break;
                 default:
                     break;
@@ -1666,7 +1676,7 @@ namespace TV_Show_Renamer
             return "";
         }
 
-        //returns string if folder exsist
+        //returns folderName if folder exsist
         private string infoFinder(string showName, List<string> folderlist)
         {
             int indexofTVshow=-1;
@@ -1704,26 +1714,6 @@ namespace TV_Show_Renamer
             for (int y = foldersIn.Count(); y > 0; y--)
                 revFoldersIn.Add(foldersIn[y - 1]);
             return revFoldersIn;
-        }
-
-        //lowercase stuff
-        private string lowering(string orig)
-        {//make every thing lowercase for crap remover to work
-            if (orig == "") return "";
-            StringBuilder s = new StringBuilder(orig);
-            for (int l = 0; l < orig.Length; l++)
-                s[l] = char.ToLower(s[l]);
-            return s.ToString();
-        }
-
-        //uppercase stuff
-        private string UpperCaseing(string orig)
-        {//make every thing lowercase for crap remover to work
-            if (orig == "") return "";
-            StringBuilder s = new StringBuilder(orig);
-            for (int l = 0; l < orig.Length; l++)
-                s[l] = char.ToUpper(s[l]);
-            return s.ToString();
         }
 
         //uppercase stuff with parameters
@@ -1833,12 +1823,7 @@ namespace TV_Show_Renamer
                     newfilename = newfilename.Replace("(", temp).Replace(")", temp).Replace("{", temp).Replace("}", temp).Replace("[", temp).Replace("]", temp);
 
                 //make every thing lowercase for crap remover to work
-                StringBuilder s = new StringBuilder(newfilename);
-                for (int l = 0; l < newfilename.Length; l++)
-                    s[l] = char.ToLower(s[l]);
-
-                //reassign edited name 
-                newfilename = s.ToString();
+                newfilename = newfilename.ToLower();// s.ToString();
 
                 //remove extra crap 
                 if (newMainSettings.RemoveCrap)
@@ -2136,18 +2121,18 @@ namespace TV_Show_Renamer
                             showTitle = UpperCaseingAfterSpace(showTitle, 0, showTitle.Length-1);
                             break;
                         case 1:
-                            showTitle = lowering(showTitle);
+                            showTitle = showTitle.ToLower();// = lowering(showTitle);
                             showTitle = UpperCaseingAfterSpace(showTitle, 0, showTitle.Length-1);
                             break;
                         case 2:
-                            showTitle = lowering(showTitle);
+                            showTitle = showTitle.ToLower();
                             showTitle = UpperCaseing(showTitle, 0, 1);
                             break;                            
                         case 3:
                             showTitle = UpperCaseing(showTitle, 0, showTitle.Length);
                             break;
                         case 4:
-                            showTitle = lowering(showTitle);
+                            showTitle = showTitle.ToLower();
                             break;  
                         default:
                             break;
@@ -2162,7 +2147,7 @@ namespace TV_Show_Renamer
                 switch (newMainSettings.ExtFormat)
                 {
                     case 0:
-                        extend = lowering(extend);
+                        extend = extend.ToLower();
                         break;
                     case 1:
                         StringBuilder ext1 = new StringBuilder(extend);
@@ -2170,7 +2155,7 @@ namespace TV_Show_Renamer
                         extend = ext1.ToString();
                         break;
                     case 2:
-                        extend = UpperCaseing(extend);
+                        extend = extend.ToUpper();
                         break;
                     default:
                         break;

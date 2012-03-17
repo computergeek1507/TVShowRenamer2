@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TV_Show_Renamer
 {
-    class SearchInfo
+    public class SearchInfo
     {
         string _title;
         int _selected;

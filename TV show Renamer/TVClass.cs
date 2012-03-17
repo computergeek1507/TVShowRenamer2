@@ -58,28 +58,7 @@ namespace TV_Show_Renamer
             get { return _epguidesID; }
             set { _epguidesID = value; }
         }
-    };
-    public class TVShowID
-    {
-        string _TVShowName;
-        int _TVID;
-        public TVShowID(string tVShowName, int tVID)
-        {
-            _TVShowName = tVShowName;
-            _TVID = tVID;
-        }
-        public string TVShowName
-        {
-            get { return _TVShowName; }
-            set { _TVShowName = value; }
-        }
-        public int TVID
-        {
-            get { return _TVID; }
-            set { _TVID = value; }
-        }
-
-    };
+    };    
     public class TVClass
     {
         string _fileFolder;//origonal folder

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
 
 namespace TV_Show_Renamer
 {
@@ -17,6 +18,8 @@ namespace TV_Show_Renamer
         }
         public int findTitle(string ShowName)
         {
+            WebClient client = new WebClient();
+            client.DownloadFile("http://epguides.com/common/allshows.txt", folder + "/allshows.txt");
             return -1;
         }
 
