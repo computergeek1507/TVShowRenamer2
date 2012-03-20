@@ -15,15 +15,22 @@ namespace TV_Show_Renamer
             _title = title;
             _selected = selected;
         }
+        public SearchInfo()
+        {
+            _title = "";
+            _selected = -1;
+        }
 
         public string Title
         {
-            get { return _title; }            
+            get { return _title; }
+            set { _title = value; }
         }
 
         public int SelectedValue
         {
-            get { return _selected; }            
+            get { return _selected; }
+            set { _selected = value; }
         }
     }//end of class
 }//end of namespace

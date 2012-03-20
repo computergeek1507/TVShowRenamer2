@@ -1544,15 +1544,18 @@ namespace TV_Show_Renamer
                         if (TVShowID != -1 && TVShowInfoList[TVShowID].TVDBID!=-1)
                             fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(TVShowID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
                         else
-                        {                            
-                                int newID = GetTitles.findTitle(fileList[selected4[mainindex]].TVShowName);
-                                if (newID != -1)
+                        {
+                                SearchInfo newID = GetTitles.findTitle(fileList[selected4[mainindex]].TVShowName);
+                                if (newID.SelectedValue != -1)
                                 {
-                                    fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(newID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
-                                    if (TVShowID != -1)                                    
-                                        TVShowInfoList[TVShowID].TVDBID = newID;                                    
-                                    else                                     
-                                        TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, "", "", newID, -1, -1));                                    
+                                    fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(newID.SelectedValue, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+                                    if (TVShowID != -1)
+                                    {
+                                        TVShowInfoList[TVShowID].TVDBID = newID.SelectedValue;
+                                        TVShowInfoList[TVShowID].RealTVShowName = newID.Title;
+                                    }
+                                    else
+                                        TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, newID.Title, "", newID.SelectedValue, -1, -1));                                    
                                 }                            
                         }
                     }
