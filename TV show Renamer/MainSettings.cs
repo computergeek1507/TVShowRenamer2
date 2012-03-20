@@ -416,7 +416,7 @@ namespace TV_Show_Renamer
         {
             XDocument TVShowListXML = XDocument.Load(FileLocation);
 
-            var TVShowLists = from TVShowList in TVShowListXML.Descendants("category")
+            var TVShowLists = from TVShowList in TVShowListXML.Descendants("TVShow")
                             select new
                             {
                                 TVShowName = TVShowList.Element("TVShowName").Value,

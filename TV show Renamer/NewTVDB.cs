@@ -31,9 +31,9 @@ namespace TV_Show_Renamer
             m_tvdbHandler.InitCache();
         }
 
-        public int findTitle(string ShowName)
+        public SearchInfo findTitle(string ShowName)
         {
-            int TVShowID = -1;
+            SearchInfo TVShowID = new SearchInfo();
             if (ShowName == null)
                 return TVShowID;
             ShowName = ShowName.Replace("Gold Rush Alaska", "Gold Rush");
@@ -55,8 +55,11 @@ namespace TV_Show_Renamer
                 }
                 if (seriesId.Count() == 0) return TVShowID;  //return if nothing found
                 int selectedSeriesId = -1;
-                if (seriesId.Count() == 1)
+                string selectedTitle="";
+                if (seriesId.Count() == 1){
                     selectedSeriesId = seriesId[0];
+                    selectedTitle=seriesName[0];
+                }
                 else
                 {
                     if (selectionList.Count() == 0)
@@ -68,6 +71,7 @@ namespace TV_Show_Renamer
                             if (selectedid == -1) return TVShowID;
                             selectionList.Add(new SearchInfo(ShowName, selectedid));
                             selectedSeriesId = seriesId[selectedid];
+                            selectedTitle = seriesName[selectedid];
                             SelectMain.Close();
                         }
                     }
@@ -91,16 +95,21 @@ namespace TV_Show_Renamer
                                 if (selectedid == -1) return TVShowID;
                                 selectionList.Add(new SearchInfo(ShowName, selectedid));
                                 selectedSeriesId = seriesId[selectedid];
+                                selectedTitle = seriesName[selectedid];
                                 SelectMain2.Close();
                             }
                         }
                         else
+                        {
                             selectedSeriesId = seriesId[idNumber];
+
+                        }
                     }
                 }
 
                 if (selectedSeriesId == -1) return TVShowID;   //return if nothing is found
-                TVShowID = selectedSeriesId;
+                TVShowID.SelectedValue = selectedSeriesId;
+                TVShowID.Title = selectedTitle;
             }
             return TVShowID;
         }
