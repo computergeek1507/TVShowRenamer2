@@ -23,10 +23,9 @@ namespace TV_Show_Renamer
 
         //string tvdbTitle = null;
 
-        public NewTVDB(string newFolder, List<SearchInfo> newselectionList)
+        public NewTVDB(string newFolder)
         {
             folder = newFolder;
-            selectionList = newselectionList;
             m_cacheProvider = new XmlCacheProvider(folder);
             m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
             m_tvdbHandler.InitCache();
