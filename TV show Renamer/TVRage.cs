@@ -12,11 +12,6 @@ namespace TV_Show_Renamer
     {
         List<SearchInfo> selectionList = new List<SearchInfo>();
 
-        public TVRage(List<SearchInfo> newselectionList)
-        {
-            selectionList = newselectionList;
-        }
-
         public int findTitle(string ShowName)
         {
             int TVShowID = -1;
