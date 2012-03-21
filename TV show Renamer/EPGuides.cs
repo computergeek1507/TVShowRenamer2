@@ -13,10 +13,9 @@ namespace TV_Show_Renamer
         string folder = null;
         List<SearchInfo> selectionList = new List<SearchInfo>();
 
-        public EPGuides(string newFolder, List<SearchInfo> newselectionList)
+        public EPGuides(string newFolder)
         {
             folder = newFolder;
-            selectionList = newselectionList;
         }
 
         public SearchInfo findTitle(string ShowName)
@@ -90,7 +89,7 @@ namespace TV_Show_Renamer
             return TVShowID;
         }
 
-        public string getTitle(int seriesID,string urlLink, int season, int episode)
+        public string getTitle(int seriesID, int season, int episode)
         { 
             return "";        
         }
