@@ -120,7 +120,7 @@ namespace TV_Show_Renamer
             TvdbEpisode e;
             try
             {
-
+                //if (season > 100) return"";
                 if (season > 100)
                 {
                     e = m_tvdbHandler.GetEpisode(seriesID, new DateTime(episode, season / 100, season % 100), TvdbLanguage.DefaultLanguage);
