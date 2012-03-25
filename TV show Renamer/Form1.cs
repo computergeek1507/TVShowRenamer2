@@ -1618,7 +1618,7 @@ namespace TV_Show_Renamer
             int i = 0;
             foreach (TVShowInfo SearchInfo in TVShowInfoList)
             {
-                if (TVShowName == SearchInfo.TVShowName)
+                if (SearchInfo.TVShowName.ToUpper().Contains(TVShowName.ToUpper()))
                     return i;
                 i++;
             }
@@ -1630,55 +1630,56 @@ namespace TV_Show_Renamer
         {
             foreach (TVShowInfo SearchInfo in TVShowInfoList)
             {
-                if (TVShowName == SearchInfo.TVShowName)                
+                int difference = Math.Abs(SearchInfo.TVShowName.Length - TVShowName.Length);
+                if (SearchInfo.TVShowName.ToUpper().Contains(TVShowName.ToUpper()) && difference < 8)
                     return SearchInfo.TVDBID;                
             }
             return -1;
         }
 
-        //Search TV Show TVRage ID List
-        private int SearchTVRageID(string TVShowName)
-        {
-            foreach (TVShowInfo SearchInfo in TVShowInfoList)
-            {
-                if (TVShowName == SearchInfo.TVShowName)
-                    return SearchInfo.RageTVID;
-            }
-            return -1;
-        }
+        ////Search TV Show TVRage ID List
+        //private int SearchTVRageID(string TVShowName)
+        //{
+        //    foreach (TVShowInfo SearchInfo in TVShowInfoList)
+        //    {
+        //        if (TVShowName == SearchInfo.TVShowName)
+        //            return SearchInfo.RageTVID;
+        //    }
+        //    return -1;
+        //}
 
-        //Search TV Show Epguides ID List
-        private int SearchEpguidesID(string TVShowName)
-        {
-            foreach (TVShowInfo SearchInfo in TVShowInfoList)
-            {
-                if (TVShowName == SearchInfo.TVShowName)
-                    return SearchInfo.EpguidesID;
-            }
-            return -1;
-        }
+        ////Search TV Show Epguides ID List
+        //private int SearchEpguidesID(string TVShowName)
+        //{
+        //    foreach (TVShowInfo SearchInfo in TVShowInfoList)
+        //    {
+        //        if (TVShowName == SearchInfo.TVShowName)
+        //            return SearchInfo.EpguidesID;
+        //    }
+        //    return -1;
+        //}
 
-        //Search TV Show Real Name List
-        private string SearchRealName(string TVShowName)
-        {
-            foreach (TVShowInfo SearchInfo in TVShowInfoList)
-            {
-                if (TVShowName == SearchInfo.TVShowName)
-                    return SearchInfo.RealTVShowName;
-            }
-            return "";
-        }
+        ////Search TV Show Real Name List
+        //private string SearchRealName(string TVShowName)
+        //{
+        //    foreach (TVShowInfo SearchInfo in TVShowInfoList)
+        //    {
+        //        if (TVShowName == SearchInfo.TVShowName)
+        //            return SearchInfo.RealTVShowName;
+        //    }
+        //    return "";
+        //}
 
-        //Search TV Show Folder List
-        private string SearchTVShowFolder(string TVShowName)
-        {
-            foreach (TVShowInfo SearchInfo in TVShowInfoList)
-            {
-                if (TVShowName == SearchInfo.TVShowName)
-                    return SearchInfo.TVShowFolder;
-            }
-            return "";
-        }
+        ////Search TV Show Folder List
+        //private string SearchTVShowFolder(string TVShowName)
+        //{
+        //    foreach (TVShowInfo SearchInfo in TVShowInfoList)
+        //    {
+        //        if (TVShowName == SearchInfo.TVShowName)
+        //            return SearchInfo.TVShowFolder;
+        //    }
+        //    return "";
+        //}
 
         //returns folderName if folder exsist
         private string infoFinder(string showName, List<string> folderlist)
@@ -1908,7 +1909,7 @@ namespace TV_Show_Renamer
                         if (newMainSettings.SeasonFormat == 0)
                         {
                             output = i.ToString() + "x" + newj;
-
+                            
                             newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
                             newfilename = newfilename.Replace(temp + newi + newj + temp, temp + output + temp);//0101                        
                             newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1               
@@ -1919,7 +1920,7 @@ namespace TV_Show_Renamer
                             newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                             newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
 
-                            startIndex = newfilename.IndexOf(output);//find index                        
+                            startIndex = newfilename.IndexOf(temp + output + temp);//find index                        
                             if (startIndex != -1)
                             {
                                 if (i > 9) { endIndex = startIndex + 5; } else { endIndex = startIndex + 4; }
@@ -1931,7 +1932,7 @@ namespace TV_Show_Renamer
                         if (newMainSettings.SeasonFormat == 1)
                         {
                             output = newi + newj;
-
+                            
                             newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101 
                             newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj + temp, temp + output + temp);//1x01
                             newfilename = newfilename.Replace("s" + newi + "e" + newj + temp, output + temp);//s01e01
@@ -1942,7 +1943,7 @@ namespace TV_Show_Renamer
                             newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                             newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
 
-                            startIndex = newfilename.IndexOf(output);//find index
+                            startIndex = newfilename.IndexOf(temp + output + temp);//find index
                             if (startIndex != -1)
                                 endIndex = startIndex + 4;
                         }
@@ -1963,7 +1964,7 @@ namespace TV_Show_Renamer
                             newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//Season 1 Episode 1
                             newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
 
-                            startIndex = newfilename.IndexOf(output);//find index
+                            startIndex = newfilename.IndexOf(temp + output + temp);//find index
                             if (startIndex != -1)
                                 endIndex = startIndex + 6;
                         }
@@ -1983,7 +1984,7 @@ namespace TV_Show_Renamer
                             newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
                             newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);// 1 01 
 
-                            startIndex = newfilename.IndexOf(output);//find index
+                            startIndex = newfilename.IndexOf(temp + output + temp);//find index
                             if (startIndex != -1)
                             {
                                 if (i > 9) { endIndex = startIndex + 4; } else { endIndex = startIndex + 3; }
@@ -2077,19 +2078,34 @@ namespace TV_Show_Renamer
 
                 tvshowName = newfilename.Substring(0, startIndex).Trim();
 
-                switch (newMainSettings.ProgramFormat)
+                bool useOldTiltle = true;
+                if (newMainSettings.GetTVShowName) {
+                    int TVShowID=SearchTVShowName(tvshowName);
+                    if (TVShowID != -1) {
+                        string newTvshowName = TVShowInfoList[TVShowID].RealTVShowName;
+                        if (newTvshowName != "") {
+                            tvshowName = newTvshowName;
+                            useOldTiltle = false;                        
+                        }
+                    }
+                }
+
+                if (useOldTiltle)
                 {
-                    case 0:
-                        tvshowName = UpperCaseingAfterSpace(tvshowName, 0, tvshowName.Length-1);
-                        break;
-                    case 1:
-                        tvshowName = UpperCaseing(tvshowName, 0, 1);
-                        break;
-                    case 2:
-                        tvshowName = UpperCaseing(tvshowName, 0, tvshowName.Length);
-                        break;
-                    default:
-                        break;
+                    switch (newMainSettings.ProgramFormat)
+                    {
+                        case 0:
+                            tvshowName = UpperCaseingAfterSpace(tvshowName, 0, tvshowName.Length - 1);
+                            break;
+                        case 1:
+                            tvshowName = UpperCaseing(tvshowName, 0, 1);
+                            break;
+                        case 2:
+                            tvshowName = UpperCaseing(tvshowName, 0, tvshowName.Length);
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 if (newMainSettings.TitleFormat != 5&&EditFileList[index].GetTitle)
@@ -3175,7 +3191,7 @@ namespace TV_Show_Renamer
             {
                 for (int u = 0; u < dataGridView1.Rows.Count; u++)
                 {
-                    if (dataGridView1.Rows[u].Cells[0].Selected || dataGridView1.Rows[u].Cells[1].Selected)
+                    if (dataGridView1.Rows[u].Selected)
                     {
                         try
                         {
