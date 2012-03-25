@@ -53,6 +53,7 @@ namespace TV_Show_Renamer
             checkBox5.Checked = newMainSettings.RemoveCrap;
             checkBox6.Checked = newMainSettings.RemoveYear;
             checkBox7.Checked = newMainSettings.AutoGetTitle;
+            checkBox8.Checked = newMainSettings.GetTVShowName;
             numericUpDown1.Value = newMainSettings.SeasonOffset;
             numericUpDown2.Value = newMainSettings.EpisodeOffset;
 
@@ -71,6 +72,7 @@ namespace TV_Show_Renamer
             this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
             this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+            this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
             this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             this.Show();
@@ -180,11 +182,21 @@ namespace TV_Show_Renamer
             if (newMainSettings.AutoGetTitle)
                 Main.clearTitles();
             convert();
-        }        
+        }
+
+        //use online show titles
+        private void checkBox8_CheckedChanged(object sender, EventArgs e)
+        {
+            newMainSettings.GetTVShowName = checkBox8.Checked;
+            convert();
+        }
+
         //autoconvert
         private void convert()
         {
             Main.autoConvert();
         }
+        
+        
     }//end of class
 }//end of namespace

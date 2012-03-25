@@ -27,6 +27,7 @@ namespace TV_Show_Renamer
         bool _checkForUpdates = false;
         bool _autoUpdates = true;
         bool _autoGetTitle = true;
+        bool _getTVShowName = false;
 
         int _seasonOffset = 0;
         int _episodeOffset = 0;
@@ -79,6 +80,7 @@ namespace TV_Show_Renamer
             _checkForUpdates = false;
             _autoUpdates = true;
             _autoGetTitle = true;
+            _getTVShowName = false;
 
             _seasonOffset = 0;
             _episodeOffset = 0;
@@ -147,6 +149,7 @@ namespace TV_Show_Renamer
                 pw.WriteLine(_autoGetTitle);
                 pw.WriteLine(_tvDataBase);
                 pw.WriteLine(_titleSelection);
+                pw.WriteLine(_getTVShowName);
                 
                 pw.Close();//close writer stream
             }
@@ -247,6 +250,8 @@ namespace TV_Show_Renamer
                     if (readtemp != null) _tvDataBase = int.Parse(readtemp);
                     readtemp = tr3.ReadLine();
                     if (readtemp != null) _titleSelection = int.Parse(readtemp);
+                    readtemp = tr3.ReadLine();
+                    if (readtemp != null) _getTVShowName = bool.Parse(readtemp);
                     
                     tr3.Close();//close reader stream                                        
                 }//end of if. 
@@ -517,7 +522,11 @@ namespace TV_Show_Renamer
             get { return _autoGetTitle; }
             set { _autoGetTitle = value; }
         }
-
+        public bool GetTVShowName
+        {
+            get { return _getTVShowName; }
+            set { _getTVShowName = value; }
+        }
         public int SeasonOffset
         {
             get { return _seasonOffset; }
@@ -594,6 +603,7 @@ namespace TV_Show_Renamer
             get { return _moveFolder; }
             set { _moveFolder = value; }
         }
+
         //public List<TVShowID> TVShowIDList
         //{
         //   get { return _TVShowIDList; }
