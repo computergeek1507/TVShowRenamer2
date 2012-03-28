@@ -56,7 +56,8 @@ namespace TV_Show_Renamer
                 if (seriesId.Count() == 0) return TVShowID;  //return if nothing found
                 int selectedSeriesId = -1;
                 string selectedTitle="";
-                if (seriesId.Count() == 1){
+                if (seriesId.Count() == 1)
+                {
                     selectedSeriesId = seriesId[0];
                     selectedTitle=seriesName[0];
                 }
@@ -102,7 +103,6 @@ namespace TV_Show_Renamer
                         else
                         {
                             selectedSeriesId = seriesId[idNumber];
-
                         }
                     }
                 }
@@ -111,26 +111,36 @@ namespace TV_Show_Renamer
                 TVShowID.SelectedValue = selectedSeriesId;
                 TVShowID.Title = selectedTitle;
             }
+            TVShowID.Title = TVShowID.Title.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
             return TVShowID;
         }
 
         public string getTitle(int seriesID, int season, int episode)
         {
             string newTitle = null;
-            TvdbEpisode e;
+            //TvdbEpisode e;
             try
             {
                 //if (season > 100) return"";
                 if (season > 100)
                 {
-                    e = m_tvdbHandler.GetEpisode(seriesID, new DateTime(episode, season / 100, season % 100), TvdbLanguage.DefaultLanguage);
+                    TvdbEpisode e = m_tvdbHandler.GetEpisode(seriesID, new DateTime(episode, season / 100, season % 100), TvdbLanguage.DefaultLanguage);
+                    newTitle = e.EpisodeName;
                 }
                 else
                 {
-                    e = m_tvdbHandler.GetEpisode(seriesID, season, episode, TvdbEpisode.EpisodeOrdering.DefaultOrder, TvdbLanguage.DefaultLanguage);
+                    TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+                    foreach (TvdbEpisode esp in s.Episodes)
+                    {
+                        if (season == esp.SeasonNumber && episode == esp.EpisodeNumber)
+                        {
+                            newTitle = esp.EpisodeName;
+                            break;
+                        }
+                    }
                 }
                 //TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
-                //List<String> epList = new List<string>();
+                ////List<String> epList = new List<string>();
 
                 //foreach (TvdbEpisode esp in s.Episodes)
                 //{
@@ -140,7 +150,7 @@ namespace TV_Show_Renamer
                 //        break;
                 //    }
                 //}
-                newTitle = e.EpisodeName;
+                //newTitle = e.EpisodeName;
             }
             catch (Exception) { }
             

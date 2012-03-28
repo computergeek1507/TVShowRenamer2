@@ -28,8 +28,11 @@ namespace TV_Show_Renamer
         // Close Log
         public void closeLog()
         {
-            log.WriteLine(DateTime.Now + " - Program Closed :(");
-            log.Close();
+            if (log != null)
+            {
+                log.WriteLine(DateTime.Now + " - Program Closed :(");
+                log.Close();
+            }
         }
 
         //save function calls 
