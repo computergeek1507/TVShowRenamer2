@@ -67,7 +67,7 @@ namespace TV_Show_Renamer
         string _fileTitle="";//Title files        
         string _newFileName;//new file name
         bool _auto = true;//autoconvert
-        //int _tvShowID = -1;//TVDB id number
+        int _tvShowID = -1;//TVDB id number
         int _seasonNum = -1;//Season Number 
         int _episodeNum = -1;//Episode Number
         string _TVShowName = ""; //Show Name
@@ -127,11 +127,11 @@ namespace TV_Show_Renamer
             set { _auto = value; }
         }
 
-        //public int TVShowID
-        //{
-        //    get { return _tvShowID; }
-        //    set { _tvShowID = value; }
-        //}
+        public int TVShowID
+        {
+            get { return _tvShowID; }
+            set { _tvShowID = value; }
+        }
 
         public string TVShowName
         {
