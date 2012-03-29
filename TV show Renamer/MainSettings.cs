@@ -46,6 +46,8 @@ namespace TV_Show_Renamer
         string _firstWord = "";
         string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer";
 
+        bool[] _columnList = new bool[9];
+
         LogWrite _main;
 
         List<string> _moveFolder = new List<string>();//TV Show folders
@@ -244,14 +246,11 @@ namespace TV_Show_Renamer
                     _autoUpdates = bool.Parse(tr3.ReadLine());
                     if (DateTime.Today.Date.ToString() != lastUpdateTime && _autoUpdates)
                         _checkForUpdates = true;
-                    var readtemp = tr3.ReadLine();
-                    if (readtemp != null) _autoGetTitle = bool.Parse(readtemp);
-                    readtemp = tr3.ReadLine();
-                    if (readtemp != null) _tvDataBase = int.Parse(readtemp);
-                    readtemp = tr3.ReadLine();
-                    if (readtemp != null) _titleSelection = int.Parse(readtemp);
-                    readtemp = tr3.ReadLine();
-                    if (readtemp != null) _getTVShowName = bool.Parse(readtemp);
+
+                    _autoGetTitle = bool.Parse(tr3.ReadLine());
+                    _tvDataBase = int.Parse(tr3.ReadLine());
+                    _titleSelection = int.Parse(tr3.ReadLine());
+                    _getTVShowName = bool.Parse(tr3.ReadLine());
                     
                     tr3.Close();//close reader stream                                        
                 }//end of if. 

@@ -108,5 +108,13 @@ namespace TV_Show_Renamer
                 updateChecker.Start();
             }
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ColumnControl Mainwindow = new ColumnControl(Main);
+            this.Hide();
+            if (Mainwindow.ShowDialog() == DialogResult.OK)
+                this.Close();
+        }
     }//end of class
 }//end of namespace
