@@ -299,7 +299,6 @@
             this.checkBox8.TabIndex = 24;
             this.checkBox8.Text = "Use Online Show Names";
             this.checkBox8.UseVisualStyleBackColor = true;
-            //this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
             // 
             // ConversionOptions
             // 
@@ -335,7 +334,7 @@
             this.Name = "ConversionOptions";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Pending File Name Convertion Options";
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();

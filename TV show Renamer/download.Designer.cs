@@ -75,6 +75,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "download";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Downloading";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.download_FormClosed);

@@ -72,7 +72,7 @@
             this.textBox1.Size = new System.Drawing.Size(248, 66);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "This is my Program, If you have any problems email anytime at scott@scottnation.c" +
-                "om";
+    "om";
             // 
             // pictureBox1
             // 
@@ -122,7 +122,7 @@
             this.MinimizeBox = false;
             this.Name = "About";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

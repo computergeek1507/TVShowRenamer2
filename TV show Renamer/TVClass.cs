@@ -156,5 +156,17 @@ namespace TV_Show_Renamer
             get { return _getTitle; }
             set { _getTitle = value; }
         }
+
+        public void Reset()
+        {
+            _fileTitle = "";
+            _newFileName = "";
+            _auto = true;
+            _tvShowID = -1;
+            _seasonNum = -1;
+            _episodeNum = -1;
+            _TVShowName = "";
+            _getTitle = true;
+        }
     }//end of class
 }//end of namespace

@@ -34,6 +34,7 @@ namespace TV_Show_Renamer
             }
             InitializeComponent();
             dataGridView1.DataSource = fileList;
+            this.loadEverything();
             if (args.GetLength(0) != 0)
             {
                 ThreadAdd FilesToAdd = new ThreadAdd();
@@ -58,6 +59,7 @@ namespace TV_Show_Renamer
             }
             InitializeComponent();
             dataGridView1.DataSource = fileList;
+            this.loadEverything();
         }
         
         #region Initiate Stuff
@@ -271,7 +273,7 @@ namespace TV_Show_Renamer
                 for (int u = 0; u < dataGridView1.Rows.Count; u++)
                 {
                     if (dataGridView1.Rows[u].Selected)
-                        fileList[u].AutoEdit = true;
+                        fileList[u].Reset();
                 }
                 autoConvert();
             }
@@ -3300,6 +3302,7 @@ namespace TV_Show_Renamer
                         {
                             fileList[i].FileTitle = mainEdit.getTitle();
                             mainEdit.Close();
+                            fileList[i].GetTitle = false;
                         }
                     }
                 }
@@ -3337,6 +3340,43 @@ namespace TV_Show_Renamer
         //loads when starts
         private void Form1_Load(object sender, EventArgs e)
         {
+            //if (!(System.IO.Directory.Exists(newMainSettings.DataFolder)))
+            //    System.IO.Directory.CreateDirectory(newMainSettings.DataFolder);
+            //Log.startLog(newMainSettings.DataFolder);
+            //newMainSettings.Start(Log, TVShowInfoList);
+
+            //this.junkRemover();
+            //this.fileChecker();
+            //newMainSettings.loadStettings();
+            
+            //AddBrowserMenu();
+            //for (int i = 0; i < newMainSettings.MoveFolder.Count(); i = i + 3)
+            //    AddFolder(newMainSettings.MoveFolder[i], newMainSettings.MoveFolder[i + 1], int.Parse(newMainSettings.MoveFolder[i + 2]));
+
+            //if (menu1.Count() != 0)
+            //{
+            //    button1.Text = "Move To " + menu1[0].Text;
+            //    button2.Text = "Copy To " + menu1[0].Text;
+            //}
+            //userJunk.junk_adder(junklist, newMainSettings.DataFolder, this);
+            //textConvert.setUp(this, newMainSettings.DataFolder);
+            //BackColor = System.Drawing.Color.FromArgb(newMainSettings.BackgroundColor[0], newMainSettings.BackgroundColor[1], newMainSettings.BackgroundColor[2], newMainSettings.BackgroundColor[3]);
+            //MainMenuStrip.BackColor = BackColor;
+            //ForeColor = System.Drawing.Color.FromArgb(newMainSettings.ForegroundColor[0], newMainSettings.ForegroundColor[1], newMainSettings.ForegroundColor[2], newMainSettings.ForegroundColor[3]);
+            //Color temp1 = System.Drawing.Color.FromArgb(newMainSettings.ButtonColor[0], newMainSettings.ButtonColor[1], newMainSettings.ButtonColor[2], newMainSettings.ButtonColor[3]);
+            //int[] temp3 = { 255, 240, 240, 240 };
+            //if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
+            //    changeButtoncolor(temp1);
+            ////this.fileChecker();
+            //if (newMainSettings.CheckForUpdates)
+            //{
+            //    Thread updateChecker = new Thread(new ThreadStart(checkForUpdateSilent));
+            //    updateChecker.Start();
+            //}
+        }//end of load command
+
+        private void loadEverything()
+        {
             if (!(System.IO.Directory.Exists(newMainSettings.DataFolder)))
                 System.IO.Directory.CreateDirectory(newMainSettings.DataFolder);
             Log.startLog(newMainSettings.DataFolder);
@@ -3345,7 +3385,7 @@ namespace TV_Show_Renamer
             this.junkRemover();
             this.fileChecker();
             newMainSettings.loadStettings();
-            
+
             AddBrowserMenu();
             for (int i = 0; i < newMainSettings.MoveFolder.Count(); i = i + 3)
                 AddFolder(newMainSettings.MoveFolder[i], newMainSettings.MoveFolder[i + 1], int.Parse(newMainSettings.MoveFolder[i + 2]));
@@ -3369,8 +3409,8 @@ namespace TV_Show_Renamer
             {
                 Thread updateChecker = new Thread(new ThreadStart(checkForUpdateSilent));
                 updateChecker.Start();
-            }
-        }//end of load command
+            }        
+        }
 
         //create preference file when program closes and close log
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
