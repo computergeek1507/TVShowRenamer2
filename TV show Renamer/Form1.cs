@@ -2189,6 +2189,34 @@ namespace TV_Show_Renamer
                     default:
                         break;
                 }
+
+                tvshowName = tvshowName.Replace("Vs", "vs");
+                tvshowName = tvshowName.Replace("O C ", "O.C. ");
+                tvshowName = tvshowName.Replace("T O ", "T.O. ");
+                tvshowName = tvshowName.Replace("Csi", "CSI");
+                tvshowName = tvshowName.Replace("Wwii", "WWII");
+                tvshowName = tvshowName.Replace("Hd", "HD");
+                tvshowName = tvshowName.Replace("Tosh 0", "Tosh.0");
+                tvshowName = tvshowName.Replace("O Brien", "O'Brien");
+                tvshowName = tvshowName.Replace("Nbc", "NBC");
+                tvshowName = tvshowName.Replace("Abc", "ABC");
+                tvshowName = tvshowName.Replace("Cbs", "CBS");
+                tvshowName = tvshowName.Replace("Iv" + temp, "IV" + temp);
+                tvshowName = tvshowName.Replace("Ix" + temp, "IX" + temp);
+                tvshowName = tvshowName.Replace("Viii", "VIII");
+                tvshowName = tvshowName.Replace("Vii", "VII");
+                tvshowName = tvshowName.Replace("Vi" + temp, "VI" + temp);
+                tvshowName = tvshowName.Replace("Xi" + temp, "XI" + temp);
+                tvshowName = tvshowName.Replace("Xii" + temp, "XII" + temp);
+                tvshowName = tvshowName.Replace("Xiii" + temp, "XIII" + temp);
+                tvshowName = tvshowName.Replace("Xiiii" + temp, "XIIII" + temp);
+                tvshowName = tvshowName.Replace("Iii", "III");
+                tvshowName = tvshowName.Replace("Ii", "II");
+                tvshowName = tvshowName.Replace("X Files", "X-Files");
+                tvshowName = tvshowName.Replace("La ", "LA ");
+                tvshowName = tvshowName.Replace("Nba", "NBA");
+                tvshowName = tvshowName.Replace("Espn", "ESPN");
+
                 if (addSeasonFormat && newMainSettings.SeasonFormat!=5)
                 {
                     //add file extention back on 
@@ -2226,33 +2254,8 @@ namespace TV_Show_Renamer
                 finalShowName = finalShowName.Replace(".-.", ".");
                 finalShowName = finalShowName.Replace("-.", ".");
                 finalShowName = finalShowName.Replace(" .", ".");
-                finalShowName = finalShowName.Replace("Vs", "vs");
-                finalShowName = finalShowName.Replace("O C ", "O.C. ");
-                finalShowName = finalShowName.Replace("T O ", "T.O. ");
-                finalShowName = finalShowName.Replace("Csi", "CSI");
-                finalShowName = finalShowName.Replace("Wwii", "WWII");
-                finalShowName = finalShowName.Replace("Hd", "HD");
-                finalShowName = finalShowName.Replace("Tosh 0", "Tosh.0");
-                finalShowName = finalShowName.Replace("O Brien", "O'Brien");
-                finalShowName = finalShowName.Replace("Nbc", "NBC");
-                finalShowName = finalShowName.Replace("Abc", "ABC");
-                finalShowName = finalShowName.Replace("Cbs", "CBS");
-                finalShowName = finalShowName.Replace("Iv" + temp, "IV" + temp);
-                finalShowName = finalShowName.Replace("Ix" + temp, "IX" + temp);
-                finalShowName = finalShowName.Replace("Viii", "VIII");
-                finalShowName = finalShowName.Replace("Vii", "VII");
-                finalShowName = finalShowName.Replace("Vi" + temp, "VI" + temp);
-                finalShowName = finalShowName.Replace("Xi" + temp, "XI" + temp);
-                finalShowName = finalShowName.Replace("Xii" + temp, "XII" + temp);
-                finalShowName = finalShowName.Replace("Xiii" + temp, "XIII" + temp);
-                finalShowName = finalShowName.Replace("Xiiii" + temp, "XIIII" + temp);
-                finalShowName = finalShowName.Replace("Iii", "III");
-                finalShowName = finalShowName.Replace("Ii", "II");
-                finalShowName = finalShowName.Replace("X Files", "X-Files");
-                finalShowName = finalShowName.Replace("La ", "LA ");
-                finalShowName = finalShowName.Replace("Nba", "NBA");
-                finalShowName = finalShowName.Replace("Espn", "ESPN");
-                finalShowName = finalShowName.Replace("Web Dl", "WEB-DL");
+
+                //finalShowName = finalShowName.Replace("Web Dl", "WEB-DL");
 
                 EditFileList[index].FileTitle = showTitle;
                 EditFileList[index].TVShowName = tvshowName;
