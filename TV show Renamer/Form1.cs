@@ -67,20 +67,20 @@ namespace TV_Show_Renamer
         const int appVersion = 281;//2.8 Beta
         const int HowDeepToScan = 4;
 
-        static BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
+        static public BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list       
         static List<string> junklist = new List<string>();//junk word list
         static List<string> userjunklist = new List<string>();//user junk word list
         static List<string> textConverter = new List<string>();//textConverter word list
-        List<TVShowInfo> TVShowInfoList = new List<TVShowInfo>();//tv show info
+        public List<TVShowInfo> TVShowInfoList = new List<TVShowInfo>();//tv show info
 
         static Queue convertionQueue = new Queue();
 
         static Queue titleQueue = new Queue();
 
         //create other forms
-        junk_words userJunk = new junk_words();
-        Text_Converter textConvert = new Text_Converter();
-        LogWrite Log = new LogWrite();//log object
+        static junk_words userJunk = new junk_words();
+        static Text_Converter textConvert = new Text_Converter();
+        public LogWrite Log = new LogWrite();//log object
         public MainSettings newMainSettings = new MainSettings();//new settings object
         public class ThreadAdd { public string AddType; public object ObjectToAdd;};
 
@@ -272,7 +272,7 @@ namespace TV_Show_Renamer
             {
                 for (int u = 0; u < dataGridView1.Rows.Count; u++)
                 {
-                    if (dataGridView1.Rows[u].Selected)
+                    //if (dataGridView1.Rows[u].Selected)
                         fileList[u].Reset();
                 }
                 autoConvert();
@@ -1539,11 +1539,14 @@ namespace TV_Show_Renamer
                 return;
             switch (newMainSettings.TVDataBase)
             {
-                case 0:
+                case 0://TVDB
                     for (int mainindex = 0; mainindex < selected4.Count; mainindex++)
                     {
                         if (TitleThread.CancellationPending) return;
                         NewTVDB GetTitles = new NewTVDB(newMainSettings.DataFolder);
+                        if (fileList[selected4[mainindex]].TVShowID == -1)
+                            fileList[selected4[mainindex]].TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);
+
                         if (fileList[selected4[mainindex]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID != -1)
                             fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
                         else
@@ -1568,6 +1571,10 @@ namespace TV_Show_Renamer
                     {
                         if (TitleThread.CancellationPending) return;
                         TVRage GetTitles = new TVRage();
+
+                        if (fileList[selected4[mainindex2]].TVShowID == -1)
+                            fileList[selected4[mainindex2]].TVShowID = SearchTVShowName(fileList[selected4[mainindex2]].TVShowName);
+
                         if (fileList[selected4[mainindex2]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID != -1)
                             fileList[selected4[mainindex2]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
                         else
@@ -1594,6 +1601,10 @@ namespace TV_Show_Renamer
                     {
                         if (TitleThread.CancellationPending) return;
                         EPGuides GetTitles = new EPGuides(newMainSettings.DataFolder);
+
+                        if (fileList[selected4[mainindex3]].TVShowID == -1)
+                            fileList[selected4[mainindex3]].TVShowID = SearchTVShowName(fileList[selected4[mainindex3]].TVShowName);
+
                         if (fileList[selected4[mainindex3]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID != -1)
                             fileList[selected4[mainindex3]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID, fileList[selected4[mainindex3]].SeasonNum, fileList[selected4[mainindex3]].EpisodeNum);
                         else
@@ -3383,7 +3394,7 @@ namespace TV_Show_Renamer
             if (!(System.IO.Directory.Exists(newMainSettings.DataFolder)))
                 System.IO.Directory.CreateDirectory(newMainSettings.DataFolder);
             Log.startLog(newMainSettings.DataFolder);
-            newMainSettings.Start(Log, TVShowInfoList);
+            newMainSettings.Start(this);
 
             this.junkRemover();
             this.fileChecker();
@@ -3437,6 +3448,20 @@ namespace TV_Show_Renamer
             }
             //write log
             Log.closeLog();
+        }
+
+        private void secretF4ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.ProgramFormat = ++newMainSettings.ProgramFormat % 4;
+            //MessageBox.Show(newMainSettings.ProgramFormat.ToString());
+            autoConvert();
+        }
+
+        private void secretF5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.TitleFormat = ++newMainSettings.TitleFormat % 6;
+            //MessageBox.Show(newMainSettings.TitleFormat.ToString());
+            autoConvert();
         }
                        
     }//end of form1 partial class    

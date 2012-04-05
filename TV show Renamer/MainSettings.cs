@@ -46,20 +46,31 @@ namespace TV_Show_Renamer
         string _firstWord = "";
         string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer";
 
-        bool[] _columnList = new bool[9];
+        //bool[] _columnList = new bool[9];
 
-        LogWrite _main;
+        Form1 _main;
+
+        //LogWrite _main;
 
         List<string> _moveFolder = new List<string>();//TV Show folders
 
-        List<TVShowInfo> _TVShowInfoList = new List<TVShowInfo>();//TV Show Info  
+        //List<TVShowInfo> _TVShowInfoList = new List<TVShowInfo>();//TV Show Info  
         #endregion     
         
         //get log object to write too
-        public void Start(LogWrite main, List<TVShowInfo> tvShowInfoList) 
+        public void Start(Form1 tempMain) 
         {
-            _main = main;
-            _TVShowInfoList = tvShowInfoList;
+            _main = tempMain;
+            //_TVShowInfoList = tempMain.TVShowInfoList;
+            //_columnList[0] = tempMain.dataGridView1.Columns["oldName"].Visible;
+            //_columnList[1] = tempMain.dataGridView1.Columns["newname"].Visible;
+            //_columnList[2] = tempMain.dataGridView1.Columns["filefolder"].Visible;
+            //_columnList[3] = tempMain.dataGridView1.Columns["fileextention"].Visible;
+            //_columnList[4] = tempMain.dataGridView1.Columns["TVShowID"].Visible;
+            //_columnList[5] = tempMain.dataGridView1.Columns["TVShowName"].Visible;
+            //_columnList[6] = tempMain.dataGridView1.Columns["titles"].Visible;
+            //_columnList[7] = tempMain.dataGridView1.Columns["SeasonNum"].Visible;
+            //_columnList[8] = tempMain.dataGridView1.Columns["EpisodeNum"].Visible;
         }
 
         //change to default settings
@@ -103,6 +114,17 @@ namespace TV_Show_Renamer
             _tvDataBase = 0;
 
             _firstWord = "";
+
+            _main.dataGridView1.Columns["oldName"].Visible=true;
+            _main.dataGridView1.Columns["newname"].Visible = true;
+            _main.dataGridView1.Columns["filefolder"].Visible = false;
+            _main.dataGridView1.Columns["fileextention"].Visible = false;
+            _main.dataGridView1.Columns["TVShowID"].Visible = false;
+            _main.dataGridView1.Columns["TVShowName"].Visible = false;
+            _main.dataGridView1.Columns["titles"].Visible = false;
+            _main.dataGridView1.Columns["SeasonNum"].Visible = false;
+            _main.dataGridView1.Columns["EpisodeNum"].Visible = false;
+
             //_moveFolder.Clear();
         }
 
@@ -152,12 +174,22 @@ namespace TV_Show_Renamer
                 pw.WriteLine(_tvDataBase);
                 pw.WriteLine(_titleSelection);
                 pw.WriteLine(_getTVShowName);
+
+                pw.WriteLine(_main.dataGridView1.Columns["oldName"].Visible);
+                pw.WriteLine(_main.dataGridView1.Columns["newname"].Visible);
+                pw.WriteLine(_main.dataGridView1.Columns["filefolder"].Visible);
+                pw.WriteLine(_main.dataGridView1.Columns["fileextention"].Visible);
+                pw.WriteLine(_main.dataGridView1.Columns["TVShowID"].Visible);
+                pw.WriteLine(_main.dataGridView1.Columns["TVShowName"].Visible);
+                pw.WriteLine(_main.dataGridView1.Columns["titles"].Visible);
+                pw.WriteLine(_main.dataGridView1.Columns["SeasonNum"].Visible);
+                pw.WriteLine(_main.dataGridView1.Columns["EpisodeNum"].Visible);
                 
                 pw.Close();//close writer stream
             }
             catch (Exception e)
             {
-                _main.WriteLog("newpreferences.seh Write Falure \n" + e.ToString());
+                _main.Log.WriteLog("newpreferences.seh Write Falure \n" + e.ToString());
                 returnValue = false;
             }
             finally
@@ -175,7 +207,7 @@ namespace TV_Show_Renamer
             }
             catch (Exception e)
             {
-                _main.WriteLog("Folders.seh Falure \n" + e.ToString());
+                _main.Log.WriteLog("Folders.seh Falure \n" + e.ToString());
                 returnValue = false;
             }
             finally
@@ -185,11 +217,11 @@ namespace TV_Show_Renamer
             }
             try
             {//write TV SHOW Infos
-                TVShowListSave(_dataFolder + "//TVShowInfo.xml", _TVShowInfoList);
+                TVShowListSave(_dataFolder + "//TVShowInfo.xml", _main.TVShowInfoList);
             }
             catch (Exception e)
             {
-                _main.WriteLog("TVShowInfo.xml Write Falure \n" + e.ToString());
+                _main.Log.WriteLog("TVShowInfo.xml Write Falure \n" + e.ToString());
                 returnValue = false;
             }
             finally
@@ -251,13 +283,23 @@ namespace TV_Show_Renamer
                     _tvDataBase = int.Parse(tr3.ReadLine());
                     _titleSelection = int.Parse(tr3.ReadLine());
                     _getTVShowName = bool.Parse(tr3.ReadLine());
+
+                    _main.dataGridView1.Columns["oldName"].Visible = bool.Parse(tr3.ReadLine());
+                    _main.dataGridView1.Columns["newname"].Visible = bool.Parse(tr3.ReadLine());
+                    _main.dataGridView1.Columns["filefolder"].Visible = bool.Parse(tr3.ReadLine());
+                    _main.dataGridView1.Columns["fileextention"].Visible = bool.Parse(tr3.ReadLine());
+                    _main.dataGridView1.Columns["TVShowID"].Visible = bool.Parse(tr3.ReadLine());
+                    _main.dataGridView1.Columns["TVShowName"].Visible = bool.Parse(tr3.ReadLine());
+                    _main.dataGridView1.Columns["titles"].Visible = bool.Parse(tr3.ReadLine());
+                    _main.dataGridView1.Columns["SeasonNum"].Visible = bool.Parse(tr3.ReadLine());
+                    _main.dataGridView1.Columns["EpisodeNum"].Visible = bool.Parse(tr3.ReadLine());
                     
                     tr3.Close();//close reader stream                                        
                 }//end of if. 
             }
             catch (Exception e)
             {
-                _main.WriteLog("newpreferences.seh Read Error \n" + e.ToString());
+                _main.Log.WriteLog("newpreferences.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
             finally
@@ -285,7 +327,7 @@ namespace TV_Show_Renamer
             }
             catch (Exception e)
             {
-                _main.WriteLog("TVFolder.seh Read Error \n" + e.ToString());
+                _main.Log.WriteLog("TVFolder.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
             finally
@@ -316,7 +358,7 @@ namespace TV_Show_Renamer
             }
             catch (Exception e)
             {
-                _main.WriteLog("OtherFolders.seh Read Error \n" + e.ToString());
+                _main.Log.WriteLog("OtherFolders.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
             finally
@@ -341,7 +383,7 @@ namespace TV_Show_Renamer
             }
             catch (Exception e)
             {
-                _main.WriteLog("Folders.seh Read Error \n" + e.ToString());
+                _main.Log.WriteLog("Folders.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
             finally
@@ -359,7 +401,7 @@ namespace TV_Show_Renamer
                     {
                         for (int i = 0; i < length; i = i + 2)
                         {
-                            _TVShowInfoList.Add(new TVShowInfo(tr3.ReadLine(),"","", int.Parse(tr3.ReadLine()),-1,-1));
+                            _main.TVShowInfoList.Add(new TVShowInfo(tr3.ReadLine(), "", "", int.Parse(tr3.ReadLine()), -1, -1));
                         }//end of for loop  
                         tr3.Close();
                         File.Delete(_dataFolder + "//TVShowID.seh");
@@ -368,7 +410,7 @@ namespace TV_Show_Renamer
             }
             catch (Exception e)
             {
-                _main.WriteLog("TVShowID.seh Read Error \n" + e.ToString());
+                _main.Log.WriteLog("TVShowID.seh Read Error \n" + e.ToString());
                 returnValue = false;
             }
             finally
@@ -381,12 +423,12 @@ namespace TV_Show_Renamer
             {
                 if (File.Exists(_dataFolder + "//TVShowInfo.xml"))//see if file exists
                 {
-                    TVShowListLoad(_dataFolder + "//TVShowInfo.xml", _TVShowInfoList);
+                    TVShowListLoad(_dataFolder + "//TVShowInfo.xml", _main.TVShowInfoList);
                 }//end of if. 
             }
             catch (Exception e)
             {
-                _main.WriteLog("TVShowInfo.xml Read Error \n" + e.ToString());
+                _main.Log.WriteLog("TVShowInfo.xml Read Error \n" + e.ToString());
                 returnValue = false;
             }
 

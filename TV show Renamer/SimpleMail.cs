@@ -38,7 +38,7 @@ namespace TV_Show_Renamer
 
             private string _strUserPassword = "computer";            
 
-            private string _strLastResponse;
+            //private string _strLastResponse;
 
             public string AuthUser
             {

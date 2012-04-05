@@ -337,6 +337,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Pending File Name Convertion Options";
             this.TopMost = true;
+            this.Activated += new System.EventHandler(this.ConversionOptions_Activated);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
