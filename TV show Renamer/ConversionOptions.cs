@@ -199,9 +199,30 @@ namespace TV_Show_Renamer
 
         private void ConversionOptions_Activated(object sender, EventArgs e)
         {
+            //this.comboBox1.SelectedIndexChanged -= new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            //this.comboBox2.SelectedIndexChanged -= new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            //this.comboBox3.SelectedIndexChanged -= new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            //this.comboBox4.SelectedIndexChanged -= new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            //this.comboBox5.SelectedIndexChanged -= new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            //this.comboBox6.SelectedIndexChanged -= new System.EventHandler(this.comboBox6_SelectedIndexChanged);
+            //this.comboBox7.SelectedIndexChanged -= new System.EventHandler(this.comboBox7_SelectedIndexChanged);
+            //this.comboBox8.SelectedIndexChanged -= new System.EventHandler(this.comboBox8_SelectedIndexChanged);
             comboBox1.SelectedIndex = newMainSettings.ProgramFormat;
-            //comboBox2.SelectedIndex = newMainSettings.SeasonFormat;
+            comboBox2.SelectedIndex = newMainSettings.SeasonFormat;
             comboBox3.SelectedIndex = newMainSettings.TitleFormat;
+            comboBox4.SelectedIndex = Convert.ToInt32(newMainSettings.DashSeason);
+            comboBox5.SelectedIndex = Convert.ToInt32(newMainSettings.DashTitle);
+            comboBox6.SelectedIndex = newMainSettings.TitleSelection;
+            comboBox7.SelectedIndex = newMainSettings.ExtFormat;
+            comboBox8.SelectedIndex = newMainSettings.TVDataBase;
+            //this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            //this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            //this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            //this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            //this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            //this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
+            //this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
+            //this.comboBox8.SelectedIndexChanged += new System.EventHandler(this.comboBox8_SelectedIndexChanged);
         }
         
         

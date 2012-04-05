@@ -114,6 +114,12 @@
             this.TitleThread = new System.ComponentModel.BackgroundWorker();
             this.secretF4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secretF5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF6ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF8ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -180,8 +186,14 @@
             this.exitToolStripMenuItem,
             this.secretSaveToolStripMenuItem,
             this.secretResetToolStripMenuItem,
+            this.secretF1ToolStripMenuItem,
+            this.secretF2ToolStripMenuItem,
+            this.secretF3ToolStripMenuItem,
             this.secretF4ToolStripMenuItem,
-            this.secretF5ToolStripMenuItem});
+            this.secretF5ToolStripMenuItem,
+            this.secretF6ToolStripMenuItem,
+            this.secretF7ToolStripMenuItem,
+            this.secretF8ToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -843,6 +855,60 @@
             this.secretF5ToolStripMenuItem.Visible = false;
             this.secretF5ToolStripMenuItem.Click += new System.EventHandler(this.secretF5ToolStripMenuItem_Click);
             // 
+            // secretF1ToolStripMenuItem
+            // 
+            this.secretF1ToolStripMenuItem.Name = "secretF1ToolStripMenuItem";
+            this.secretF1ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.secretF1ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF1ToolStripMenuItem.Text = "Secret F1";
+            this.secretF1ToolStripMenuItem.Visible = false;
+            this.secretF1ToolStripMenuItem.Click += new System.EventHandler(this.secretF1ToolStripMenuItem_Click);
+            // 
+            // secretF2ToolStripMenuItem
+            // 
+            this.secretF2ToolStripMenuItem.Name = "secretF2ToolStripMenuItem";
+            this.secretF2ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.secretF2ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF2ToolStripMenuItem.Text = "Secret F2";
+            this.secretF2ToolStripMenuItem.Visible = false;
+            this.secretF2ToolStripMenuItem.Click += new System.EventHandler(this.secretF2ToolStripMenuItem_Click);
+            // 
+            // secretF3ToolStripMenuItem
+            // 
+            this.secretF3ToolStripMenuItem.Name = "secretF3ToolStripMenuItem";
+            this.secretF3ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.secretF3ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF3ToolStripMenuItem.Text = "Secret F3";
+            this.secretF3ToolStripMenuItem.Visible = false;
+            this.secretF3ToolStripMenuItem.Click += new System.EventHandler(this.secretF3ToolStripMenuItem_Click);
+            // 
+            // secretF6ToolStripMenuItem
+            // 
+            this.secretF6ToolStripMenuItem.Name = "secretF6ToolStripMenuItem";
+            this.secretF6ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
+            this.secretF6ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF6ToolStripMenuItem.Text = "Secret F6";
+            this.secretF6ToolStripMenuItem.Visible = false;
+            this.secretF6ToolStripMenuItem.Click += new System.EventHandler(this.secretF6ToolStripMenuItem_Click);
+            // 
+            // secretF7ToolStripMenuItem
+            // 
+            this.secretF7ToolStripMenuItem.Name = "secretF7ToolStripMenuItem";
+            this.secretF7ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
+            this.secretF7ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF7ToolStripMenuItem.Text = "Secret F7";
+            this.secretF7ToolStripMenuItem.Visible = false;
+            this.secretF7ToolStripMenuItem.Click += new System.EventHandler(this.secretF7ToolStripMenuItem_Click);
+            // 
+            // secretF8ToolStripMenuItem
+            // 
+            this.secretF8ToolStripMenuItem.Name = "secretF8ToolStripMenuItem";
+            this.secretF8ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.secretF8ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF8ToolStripMenuItem.Text = "Secret F8";
+            this.secretF8ToolStripMenuItem.Visible = false;
+            this.secretF8ToolStripMenuItem.Click += new System.EventHandler(this.secretF8ToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -959,6 +1025,12 @@
         public System.Windows.Forms.DataGridViewTextBoxColumn edittitle;
         private System.Windows.Forms.ToolStripMenuItem secretF4ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secretF5ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem secretF1ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem secretF2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem secretF3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem secretF6ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem secretF7ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem secretF8ToolStripMenuItem;
     }
 }
 

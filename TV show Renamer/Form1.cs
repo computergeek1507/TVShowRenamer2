@@ -3449,11 +3449,30 @@ namespace TV_Show_Renamer
             //write log
             Log.closeLog();
         }
-
-        private void secretF4ToolStripMenuItem_Click(object sender, EventArgs e)
+        
+        private void secretF1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             newMainSettings.ProgramFormat = ++newMainSettings.ProgramFormat % 4;
             //MessageBox.Show(newMainSettings.ProgramFormat.ToString());
+            autoConvert();
+        }
+
+        private void secretF2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.DashSeason = !newMainSettings.DashSeason;
+            //MessageBox.Show(newMainSettings.ProgramFormat.ToString());
+            autoConvert();
+        }
+
+        private void secretF3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.SeasonFormat = ++newMainSettings.SeasonFormat % 6;
+            autoConvert();
+        }
+
+        private void secretF4ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.DashTitle = !newMainSettings.DashTitle;
             autoConvert();
         }
 
@@ -3461,6 +3480,24 @@ namespace TV_Show_Renamer
         {
             newMainSettings.TitleFormat = ++newMainSettings.TitleFormat % 6;
             //MessageBox.Show(newMainSettings.TitleFormat.ToString());
+            autoConvert();
+        }
+
+        private void secretF6ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.ExtFormat = ++newMainSettings.ExtFormat % 3;
+            autoConvert();
+        }
+
+        private void secretF7ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.TitleSelection = ++newMainSettings.TitleSelection % 3;
+            autoConvert();
+        }
+
+        private void secretF8ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.TVDataBase = ++newMainSettings.TVDataBase % 3;
             autoConvert();
         }
                        
