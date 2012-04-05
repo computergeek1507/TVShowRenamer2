@@ -196,6 +196,13 @@ namespace TV_Show_Renamer
         {
             Main.autoConvert();
         }
+
+        private void ConversionOptions_Activated(object sender, EventArgs e)
+        {
+            comboBox1.SelectedIndex = newMainSettings.ProgramFormat;
+            //comboBox2.SelectedIndex = newMainSettings.SeasonFormat;
+            comboBox3.SelectedIndex = newMainSettings.TitleFormat;
+        }
         
         
     }//end of class

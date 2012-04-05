@@ -78,6 +78,19 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.oldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.newname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.filefolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fileextention = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TVShowID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TVShowName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.titles = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SeasonNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EpisodeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fullfolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.newfullfolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GetTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.edittitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.saveNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -99,19 +112,8 @@
             this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
             this.AddFilesThread = new System.ComponentModel.BackgroundWorker();
             this.TitleThread = new System.ComponentModel.BackgroundWorker();
-            this.oldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.newname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.filefolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fileextention = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TVShowID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TVShowName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.titles = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SeasonNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EpisodeNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fullfolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.newfullfolder = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GetTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.edittitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.secretF4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -177,7 +179,9 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem,
             this.secretSaveToolStripMenuItem,
-            this.secretResetToolStripMenuItem});
+            this.secretResetToolStripMenuItem,
+            this.secretF4ToolStripMenuItem,
+            this.secretF5ToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -525,6 +529,153 @@
             this.dataGridView1.TabIndex = 30;
             this.dataGridView1.DoubleClick += new System.EventHandler(this.button5_Click);
             // 
+            // oldName
+            // 
+            this.oldName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.oldName.DataPropertyName = "FileName";
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.oldName.DefaultCellStyle = dataGridViewCellStyle3;
+            this.oldName.HeaderText = "Current File Name";
+            this.oldName.Name = "oldName";
+            this.oldName.ReadOnly = true;
+            this.oldName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.oldName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.oldName.Width = 116;
+            // 
+            // newname
+            // 
+            this.newname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.newname.DataPropertyName = "NewFileName";
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newname.DefaultCellStyle = dataGridViewCellStyle4;
+            this.newname.HeaderText = "Pending File Name";
+            this.newname.Name = "newname";
+            this.newname.ReadOnly = true;
+            this.newname.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.newname.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.newname.Width = 121;
+            // 
+            // filefolder
+            // 
+            this.filefolder.DataPropertyName = "FileFolder";
+            this.filefolder.HeaderText = "File Location";
+            this.filefolder.Name = "filefolder";
+            this.filefolder.ReadOnly = true;
+            this.filefolder.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.filefolder.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.filefolder.Visible = false;
+            this.filefolder.Width = 92;
+            // 
+            // fileextention
+            // 
+            this.fileextention.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.fileextention.DataPropertyName = "FileExtention";
+            this.fileextention.HeaderText = "File Extention";
+            this.fileextention.Name = "fileextention";
+            this.fileextention.ReadOnly = true;
+            this.fileextention.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.fileextention.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.fileextention.Visible = false;
+            // 
+            // TVShowID
+            // 
+            this.TVShowID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.TVShowID.DataPropertyName = "TVShowID";
+            this.TVShowID.HeaderText = "TV Show Index";
+            this.TVShowID.Name = "TVShowID";
+            this.TVShowID.ReadOnly = true;
+            this.TVShowID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.TVShowID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.TVShowID.Visible = false;
+            // 
+            // TVShowName
+            // 
+            this.TVShowName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.TVShowName.DataPropertyName = "TVShowName";
+            this.TVShowName.HeaderText = "TV Show Name";
+            this.TVShowName.Name = "TVShowName";
+            this.TVShowName.ReadOnly = true;
+            this.TVShowName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.TVShowName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.TVShowName.Width = 107;
+            // 
+            // titles
+            // 
+            this.titles.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.titles.DataPropertyName = "FileTitle";
+            this.titles.HeaderText = "Episode Titles";
+            this.titles.Name = "titles";
+            this.titles.ReadOnly = true;
+            this.titles.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.titles.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.titles.Width = 98;
+            // 
+            // SeasonNum
+            // 
+            this.SeasonNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.SeasonNum.DataPropertyName = "SeasonNum";
+            this.SeasonNum.HeaderText = "Season #";
+            this.SeasonNum.Name = "SeasonNum";
+            this.SeasonNum.ReadOnly = true;
+            this.SeasonNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.SeasonNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.SeasonNum.Width = 78;
+            // 
+            // EpisodeNum
+            // 
+            this.EpisodeNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.EpisodeNum.DataPropertyName = "EpisodeNum";
+            this.EpisodeNum.HeaderText = "Episode #";
+            this.EpisodeNum.Name = "EpisodeNum";
+            this.EpisodeNum.ReadOnly = true;
+            this.EpisodeNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.EpisodeNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.EpisodeNum.Width = 80;
+            // 
+            // fullfolder
+            // 
+            this.fullfolder.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.fullfolder.DataPropertyName = "FullFileName";
+            this.fullfolder.HeaderText = "fullfolder";
+            this.fullfolder.Name = "fullfolder";
+            this.fullfolder.ReadOnly = true;
+            this.fullfolder.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.fullfolder.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.fullfolder.Visible = false;
+            // 
+            // newfullfolder
+            // 
+            this.newfullfolder.DataPropertyName = "NewFullFileName";
+            this.newfullfolder.HeaderText = "newfullfolder";
+            this.newfullfolder.Name = "newfullfolder";
+            this.newfullfolder.ReadOnly = true;
+            this.newfullfolder.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.newfullfolder.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.newfullfolder.Visible = false;
+            this.newfullfolder.Width = 91;
+            // 
+            // GetTitle
+            // 
+            this.GetTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.GetTitle.DataPropertyName = "GetTitle";
+            this.GetTitle.HeaderText = "GetTitle";
+            this.GetTitle.Name = "GetTitle";
+            this.GetTitle.ReadOnly = true;
+            this.GetTitle.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.GetTitle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.GetTitle.Visible = false;
+            // 
+            // edittitle
+            // 
+            this.edittitle.DataPropertyName = "AutoEdit";
+            this.edittitle.HeaderText = "AutoEdit";
+            this.edittitle.Name = "edittitle";
+            this.edittitle.ReadOnly = true;
+            this.edittitle.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.edittitle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.edittitle.Visible = false;
+            this.edittitle.Width = 72;
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -674,156 +825,23 @@
             this.TitleThread.WorkerSupportsCancellation = true;
             this.TitleThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.TitleThread_DoWork);
             // 
-            // oldName
+            // secretF4ToolStripMenuItem
             // 
-            this.oldName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.oldName.DataPropertyName = "FileName";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.oldName.DefaultCellStyle = dataGridViewCellStyle3;
-            this.oldName.HeaderText = "Current File Name";
-            this.oldName.Name = "oldName";
-            this.oldName.ReadOnly = true;
-            this.oldName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.oldName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.oldName.Width = 116;
+            this.secretF4ToolStripMenuItem.Name = "secretF4ToolStripMenuItem";
+            this.secretF4ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.secretF4ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF4ToolStripMenuItem.Text = "Secret F4";
+            this.secretF4ToolStripMenuItem.Visible = false;
+            this.secretF4ToolStripMenuItem.Click += new System.EventHandler(this.secretF4ToolStripMenuItem_Click);
             // 
-            // newname
+            // secretF5ToolStripMenuItem
             // 
-            this.newname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.newname.DataPropertyName = "NewFileName";
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newname.DefaultCellStyle = dataGridViewCellStyle4;
-            this.newname.HeaderText = "Pending File Name";
-            this.newname.Name = "newname";
-            this.newname.ReadOnly = true;
-            this.newname.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.newname.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.newname.Width = 121;
-            // 
-            // filefolder
-            // 
-            this.filefolder.DataPropertyName = "FileFolder";
-            this.filefolder.HeaderText = "File Location";
-            this.filefolder.Name = "filefolder";
-            this.filefolder.ReadOnly = true;
-            this.filefolder.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.filefolder.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.filefolder.Visible = false;
-            this.filefolder.Width = 92;
-            // 
-            // fileextention
-            // 
-            this.fileextention.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.fileextention.DataPropertyName = "FileExtention";
-            this.fileextention.HeaderText = "File Extention";
-            this.fileextention.Name = "fileextention";
-            this.fileextention.ReadOnly = true;
-            this.fileextention.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.fileextention.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.fileextention.Visible = false;
-            this.fileextention.Width = 95;
-            // 
-            // TVShowID
-            // 
-            this.TVShowID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.TVShowID.DataPropertyName = "TVShowID";
-            this.TVShowID.HeaderText = "TV Show Index";
-            this.TVShowID.Name = "TVShowID";
-            this.TVShowID.ReadOnly = true;
-            this.TVShowID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.TVShowID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.TVShowID.Visible = false;
-            this.TVShowID.Width = 105;
-            // 
-            // TVShowName
-            // 
-            this.TVShowName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.TVShowName.DataPropertyName = "TVShowName";
-            this.TVShowName.HeaderText = "TV Show Name";
-            this.TVShowName.Name = "TVShowName";
-            this.TVShowName.ReadOnly = true;
-            this.TVShowName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.TVShowName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.TVShowName.Width = 107;
-            // 
-            // titles
-            // 
-            this.titles.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.titles.DataPropertyName = "FileTitle";
-            this.titles.HeaderText = "Episode Titles";
-            this.titles.Name = "titles";
-            this.titles.ReadOnly = true;
-            this.titles.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.titles.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.titles.Width = 98;
-            // 
-            // SeasonNum
-            // 
-            this.SeasonNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.SeasonNum.DataPropertyName = "SeasonNum";
-            this.SeasonNum.HeaderText = "Season #";
-            this.SeasonNum.Name = "SeasonNum";
-            this.SeasonNum.ReadOnly = true;
-            this.SeasonNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.SeasonNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.SeasonNum.Width = 78;
-            // 
-            // EpisodeNum
-            // 
-            this.EpisodeNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.EpisodeNum.DataPropertyName = "EpisodeNum";
-            this.EpisodeNum.HeaderText = "Episode #";
-            this.EpisodeNum.Name = "EpisodeNum";
-            this.EpisodeNum.ReadOnly = true;
-            this.EpisodeNum.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.EpisodeNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.EpisodeNum.Width = 80;
-            // 
-            // fullfolder
-            // 
-            this.fullfolder.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.fullfolder.DataPropertyName = "FullFileName";
-            this.fullfolder.HeaderText = "fullfolder";
-            this.fullfolder.Name = "fullfolder";
-            this.fullfolder.ReadOnly = true;
-            this.fullfolder.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.fullfolder.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.fullfolder.Visible = false;
-            this.fullfolder.Width = 71;
-            // 
-            // newfullfolder
-            // 
-            this.newfullfolder.DataPropertyName = "NewFullFileName";
-            this.newfullfolder.HeaderText = "newfullfolder";
-            this.newfullfolder.Name = "newfullfolder";
-            this.newfullfolder.ReadOnly = true;
-            this.newfullfolder.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.newfullfolder.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.newfullfolder.Visible = false;
-            this.newfullfolder.Width = 91;
-            // 
-            // GetTitle
-            // 
-            this.GetTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.GetTitle.DataPropertyName = "GetTitle";
-            this.GetTitle.HeaderText = "GetTitle";
-            this.GetTitle.Name = "GetTitle";
-            this.GetTitle.ReadOnly = true;
-            this.GetTitle.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.GetTitle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.GetTitle.Visible = false;
-            this.GetTitle.Width = 69;
-            // 
-            // edittitle
-            // 
-            this.edittitle.DataPropertyName = "AutoEdit";
-            this.edittitle.HeaderText = "AutoEdit";
-            this.edittitle.Name = "edittitle";
-            this.edittitle.ReadOnly = true;
-            this.edittitle.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.edittitle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.edittitle.Visible = false;
-            this.edittitle.Width = 72;
+            this.secretF5ToolStripMenuItem.Name = "secretF5ToolStripMenuItem";
+            this.secretF5ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.secretF5ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF5ToolStripMenuItem.Text = "Secret F5";
+            this.secretF5ToolStripMenuItem.Visible = false;
+            this.secretF5ToolStripMenuItem.Click += new System.EventHandler(this.secretF5ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -939,6 +957,8 @@
         public System.Windows.Forms.DataGridViewTextBoxColumn newfullfolder;
         public System.Windows.Forms.DataGridViewTextBoxColumn GetTitle;
         public System.Windows.Forms.DataGridViewTextBoxColumn edittitle;
+        private System.Windows.Forms.ToolStripMenuItem secretF4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem secretF5ToolStripMenuItem;
     }
 }
 
