@@ -14,6 +14,7 @@ using Microsoft.VisualBasic.FileIO;
 using System.Threading;
 using SevenZip;
 using System.Collections;
+//using Microsoft.VisualBasic;
 
 namespace TV_Show_Renamer
 {
@@ -178,6 +179,7 @@ namespace TV_Show_Renamer
         //add word to begining
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
+            //string text=Interaction.InputBox("Did you know your question goes here?", "Title", "");
             EditTitle2 mainEdit = new EditTitle2(newMainSettings.FirstWord);
             mainEdit.Text = "Add Text To Begining";
             mainEdit.Location = new Point(this.Location.X + ((this.Size.Width - mainEdit.Size.Width) / 2), this.Location.Y + ((this.Size.Height - mainEdit.Size.Height) / 2));
@@ -192,6 +194,16 @@ namespace TV_Show_Renamer
                 newMainSettings.FirstWord = "";
                 autoConvert();
             }
+            //if (text!= "")
+            //{
+            //    newMainSettings.FirstWord = text;
+            //    autoConvert();
+            //}
+            //else
+            //{
+            //    newMainSettings.FirstWord = "";
+            //    autoConvert();
+            //}
         }//end of form closing
 
         //XBMC Tools
@@ -277,6 +289,65 @@ namespace TV_Show_Renamer
                 }
                 autoConvert();
             }
+        }
+
+        //secret F1
+        private void secretF1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.ProgramFormat = ++newMainSettings.ProgramFormat % 4;
+            //MessageBox.Show(newMainSettings.ProgramFormat.ToString());
+            autoConvert();
+        }
+
+        //secret F2
+        private void secretF2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.DashSeason = !newMainSettings.DashSeason;
+            //MessageBox.Show(newMainSettings.ProgramFormat.ToString());
+            autoConvert();
+        }
+
+        //secret F3
+        private void secretF3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.SeasonFormat = ++newMainSettings.SeasonFormat % 6;
+            autoConvert();
+        }
+
+        //secret F4
+        private void secretF4ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.DashTitle = !newMainSettings.DashTitle;
+            autoConvert();
+        }
+
+        //secret F5
+        private void secretF5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.TitleFormat = ++newMainSettings.TitleFormat % 6;
+            //MessageBox.Show(newMainSettings.TitleFormat.ToString());
+            autoConvert();
+        }
+
+        //secret F6
+        private void secretF6ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.ExtFormat = ++newMainSettings.ExtFormat % 3;
+            autoConvert();
+        }
+
+        //secret F7
+        private void secretF7ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.TitleSelection = ++newMainSettings.TitleSelection % 3;
+            autoConvert();
+        }
+
+        //secret F8
+        private void secretF8ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newMainSettings.TVDataBase = ++newMainSettings.TVDataBase % 3;
+            autoConvert();
         }
 
         #endregion
@@ -3351,44 +3422,6 @@ namespace TV_Show_Renamer
 
         #endregion
 
-        //loads when starts
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //if (!(System.IO.Directory.Exists(newMainSettings.DataFolder)))
-            //    System.IO.Directory.CreateDirectory(newMainSettings.DataFolder);
-            //Log.startLog(newMainSettings.DataFolder);
-            //newMainSettings.Start(Log, TVShowInfoList);
-
-            //this.junkRemover();
-            //this.fileChecker();
-            //newMainSettings.loadStettings();
-            
-            //AddBrowserMenu();
-            //for (int i = 0; i < newMainSettings.MoveFolder.Count(); i = i + 3)
-            //    AddFolder(newMainSettings.MoveFolder[i], newMainSettings.MoveFolder[i + 1], int.Parse(newMainSettings.MoveFolder[i + 2]));
-
-            //if (menu1.Count() != 0)
-            //{
-            //    button1.Text = "Move To " + menu1[0].Text;
-            //    button2.Text = "Copy To " + menu1[0].Text;
-            //}
-            //userJunk.junk_adder(junklist, newMainSettings.DataFolder, this);
-            //textConvert.setUp(this, newMainSettings.DataFolder);
-            //BackColor = System.Drawing.Color.FromArgb(newMainSettings.BackgroundColor[0], newMainSettings.BackgroundColor[1], newMainSettings.BackgroundColor[2], newMainSettings.BackgroundColor[3]);
-            //MainMenuStrip.BackColor = BackColor;
-            //ForeColor = System.Drawing.Color.FromArgb(newMainSettings.ForegroundColor[0], newMainSettings.ForegroundColor[1], newMainSettings.ForegroundColor[2], newMainSettings.ForegroundColor[3]);
-            //Color temp1 = System.Drawing.Color.FromArgb(newMainSettings.ButtonColor[0], newMainSettings.ButtonColor[1], newMainSettings.ButtonColor[2], newMainSettings.ButtonColor[3]);
-            //int[] temp3 = { 255, 240, 240, 240 };
-            //if (temp3[1] != newMainSettings.ButtonColor[1] && temp3[2] != newMainSettings.ButtonColor[2] && temp3[3] != newMainSettings.ButtonColor[3])
-            //    changeButtoncolor(temp1);
-            ////this.fileChecker();
-            //if (newMainSettings.CheckForUpdates)
-            //{
-            //    Thread updateChecker = new Thread(new ThreadStart(checkForUpdateSilent));
-            //    updateChecker.Start();
-            //}
-        }//end of load command
-
         private void loadEverything()
         {
             if (!(System.IO.Directory.Exists(newMainSettings.DataFolder)))
@@ -3449,57 +3482,6 @@ namespace TV_Show_Renamer
             //write log
             Log.closeLog();
         }
-        
-        private void secretF1ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newMainSettings.ProgramFormat = ++newMainSettings.ProgramFormat % 4;
-            //MessageBox.Show(newMainSettings.ProgramFormat.ToString());
-            autoConvert();
-        }
-
-        private void secretF2ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newMainSettings.DashSeason = !newMainSettings.DashSeason;
-            //MessageBox.Show(newMainSettings.ProgramFormat.ToString());
-            autoConvert();
-        }
-
-        private void secretF3ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newMainSettings.SeasonFormat = ++newMainSettings.SeasonFormat % 6;
-            autoConvert();
-        }
-
-        private void secretF4ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newMainSettings.DashTitle = !newMainSettings.DashTitle;
-            autoConvert();
-        }
-
-        private void secretF5ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newMainSettings.TitleFormat = ++newMainSettings.TitleFormat % 6;
-            //MessageBox.Show(newMainSettings.TitleFormat.ToString());
-            autoConvert();
-        }
-
-        private void secretF6ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newMainSettings.ExtFormat = ++newMainSettings.ExtFormat % 3;
-            autoConvert();
-        }
-
-        private void secretF7ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newMainSettings.TitleSelection = ++newMainSettings.TitleSelection % 3;
-            autoConvert();
-        }
-
-        private void secretF8ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newMainSettings.TVDataBase = ++newMainSettings.TVDataBase % 3;
-            autoConvert();
-        }
-                       
+                               
     }//end of form1 partial class    
 }//end of namespace
