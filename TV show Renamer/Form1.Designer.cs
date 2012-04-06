@@ -933,7 +933,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "TV Show Renamer 2.8 BETA";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.dragTo_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.dragTo_DragEnter);
             this.menuStrip1.ResumeLayout(false);
@@ -943,7 +942,6 @@
             this.contextMenuStrip4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
