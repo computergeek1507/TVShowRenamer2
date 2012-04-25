@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MsdnMag;
 
 namespace TV_Show_Renamer
 {    
@@ -169,19 +170,5 @@ namespace TV_Show_Renamer
             _getTitle = true;
         }
     }//end of class
-
-    public static class ScottsFileSystem
-    {
-        public static void CopyFiles(List<string> sourceFiles, List<string> destFiles)
-        {
-            CopyFilesDialog copyfiles = new CopyFilesDialog(sourceFiles,  destFiles,false);
-            copyfiles.Show();
-        }
-
-        public static void MoveFiles(List<string> sourceFiles, List<string> destFiles)
-        {
-            CopyFilesDialog copyfiles = new CopyFilesDialog(sourceFiles, destFiles, true);
-            copyfiles.Show();
-        }
-    }
+    
 }//end of namespace

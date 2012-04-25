@@ -72,6 +72,9 @@
     <StartupObject>TV_Show_Renamer.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FileOperation">
+      <HintPath>Resources\FileOperation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="SevenZipSharp">
       <HintPath>Resources\SevenZipSharp.dll</HintPath>
@@ -124,13 +127,6 @@
     </Compile>
     <Compile Include="ConversionOptions.Designer.cs">
       <DependentUpon>ConversionOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Copyfiles.cs" />
-    <Compile Include="CopyFilesDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CopyFilesDialog.Designer.cs">
-      <DependentUpon>CopyFilesDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="download.cs">
       <SubType>Form</SubType>
@@ -209,9 +205,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConversionOptions.resx">
       <DependentUpon>ConversionOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CopyFilesDialog.resx">
-      <DependentUpon>CopyFilesDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="download.resx">
       <DependentUpon>download.cs</DependentUpon>
@@ -320,6 +313,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\FileOperation.dll" />
     <Content Include="TVcustom.ico" />
     <Content Include="TVcustom.png" />
     <None Include="Resources\licence.rtf" />
