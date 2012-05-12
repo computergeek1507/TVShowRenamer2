@@ -13,21 +13,21 @@ namespace TV_Show_Renamer
         {
             _TVShowName = tVShowName;
         }
-        public TVShowInfo(string tVShowName, string realTVShowName,string tVShowFolder, int tvdbID, int rageTVID, int epguidesID)
+        public TVShowInfo(string tVShowName, string realTVShowName,string tVShowFolder, int tvdbID, int rageTVID, string epguidesID)
         {
             _TVShowName = tVShowName;
             if(realTVShowName!="")_realTVName = realTVShowName;
             if (tVShowFolder != "") _TVShowFolder = tVShowFolder;
             if (tvdbID != -1) _tvdbID = tvdbID;
             if (rageTVID != -1) _rageTVID = rageTVID;
-            if (epguidesID != -1) _epguidesID = epguidesID;
+            if (epguidesID != "-1") _epguidesID = epguidesID;
         }
         string _TVShowName="";
         string _realTVName="";
         string _TVShowFolder = "";
         int _tvdbID=-1;
         int _rageTVID=-1;
-        int _epguidesID=-1;
+        string _epguidesID = "-1";
 
         public string TVShowName
         {
@@ -54,7 +54,7 @@ namespace TV_Show_Renamer
             get { return _rageTVID; }
             set { _rageTVID = value; }
         }
-        public int EpguidesID
+        public string EpguidesID
         {
             get { return _epguidesID; }
             set { _epguidesID = value; }

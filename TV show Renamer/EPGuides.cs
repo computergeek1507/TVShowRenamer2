@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace TV_Show_Renamer
 {
@@ -13,9 +15,11 @@ namespace TV_Show_Renamer
         string folder = null;
         List<SearchInfo> selectionList = new List<SearchInfo>();
 
+        public static string URL = "http://epguides.com/";
+
         public EPGuides(string newFolder)
         {
-            folder = newFolder;
+            folder = newFolder + "\\Temp";
         }
 
         public SearchInfo findTitle(string ShowName)
@@ -89,8 +93,11 @@ namespace TV_Show_Renamer
             return TVShowID;
         }
 
-        public string getTitle(int seriesID, int season, int episode)
+        public string getTitle(string seriesID, int season, int episode)
         { 
+
+
+
             return "";        
         }
 
@@ -129,6 +136,155 @@ namespace TV_Show_Renamer
             }
 
             return parsedData;
+        }
+
+        public List<string> parse(string showtitle)
+        {
+            List<string> AllEpisodes = new List<string>();
+            //DataSet ds = new DataSet(showtitle);
+
+            WebClient client = new WebClient();
+            String htmlCode = client.DownloadString(URL + showtitle);
+            //client.DownloadFile(URL + showtitle, "d:/dev.html.txt");
+
+            //string htmlCode = File.ReadAllText("d:/dev.html.txt");
+
+            StringReader sr = new StringReader(htmlCode);
+
+            string line;
+            while ((line = sr.ReadLine()) != null)
+            {
+                // title
+                if (line.Contains("<title>"))
+                {
+                    int start = line.IndexOf("<title>") + 7;
+                    int end = line.IndexOf("(a Titles &amp");
+                    AllEpisodes.Add(line.Substring(start, end - start));
+                }
+
+                // show and episode content
+                if (line.Contains("<pre>"))
+                {
+                    line = sr.ReadLine();
+
+                    // skip empty lines
+                    while (line != null && line.Length == 0)
+                    {
+                        line = sr.ReadLine();
+                    }
+
+                    // skip episode table header
+                    line = sr.ReadLine();
+                    line = sr.ReadLine();
+                    line = sr.ReadLine();
+
+                    // skip empty lines
+                    while (line != null && line.Length == 0)
+                    {
+                        line = sr.ReadLine();
+                    }
+
+                    // cycle through all season and episode lines
+                    while (line != null && !line.Contains("</pre>"))
+                    {
+                        // season name
+                        //Console.WriteLine("Season: {0}", line);
+
+                        if (line.StartsWith("&bull; ")) // sometimes season names start with &bull; 
+                        {
+                            line = line.Substring(7).Trim();
+
+                            //ds.Tables["HEAD"].Rows.Add("ContentVersion", "epguides+tvrage");
+                        }
+                        else
+                        {
+                            //ds.Tables["HEAD"].Rows.Add("ContentVersion", "epguides+tv.com");
+                        }
+
+                        line = sr.ReadLine();
+
+                        // skip empty lines
+                        while (line != null && line.Length == 0)
+                        {
+                            line = sr.ReadLine();
+                        }
+
+                        // episodes
+                        while (line != null && !(line.Length == 0))
+                        {
+
+                            DateTime airDate = DateTime.MinValue;
+                            string episodeNumber = "";
+                            string episodeNumber2 = "";
+                            string episode = "";
+                            string episodeTitle = "";
+
+                            Regex r = new Regex(@"\s{2,}");
+                            string[] parts = r.Split(line);
+                            foreach (string ppp in parts)
+                            {
+                                // try distance as a tool to determine if value is episode number or production number etc.
+                                //Console.WriteLine("split[distance:{1}]: {0} ", ppp, line.IndexOf(ppp));
+
+                                // get episode number
+                                if (line.IndexOf(ppp) == 0)
+                                {
+                                    episodeNumber = ppp;
+                                }
+
+                                // get 2nd episode number
+                                if (line.IndexOf(ppp) > 0 && line.IndexOf(ppp) < 10)
+                                {
+                                    episodeNumber2 = ppp;
+                                }
+
+                                // get episode info
+                                if (line.IndexOf(ppp) > 35 && !ppp.Contains("#trailer"))
+                                {
+                                    episode = ppp;
+                                }
+
+                                // get airdate                                
+                                if (airDate == DateTime.MinValue)
+                                    if (!DateTime.TryParseExact(ppp, "dd/MMM/yy", CultureInfo.CreateSpecificCulture("en"), System.Globalization.DateTimeStyles.None, out airDate))
+                                        DateTime.TryParseExact(ppp, "dd MMM yy", CultureInfo.CreateSpecificCulture("en"), System.Globalization.DateTimeStyles.None, out airDate);
+                            }
+
+                            // get episode title
+                            List<LinkItem> list = LinkFinder.Find(episode);
+                            foreach (LinkItem item in list)
+                            {
+                                if (!item.Href.Contains("#trailer"))
+                                {
+                                    //Console.WriteLine("episode href: {0}", item.Href);
+                                    //Console.WriteLine("episode title: {0}", item.Text);
+                                    episodeTitle = item.Text;
+                                    //episodeTitleLink = item.Href;
+                                }
+                            }
+
+                            // add episode values to episode table 
+                            AllEpisodes.Add(episodeNumber);
+                            AllEpisodes.Add(episodeNumber2);
+                            AllEpisodes.Add(episodeTitle);
+                            AllEpisodes.Add(airDate.ToShortDateString());
+                            //dt.Rows.Add(episodeNumber2,  episodeTitle);
+
+                            line = sr.ReadLine();
+                        }
+
+                        // skip empty lines until next season
+                        while (line != null && line.Length == 0)
+                        {
+                            line = sr.ReadLine();
+                        }
+                    }
+                    break; // got all episodes - we are done
+                }
+
+            }
+
+            return AllEpisodes;
         }
     }
 

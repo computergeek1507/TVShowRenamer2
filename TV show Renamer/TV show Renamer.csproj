@@ -164,6 +164,7 @@
     <Compile Include="Junk Words.Designer.cs">
       <DependentUpon>Junk Words.cs</DependentUpon>
     </Compile>
+    <Compile Include="LinkFinder.cs" />
     <Compile Include="LogWrite.cs" />
     <Compile Include="MainSettings.cs" />
     <Compile Include="NewTVDB.cs" />

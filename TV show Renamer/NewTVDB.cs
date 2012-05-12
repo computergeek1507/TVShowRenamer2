@@ -26,7 +26,7 @@ namespace TV_Show_Renamer
         public NewTVDB(string newFolder)
         {
             folder = newFolder;
-            m_cacheProvider = new XmlCacheProvider(folder);
+            m_cacheProvider = new XmlCacheProvider(folder+"\\Temp");
             m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
             m_tvdbHandler.InitCache();
         }
