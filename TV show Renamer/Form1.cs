@@ -10,7 +10,7 @@ using System.IO;
 using System.Xml;
 using System.Net;
 using System.Diagnostics;
-using Microsoft.VisualBasic.FileIO;
+//using Microsoft.VisualBasic.FileIO;
 using System.Threading;
 using SevenZip;
 using System.Collections;
@@ -561,8 +561,8 @@ namespace TV_Show_Renamer
                     try
                     {
                         if (fileList[y].FileName == fileList[y].NewFileName) continue;
-                        FileSystem.MoveFile((fileList[y].FullFileName), (fileList[y].NewFullFileName), true);
-                        //System.IO.File.Move((fileList[y].FullFileName), (fileList[y].NewFullFileName));
+                        //FileSystem.MoveFile((fileList[y].FullFileName), (fileList[y].NewFullFileName), true);
+                        System.IO.File.Move((fileList[y].FullFileName), (fileList[y].NewFullFileName));
                         Log.WriteLog(fileList[y].FileName, fileList[y].NewFileName);
                         fileList[y].FileName = fileList[y].NewFileName;
                         fileList[y].FileTitle = "";
@@ -1662,7 +1662,7 @@ namespace TV_Show_Renamer
                                     TVShowInfoList[fileList[selected4[mainindex]].TVShowID].RealTVShowName = newID.Title;
                                 }
                                 else
-                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, newID.Title, "", newID.SelectedValue, -1, -1));
+                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, newID.Title, "", newID.SelectedValue, -1, "-1"));
                             }
                         }
                     }
@@ -1690,14 +1690,12 @@ namespace TV_Show_Renamer
                                     TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RealTVShowName = newID.Title;
                                 }
                                 else
-                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex2]].TVShowName, newID.Title, "", -1, newID.SelectedValue, -1));
+                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex2]].TVShowName, newID.Title, "", -1, newID.SelectedValue,"-1"));
                             }
                         }
                     }
                     break;
                 case 2:
-                    MessageBox.Show("Not Working Yet");
-                    return;
                     for (int mainindex3 = 0; mainindex3 < selected4.Count; mainindex3++)
                     {
                         if (TitleThread.CancellationPending) return;
@@ -1706,21 +1704,21 @@ namespace TV_Show_Renamer
                         if (fileList[selected4[mainindex3]].TVShowID == -1)
                             fileList[selected4[mainindex3]].TVShowID = SearchTVShowName(fileList[selected4[mainindex3]].TVShowName);
 
-                        if (fileList[selected4[mainindex3]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID != -1)
+                        if (fileList[selected4[mainindex3]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID != "-1")
                             fileList[selected4[mainindex3]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID, fileList[selected4[mainindex3]].SeasonNum, fileList[selected4[mainindex3]].EpisodeNum);
                         else
                         {
                             SearchInfo newID = GetTitles.findTitle(fileList[selected4[mainindex3]].TVShowName);
                             if (newID.SelectedValue != -1)
                             {
-                                fileList[selected4[mainindex3]].FileTitle = GetTitles.getTitle(newID.SelectedValue, fileList[selected4[mainindex3]].SeasonNum, fileList[selected4[mainindex3]].EpisodeNum);
+                                fileList[selected4[mainindex3]].FileTitle = GetTitles.getTitle(newID.NewTitle, fileList[selected4[mainindex3]].SeasonNum, fileList[selected4[mainindex3]].EpisodeNum);
                                 if (fileList[selected4[mainindex3]].TVShowID != -1)
                                 {
-                                    TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID = newID.SelectedValue;
+                                    TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID = newID.NewTitle;
                                     TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].RealTVShowName = newID.Title;
                                 }
                                 else
-                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex3]].TVShowName, newID.Title, "", -1, -1, newID.SelectedValue));
+                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex3]].TVShowName, newID.Title, "", -1, -1, newID.NewTitle));
                             }
                         }
                     }
@@ -2480,37 +2478,24 @@ namespace TV_Show_Renamer
         //Move All Files
         private void moveAllFiles(string Outputfolder)
         {
-            for (int z = 0; z < fileList.Count; z++)
+            using (FileOperation fileOp = new FileOperation(null, this))
             {
-                string fullFileName = fileList[z].FullFileName;
-                try
+                for (int z = 0; z < fileList.Count; z++)
                 {
-                    FileSystem.MoveFile(fullFileName, (Outputfolder + "\\" + fileList[z].FileName), UIOption.AllDialogs);
+                    string fullFileName = fileList[z].FullFileName;
+                    fileOp.MoveItem(fullFileName, Outputfolder, fileList[z].FileName);
                     Log.WriteLog(fullFileName + " Moved to " + Outputfolder);
                     //clear stuff                    
                     fileList[z].FileFolder = (Outputfolder);
                 }
-                catch (FileNotFoundException r)
+                try
                 {
-                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                    Log.WriteLog(r.ToString());
-                    continue;
-                }
-                catch (IOException g)
-                {
-                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                    Log.WriteLog(g.ToString());
-                    continue;
-                }
-                catch (OperationCanceledException)
-                {
-                    continue;
+                    fileOp.PerformOperations();
                 }
                 catch (Exception t)
                 {
                     MessageBox.Show("Error with Operation\n" + t.ToString());
                     Log.WriteLog(t.ToString());
-                    continue;
                 }
             }
         }
@@ -2518,75 +2503,50 @@ namespace TV_Show_Renamer
         //Move Selected Files
         private void moveSelectedFiles(string outputFolder)
         {
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            using (FileOperation fileOp = new FileOperation(null, this))
             {
-                if (dataGridView1.Rows[i].Selected)
+                for (int z = 0; z < dataGridView1.Rows.Count; z++)
                 {
-                    string fullFileName = fileList[i].FullFileName;
-                    try
+                    if (dataGridView1.Rows[z].Selected)
                     {
-                        FileSystem.MoveFile(fullFileName, (outputFolder + "\\" + fileList[i].FileName), UIOption.AllDialogs);
+                        string fullFileName = fileList[z].FullFileName;
+                        fileOp.MoveItem(fullFileName, outputFolder, fileList[z].FileName);
                         Log.WriteLog(fullFileName + " Moved to " + outputFolder);
-                        fileList[i].FileFolder = (outputFolder);
-                    }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
+                        //clear stuff                    
+                        fileList[z].FileFolder = (outputFolder);
                     }
                 }
-            }
-        }
-
-        //Copy All Files
-        private void copyAllFiles(string Outputfolder)
-        {
-            for (int z = 0; z < fileList.Count; z++)
-            {
-                string fullFileName = fileList[z].FullFileName;
                 try
                 {
-                    FileSystem.CopyFile(fullFileName, (Outputfolder + "\\" + fileList[z].FileName), UIOption.AllDialogs);
-                    Log.WriteLog(fullFileName + " Copied to " + Outputfolder);
-                }
-                catch (FileNotFoundException r)
-                {
-                    MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                    Log.WriteLog(r.ToString());
-                    continue;
-                }
-                catch (IOException g)
-                {
-                    MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                    Log.WriteLog(g.ToString());
-                    continue;
-                }
-                catch (OperationCanceledException)
-                {
-                    continue;
+                    fileOp.PerformOperations();
                 }
                 catch (Exception t)
                 {
                     MessageBox.Show("Error with Operation\n" + t.ToString());
                     Log.WriteLog(t.ToString());
-                    continue;
+                }
+            }            
+        }
+
+        //Copy All Files
+        private void copyAllFiles(string Outputfolder)
+        {
+            using (FileOperation fileOp = new FileOperation(null, this))
+            {
+                for (int z = 0; z < fileList.Count; z++)
+                {
+                    string fullFileName = fileList[z].FullFileName;
+                    fileOp.CopyItem(fullFileName, Outputfolder, fileList[z].FileName);
+                    Log.WriteLog(fullFileName + " Copied to " + Outputfolder);
+                }
+                try
+                {
+                    fileOp.PerformOperations();
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
                 }
             }
         }
@@ -2594,38 +2554,25 @@ namespace TV_Show_Renamer
         //Copy Selected Files
         private void copySelectedFiles(string outputFolder)
         {
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            using (FileOperation fileOp = new FileOperation(null, this))
             {
-                if (dataGridView1.Rows[i].Selected)
+                for (int z = 0; z < dataGridView1.Rows.Count; z++)
                 {
-                    string fullFileName = fileList[i].FullFileName;
-                    try
+                    if (dataGridView1.Rows[z].Selected)
                     {
-                        FileSystem.CopyFile(fullFileName, (outputFolder + "\\" + fileList[i].FileName), UIOption.AllDialogs);
-                        Log.WriteLog(fullFileName + " Moved to " + outputFolder);
+                        string fullFileName = fileList[z].FullFileName;
+                        fileOp.CopyItem(fullFileName, outputFolder, fileList[z].FileName);
+                        Log.WriteLog(fullFileName + " Copied to " + outputFolder);
                     }
-                    catch (FileNotFoundException r)
-                    {
-                        MessageBox.Show("File have been changed or moved \n" + fullFileName);
-                        Log.WriteLog(r.ToString());
-                        continue;
-                    }
-                    catch (IOException g)
-                    {
-                        MessageBox.Show("File already exists or is in use\n" + fullFileName);
-                        Log.WriteLog(g.ToString());
-                        continue;
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        continue;
-                    }
-                    catch (Exception t)
-                    {
-                        MessageBox.Show("Error with Operation\n" + t.ToString());
-                        Log.WriteLog(t.ToString());
-                        continue;
-                    }
+                }
+                try
+                {
+                    fileOp.PerformOperations();
+                }
+                catch (Exception t)
+                {
+                    MessageBox.Show("Error with Operation\n" + t.ToString());
+                    Log.WriteLog(t.ToString());
                 }
             }
         }
@@ -3321,8 +3268,8 @@ namespace TV_Show_Renamer
                     {
                         try
                         {
-                            FileSystem.MoveFile((fileList[u].FullFileName), (fileList[u].NewFullFileName), true);
-                            //System.IO.File.Move((fileList[u].FullFileName), (fileList[u].NewFullFileName));
+                            //FileSystem.MoveFile((fileList[u].FullFileName), (fileList[u].NewFullFileName), true);
+                            System.IO.File.Move((fileList[u].FullFileName), (fileList[u].NewFullFileName));
                             Log.WriteLog(fileList[u].FullFileName, fileList[u].NewFullFileName);
                             fileList[u].FileName = fileList[u].NewFileName;
                             fileList[u].FileTitle = "";

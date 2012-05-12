@@ -573,7 +573,7 @@ namespace TV_Show_Renamer
         //--
         public static int GetInteger(string key)
         {
-            int intTemp = Convert.ToInt32(ConfigurationManager.AppSettings.Get(key));
+            var intTemp = Convert.ToInt32(ConfigurationManager.AppSettings.Get(key));
             if (intTemp == null)
             {
                 return 0;

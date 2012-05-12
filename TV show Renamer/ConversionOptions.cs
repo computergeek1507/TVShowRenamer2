@@ -14,7 +14,7 @@ namespace TV_Show_Renamer
     {
         MainSettings newMainSettings;
         Form1 Main;
-        string[] seasonSettings = { "1x01", "0101", "S01E01", "101", "1-1-2011", "None" };
+        string[] seasonSettings = { "1x01", "0101", "S01E01", "101", "1-1-2012", "None" };
         string[] programSettings = { "Test Show", "Test show", "TEST SHOW", "test show"};
         string[] dashSettings = { "-"," "};
         string[] dashSettings2 = { "-", " " };

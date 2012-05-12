@@ -61,16 +61,6 @@ namespace TV_Show_Renamer
         public void Start(Form1 tempMain) 
         {
             _main = tempMain;
-            //_TVShowInfoList = tempMain.TVShowInfoList;
-            //_columnList[0] = tempMain.dataGridView1.Columns["oldName"].Visible;
-            //_columnList[1] = tempMain.dataGridView1.Columns["newname"].Visible;
-            //_columnList[2] = tempMain.dataGridView1.Columns["filefolder"].Visible;
-            //_columnList[3] = tempMain.dataGridView1.Columns["fileextention"].Visible;
-            //_columnList[4] = tempMain.dataGridView1.Columns["TVShowID"].Visible;
-            //_columnList[5] = tempMain.dataGridView1.Columns["TVShowName"].Visible;
-            //_columnList[6] = tempMain.dataGridView1.Columns["titles"].Visible;
-            //_columnList[7] = tempMain.dataGridView1.Columns["SeasonNum"].Visible;
-            //_columnList[8] = tempMain.dataGridView1.Columns["EpisodeNum"].Visible;
         }
 
         //change to default settings
@@ -236,6 +226,8 @@ namespace TV_Show_Renamer
         public bool loadStettings()
         {
             bool returnValue = true;
+            bool deleteTemp = false;
+
             StreamReader tr3 = null;
             try
             {
@@ -276,9 +268,12 @@ namespace TV_Show_Renamer
                     _buttonColor[3] = int.Parse(tr3.ReadLine());
                     string lastUpdateTime = tr3.ReadLine();
                     _autoUpdates = bool.Parse(tr3.ReadLine());
-                    if (DateTime.Today.Date.ToString() != lastUpdateTime && _autoUpdates)
-                        _checkForUpdates = true;
-
+                    if (DateTime.Today.Date.ToString() != lastUpdateTime)
+                    {
+                        deleteTemp = true;
+                        if(_autoUpdates)
+                            _checkForUpdates = true;
+                    }
                     _autoGetTitle = bool.Parse(tr3.ReadLine());
                     _tvDataBase = int.Parse(tr3.ReadLine());
                     _titleSelection = int.Parse(tr3.ReadLine());
@@ -401,7 +396,7 @@ namespace TV_Show_Renamer
                     {
                         for (int i = 0; i < length; i = i + 2)
                         {
-                            _main.TVShowInfoList.Add(new TVShowInfo(tr3.ReadLine(), "", "", int.Parse(tr3.ReadLine()), -1, -1));
+                            _main.TVShowInfoList.Add(new TVShowInfo(tr3.ReadLine(), "", "", int.Parse(tr3.ReadLine()), -1,"-1" ));
                         }//end of for loop  
                         tr3.Close();
                         File.Delete(_dataFolder + "//TVShowID.seh");
@@ -431,6 +426,26 @@ namespace TV_Show_Renamer
                 _main.Log.WriteLog("TVShowInfo.xml Read Error \n" + e.ToString());
                 returnValue = false;
             }
+            //delete temp folder daily
+            try
+            {
+                if ((Directory.Exists(_dataFolder + "\\Temp")))
+                {
+                    if (deleteTemp)
+                    {
+                        Directory.Delete(_dataFolder + "\\Temp");
+                        Directory.CreateDirectory(_dataFolder + "\\Temp");
+                    }
+                }else
+                    Directory.CreateDirectory(_dataFolder + "\\Temp");
+
+            }
+            catch (Exception e)
+            {
+                _main.Log.WriteLog("Can't Delete Temp Folder\n" + e.ToString());
+                returnValue = false;
+            }
+           
 
             return returnValue;
         }//end of loadsettings methods
@@ -474,7 +489,7 @@ namespace TV_Show_Renamer
                             };
 
             foreach (var wd in TVShowLists)            
-                loadedItem.Add(new TVShowInfo(wd.TVShowName, wd.RealTVShowName, wd.TVShowFolder, Int32.Parse(wd.TVDBID),Int32.Parse(wd.RageTVID),Int32.Parse(wd.EpguidesID)));            
+                loadedItem.Add(new TVShowInfo(wd.TVShowName, wd.RealTVShowName, wd.TVShowFolder, Int32.Parse(wd.TVDBID),Int32.Parse(wd.RageTVID),wd.EpguidesID));            
         }
 
         #region declartions
