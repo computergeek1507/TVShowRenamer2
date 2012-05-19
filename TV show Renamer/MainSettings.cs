@@ -46,18 +46,12 @@ namespace TV_Show_Renamer
         string _firstWord = "";
         string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer";
 
-        //bool[] _columnList = new bool[9];
-
         Form1 _main;
 
-        //LogWrite _main;
-
         List<string> _moveFolder = new List<string>();//TV Show folders
-
-        //List<TVShowInfo> _TVShowInfoList = new List<TVShowInfo>();//TV Show Info  
         #endregion     
         
-        //get log object to write too
+        //get Main Form object
         public void Start(Form1 tempMain) 
         {
             _main = tempMain;
@@ -444,8 +438,7 @@ namespace TV_Show_Renamer
             {
                 _main.Log.WriteLog("Can't Delete Temp Folder\n" + e.ToString());
                 returnValue = false;
-            }
-           
+            }          
 
             return returnValue;
         }//end of loadsettings methods
@@ -659,12 +652,7 @@ namespace TV_Show_Renamer
             get { return _moveFolder; }
             set { _moveFolder = value; }
         }
-
-        //public List<TVShowID> TVShowIDList
-        //{
-        //   get { return _TVShowIDList; }
-        //    set { _TVShowIDList = value; }
-        //}   
+  
         #endregion      
     }//end of class
 }//end of namespace
