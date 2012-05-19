@@ -16,12 +16,14 @@ namespace TV_Show_Renamer
             _title = title;
             _selected = selected;
         }
+
         public SearchInfo(string title, string newTitle,int selected)
         {
             _title = title;
             _selected = selected;
             _newTitle = newTitle;
         }
+
         public SearchInfo()
         {
             _title = "";

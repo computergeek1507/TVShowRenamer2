@@ -170,5 +170,52 @@ namespace TV_Show_Renamer
             _getTitle = true;
         }
     }//end of class
+    public class EPGuigeReturnObject
+    {
+        string _tvshowName;
+        string _episodeNumber;
+        string _episodeNumber2;
+        string _episodeDate;
+        string _episodeTitle;
+
+        public EPGuigeReturnObject(string tvshowName,string episodeNumber, string episodeNumber2, string episodeDate, string episodeTitle )
+        {
+            _tvshowName = tvshowName;
+            _episodeNumber = episodeNumber;
+            _episodeNumber2 = episodeNumber2;
+            _episodeDate = episodeDate;
+            _episodeTitle = episodeTitle;  
+           
+        }
+        public string TVShowName
+        {
+            get { return _tvshowName; }
+            set { _tvshowName = value; }
+        }
+
+        public string EpisodeNumber
+        {
+            get { return _episodeNumber; }
+            set { _episodeNumber = value; }
+        }
+
+        public string EpisodeNumber2
+        {
+            get { return _episodeNumber2; }
+            set { _episodeNumber2 = value; }
+        }
+
+        public string EpisodeDate
+        {
+            get { return _episodeDate; }
+            set { _episodeDate = value; }
+        }
+
+        public string EpisodeTitle
+        {
+            get { return _episodeTitle; }
+            set { _episodeTitle = value; }
+        }        
+    }//end of class
     
 }//end of namespace

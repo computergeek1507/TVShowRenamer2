@@ -433,7 +433,7 @@ namespace TV_Show_Renamer
                 {
                     if (deleteTemp)
                     {
-                        Directory.Delete(_dataFolder + "\\Temp");
+                        Directory.Delete(_dataFolder + "\\Temp",true);
                         Directory.CreateDirectory(_dataFolder + "\\Temp");
                     }
                 }else
