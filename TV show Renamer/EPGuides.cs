@@ -115,13 +115,29 @@ namespace TV_Show_Renamer
             }
             if (!(showList.Count == 0)) 
             {
-                foreach (EPGuigeReturnObject EpisodeInfo in showList) 
+                if (season > 100)
                 {
-                    if ((EpisodeInfo.EpisodeNumber2 == (season.ToString() + "-0" + episode.ToString())) || (EpisodeInfo.EpisodeNumber2 == (season.ToString() + "-" + episode.ToString())))
+                    foreach (EPGuigeReturnObject EpisodeInfo in showList)
                     {
-                        returnInfo = EpisodeInfo.EpisodeTitle;
-                        break;
-                    }                
+                        //DateTime test = new DateTime(episode, season / 100, season % 100);
+                        //string testTime = ((season / 100).ToString() + "/" + (season % 100).ToString() + "/" + episode.ToString());
+                        if (EpisodeInfo.EpisodeDate ==  new DateTime(episode, season / 100, season % 100).ToShortDateString())
+                        {
+                            returnInfo = EpisodeInfo.EpisodeTitle;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (EPGuigeReturnObject EpisodeInfo in showList)
+                    {
+                        if ((EpisodeInfo.EpisodeNumber2 == (season.ToString() + "-0" + episode.ToString())) || (EpisodeInfo.EpisodeNumber2 == (season.ToString() + "-" + episode.ToString())))
+                        {
+                            returnInfo = EpisodeInfo.EpisodeTitle;
+                            break;
+                        }
+                    }
                 }
             }
             returnInfo = returnInfo.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
@@ -268,7 +284,7 @@ namespace TV_Show_Renamer
                                 }
 
                                 // get episode info
-                                if (line.IndexOf(ppp) > 35 && !ppp.Contains("#trailer"))
+                                if (line.IndexOf(ppp) > 35 && (!ppp.Contains("#trailer") && !ppp.Contains("recap")))
                                 {
                                     episode = ppp;
                                 }
@@ -283,7 +299,7 @@ namespace TV_Show_Renamer
                             List<LinkItem> list = LinkFinder.Find(episode);
                             foreach (LinkItem item in list)
                             {
-                                if (!item.Href.Contains("#trailer"))
+                                if ((!item.Href.Contains("#trailer")) && (!item.Href.Contains("recap")))
                                 {
                                     //Console.WriteLine("episode href: {0}", item.Href);
                                     //Console.WriteLine("episode title: {0}", item.Text);
