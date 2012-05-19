@@ -37,8 +37,6 @@ namespace TV_Show_Renamer
             if (TVShowList != null && TVShowList.Count > 0)
             {
                 if (TVShowList.Count() == 0) return TVShowID;  //return if nothing found
-                //int selectedSeriesId = -1;
-                //string selectedTitle = "";
                 if (TVShowList.Count() == 1)
                 {
                     return TVShowList[0];
@@ -105,7 +103,6 @@ namespace TV_Show_Renamer
                 else 
                 {
                     WebClient client = new WebClient();
-                    //String htmlCode = client.DownloadString(URL + showtitle);
                     client.DownloadFile(URL + seriesID, folder + "\\" + seriesID);
                     showList = parse(folder + "\\" + seriesID);
                 } 
@@ -119,8 +116,6 @@ namespace TV_Show_Renamer
                 {
                     foreach (EPGuigeReturnObject EpisodeInfo in showList)
                     {
-                        //DateTime test = new DateTime(episode, season / 100, season % 100);
-                        //string testTime = ((season / 100).ToString() + "/" + (season % 100).ToString() + "/" + episode.ToString());
                         if (EpisodeInfo.EpisodeDate ==  new DateTime(episode, season / 100, season % 100).ToShortDateString())
                         {
                             returnInfo = EpisodeInfo.EpisodeTitle;
@@ -144,7 +139,7 @@ namespace TV_Show_Renamer
             return returnInfo;        
         }
 
-        public List<SearchInfo> parseCSV(string path,string tvshowname)
+        private List<SearchInfo> parseCSV(string path, string tvshowname)
         {
             List<SearchInfo> parsedData = new List<SearchInfo>();
             StreamReader readFile= null;
@@ -182,16 +177,10 @@ namespace TV_Show_Renamer
             return parsedData;
         }
 
-        public List<EPGuigeReturnObject> parse(string fileLocation)
+        private List<EPGuigeReturnObject> parse(string fileLocation)
         {
             List<EPGuigeReturnObject> AllEpisodes = new List<EPGuigeReturnObject>();
             string ShowName = "";
-            //DataSet ds = new DataSet(showtitle);
-
-            //WebClient client = new WebClient();
-            //String htmlCode = client.DownloadString(URL + showtitle);
-            //client.DownloadFile(URL + showtitle, "d:/dev.html.txt");
-
             string htmlCode = File.ReadAllText(fileLocation);
 
             StringReader sr = new StringReader(htmlCode);
@@ -233,17 +222,9 @@ namespace TV_Show_Renamer
                     while (line != null && !line.Contains("</pre>"))
                     {
                         // season name
-                        //Console.WriteLine("Season: {0}", line);
-
                         if (line.StartsWith("&bull; ")) // sometimes season names start with &bull; 
                         {
                             line = line.Substring(7).Trim();
-
-                            //ds.Tables["HEAD"].Rows.Add("ContentVersion", "epguides+tvrage");
-                        }
-                        else
-                        {
-                            //ds.Tables["HEAD"].Rows.Add("ContentVersion", "epguides+tv.com");
                         }
 
                         line = sr.ReadLine();
@@ -268,9 +249,6 @@ namespace TV_Show_Renamer
                             string[] parts = r.Split(line);
                             foreach (string ppp in parts)
                             {
-                                // try distance as a tool to determine if value is episode number or production number etc.
-                                //Console.WriteLine("split[distance:{1}]: {0} ", ppp, line.IndexOf(ppp));
-
                                 // get episode number
                                 if (line.IndexOf(ppp) == 0)
                                 {
@@ -283,16 +261,17 @@ namespace TV_Show_Renamer
                                     episodeNumber2 = ppp;
                                 }
 
-                                // get episode info
-                                if (line.IndexOf(ppp) > 35 && (!ppp.Contains("#trailer") && !ppp.Contains("recap")))
-                                {
-                                    episode = ppp;
-                                }
-
                                 // get airdate                                
                                 if (airDate == DateTime.MinValue)
                                     if (!DateTime.TryParseExact(ppp, "dd/MMM/yy", CultureInfo.CreateSpecificCulture("en"), System.Globalization.DateTimeStyles.None, out airDate))
                                         DateTime.TryParseExact(ppp, "dd MMM yy", CultureInfo.CreateSpecificCulture("en"), System.Globalization.DateTimeStyles.None, out airDate);
+
+                                // get episode info
+                                if (line.IndexOf(ppp) > 35 && (!ppp.Contains("#trailer") && !ppp.Contains("recap")))
+                                {
+                                    episode = ppp;
+                                    break;
+                                }                                
                             }
 
                             // get episode title
@@ -301,20 +280,11 @@ namespace TV_Show_Renamer
                             {
                                 if ((!item.Href.Contains("#trailer")) && (!item.Href.Contains("recap")))
                                 {
-                                    //Console.WriteLine("episode href: {0}", item.Href);
-                                    //Console.WriteLine("episode title: {0}", item.Text);
                                     episodeTitle = item.Text;
-                                    //episodeTitleLink = item.Href;
                                 }
                             }
 
-                            // add episode values to episode table 
                             AllEpisodes.Add(new EPGuigeReturnObject(ShowName, episodeNumber, episodeNumber2, airDate.ToShortDateString(), episodeTitle));
-                            //AllEpisodes.Add(episodeNumber);
-                            //AllEpisodes.Add(episodeNumber2);
-                            //AllEpisodes.Add(episodeTitle);
-                            //AllEpisodes.Add(airDate.ToShortDateString());
-                            //dt.Rows.Add(episodeNumber2,  episodeTitle);
 
                             line = sr.ReadLine();
                         }
@@ -333,7 +303,7 @@ namespace TV_Show_Renamer
             return AllEpisodes;
         }
 
-        public string RemoveSpecialChars(string input)
+        private string RemoveSpecialChars(string input)
         {
             return Regex.Replace(input, @"[^0-9a-zA-Z\ ]", string.Empty);
         }
