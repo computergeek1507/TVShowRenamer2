@@ -356,7 +356,9 @@ namespace TV_Show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                using (FileOperation fileOp = new FileOperation(null, this))
+                List<int> Selected = new List<int>();
+                List<string> folders = new List<string>();
+                using (FileOperation fileOp = new FileOperation(new MyProgressSink(Selected, folders, fileList), this))
                 {
                     if (menu1.Count() != 0)
                     {
@@ -372,9 +374,11 @@ namespace TV_Show_Renamer
                         {
                             for (int i = 0; i < dataGridView1.Rows.Count; i++)
                             {
+                                Selected.Add(i);
+                                folders.Add(folderSettings[1]);
                                 fileOp.MoveItem(fileList[i].FullFileName, folderSettings[1], fileList[i].FileName);
                                 //if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
-                                fileList[i].FileFolder = folderSettings[1];
+                                //fileList[i].FileFolder = folderSettings[1];
                             }
                         }
                         else if (int.Parse(folderSettings[0]) > 1)
@@ -398,17 +402,21 @@ namespace TV_Show_Renamer
                                         }
                                         else
                                         {
+                                            Selected.Add(z);
+                                            folders.Add(folderSettings[1]);
                                             fileOp.MoveItem(fileList[z].FullFileName, folderSettings[1], fileList[z].FileName);
                                             //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                            fileList[z].FileFolder = (folderSettings[1]);
+                                            //fileList[z].FileFolder = (folderSettings[1]);
                                             continue;
                                         }
                                     }
                                     else
                                     {
+                                        Selected.Add(z);
+                                        folders.Add(folderSettings[1]);
                                         fileOp.MoveItem(fileList[z].FullFileName, folderSettings[1], fileList[z].FileName);
                                         //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                        fileList[z].FileFolder = (folderSettings[1]);
+                                        //fileList[z].FileFolder = (folderSettings[1]);
                                         continue;
                                     }
                                 }
@@ -417,16 +425,19 @@ namespace TV_Show_Renamer
                                 {
                                     if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
                                         System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-
+                                    Selected.Add(z);
+                                    folders.Add(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                                     fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString(), fileList[z].FileName);
                                     //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
-                                    fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+                                    //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                                 }
                                 else//if no season is selected 
                                 {
+                                    Selected.Add(z);
+                                    folders.Add(folderSettings[1] + "\\" + TVFolder);
                                     fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder, fileList[z].FileName);
                                     //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
-                                    fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+                                    //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
                                 }//end of if-else                        
                             }//end of for loop 
                         }
@@ -437,9 +448,11 @@ namespace TV_Show_Renamer
                         {
                             for (int i = 0; i < dataGridView1.Rows.Count; i++)
                             {
+                                Selected.Add(i);
+                                folders.Add(folderBrowserDialog2.SelectedPath);
                                 fileOp.MoveItem(fileList[i].FullFileName, folderBrowserDialog2.SelectedPath, fileList[i].FileName);
                                 //if (MoveFile(fileList[i].FullFileName, (folderBrowserDialog2.SelectedPath + "\\" + fileList[i].FileName)))
-                                fileList[i].FileFolder = folderBrowserDialog2.SelectedPath;
+                                //fileList[i].FileFolder = folderBrowserDialog2.SelectedPath;
                             }
                         }
                         else
@@ -458,7 +471,7 @@ namespace TV_Show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                using (FileOperation fileOp = new FileOperation(null, this))
+                using (FileOperation fileOp = new FileOperation(new MyProgressSink(), this))
                 {
                     //fileOp.CopyItem(@"C:\test\test1.txt", @"C:\test", @"copy.txt");
                     //fileOp.DeleteItem(@"C:\test\test2.txt");
@@ -630,15 +643,19 @@ namespace TV_Show_Renamer
                     MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
                     return;
                 }
-                using (FileOperation fileOp = new FileOperation(null, this))
+                List<int> Selected = new List<int>();
+                List<string> folders = new List<string>();
+                using (FileOperation fileOp = new FileOperation(new MyProgressSink(Selected, folders, fileList), this))
                 {
                     if (int.Parse(folderSettings[0]) == 1)
                     {
                         for (int i = 0; i < dataGridView1.Rows.Count; i++)
                         {
+                            Selected.Add(i);
+                            folders.Add(folderSettings[1]);
                             fileOp.MoveItem(fileList[i].FullFileName, folderSettings[1], fileList[i].FileName);
                             //if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
-                            fileList[i].FileFolder = folderSettings[1];
+                            //fileList[i].FileFolder = folderSettings[1];
                         }
                     }
                     else if (int.Parse(folderSettings[0]) > 1)
@@ -662,17 +679,21 @@ namespace TV_Show_Renamer
                                     }
                                     else
                                     {
+                                        Selected.Add(z);
+                                        folders.Add(folderSettings[1]);
                                         fileOp.MoveItem(fullFileName, folderSettings[1], fileList[z].FileName);
                                         //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                        fileList[z].FileFolder = (folderSettings[1]);
+                                        //fileList[z].FileFolder = (folderSettings[1]);
                                         continue;
                                     }
                                 }
                                 else
                                 {
+                                    Selected.Add(z);
+                                    folders.Add(folderSettings[1]);
                                     fileOp.MoveItem(fullFileName, folderSettings[1], fileList[z].FileName);
                                     //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                    fileList[z].FileFolder = (folderSettings[1]);
+                                    //fileList[z].FileFolder = (folderSettings[1]);
                                     continue;
                                 }
                             }
@@ -682,15 +703,19 @@ namespace TV_Show_Renamer
                                 if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
                                     System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
 
+                                Selected.Add(z);
+                                folders.Add(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                                 fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString(), fileList[z].FileName);
                                 //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
-                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+                                //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                             }
                             else//if no season is selected 
                             {
+                                Selected.Add(z);
+                                folders.Add(folderSettings[1] + "\\" + TVFolder);
                                 fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder, fileList[z].FileName);
                                 //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
-                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+                                //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
                             }//end of if-else                        
                         }//end of for loop 
                     }
@@ -720,7 +745,7 @@ namespace TV_Show_Renamer
                     MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
                     return;
                 }
-                using (FileOperation fileOp = new FileOperation(null, this))
+                using (FileOperation fileOp = new FileOperation(new MyProgressSink(), this))
                 {
                     if (int.Parse(folderSettings[0]) == 1)
                     {
@@ -804,15 +829,19 @@ namespace TV_Show_Renamer
                     MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
                     return;
                 }
-                using (FileOperation fileOp = new FileOperation(null, this))
+                List<int> Selected = new List<int>();
+                List<string> folders = new List<string>();
+                using (FileOperation fileOp = new FileOperation(new MyProgressSink(Selected, folders, fileList), this))
                 {
                     if (int.Parse(folderSettings[0]) == 1)
                     {
                         for (int i = 0; i < dataGridView1.Rows.Count; i++)
                         {
+                            Selected.Add(i);
+                            folders.Add(folderSettings[1]);
                             fileOp.MoveItem(fileList[i].FullFileName, folderSettings[1], fileList[i].FileName);
                             //if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
-                            fileList[i].FileFolder = folderSettings[1];
+                            //fileList[i].FileFolder = folderSettings[1];
                         }
                     }
                     else if (int.Parse(folderSettings[0]) > 1)
@@ -836,17 +865,21 @@ namespace TV_Show_Renamer
                                     }
                                     else
                                     {
+                                        Selected.Add(z);
+                                        folders.Add(folderSettings[1]);
                                         fileOp.MoveItem(fullFileName, folderSettings[1], fileList[z].FileName);
                                         //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                        fileList[z].FileFolder = (folderSettings[1]);
+                                        //fileList[z].FileFolder = (folderSettings[1]);
                                         continue;
                                     }
                                 }
                                 else
                                 {
+                                    Selected.Add(z);
+                                    folders.Add(folderSettings[1]);
                                     fileOp.MoveItem(fullFileName, folderSettings[1], fileList[z].FileName);
                                     //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                    fileList[z].FileFolder = (folderSettings[1]);
+                                    //fileList[z].FileFolder = (folderSettings[1]);
                                     continue;
                                 }
                             }
@@ -856,15 +889,19 @@ namespace TV_Show_Renamer
                                 if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
                                     System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
 
+                                Selected.Add(z);
+                                folders.Add(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                                 fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString(), fileList[z].FileName);
                                 //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
-                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+                                //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                             }
                             else//if no season is selected 
                             {
+                                Selected.Add(z);
+                                folders.Add( folderSettings[1] + "\\" + TVFolder);
                                 fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder, fileList[z].FileName);
                                 //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
-                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+                                //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
                             }//end of if-else                        
                         }//end of for loop 
                     }
@@ -895,7 +932,7 @@ namespace TV_Show_Renamer
                     MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
                     return;
                 }
-                using (FileOperation fileOp = new FileOperation(null, this))
+                using (FileOperation fileOp = new FileOperation(new MyProgressSink(), this))
                 {
                     if (int.Parse(folderSettings[0]) == 1)
                     {
@@ -2478,15 +2515,19 @@ namespace TV_Show_Renamer
         //Move All Files
         private void moveAllFiles(string Outputfolder)
         {
-            using (FileOperation fileOp = new FileOperation(null, this))
+            List<int> Selected = new List<int>();
+            List<string> folders = new List<string>();
+            using (FileOperation fileOp = new FileOperation(new MyProgressSink(Selected, folders, fileList), this))
             {
                 for (int z = 0; z < fileList.Count; z++)
                 {
                     string fullFileName = fileList[z].FullFileName;
+                    Selected.Add(z);
+                    folders.Add(Outputfolder);
                     fileOp.MoveItem(fullFileName, Outputfolder, fileList[z].FileName);
                     Log.WriteLog(fullFileName + " Moved to " + Outputfolder);
                     //clear stuff                    
-                    fileList[z].FileFolder = (Outputfolder);
+                    //fileList[z].FileFolder = (Outputfolder);
                 }
                 try
                 {
@@ -2503,17 +2544,21 @@ namespace TV_Show_Renamer
         //Move Selected Files
         private void moveSelectedFiles(string outputFolder)
         {
-            using (FileOperation fileOp = new FileOperation(null, this))
+            List<int> Selected = new List<int>();
+            List<string> folders = new List<string>();
+            using (FileOperation fileOp = new FileOperation(new MyProgressSink(Selected, folders, fileList), this))
             {
                 for (int z = 0; z < dataGridView1.Rows.Count; z++)
                 {
                     if (dataGridView1.Rows[z].Selected)
                     {
                         string fullFileName = fileList[z].FullFileName;
+                        Selected.Add(z);
+                        folders.Add(outputFolder);
                         fileOp.MoveItem(fullFileName, outputFolder, fileList[z].FileName);
                         Log.WriteLog(fullFileName + " Moved to " + outputFolder);
                         //clear stuff                    
-                        fileList[z].FileFolder = (outputFolder);
+                        //fileList[z].FileFolder = (outputFolder);
                     }
                 }
                 try
@@ -2531,7 +2576,7 @@ namespace TV_Show_Renamer
         //Copy All Files
         private void copyAllFiles(string Outputfolder)
         {
-            using (FileOperation fileOp = new FileOperation(null, this))
+            using (FileOperation fileOp = new FileOperation(new MyProgressSink(), this))
             {
                 for (int z = 0; z < fileList.Count; z++)
                 {
@@ -2554,7 +2599,7 @@ namespace TV_Show_Renamer
         //Copy Selected Files
         private void copySelectedFiles(string outputFolder)
         {
-            using (FileOperation fileOp = new FileOperation(null, this))
+            using (FileOperation fileOp = new FileOperation(new MyProgressSink(), this))
             {
                 for (int z = 0; z < dataGridView1.Rows.Count; z++)
                 {
@@ -3456,7 +3501,6 @@ namespace TV_Show_Renamer
             }
             //write log
             Log.closeLog();
-        }
-
+        }        
     }//end of form1 partial class    
 }//end of namespace
