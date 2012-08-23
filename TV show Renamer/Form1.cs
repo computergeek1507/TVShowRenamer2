@@ -3403,9 +3403,9 @@ namespace TV_Show_Renamer
                 {
                     if (dataGridView1.Rows[i].Selected)
                     {
-                        if (fileList[i].FileTitle == "")
-                            continue;
-                        string text = fileList[i].NewFileName;
+                        //if (fileList[i].FileTitle == "")
+                        //    continue;
+                        string text = fileList[i].FileTitle;
                         if (InputBox.Show("Edit Episode Title", "Episode Title:", ref text) == DialogResult.OK)
                         {
                             fileList[i].FileTitle = text;
