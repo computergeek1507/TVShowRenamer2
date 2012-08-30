@@ -11,7 +11,6 @@ using System.IO;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Net;
-using System.Net.Sockets;
 using System.Collections;
 using System.Diagnostics;
 
@@ -65,67 +64,10 @@ namespace TV_Show_Renamer_Server
             SetThreadExecutionState(EXECUTION_STATE.ES_DISPLAY_REQUIRED | EXECUTION_STATE.ES_CONTINUOUS);
             
             //Start Server
-            t = new Thread(new ThreadStart(serverRecieve));
-            t.Start();
+            
         }
 
-        private void serverRecieve() {
-
-            try
-            {
-                IPAddress ipAd = IPAddress.Parse("127.0.0.1");
-                // use local m/c IP address, and 
-
-                // use the same in the client
-
-
-                /* Initializes the Listener */
-                TcpListener myList = new TcpListener(ipAd, 49999);
-
-                /* Start Listeneting at the specified port */
-                myList.Start();
-
-                while (on)
-                {
-
-                    Console.WriteLine("The server is running at port 49999...");
-                    Console.WriteLine("The local End point is  :" +
-                                      myList.LocalEndpoint);
-                    Console.WriteLine("Waiting for a connection.....");
-
-                    Socket s = myList.AcceptSocket();
-                    Console.WriteLine("Connection accepted from " + s.RemoteEndPoint);
-
-                    byte[] b = new byte[100];
-                    int k = s.Receive(b);
-                    Console.WriteLine("Recieved...");
-                    string temp="";
-                    for (int i = 0; i < k; i++)
-                    {
-                        temp = temp + Convert.ToChar(b[i]);
-                        //Console.Write(Convert.ToChar(b[i]));
-                    }
-                    if (temp != "Close")
-                    {
-                        TheadQueue.Enqueue(temp);
-                        MessageBox.Show(temp);
-                    }
-                    ASCIIEncoding asen = new ASCIIEncoding();
-                    s.Send(asen.GetBytes("The string was recieved by the server."));
-                    Console.WriteLine("\nSent Acknowledgement");
-                    /* clean up */
-                    s.Close();
-                }
-
-                myList.Stop();
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error..... " + e.StackTrace);
-            }    
         
-        }
 
         private void folderSelectButton_Click(object sender, EventArgs e)
         {
@@ -202,45 +144,7 @@ namespace TV_Show_Renamer_Server
         }
 
         //kills process        
-        public void closeServer()
-        {
-            on = false;
-            try
-            {
-                TcpClient tcpclnt = new TcpClient();
-                Console.WriteLine("Connecting.....");
-
-                tcpclnt.Connect("127.0.0.1", 49999);
-                // use the ipaddress as in the server program
-
-
-                Console.WriteLine("Connected");
-                Console.Write("Enter the string to be transmitted : ");
-
-                string str = "Close";
-                Stream stm = tcpclnt.GetStream();
-
-                ASCIIEncoding asen = new ASCIIEncoding();
-                byte[] ba = asen.GetBytes(str);
-                Console.WriteLine("Transmitting.....");
-
-                stm.Write(ba, 0, ba.Length);
-
-                byte[] bb = new byte[100];
-                int k = stm.Read(bb, 0, 100);
-
-                for (int i = 0; i < k; i++)
-                    Console.Write(Convert.ToChar(bb[i]));
-
-                tcpclnt.Close();
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine("Error..... " + e.StackTrace);
-            }
-        }
-
+        
         //save settings
         public void saveStettings()
         {
@@ -309,47 +213,13 @@ namespace TV_Show_Renamer_Server
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
-            closeServer();
             saveStettings();
             MainLog.closeLog();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                TcpClient tcpclnt = new TcpClient();
-                Console.WriteLine("Connecting.....");
-
-                tcpclnt.Connect("127.0.0.1", 49999);
-                // use the ipaddress as in the server program
-
-
-                Console.WriteLine("Connected");
-                Console.Write("Enter the string to be transmitted : ");
-
-                string str = "Test Stuff";
-                Stream stm = tcpclnt.GetStream();
-
-                ASCIIEncoding asen = new ASCIIEncoding();
-                byte[] ba = asen.GetBytes(str);
-                Console.WriteLine("Transmitting.....");
-
-                stm.Write(ba, 0, ba.Length);
-
-                byte[] bb = new byte[100];
-                int k = stm.Read(bb, 0, 100);
-
-                for (int i = 0; i < k; i++)
-                    Console.Write(Convert.ToChar(bb[i]));
-
-                tcpclnt.Close();
-            }
-
-            catch (Exception k)
-            {
-                Console.WriteLine("Error..... " + k.StackTrace);
-            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -483,6 +353,5 @@ namespace TV_Show_Renamer_Server
         {
             listBox1.Items.Add(str);
         }
-
     }
 }
