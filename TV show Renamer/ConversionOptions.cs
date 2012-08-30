@@ -22,7 +22,7 @@ namespace TV_Show_Renamer
         string[] junkSettings = { "Junk Text", "Junk text", "JUNK TEXT", "junk text", "Original" };
         string[] extSettings = { ".ext", ".Ext",".EXT" };
         string[] titleGetSettings = { "Use File then Online", "Use File", "Online Only" };
-        string[] TVSearch = { "TVDB.com", "TVRage.com", "Epguides.com" };
+        string[] TVSearch = { "TVDB.com", "TVRage.com", "Epguides.com", "theXEM.de" };
 
         public ConversionOptions(Form1 temp,MainSettings tempSettings)
         {            
