@@ -10,7 +10,7 @@ using System.IO;
 using System.Xml;
 using System.Net;
 using System.Diagnostics;
-//using Microsoft.VisualBasic.FileIO;
+using Microsoft.VisualBasic.FileIO;
 using System.Threading;
 using SevenZip;
 using System.Collections;
@@ -343,7 +343,7 @@ namespace TV_Show_Renamer
         //secret F8
         private void secretF8ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newMainSettings.TVDataBase = ++newMainSettings.TVDataBase % 3;
+            newMainSettings.TVDataBase = ++newMainSettings.TVDataBase % 4;
             autoConvert();
         }
 
@@ -377,8 +377,8 @@ namespace TV_Show_Renamer
                                 Selected.Add(i);
                                 folders.Add(folderSettings[1]);
                                 fileOp.MoveItem(fileList[i].FullFileName, folderSettings[1], fileList[i].FileName);
-                                //if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
-                                //fileList[i].FileFolder = folderSettings[1];
+                                //if(MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
+                                    fileList[i].FileFolder = folderSettings[1];
                             }
                         }
                         else if (int.Parse(folderSettings[0]) > 1)
@@ -405,8 +405,8 @@ namespace TV_Show_Renamer
                                             Selected.Add(z);
                                             folders.Add(folderSettings[1]);
                                             fileOp.MoveItem(fileList[z].FullFileName, folderSettings[1], fileList[z].FileName);
-                                            //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                            //fileList[z].FileFolder = (folderSettings[1]);
+                                            //if(MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
+                                                fileList[z].FileFolder = (folderSettings[1]);
                                             continue;
                                         }
                                     }
@@ -415,8 +415,8 @@ namespace TV_Show_Renamer
                                         Selected.Add(z);
                                         folders.Add(folderSettings[1]);
                                         fileOp.MoveItem(fileList[z].FullFileName, folderSettings[1], fileList[z].FileName);
-                                        //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                        //fileList[z].FileFolder = (folderSettings[1]);
+                                        //if(MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
+                                           fileList[z].FileFolder = (folderSettings[1]);
                                         continue;
                                     }
                                 }
@@ -428,16 +428,16 @@ namespace TV_Show_Renamer
                                     Selected.Add(z);
                                     folders.Add(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                                     fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString(), fileList[z].FileName);
-                                    //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
-                                    //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+                                    //if(MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
+                                       fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                                 }
                                 else//if no season is selected 
                                 {
                                     Selected.Add(z);
                                     folders.Add(folderSettings[1] + "\\" + TVFolder);
                                     fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder, fileList[z].FileName);
-                                    //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
-                                    //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+                                    //if(MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
+                                        fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
                                 }//end of if-else                        
                             }//end of for loop 
                         }
@@ -451,8 +451,8 @@ namespace TV_Show_Renamer
                                 Selected.Add(i);
                                 folders.Add(folderBrowserDialog2.SelectedPath);
                                 fileOp.MoveItem(fileList[i].FullFileName, folderBrowserDialog2.SelectedPath, fileList[i].FileName);
-                                //if (MoveFile(fileList[i].FullFileName, (folderBrowserDialog2.SelectedPath + "\\" + fileList[i].FileName)))
-                                //fileList[i].FileFolder = folderBrowserDialog2.SelectedPath;
+                                //if(MoveFile(fileList[i].FullFileName, (folderBrowserDialog2.SelectedPath + "\\" + fileList[i].FileName)))
+                                    fileList[i].FileFolder = folderBrowserDialog2.SelectedPath;
                             }
                         }
                         else
@@ -655,7 +655,7 @@ namespace TV_Show_Renamer
                             folders.Add(folderSettings[1]);
                             fileOp.MoveItem(fileList[i].FullFileName, folderSettings[1], fileList[i].FileName);
                             //if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
-                            //fileList[i].FileFolder = folderSettings[1];
+                            fileList[i].FileFolder = folderSettings[1];
                         }
                     }
                     else if (int.Parse(folderSettings[0]) > 1)
@@ -683,7 +683,7 @@ namespace TV_Show_Renamer
                                         folders.Add(folderSettings[1]);
                                         fileOp.MoveItem(fullFileName, folderSettings[1], fileList[z].FileName);
                                         //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                        //fileList[z].FileFolder = (folderSettings[1]);
+                                        fileList[z].FileFolder = (folderSettings[1]);
                                         continue;
                                     }
                                 }
@@ -693,7 +693,7 @@ namespace TV_Show_Renamer
                                     folders.Add(folderSettings[1]);
                                     fileOp.MoveItem(fullFileName, folderSettings[1], fileList[z].FileName);
                                     //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                    //fileList[z].FileFolder = (folderSettings[1]);
+                                    fileList[z].FileFolder = (folderSettings[1]);
                                     continue;
                                 }
                             }
@@ -707,7 +707,7 @@ namespace TV_Show_Renamer
                                 folders.Add(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                                 fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString(), fileList[z].FileName);
                                 //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
-                                //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                             }
                             else//if no season is selected 
                             {
@@ -715,7 +715,7 @@ namespace TV_Show_Renamer
                                 folders.Add(folderSettings[1] + "\\" + TVFolder);
                                 fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder, fileList[z].FileName);
                                 //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
-                                //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
                             }//end of if-else                        
                         }//end of for loop 
                     }
@@ -841,7 +841,7 @@ namespace TV_Show_Renamer
                             folders.Add(folderSettings[1]);
                             fileOp.MoveItem(fileList[i].FullFileName, folderSettings[1], fileList[i].FileName);
                             //if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
-                            //fileList[i].FileFolder = folderSettings[1];
+                            fileList[i].FileFolder = folderSettings[1];
                         }
                     }
                     else if (int.Parse(folderSettings[0]) > 1)
@@ -869,7 +869,7 @@ namespace TV_Show_Renamer
                                         folders.Add(folderSettings[1]);
                                         fileOp.MoveItem(fullFileName, folderSettings[1], fileList[z].FileName);
                                         //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                        //fileList[z].FileFolder = (folderSettings[1]);
+                                        fileList[z].FileFolder = (folderSettings[1]);
                                         continue;
                                     }
                                 }
@@ -879,7 +879,7 @@ namespace TV_Show_Renamer
                                     folders.Add(folderSettings[1]);
                                     fileOp.MoveItem(fullFileName, folderSettings[1], fileList[z].FileName);
                                     //if(MoveFile(fullFileName,folderSettings[1] + "\\" + fileList[z].FileName))
-                                    //fileList[z].FileFolder = (folderSettings[1]);
+                                    fileList[z].FileFolder = (folderSettings[1]);
                                     continue;
                                 }
                             }
@@ -893,7 +893,7 @@ namespace TV_Show_Renamer
                                 folders.Add(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                                 fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString(), fileList[z].FileName);
                                 //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
-                                //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
                             }
                             else//if no season is selected 
                             {
@@ -901,7 +901,7 @@ namespace TV_Show_Renamer
                                 folders.Add( folderSettings[1] + "\\" + TVFolder);
                                 fileOp.MoveItem(fullFileName, folderSettings[1] + "\\" + TVFolder, fileList[z].FileName);
                                 //if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
-                                //fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
                             }//end of if-else                        
                         }//end of for loop 
                     }
@@ -1760,6 +1760,33 @@ namespace TV_Show_Renamer
                         }
                     }
                     break;
+                case 3://XEM
+                    for (int mainindex = 0; mainindex < selected4.Count; mainindex++)
+                    {
+                        if (TitleThread.CancellationPending) return;
+                        thexem GetTitles = new thexem(newMainSettings.DataFolder);
+                        if (fileList[selected4[mainindex]].TVShowID == -1)
+                            fileList[selected4[mainindex]].TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);
+
+                        if (fileList[selected4[mainindex]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID != -1)
+                            fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+                        else
+                        {
+                            SearchInfo newID = GetTitles.findTitle(fileList[selected4[mainindex]].TVShowName);
+                            if (newID.SelectedValue != -1)
+                            {
+                                fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(newID.SelectedValue, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+                                if (fileList[selected4[mainindex]].TVShowID != -1)
+                                {
+                                    TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID = newID.SelectedValue;
+                                    TVShowInfoList[fileList[selected4[mainindex]].TVShowID].RealTVShowName = newID.Title;
+                                }
+                                else
+                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, newID.Title, "", newID.SelectedValue, -1, "-1"));
+                            }
+                        }
+                    }
+                    break;
                 default:
                     break;
             }
@@ -1844,9 +1871,7 @@ namespace TV_Show_Renamer
                 int difference = Math.Abs(folderName.Length - showName.Length);
                 indexofTVshow = folderName.IndexOf(showName, StringComparison.InvariantCultureIgnoreCase);
                 if (indexofTVshow != -1 && difference < 3)
-                {
                     return folderName;
-                }
             }//end of for loop            
             return "";
         }//end of infofinder method
@@ -2527,7 +2552,7 @@ namespace TV_Show_Renamer
                     fileOp.MoveItem(fullFileName, Outputfolder, fileList[z].FileName);
                     Log.WriteLog(fullFileName + " Moved to " + Outputfolder);
                     //clear stuff                    
-                    //fileList[z].FileFolder = (Outputfolder);
+                    fileList[z].FileFolder = (Outputfolder);
                 }
                 try
                 {
@@ -2558,7 +2583,7 @@ namespace TV_Show_Renamer
                         fileOp.MoveItem(fullFileName, outputFolder, fileList[z].FileName);
                         Log.WriteLog(fullFileName + " Moved to " + outputFolder);
                         //clear stuff                    
-                        //fileList[z].FileFolder = (outputFolder);
+                        fileList[z].FileFolder = (outputFolder);
                     }
                 }
                 try
@@ -2904,70 +2929,70 @@ namespace TV_Show_Renamer
 
         }//end of junk remover
 
-        //private bool MoveFile(string oldLocation, string newLocation)
-        //{
-        //    if (oldLocation == newLocation) return true;
-        //    try
-        //    {
-        //        FileSystem.MoveFile(oldLocation, newLocation, UIOption.AllDialogs);
-        //        Log.WriteLog(oldLocation + " Moved to " + newLocation);
-        //    }
-        //    catch (FileNotFoundException r)
-        //    {
-        //        MessageBox.Show("File have been changed or moved \n" + oldLocation);
-        //        Log.WriteLog(r.ToString());
-        //        return false;
-        //    }
-        //    catch (IOException g)
-        //    {
-        //        MessageBox.Show("File already exists or is in use\n" + oldLocation);
-        //        Log.WriteLog(g.ToString());
-        //        return false;
-        //    }
-        //    catch (OperationCanceledException)
-        //    {
-        //        return false;
-        //    }
-        //    catch (Exception t)
-        //    {
-        //        MessageBox.Show("Error with Operation\n" + t.ToString());
-        //        Log.WriteLog(t.ToString());
-        //        return false;
-        //    }
-        //    return true;
-        //}
+        private bool MoveFile(string oldLocation, string newLocation)
+        {
+            if (oldLocation == newLocation) return true;
+            try
+            {
+                FileSystem.MoveFile(oldLocation, newLocation, UIOption.AllDialogs);
+                Log.WriteLog(oldLocation + " Moved to " + newLocation);
+            }
+            catch (FileNotFoundException r)
+            {
+                MessageBox.Show("File have been changed or moved \n" + oldLocation);
+                Log.WriteLog(r.ToString());
+                return false;
+            }
+            catch (IOException g)
+            {
+                MessageBox.Show("File already exists or is in use\n" + oldLocation);
+                Log.WriteLog(g.ToString());
+                return false;
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
+            catch (Exception t)
+            {
+                MessageBox.Show("Error with Operation\n" + t.ToString());
+                Log.WriteLog(t.ToString());
+                return false;
+            }
+            return true;
+        }
 
-        //private bool CopyFile(string oldLocation, string newLocation)
-        //{
-        //    try
-        //    {
-        //        FileSystem.CopyFile(oldLocation, newLocation, UIOption.AllDialogs);
-        //        Log.WriteLog(oldLocation + " Coped to " + newLocation);
-        //    }
-        //    catch (FileNotFoundException r)
-        //    {
-        //        MessageBox.Show("File have been changed or moved \n" + oldLocation);
-        //        Log.WriteLog(r.ToString());
-        //        return false;
-        //    }
-        //    catch (IOException g)
-        //    {
-        //        MessageBox.Show("File already exists or is in use\n" + oldLocation);
-        //        Log.WriteLog(g.ToString());
-        //        return false;
-        //    }
-        //    catch (OperationCanceledException)
-        //    {
-        //        return false;
-        //    }
-        //    catch (Exception t)
-        //    {
-        //        MessageBox.Show("Error with Operation\n" + t.ToString());
-        //        Log.WriteLog(t.ToString());
-        //        return false;
-        //    }
-        //    return true;
-        //}
+        private bool CopyFile(string oldLocation, string newLocation)
+        {
+            try
+            {
+                FileSystem.CopyFile(oldLocation, newLocation, UIOption.AllDialogs);
+                Log.WriteLog(oldLocation + " Coped to " + newLocation);
+            }
+            catch (FileNotFoundException r)
+            {
+                MessageBox.Show("File have been changed or moved \n" + oldLocation);
+                Log.WriteLog(r.ToString());
+                return false;
+            }
+            catch (IOException g)
+            {
+                MessageBox.Show("File already exists or is in use\n" + oldLocation);
+                Log.WriteLog(g.ToString());
+                return false;
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
+            catch (Exception t)
+            {
+                MessageBox.Show("Error with Operation\n" + t.ToString());
+                Log.WriteLog(t.ToString());
+                return false;
+            }
+            return true;
+        }
 
         /// <summary>
         /// extract contents of zip/rar file
