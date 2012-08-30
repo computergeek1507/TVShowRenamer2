@@ -184,6 +184,7 @@
       <DependentUpon>SelectMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="SimpleMail.cs" />
+    <Compile Include="thexem.cs" />
     <Compile Include="TVClass.cs" />
     <Compile Include="TVRage.cs" />
     <Compile Include="UnhandledExceptionManager.cs" />
