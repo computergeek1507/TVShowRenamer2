@@ -40,6 +40,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.convertionThread = new System.ComponentModel.BackgroundWorker();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.winsock1 = new Winsock2007.Winsock();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -141,6 +142,16 @@
             this.listBox1.Size = new System.Drawing.Size(796, 303);
             this.listBox1.TabIndex = 30;
             // 
+            // winsock1
+            // 
+            this.winsock1.BufferSize = 8192;
+            this.winsock1.LegacySupport = false;
+            this.winsock1.LocalPort = 8080;
+            this.winsock1.MaxPendingConnections = 1;
+            this.winsock1.Protocol = Winsock2007.WinsockProtocols.Tcp;
+            this.winsock1.RemoteHost = "localhost";
+            this.winsock1.RemotePort = 8080;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,6 +192,7 @@
         private System.Windows.Forms.Button button4;
         private System.ComponentModel.BackgroundWorker convertionThread;
         private System.Windows.Forms.ListBox listBox1;
+        private Winsock2007.Winsock winsock1;
     }
 }
 

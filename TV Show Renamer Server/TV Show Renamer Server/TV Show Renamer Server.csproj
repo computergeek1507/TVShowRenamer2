@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="TvdbLib">
       <HintPath>.\TvdbLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Winsock2007">
+      <HintPath>.\Winsock2007.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +84,7 @@
     <Compile Include="SelectMenu.designer.cs">
       <DependentUpon>SelectMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="thexem.cs" />
     <Compile Include="TVClass.cs" />
     <Compile Include="TVRage.cs" />
     <Compile Include="TVShowOptions.cs">
