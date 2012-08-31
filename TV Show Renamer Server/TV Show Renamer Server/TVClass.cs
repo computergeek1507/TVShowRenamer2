@@ -58,6 +58,7 @@ namespace TV_Show_Renamer_Server
         }
 
     };
+
     public class CategoryInfo 
     {
         string _categoryTitle;
@@ -93,6 +94,7 @@ namespace TV_Show_Renamer_Server
             set { _folderOptions = value; }
         }
     };
+
     public class TVClass
     {
         string _fileFolder;//origonal folder
@@ -184,6 +186,47 @@ namespace TV_Show_Renamer_Server
             set { _episodeNum = value; }
         }
     }//end of class
+
+    public class TVShowSettings
+    {
+        string _ShowFolder;
+        string _RealShowName;
+        string _SearchName;
+
+        int _TVDBSeriesID = -1;//TVDB id number
+
+        public TVShowSettings(string showFolder, string realShowName, string searchName, int tVDBSeriesID)
+        {
+            _ShowFolder = showFolder;
+            _RealShowName = realShowName;
+            _SearchName = searchName;
+            _TVDBSeriesID = tVDBSeriesID;
+        }
+
+        public string ShowFolder
+        {
+            get { return _ShowFolder; }
+            set { _ShowFolder = value; }
+        }
+
+        public string RealShowName
+        {
+            get { return _RealShowName; }
+            set { _RealShowName = value; }
+        }
+
+        public string SearchName
+        {
+            get { return _SearchName; }
+            set { _SearchName = value; }
+        }
+        public int TVDBSeriesID
+        {
+            get { return _TVDBSeriesID; }
+            set { _TVDBSeriesID = value; }
+        }
+    }//end of class
+
     public class SearchInfo
     {
         string _title;
