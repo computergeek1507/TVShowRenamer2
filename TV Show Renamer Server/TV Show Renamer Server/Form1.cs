@@ -44,10 +44,12 @@ namespace TV_Show_Renamer_Server
         static Queue TheadQueue = new Queue();
         LogWrite MainLog = new LogWrite();//log object 
         List<CategoryInfo> CategoryList = new List<CategoryInfo>();
+        public static ListBoxLog listBoxLog;
         
         public MainForm()
         {
             InitializeComponent();
+            listBoxLog = new ListBoxLog(listBox1);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -64,10 +66,9 @@ namespace TV_Show_Renamer_Server
             SetThreadExecutionState(EXECUTION_STATE.ES_DISPLAY_REQUIRED | EXECUTION_STATE.ES_CONTINUOUS);
             
             //Start Server
+            listBoxLog.Log(Level.Info, "Server Started");
             
-        }
-
-        
+        }        
 
         private void folderSelectButton_Click(object sender, EventArgs e)
         {
@@ -219,7 +220,9 @@ namespace TV_Show_Renamer_Server
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            List<string> newitems = folderFinder(folderTextBox.Text);
+            TVShowOptions main = new TVShowOptions(newitems);
+            main.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -349,9 +352,37 @@ namespace TV_Show_Renamer_Server
             }
         }
 
-        private void trace(string str)
+        private string infoFinder(string showName, List<string> folderlist)
         {
-            listBox1.Items.Add(str);
+            int indexofTVshow = -1;
+            foreach (string folderName in folderlist)// (int ifolder = 0; ifolder < folderlist.Count(); ifolder++)
+            {
+                int difference = Math.Abs(folderName.Length - showName.Length);
+                indexofTVshow = folderName.IndexOf(showName, StringComparison.InvariantCultureIgnoreCase);
+                if (indexofTVshow != -1 && difference < 3)
+                    return folderName;
+            }//end of for loop            
+            return "";
+        }//end of infofinder method
+
+        //get list of folders
+        private List<string> folderFinder(string folderwatch)
+        {
+            List<string> foldersIn = new List<string>();
+
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch);
+            try
+            {
+                foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
+                    foldersIn.Add(fi.Name);
+            }
+            catch (IOException)
+            {
+                return foldersIn;
+            }
+            foldersIn.Sort();
+            return foldersIn;
         }
+        
     }
 }

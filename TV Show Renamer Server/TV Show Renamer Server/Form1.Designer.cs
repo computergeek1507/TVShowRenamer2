@@ -111,7 +111,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(32, 162);
+            this.button3.Location = new System.Drawing.Point(15, 176);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 28;
@@ -168,7 +168,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "TV Show Server";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
