@@ -41,16 +41,23 @@ int TVShowModel::rowCount(const QModelIndex &parent) const
 
      if (orientation == Qt::Horizontal)
      {
-         if (section == DATE_COLUMN)
-             return tr(DATE_HEADING);
-         else if (section == MODULE_COLUMN)
-             return tr(MODULE_HEADING);
-         else if (section == FILE_AND_LINE_COLUMN)
-             return tr(FILE_AND_LINE_HEADING);
-         else if (section == LEVEL_AND_MESSAGE_COLUMN)
-             return tr(LEVEL_AND_MESSAGE_HEADING);
+         if (section == NEWFILENAME_COLUMN)
+             return tr(NEWFILENAME_HEADING);
+         else if (section == FILENAME_COLUMN)
+             return tr(FILENAME_HEADING);
+         else if (section == FILEFOLDER_COLUMN)
+             return tr(FILEFOLDER_HEADING);
+         else if (section == FILETITLE_COLUMN)
+             return tr(FILETITLE_HEADING);
+         else if (section == TVSHOWNAME_COLUMN)
+             return tr(TVSHOWNAME_HEADING);
+         else if (section == TVSHOWID_COLUMN)
+             return tr(TVSHOWID_HEADING);
+         else if (section == SEASONNUM_COLUMN)
+             return tr(SEASONNUM_HEADING);
+         else if (section == EPISODENUM_COLUMN)
+             return tr(EPISODENUM_HEADING);
      }
-
      return QVariant();
  }
 
@@ -59,7 +66,7 @@ int TVShowModel::rowCount(const QModelIndex &parent) const
      return _TVShowItemList;
  }
 
- void TVShowModel::addLogItem(TVShowClass TVShow)
+ void TVShowModel::addTVShowItem(TVShowClass TVShow)
  {
     int row = _TVShowItemList.count();
 

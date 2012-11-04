@@ -7,18 +7,25 @@
 #include <QVector>
 #include "tvshowclass.h"
 
-#define DATE_COLUMN 0
-#define MODULE_COLUMN 1
-#define FILE_AND_LINE_COLUMN 2
-#define LEVEL_AND_MESSAGE_COLUMN 3
-#define ERROR_COLUMN 4
+#define NEWFILENAME_COLUMN 0
+#define FILENAME_COLUMN 1
+#define FILEFOLDER_COLUMN 2
+#define FILETITLE_COLUMN 3
+#define TVSHOWNAME_COLUMN 4
+#define TVSHOWID_COLUMN 5
+#define SEASONNUM_COLUMN 6
+#define EPISODENUM_COLUMN 7
 
-#define DATE_HEADING "Current File Name"
-#define MODULE_HEADING "Pending File Name"
-#define FILE_AND_LINE_HEADING "TV Show Name"
-#define LEVEL_AND_MESSAGE_HEADING "Episode Title"
+#define NEWFILENAME_HEADING "Pending File Name"
+#define FILENAME_HEADING "Current File Name"
+#define FILEFOLDER_HEADING "File Folder Location"
+#define FILETITLE_HEADING "Episode Title"
+#define TVSHOWNAME_HEADING "TV Show Name"
+#define TVSHOWID_HEADING "Online TV Show ID"
+#define SEASONNUM_HEADING "Season Number"
+#define EPISODENUM_HEADING "Episode Number"
 
-#define COLUMN_COUNT 4
+#define COLUMN_COUNT 8
 
 
 class TVShowModel: public QAbstractTableModel
@@ -34,7 +41,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     QVector<TVShowClass> getList();
-    void addLogItem(TVShowClass logItem);
+    void addTVShowItem(TVShowClass TVShow);
     void removeAll();
     void removeTopRow();
 
