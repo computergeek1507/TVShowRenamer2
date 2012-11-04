@@ -5,7 +5,7 @@
 #include <QList>
 #include <QString>
 #include <QVector>
-#include "TVShowClass.h"
+#include "tvshowclass.h"
 
 #define DATE_COLUMN 0
 #define MODULE_COLUMN 1

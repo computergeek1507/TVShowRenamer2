@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QItemSelection>
 #include <QSortFilterProxyModel>
-#include "TVShowModel.H"
+#include "tvshowmodel.h"
 
 namespace Ui {
 class MainWindow;
