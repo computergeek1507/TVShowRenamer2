@@ -26,12 +26,35 @@ int TVShowModel::rowCount(const QModelIndex &parent) const
  QVariant TVShowModel::data(const QModelIndex &index, int role) const
  {
      if (!index.isValid())
-         return QVariant();
+              return QVariant();
 
-     if (index.row() >= _TVShowItemList.size() || index.row() < 0)
-         return QVariant();
+          if (index.row() >= _TVShowItemList.size() || index.row() < 0)
+              return QVariant();
 
-     return QVariant();
+          if (role == Qt::DisplayRole)
+          {
+
+              TVShowClass item = _TVShowItemList.at(index.row());
+
+              if (index.column() == NEWFILENAME_COLUMN)
+                  return item.NewFileName();
+              else if (index.column() == FILENAME_COLUMN)
+                  return item.FileName();
+              else if (index.column() == FILEFOLDER_COLUMN)
+                  return item.FileFolder();
+              else if (index.column() == FILETITLE_COLUMN)
+                  return item.FileTitle();
+              else if (index.column() == TVSHOWNAME_COLUMN)
+                  return item.TVShowName();
+              else if (index.column() == TVSHOWID_COLUMN)
+                  return item.TvShowID();
+              else if (index.column() == SEASONNUM_COLUMN)
+                  return item.SeasonNum();
+              else if (index.column() == EPISODENUM_COLUMN)
+                  return item.EpisodeNum();
+
+          }
+          return QVariant();
  }
 
  QVariant TVShowModel::headerData(int section, Qt::Orientation orientation, int role) const

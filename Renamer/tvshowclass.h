@@ -8,7 +8,7 @@ class TVShowClass
 public:
     TVShowClass();
     TVShowClass(QString fileFolder, QString fileName, QString fileExtention);
-    Reset();
+    void Reset();
 
     const QString& FileFolder    () const { return _fileFolder;    }
     const QString& FileName      () const { return _fileName;      }
