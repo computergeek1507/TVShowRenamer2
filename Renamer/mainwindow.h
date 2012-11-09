@@ -44,6 +44,7 @@ private:
     TVShowModel *_TVShowModelList;
 
     bool ConvertFileName();
+    void RecurseDirectory(const QString& sDir);
 };
 
 #endif // MAINWINDOW_H
