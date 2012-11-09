@@ -42,6 +42,7 @@ private:
     Ui::MainWindow *ui;
     QSortFilterProxyModel *proxyModel;
     TVShowModel *_TVShowModelList;
+    QStringList _UsableEXT;
 
     bool ConvertFileName();
     void RecurseDirectory(const QString& sDir);
