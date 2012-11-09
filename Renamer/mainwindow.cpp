@@ -39,22 +39,26 @@ void MainWindow::on_actionAdd_Files_triggered()
 
 void MainWindow::on_actionAdd_Folder_triggered()
 {
-
+    QString dir = QFileDialog::getExistingDirectory(this,"Open Directory",
+                                                 QDir::homePath(),
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
 }
 
 void MainWindow::on_actionRemove_Selected_triggered()
 {
-
+    int index = ui->tableViewTVShowList->currentIndex().row();
+    _TVShowModelList->removeSingleRow(index);
 }
 
 void MainWindow::on_actionClear_List_triggered()
 {
-
+    _TVShowModelList->removeAll();
 }
 
 void MainWindow::on_actionExit_triggered()
 {
-
+    exit(0);
 }
 
 void MainWindow::on_pushButtonSave_clicked()
@@ -75,4 +79,10 @@ void MainWindow::on_pushButtonCopy_clicked()
 void MainWindow::on_pushButtonGetTitle_clicked()
 {
 
+}
+
+bool MainWindow::ConvertFileName()
+{
+
+    return true;
 }

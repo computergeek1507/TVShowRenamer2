@@ -42,6 +42,8 @@ private:
     Ui::MainWindow *ui;
     QSortFilterProxyModel *proxyModel;
     TVShowModel *_TVShowModelList;
+
+    bool ConvertFileName();
 };
 
 #endif // MAINWINDOW_H
