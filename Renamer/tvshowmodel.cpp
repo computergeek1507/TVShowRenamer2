@@ -114,3 +114,10 @@ int TVShowModel::rowCount(const QModelIndex &parent) const
     _TVShowItemList.remove(0);
     endRemoveRows();
  }
+
+ void TVShowModel::removeSingleRow(int index)
+ {
+    beginRemoveRows(QModelIndex(), index, index);
+    _TVShowItemList.remove(index);
+    endRemoveRows();
+ }

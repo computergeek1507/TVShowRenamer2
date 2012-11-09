@@ -44,6 +44,7 @@ public:
     void addTVShowItem(TVShowClass TVShow);
     void removeAll();
     void removeTopRow();
+    void removeSingleRow(int index);
 
 private:
     QVector<TVShowClass> _TVShowItemList;
