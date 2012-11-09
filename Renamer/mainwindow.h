@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QItemSelection>
+#include <QFileDialog>
 #include <QSortFilterProxyModel>
 #include "tvshowmodel.h"
 

@@ -24,7 +24,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionAdd_Files_triggered()
 {
-
+    QStringList files = QFileDialog::getOpenFileNames(
+                             this,
+                             "Select Media File to Add",
+                             QDir::homePath(),
+                             "Videos (*.avi *.mp4 *.mkv)");
+    Q_FOREACH(QString filename,files)
+    {
+        QDir fullinfo(filename);
+        QFileInfo fi(filename);
+        _TVShowModelList->addTVShowItem(TVShowClass(fullinfo.toNativeSeparators(fi.absoluteDir().path()), fi.fileName(),fi.completeSuffix()));
+    }
 }
 
 void MainWindow::on_actionAdd_Folder_triggered()
