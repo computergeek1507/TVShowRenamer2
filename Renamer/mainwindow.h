@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QItemSelection>
 #include <QFileDialog>
+#include <QtNetwork>
 #include <QSortFilterProxyModel>
 #include "tvshowmodel.h"
 
