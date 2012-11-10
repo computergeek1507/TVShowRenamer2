@@ -13,13 +13,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     tvshowmodel.cpp \
-    tvshowclass.cpp
+    tvshowclass.cpp \
+    convertionsettingsclass.cpp
 
 HEADERS  += mainwindow.h \
     tvshowmodel.h \
-    tvshowclass.h
+    tvshowclass.h \
+    convertionsettingsclass.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    ConvertionSettings.ui
 
 RESOURCES += \
     resources.qrc
