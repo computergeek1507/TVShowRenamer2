@@ -45,6 +45,8 @@ public:
     void removeAll();
     void removeTopRow();
     void removeSingleRow(int index);
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+    bool setData(const QModelIndex &index,const TVShowClass &value, int role);
 
 private:
     QVector<TVShowClass> _TVShowItemList;
