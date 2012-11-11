@@ -121,3 +121,21 @@ int TVShowModel::rowCount(const QModelIndex &parent) const
     _TVShowItemList.remove(index);
     endRemoveRows();
  }
+ Qt::ItemFlags TVShowModel::flags(const QModelIndex &index) const
+ {
+      if (!index.isValid())
+          return Qt::ItemIsEnabled;
+
+      return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+ }
+ bool TVShowModel::setData(const QModelIndex &index,
+                                const TVShowClass &value, int role)
+{
+      if (index.isValid() && role == Qt::EditRole)
+      {
+          _TVShowItemList.replace(index.row(), value);
+          emit dataChanged(index, index);
+          return true;
+      }
+      return false;
+}
