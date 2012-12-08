@@ -7,6 +7,7 @@
 #include <QtNetwork>
 #include <QSortFilterProxyModel>
 #include "tvshowmodel.h"
+#include <boost/regex.hpp>
 
 namespace Ui {
 class MainWindow;
