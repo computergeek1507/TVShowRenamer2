@@ -5,9 +5,9 @@
 #include <QItemSelection>
 #include <QFileDialog>
 #include <QtNetwork>
+#include <QMessageBox>
 #include <QSortFilterProxyModel>
 #include "tvshowmodel.h"
-#include <boost/regex.hpp>
 
 namespace Ui {
 class MainWindow;
