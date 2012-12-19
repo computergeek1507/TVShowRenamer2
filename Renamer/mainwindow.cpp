@@ -36,6 +36,7 @@ void MainWindow::on_actionAdd_Files_triggered()
 		QFileInfo fi(filename);
 		_TVShowModelList->addTVShowItem(TVShowClass(fullinfo.toNativeSeparators(fi.absoluteDir().path()), fi.fileName(),fi.completeSuffix()));
 	}
+    ConvertFileName();
 }
 
 void MainWindow::on_actionAdd_Folder_triggered()
@@ -88,6 +89,22 @@ bool MainWindow::ConvertFileName()
 {
 	QVector<TVShowClass> TVShowModel = _TVShowModelList->getList();
 
+    QRegExp rx("(\\d+)[\\w]+(\\d+)");
+
+    foreach(TVShowClass TVShowInfo, TVShowModel)
+    {
+        int pos = rx.indexIn(TVShowInfo.FileName());
+        QStringList list = rx.capturedTexts();
+        if(list.size()>0)
+        {
+            QMessageBox msgBox;
+            msgBox.setText(list[1]+"--"+list[2]);
+            msgBox.exec();
+
+        }
+
+
+    }
 	return true;
 }
 

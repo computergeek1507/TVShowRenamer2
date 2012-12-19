@@ -9,9 +9,6 @@ QT       += core gui network
 
 TARGET = Renamer
 
-unix:LIBS += -L/usr/lib -lboost_regex
-win32:LIBS +=C:/Qt/2010.02.1/qt/lib/libboost_regex.lib
-
 TEMPLATE = app
 
 
