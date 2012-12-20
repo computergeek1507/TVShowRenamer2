@@ -130,14 +130,23 @@ int TVShowModel::rowCount(const QModelIndex &parent) const
 
       return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
  }
- bool TVShowModel::setData(const QModelIndex &index,
+ bool TVShowModel::setData(const int &row,
                                 const TVShowClass &value, int role)
 {
-      if (index.isValid() && role == Qt::EditRole)
-      {
-          _TVShowItemList.replace(index.row(), value);
-          emit dataChanged(index, index);
+      if (this->index(row,0).isValid() && role == Qt::EditRole)
+      {          
+          _TVShowItemList.replace(row, value);
+          emit dataChanged(this->index(row,0), this->index(row,COLUMN_COUNT));
           return true;
       }
       return false;
+}
+
+ TVShowClass TVShowModel::getData(const int &row,int role)
+{
+      if (this->index(row,0).isValid()&& role == Qt::DisplayRole)
+      {
+          return _TVShowItemList[row];
+      }
+      return TVShowClass();
 }
