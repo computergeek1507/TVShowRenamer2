@@ -87,23 +87,29 @@ void MainWindow::on_pushButtonGetTitle_clicked()
 
 bool MainWindow::ConvertFileName()
 {
-	QVector<TVShowClass> TVShowModel = _TVShowModelList->getList();
+    int rowCount = _TVShowModelList->rowCount();
+    int columnCount = _TVShowModelList->columnCount();
 
     QRegExp rx("(\\d+)[\\w]+(\\d+)");
 
-    foreach(TVShowClass TVShowInfo, TVShowModel)
+    for(int i = 0;i<rowCount;i++)
     {
+        //_TVShowModelList->index(i,0);
+
+        TVShowClass TVShowInfo = _TVShowModelList->getData(i);
+
         int pos = rx.indexIn(TVShowInfo.FileName());
         QStringList list = rx.capturedTexts();
-        if(list.size()>0)
+        if(list.size()==3)
         {
-            QMessageBox msgBox;
-            msgBox.setText(list[1]+"--"+list[2]);
-            msgBox.exec();
-
+            TVShowInfo.setSeasonNum(list[1].toInt());
+            TVShowInfo.setEpisodeNum(list[2].toInt());
+            QMessageBox myBox;
+            myBox.setText(list[1]+"__"+list[2]+TVShowInfo.FileName());
+            myBox.exec();
         }
 
-
+        _TVShowModelList->setData(i,TVShowInfo);
     }
 	return true;
 }
