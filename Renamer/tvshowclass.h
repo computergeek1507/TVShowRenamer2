@@ -24,10 +24,10 @@ public:
     const int& EpisodeNum        () const { return _episodeNum;    }
 
     const QString& FullFileName    () const {
-		return _fileFolder +  QDir::separator() + _fileName;  
+		return _fileFolder + /* QString(QDir::separator())*/"\\" + _fileName;  
 	}
     const QString& NewFullFileName () const { 
-		return _fileFolder + QDir::separator() + _newFileName;
+		return _fileFolder +/* QString(QDir::separator())*/"\\" + _newFileName;
 	}
 
     void setFileFolder    ( const QString& FileFolder    ){ _fileFolder    = FileFolder;    }
