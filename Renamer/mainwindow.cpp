@@ -75,21 +75,22 @@ void MainWindow::on_pushButtonSave_clicked()
 	int rowCount = _TVShowModelList->rowCount();
 	for(int i = 0;i<rowCount;i++)
 	{
-		TVShowClass TVShowInfo = _TVShowModelList->getData(i);
+		TVShowClass TVShowInfoTemp = _TVShowModelList->getData(i);
 
-		if (TVShowInfo.FileName() == TVShowInfo.NewFileName()) continue;
-		QDir temp(TVShowInfo.FullFileName());
+		if (TVShowInfoTemp.FileName() == TVShowInfoTemp.NewFileName()) continue;
+
+		QFile temp(TVShowInfoTemp.FileFolder()+QDir::separator()+   TVShowInfoTemp.FileName());
 		//QFile file(TVShowInfo.FullFileName());
-		if(temp.rename(TVShowInfo.FullFileName(),TVShowInfo.NewFullFileName()))
+		if(temp.rename(TVShowInfoTemp.FileFolder()+QDir::separator()+ TVShowInfoTemp.NewFileName()))
 		{
-			TVShowInfo.setFileName(TVShowInfo.NewFileName());
-			TVShowInfo.setFileTitle("");
-			_TVShowModelList->setData(i,TVShowInfo);
+			TVShowInfoTemp.setFileName(TVShowInfoTemp.NewFileName());
+			TVShowInfoTemp.setFileTitle("");
+			_TVShowModelList->setData(i,TVShowInfoTemp);
 		}
 		else
 		{
 			QMessageBox myBox;
-			myBox.setText("Rename Failed:"+TVShowInfo.FullFileName()+"to:"+TVShowInfo.NewFullFileName());
+			myBox.setText("Rename Failed:"+TVShowInfoTemp.FileFolder()+"to:"+TVShowInfoTemp.NewFileName());
 			myBox.exec();
 		}
 	}
@@ -118,8 +119,8 @@ bool MainWindow::ConvertFileName()
 
 	QString tempSpace = " ";
 	QString notTempSpace = ".";
-	QString SeasonDash = "- ";
-	QString TitleDash ="";// "- ";
+	QString SeasonDash ="";// "- ";
+	QString TitleDash = "- ";
 
 
 	QRegExp rxFormat("(\\d+)[x|X](\\d+)");
@@ -138,7 +139,7 @@ bool MainWindow::ConvertFileName()
 		int pos = rxFormat.indexIn(TVShowInfo.NewFileName());
 		QStringList List = rxFormat.capturedTexts();
 
-		if(List.size()==3)
+		if(List[1]!="")
 		{
 			TVShowInfo.setSeasonNum(List[1].toInt());
 			TVShowInfo.setEpisodeNum(List[2].toInt());
@@ -153,7 +154,7 @@ bool MainWindow::ConvertFileName()
 		pos = rxSeasonFormat.indexIn(TVShowInfo.NewFileName());
 		List = rxSeasonFormat.capturedTexts();
 
-		if(List.size()==3)
+		if(List[1]!=""&!found)
 		{
 			TVShowInfo.setSeasonNum(List[1].toInt());
 			TVShowInfo.setEpisodeNum(List[2].toInt());
@@ -163,6 +164,7 @@ bool MainWindow::ConvertFileName()
 
 		if(found)
 		{
+			TVShowInfo.setTVShowName(QString(TVShowInfo.TVShowName()).trimmed());
 			QString FormatedSeasonNumber = QString::number(TVShowInfo.SeasonNum());
 			QString FormatedEpisodeNumber = QString::number(TVShowInfo.EpisodeNum());
 			//check if i is less than 10
@@ -172,7 +174,7 @@ bool MainWindow::ConvertFileName()
 			if (TVShowInfo.EpisodeNum() < 10)
 			FormatedEpisodeNumber = "0" + QString::number(TVShowInfo.EpisodeNum());
 
-			QString finalShowName = TVShowInfo.NewFileName().left(pos-1) + tempSpace + SeasonDash + QString::number(TVShowInfo.SeasonNum()) + "x" + FormatedEpisodeNumber + tempSpace + TitleDash + ShowTitle +"."+ Extention;
+			QString finalShowName = TVShowInfo.TVShowName() + tempSpace + SeasonDash + QString::number(TVShowInfo.SeasonNum()) + "x" + FormatedEpisodeNumber + tempSpace + TitleDash + ShowTitle +"."+ Extention;
 			
 			finalShowName.replace("..", ".");
 			finalShowName.replace(" .", ".");
