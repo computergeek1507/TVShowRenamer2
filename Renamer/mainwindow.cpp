@@ -15,7 +15,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->tableViewTVShowList->setModel(proxyModel);
 	ui->tableViewTVShowList->resizeColumnsToContents();
 	//setStyleSheet("QMainWindow {background: 'light blue';}");
-	_UsableEXT<<"avi"<<"mp4"<<"mkv";
+	_UsableEXT<<"avi"<<"mp4"<<"mkv"<<"mov";
+	ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
+	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
+	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
+	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
+	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
 }
 
 MainWindow::~MainWindow()
@@ -34,9 +39,9 @@ void MainWindow::on_actionAdd_Files_triggered()
 	{
 		QDir fullinfo(filename);
 		QFileInfo fi(filename);
-		_TVShowModelList->addTVShowItem(TVShowClass(fullinfo.toNativeSeparators(fi.absoluteDir().path()), fi.fileName(),fi.completeSuffix()));
+		_TVShowModelList->addTVShowItem(TVShowClass(fullinfo.toNativeSeparators(fi.absoluteDir().path()), fi.fileName(),fi.suffix ()));
 	}
-    ConvertFileName();
+	ConvertFileName();
 }
 
 void MainWindow::on_actionAdd_Folder_triggered()
@@ -67,7 +72,28 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_pushButtonSave_clicked()
 {
+	int rowCount = _TVShowModelList->rowCount();
+	for(int i = 0;i<rowCount;i++)
+	{
+		TVShowClass TVShowInfo = _TVShowModelList->getData(i);
 
+		if (TVShowInfo.FileName() == TVShowInfo.NewFileName()) continue;
+		QDir temp(TVShowInfo.FullFileName());
+		//QFile file(TVShowInfo.FullFileName());
+		if(temp.rename(TVShowInfo.FullFileName(),TVShowInfo.NewFullFileName()))
+		{
+			TVShowInfo.setFileName(TVShowInfo.NewFileName());
+			TVShowInfo.setFileTitle("");
+			_TVShowModelList->setData(i,TVShowInfo);
+		}
+		else
+		{
+			QMessageBox myBox;
+			myBox.setText("Rename Failed:"+TVShowInfo.FullFileName()+"to:"+TVShowInfo.NewFullFileName());
+			myBox.exec();
+		}
+	}
+	ui->tableViewTVShowList->resizeColumnsToContents();
 }
 
 void MainWindow::on_pushButtonMove_clicked()
@@ -87,30 +113,81 @@ void MainWindow::on_pushButtonGetTitle_clicked()
 
 bool MainWindow::ConvertFileName()
 {
-    int rowCount = _TVShowModelList->rowCount();
-    int columnCount = _TVShowModelList->columnCount();
+	int rowCount = _TVShowModelList->rowCount();
+	int columnCount = _TVShowModelList->columnCount();
 
-    QRegExp rx("(\\d+)[\\w]+(\\d+)");
+	QString tempSpace = " ";
+	QString notTempSpace = ".";
+	QString SeasonDash = "- ";
+	QString TitleDash ="";// "- ";
 
-    for(int i = 0;i<rowCount;i++)
-    {
-        //_TVShowModelList->index(i,0);
 
-        TVShowClass TVShowInfo = _TVShowModelList->getData(i);
+	QRegExp rxFormat("(\\d+)[x|X](\\d+)");
+	QRegExp rxSeasonFormat("[s|S](\\d+)[e|E](\\d+)");
 
-        int pos = rx.indexIn(TVShowInfo.FileName());
-        QStringList list = rx.capturedTexts();
-        if(list.size()==3)
-        {
-            TVShowInfo.setSeasonNum(list[1].toInt());
-            TVShowInfo.setEpisodeNum(list[2].toInt());
-            QMessageBox myBox;
-            myBox.setText(list[1]+"__"+list[2]+TVShowInfo.FileName());
-            myBox.exec();
-        }
+	for(int i = 0;i<rowCount;i++)
+	{
+		TVShowClass TVShowInfo = _TVShowModelList->getData(i);
+		QString Extention = TVShowInfo.FileExtention();
+		QString ShowTitle = "";
+		bool found = false;
 
-        _TVShowModelList->setData(i,TVShowInfo);
-    }
+		TVShowInfo.setNewFileName(QString(TVShowInfo.FileName()).replace(notTempSpace,tempSpace));
+
+		//1x01 format
+		int pos = rxFormat.indexIn(TVShowInfo.NewFileName());
+		QStringList List = rxFormat.capturedTexts();
+
+		if(List.size()==3)
+		{
+			TVShowInfo.setSeasonNum(List[1].toInt());
+			TVShowInfo.setEpisodeNum(List[2].toInt());
+			TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
+			found = true;
+			//QMessageBox myBox;
+			//myBox.setText(List[1]+"__"+List[2]+"__"+TVShowInfo.FileName()+"__"+QString::number(pos));
+			//myBox.exec();
+		}
+
+		//s01e01 format
+		pos = rxSeasonFormat.indexIn(TVShowInfo.NewFileName());
+		List = rxSeasonFormat.capturedTexts();
+
+		if(List.size()==3)
+		{
+			TVShowInfo.setSeasonNum(List[1].toInt());
+			TVShowInfo.setEpisodeNum(List[2].toInt());
+			TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
+			found = true;
+		}
+
+		if(found)
+		{
+			QString FormatedSeasonNumber = QString::number(TVShowInfo.SeasonNum());
+			QString FormatedEpisodeNumber = QString::number(TVShowInfo.EpisodeNum());
+			//check if i is less than 10
+			if (TVShowInfo.SeasonNum() < 10)
+			FormatedSeasonNumber = "0" +QString::number(TVShowInfo.SeasonNum());
+			//check if j is less than 10
+			if (TVShowInfo.EpisodeNum() < 10)
+			FormatedEpisodeNumber = "0" + QString::number(TVShowInfo.EpisodeNum());
+
+			QString finalShowName = TVShowInfo.NewFileName().left(pos-1) + tempSpace + SeasonDash + QString::number(TVShowInfo.SeasonNum()) + "x" + FormatedEpisodeNumber + tempSpace + TitleDash + ShowTitle +"."+ Extention;
+			
+			finalShowName.replace("..", ".");
+			finalShowName.replace(" .", ".");
+			finalShowName.replace("- -", "-");
+			finalShowName.replace(".-.", ".");
+			finalShowName.replace("-.", ".");
+			finalShowName.replace(" .", ".");
+			
+			TVShowInfo.setNewFileName(finalShowName);
+		}
+
+		_TVShowModelList->setData(i,TVShowInfo);
+	}
+
+	ui->tableViewTVShowList->resizeColumnsToContents();
 	return true;
 }
 
