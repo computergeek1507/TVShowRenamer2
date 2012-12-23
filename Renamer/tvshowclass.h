@@ -2,6 +2,7 @@
 #define TVSHOWCLASS_H
 
 #include <QString>
+#include <QDir>
 
 class TVShowClass
 {
@@ -22,8 +23,12 @@ public:
     const int& SeasonNum         () const { return _seasonNum;     }
     const int& EpisodeNum        () const { return _episodeNum;    }
 
-    const QString& FullFileName    () const { return _fileFolder + "\\" + _fileName;    }
-    const QString& NewFullFileName () const { return _fileFolder + "\\" + _newFileName; }
+    const QString& FullFileName    () const {
+		return _fileFolder +  QDir::separator() + _fileName;  
+	}
+    const QString& NewFullFileName () const { 
+		return _fileFolder + QDir::separator() + _newFileName;
+	}
 
     void setFileFolder    ( const QString& FileFolder    ){ _fileFolder    = FileFolder;    }
     void setFileName      ( const QString& FileName      ){ _fileName      = FileName;      }

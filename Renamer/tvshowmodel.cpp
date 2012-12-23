@@ -126,9 +126,9 @@ int TVShowModel::rowCount(const QModelIndex &parent) const
 
  {
       if (!index.isValid())
-          return Qt::ItemIsEnabled;
+          return (Qt::NoItemFlags|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 
-      return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+      return QAbstractItemModel::flags(index) | (Qt::NoItemFlags|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
  }
  bool TVShowModel::setData(const int &row,
                                 const TVShowClass &value, int role)

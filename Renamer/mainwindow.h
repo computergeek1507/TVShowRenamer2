@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QItemSelection>
 #include <QFileDialog>
+#include <QDir>
 #include <QtNetwork>
 #include <QMessageBox>
 #include <QSortFilterProxyModel>
