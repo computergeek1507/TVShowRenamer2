@@ -15,11 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     tvshowmodel.cpp \
-    tvshowclass.cpp
+    tvshowclass.cpp \
+    tvepisodetitle.cpp \
+    settingswidget.cpp
 
 HEADERS  += mainwindow.h \
     tvshowmodel.h \
-    tvshowclass.h
+    tvshowclass.h \
+    tvepisodetitle.h \
+    settingswidget.h
 
 FORMS    += mainwindow.ui
 
