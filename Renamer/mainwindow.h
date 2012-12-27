@@ -7,8 +7,11 @@
 #include <QDir>
 #include <QtNetwork>
 #include <QMessageBox>
+#include <QSettings>
 #include <QSortFilterProxyModel>
 #include "tvshowmodel.h"
+#include "convertiondialog.h"
+#include "settingsdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -33,6 +36,10 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_actionConvertion_Profiles_triggered();
+
+    void on_actionOptions_triggered();
+
     void on_pushButtonSave_clicked();
 
     void on_pushButtonMove_clicked();
@@ -43,12 +50,16 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    SettingsDialog *_MainSettings;
+    ConvertionDialog *_ConvertionSettings;
     QSortFilterProxyModel *proxyModel;
     TVShowModel *_TVShowModelList;
     QStringList _UsableEXT;
 
     bool ConvertFileName();
     void RecurseDirectory(const QString& sDir);
+    void LoadSettings();
+
 };
 
 #endif // MAINWINDOW_H

@@ -99,7 +99,7 @@
      <x>0</x>
      <y>0</y>
      <width>731</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -123,11 +123,13 @@
     <property name="title">
      <string>Tools</string>
     </property>
+    <addaction name="actionConvertion_Profiles"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
      <string>Settings</string>
     </property>
+    <addaction name="actionOptions"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -184,6 +186,16 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionOptions">
+   <property name="text">
+    <string>Options...</string>
+   </property>
+  </action>
+  <action name="actionConvertion_Profiles">
+   <property name="text">
+    <string>Convertion Options...</string>
    </property>
   </action>
  </widget>
