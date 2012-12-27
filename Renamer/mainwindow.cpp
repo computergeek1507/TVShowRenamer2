@@ -16,6 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->tableViewTVShowList->resizeColumnsToContents();
 	//setStyleSheet("QMainWindow {background: 'light blue';}");
 	_UsableEXT<<"avi"<<"mp4"<<"mkv"<<"mov";
+
+    _MainSettings = new SettingsDialog();
+    _ConvertionSettings = new ConvertionDialog();
+
 	ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
 	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
 	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
@@ -68,6 +72,17 @@ void MainWindow::on_actionClear_List_triggered()
 void MainWindow::on_actionExit_triggered()
 {
 	exit(0);
+}
+
+void MainWindow::on_actionConvertion_Profiles_triggered()
+{
+    _ConvertionSettings->show();
+}
+
+
+void MainWindow::on_actionOptions_triggered()
+{
+    _MainSettings->show();
 }
 
 void MainWindow::on_pushButtonSave_clicked()
@@ -220,4 +235,9 @@ void MainWindow::RecurseDirectory(const QString& sDir)
 			}
 		}
 	}
+}
+
+void MainWindow::LoadSettings()
+{
+    //QSettings settings(QSettings::IniFormat,"ScottNation", "TV Show Renamer");
 }

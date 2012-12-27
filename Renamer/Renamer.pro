@@ -16,14 +16,20 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     tvshowmodel.cpp \
     tvshowclass.cpp \
-    tvepisodetitle.cpp
+    tvepisodetitle.cpp \
+    settingsdialog.cpp \
+    convertiondialog.cpp
 
 HEADERS  += mainwindow.h \
     tvshowmodel.h \
     tvshowclass.h \
-    tvepisodetitle.h
+    tvepisodetitle.h \
+    settingsdialog.h \
+    convertiondialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    settingsdialog.ui \
+    convertiondialog.ui
 
 RESOURCES += \
     resources.qrc

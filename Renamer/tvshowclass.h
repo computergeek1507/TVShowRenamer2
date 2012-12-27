@@ -23,10 +23,10 @@ public:
     const int& SeasonNum         () const { return _seasonNum;     }
     const int& EpisodeNum        () const { return _episodeNum;    }
 
-    const QString& FullFileName    () const {
+    QString FullFileName    () {
 		return _fileFolder + /* QString(QDir::separator())*/"\\" + _fileName;  
 	}
-    const QString& NewFullFileName () const { 
+    QString NewFullFileName () {
 		return _fileFolder +/* QString(QDir::separator())*/"\\" + _newFileName;
 	}
 
