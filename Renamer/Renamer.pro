@@ -16,14 +16,12 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     tvshowmodel.cpp \
     tvshowclass.cpp \
-    tvepisodetitle.cpp \
-    settingswidget.cpp
+    tvepisodetitle.cpp
 
 HEADERS  += mainwindow.h \
     tvshowmodel.h \
     tvshowclass.h \
-    tvepisodetitle.h \
-    settingswidget.h
+    tvepisodetitle.h
 
 FORMS    += mainwindow.ui
 
