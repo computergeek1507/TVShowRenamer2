@@ -22,3 +22,13 @@ ConvertionDialog::~ConvertionDialog()
 {
     delete ui;
 }
+
+void ConvertionDialog::on_OKPushButton_clicked()
+{
+    accept();
+}
+
+void ConvertionDialog::on_CancelPushButton_clicked()
+{
+    reject();
+}

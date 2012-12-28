@@ -17,8 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	//setStyleSheet("QMainWindow {background: 'light blue';}");
 	_UsableEXT<<"avi"<<"mp4"<<"mkv"<<"mov";
 
-    _MainSettings = new SettingsDialog();
-    _ConvertionSettings = new ConvertionDialog();
+	_MainSettings = new SettingsDialog();
+	_ConvertionSettings = new ConvertionDialog();
 
 	ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
 	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
@@ -76,13 +76,13 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionConvertion_Profiles_triggered()
 {
-    _ConvertionSettings->show();
+	_ConvertionSettings->show();
 }
 
 
 void MainWindow::on_actionOptions_triggered()
 {
-    _MainSettings->show();
+	_MainSettings->show();
 }
 
 void MainWindow::on_pushButtonSave_clicked()
@@ -130,16 +130,17 @@ void MainWindow::on_pushButtonGetTitle_clicked()
 bool MainWindow::ConvertFileName()
 {
 	int rowCount = _TVShowModelList->rowCount();
-	int columnCount = _TVShowModelList->columnCount();
+	//int columnCount = _TVShowModelList->columnCount();
 
 	QString tempSpace = " ";
 	QString notTempSpace = ".";
 	QString SeasonDash ="";// "- ";
 	QString TitleDash = "- ";
 
-
 	QRegExp rxFormat("(\\d+)[x|X](\\d+)");
 	QRegExp rxSeasonFormat("[s|S](\\d+)[e|E](\\d+)");
+	QRegExp rxNumberFormat("(\\d+)[.](\\d+)");
+	QRegExp rxSpecialFormat("[s|S](\\d+)");
 
 	for(int i = 0;i<rowCount;i++)
 	{
@@ -169,7 +170,7 @@ bool MainWindow::ConvertFileName()
 		pos = rxSeasonFormat.indexIn(TVShowInfo.NewFileName());
 		List = rxSeasonFormat.capturedTexts();
 
-		if(List[1]!=""&!found)
+		if((List[1]!="")&&!found)
 		{
 			TVShowInfo.setSeasonNum(List[1].toInt());
 			TVShowInfo.setEpisodeNum(List[2].toInt());
@@ -239,5 +240,5 @@ void MainWindow::RecurseDirectory(const QString& sDir)
 
 void MainWindow::LoadSettings()
 {
-    //QSettings settings(QSettings::IniFormat,"ScottNation", "TV Show Renamer");
+	//QSettings settings(QSettings::IniFormat,"ScottNation", "TV Show Renamer");
 }
