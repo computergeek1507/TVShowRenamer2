@@ -53,7 +53,7 @@
     <string>Add</string>
    </property>
   </widget>
-  <widget class="QGroupBox" name="groupBox">
+  <widget class="QGroupBox" name="FileFormatGroupBox">
    <property name="geometry">
     <rect>
      <x>140</x>
@@ -63,7 +63,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>GroupBox</string>
+    <string>File Format</string>
    </property>
    <widget class="QComboBox" name="ExtFormatComboBox">
     <property name="geometry">
@@ -138,30 +138,30 @@
    <property name="title">
     <string>GroupBox</string>
    </property>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QCheckBox" name="SpacerCheckBox">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>20</y>
-      <width>91</width>
+      <width>131</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>CheckBox</string>
+     <string>Convert &quot;.&quot; to &quot; &quot;</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_2">
+   <widget class="QCheckBox" name="RemoveBracketsCheckBox">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>50</y>
-      <width>91</width>
+      <width>131</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>CheckBox</string>
+     <string>Remove {},[]</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox_3">
@@ -194,9 +194,9 @@
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>430</x>
      <y>70</y>
-     <width>141</width>
+     <width>151</width>
      <height>201</height>
     </rect>
    </property>
@@ -206,9 +206,9 @@
    <widget class="QComboBox" name="TitleGetComboBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>20</y>
-      <width>121</width>
+      <width>151</width>
       <height>25</height>
      </rect>
     </property>
@@ -216,9 +216,9 @@
    <widget class="QComboBox" name="TitleSearchComboBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>50</y>
-      <width>121</width>
+      <width>151</width>
       <height>25</height>
      </rect>
     </property>
@@ -246,14 +246,14 @@
    <widget class="QCheckBox" name="AutoTitleCheckBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>80</y>
-      <width>121</width>
+      <width>151</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Auto Get Title</string>
+     <string>Auto Get Show Title</string>
     </property>
    </widget>
   </widget>
