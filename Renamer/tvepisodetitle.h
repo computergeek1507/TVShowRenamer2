@@ -10,14 +10,14 @@ class tvepisodetitle
 {
 	//http://www.thetvdb.com/api/GetSeries.php?seriesname=house&language=en
 public:
-    tvepisodetitle();
+	tvepisodetitle();
 
 	public slots:
 	void replyFinished(QNetworkReply*);
 
 	private:
-    QNetworkAccessManager *manager;
-    QNetworkReply * reply;
+	QNetworkAccessManager *manager;
+	QNetworkReply * reply;
 };
 
 #endif // TVEPISODETITLE_H

@@ -30,27 +30,27 @@
 
 class TVShowModel: public QAbstractTableModel
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    TVShowModel(QObject *parent=0);
-    TVShowModel(QVector<TVShowClass> TVShowItemList, QObject *parent=0);
+	TVShowModel(QObject *parent=0);
+	TVShowModel(QVector<TVShowClass> TVShowItemList, QObject *parent=0);
 
-    int rowCount(const QModelIndex &parent= QModelIndex()) const;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-    QVector<TVShowClass> getList();
-    void addTVShowItem(TVShowClass TVShow);
-    void removeAll();
-    void removeTopRow();
-    void removeSingleRow(int index);
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-    bool setData(const int &row,const TVShowClass &value, int role = Qt::EditRole);
-    TVShowClass getData(const int &row,int role = Qt::DisplayRole);
+	int rowCount(const QModelIndex &parent= QModelIndex()) const;
+	int columnCount(const QModelIndex &parent = QModelIndex()) const;
+	QVariant data(const QModelIndex &index, int role) const;
+	QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+	QVector<TVShowClass> getList();
+	void addTVShowItem(TVShowClass TVShow);
+	void removeAll();
+	void removeTopRow();
+	void removeSingleRow(int index);
+	Qt::ItemFlags flags(const QModelIndex &index) const;
+	bool setData(const int &row,const TVShowClass &value, int role = Qt::EditRole);
+	TVShowClass getData(const int &row,int role = Qt::DisplayRole);
 
 private:
-    QVector<TVShowClass> _TVShowItemList;
+	QVector<TVShowClass> _TVShowItemList;
 };
 
 #endif // TVSHOWMODEL_H
