@@ -32,3 +32,16 @@ void ConvertionDialog::on_CancelPushButton_clicked()
 {
     reject();
 }
+const int& ConvertionDialog::TVShowFormat     () const { return ui->ShowNameComboBox->currentIndex();     }
+const int& ConvertionDialog::SeasonFormat     () const { return ui->EpisodeFormatComboBox->currentIndex();     }
+const int& ConvertionDialog::TitleFormat      () const { return ui->TitleFormatComboBox->currentIndex();      }
+const int& ConvertionDialog::ExtFormat        () const { return ui->ExtFormatComboBox->currentIndex();        }
+const int& ConvertionDialog::TitleGetSetting  () const { return ui->TitleGetComboBox->currentIndex();  }
+const int& ConvertionDialog::TitleGetLocation () const { return  ui->TitleSearchComboBox->currentIndex(); }
+
+void ConvertionDialog::setTVShowFormat     ( const int&  TVShowFormat     ){ ui->ShowNameComboBox->setCurrentIndex( TVShowFormat);    }
+void ConvertionDialog::setSeasonFormat     ( const int&  SeasonFormat     ){ ui->EpisodeFormatComboBox->setCurrentIndex( SeasonFormat);     }
+void ConvertionDialog::setTitleFormat      ( const int&  TitleFormat      ){ ui->TitleFormatComboBox->setCurrentIndex( TitleFormat);      }
+void ConvertionDialog::setExtFormat        ( const int&  ExtFormat        ){ ui->ExtFormatComboBox->setCurrentIndex(  ExtFormat);        }
+void ConvertionDialog::setTitleGetSetting  ( const int&  TitleGetSetting  ){ ui->TitleGetComboBox->setCurrentIndex( TitleGetSetting);  }
+void ConvertionDialog::setTitleGetLocation ( const int&  TitleGetLocation ){ ui->TitleSearchComboBox->setCurrentIndex( TitleGetLocation); }
