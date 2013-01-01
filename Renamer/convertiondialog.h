@@ -16,8 +16,8 @@ public:
 	explicit ConvertionDialog(QWidget *parent = 0);
 	~ConvertionDialog();
 
-	const bool& SeasonDash      () const { return _SeasonDash;       }
-	const bool& TitleDash       () const { return _TitleDash;        }
+	const bool& SeasonDash      () const;// { return _SeasonDash;       }
+	const bool& TitleDash       () const;// { return _TitleDash;        }
 
 	const int& TVShowFormat     () const ;//{ return ui->ShowNameComboBox->currentIndex();     }
 	const int& SeasonFormat     () const ;//{ return _SeasonFormat;     }
@@ -26,8 +26,8 @@ public:
 	const int& TitleGetSetting  () const ;//{ return _TitleGetSetting;  }
 	const int& TitleGetLocation () const ;//{ return _TitleGetLocation; }
 
-	void setSeasonDash       ( const bool& SeasonDash       ){ _SeasonDash       = SeasonDash;       }
-	void setTitleDash        ( const bool& TitleDash        ){ _TitleDash        = TitleDash;        }
+	void setSeasonDash       ( const bool& SeasonDash       );//{ _SeasonDash       = SeasonDash;       }
+	void setTitleDash        ( const bool& TitleDash        );//{ _TitleDash        = TitleDash;        }
 
 	void setTVShowFormat     ( const int&  TVShowFormat     );//{ ui->ShowNameComboBox->setCurrentIndex( TVShowFormat);    }
 	void setSeasonFormat     ( const int&  SeasonFormat     );//{ _SeasonFormat     = SeasonFormat;     }
@@ -53,8 +53,8 @@ private:
 	int _SeasonOffset;
 	int _EpisodeOffset;
 
-	bool _SeasonDash;
-	bool _TitleDash;
+	//bool _SeasonDash;
+	//bool _TitleDash;
 	bool _SpaceAsSeporator;
 	bool _ConvertUnderScores;
 	bool _RemoveBrackets;
