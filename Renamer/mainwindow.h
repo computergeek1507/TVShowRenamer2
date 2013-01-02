@@ -8,6 +8,7 @@
 #include <QtNetwork>
 #include <QMessageBox>
 #include <QSettings>
+#include <QHash>
 #include <QSortFilterProxyModel>
 #include "tvshowmodel.h"
 #include "convertiondialog.h"
@@ -44,11 +45,13 @@ private:
 	ConvertionDialog *_ConvertionSettings;
 	QSortFilterProxyModel *proxyModel;
 	TVShowModel *_TVShowModelList;
+	QSettings* _ConvertionSettingsQSettings;
 	QStringList _UsableEXT;
 
 	bool ConvertFileName();
 	void RecurseDirectory(const QString& sDir);
 	void LoadSettings();
+	void SaveSettings();
 };
 
 #endif // MAINWINDOW_H
