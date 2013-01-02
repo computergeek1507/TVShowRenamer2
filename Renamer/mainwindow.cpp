@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	_MainSettings = new SettingsDialog();
 	_ConvertionSettings = new ConvertionDialog();
 
+	_ConvertionSettingsQSettings = new QSettings(QSettings::IniFormat,QSettings::UserScope,"ScottNation", "TV Show Renamer");
+	LoadSettings();
+
 	ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
 	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
 	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
@@ -29,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+	SaveSettings();
 	delete ui;
 }
 
@@ -240,5 +244,28 @@ void MainWindow::RecurseDirectory(const QString& sDir)
 
 void MainWindow::LoadSettings()
 {
-	//QSettings settings(QSettings::IniFormat,"ScottNation", "TV Show Renamer");
+	_ConvertionSettingsQSettings->beginGroup("ConvertionSettings");
+	QHash<QString, QVariant> hash;
+	const QStringList keys = _ConvertionSettingsQSettings->allKeys();
+	Q_FOREACH(QString key, keys) 
+	{
+		hash[key] = _ConvertionSettingsQSettings->value(key);
+	}
+	_ConvertionSettings->SetConvertionSettings(hash);
+	_ConvertionSettingsQSettings->endGroup();
+}
+void MainWindow::SaveSettings()
+{
+	_ConvertionSettingsQSettings->beginGroup("ConvertionSettings");
+	QHash<QString, QVariant> hash = _ConvertionSettings->GetConvertionSettings();
+
+	QHashIterator<QString, QVariant> i(hash);
+	while (i.hasNext())
+	{
+		i.next();
+		_ConvertionSettingsQSettings->setValue(i.key(),i.value());
+	}
+	_ConvertionSettingsQSettings->endGroup();
+
+	_ConvertionSettingsQSettings->sync();
 }

@@ -23,6 +23,46 @@ ConvertionDialog::~ConvertionDialog()
 	delete ui;
 }
 
+QHash<QString, QVariant> ConvertionDialog::GetConvertionSettings()
+{
+	QHash<QString, QVariant> ConvertionSettings;
+
+	ConvertionSettings.insert( ui->ShowNameComboBox      ->objectName(), ui->ShowNameComboBox      ->currentIndex());
+	ConvertionSettings.insert( ui->EpisodeFormatComboBox ->objectName(), ui->EpisodeFormatComboBox ->currentIndex());
+	ConvertionSettings.insert( ui->TitleFormatComboBox   ->objectName(), ui->TitleFormatComboBox   ->currentIndex());
+	ConvertionSettings.insert( ui->ExtFormatComboBox     ->objectName(), ui->ExtFormatComboBox     ->currentIndex());
+	ConvertionSettings.insert( ui->TitleGetComboBox      ->objectName(), ui->TitleGetComboBox      ->currentIndex());
+	ConvertionSettings.insert( ui->TitleSearchComboBox   ->objectName(), ui->TitleSearchComboBox   ->currentIndex());
+	ConvertionSettings.insert( ui->SeasonDashComboBox    ->objectName(), ui->SeasonDashComboBox    ->currentIndex());
+	ConvertionSettings.insert( ui->TitleDashComboBox     ->objectName(), ui->TitleDashComboBox     ->currentIndex());
+
+
+	ConvertionSettings.insert( ui->SeasonOffsetSpinBox     ->objectName(), ui->SeasonOffsetSpinBox  ->value());
+	ConvertionSettings.insert( ui->EpisodeOffsetSpinBox    ->objectName(), ui->EpisodeOffsetSpinBox ->value());
+
+	ConvertionSettings.insert( ui->SpacerCheckBox          ->objectName(), ui->SpacerCheckBox          ->isChecked());
+	ConvertionSettings.insert( ui->UnderScoreCheckBox      ->objectName(), ui->UnderScoreCheckBox      ->isChecked());
+	ConvertionSettings.insert( ui->RemoveBracketsCheckBox  ->objectName(), ui->RemoveBracketsCheckBox  ->isChecked());
+	ConvertionSettings.insert( ui->RemoveDashCheckBox      ->objectName(), ui->RemoveDashCheckBox      ->isChecked());
+	ConvertionSettings.insert( ui->RemoveYearCheckBox      ->objectName(), ui->RemoveYearCheckBox      ->isChecked());
+	ConvertionSettings.insert( ui->RemoveExtraJunkCheckBox ->objectName(), ui->RemoveExtraJunkCheckBox ->isChecked());
+	ConvertionSettings.insert( ui->AutoTitleCheckBox       ->objectName(), ui->AutoTitleCheckBox       ->isChecked());
+	ConvertionSettings.insert( ui->OnlineShowCheckBox      ->objectName(), ui->OnlineShowCheckBox      ->isChecked());
+	
+	return ConvertionSettings;
+}
+
+void ConvertionDialog::SetConvertionSettings(QHash<QString, QVariant> ConvertionSettings)
+{
+	QHashIterator<QString, QVariant> i(ConvertionSettings);
+	while (i.hasNext())
+	{
+		i.next();
+		//_ConvertionSettingsQSettings->setValue(i.key(),i.value());
+	}
+
+}
+
 void ConvertionDialog::on_OKPushButton_clicked()
 {
 	accept();
@@ -32,6 +72,7 @@ void ConvertionDialog::on_CancelPushButton_clicked()
 {
 	reject();
 }
+
 const int& ConvertionDialog::TVShowFormat     () const { return ui->ShowNameComboBox      ->currentIndex(); }
 const int& ConvertionDialog::SeasonFormat     () const { return ui->EpisodeFormatComboBox ->currentIndex(); }
 const int& ConvertionDialog::TitleFormat      () const { return ui->TitleFormatComboBox   ->currentIndex(); }
