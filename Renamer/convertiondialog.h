@@ -19,6 +19,15 @@ public:
 	const bool& SeasonDash      () const;// { return _SeasonDash;       }
 	const bool& TitleDash       () const;// { return _TitleDash;        }
 
+	const bool& SpaceAsSeporator   () const;
+	const bool& ConvertUnderScores () const;
+	const bool& RemoveBrackets     () const;
+	const bool& RemoveDashes       () const;
+	const bool& RemoveYear         () const;
+	const bool& RemoveJunk         () const;
+	const bool& AutoGetTitle       () const;
+	const bool& UseOnlineShowName  () const;
+
 	const int& TVShowFormat     () const ;//{ return ui->ShowNameComboBox->currentIndex();     }
 	const int& SeasonFormat     () const ;//{ return _SeasonFormat;     }
 	const int& TitleFormat      () const ;//{ return _TitleFormat;      }
@@ -26,8 +35,20 @@ public:
 	const int& TitleGetSetting  () const ;//{ return _TitleGetSetting;  }
 	const int& TitleGetLocation () const ;//{ return _TitleGetLocation; }
 
+	const int& SeasonOffset  () const ;//{ return _TitleGetSetting;  }
+	const int& EpisodeOffset () const ;//{ return _TitleGetLocation; }
+
 	void setSeasonDash       ( const bool& SeasonDash       );//{ _SeasonDash       = SeasonDash;       }
 	void setTitleDash        ( const bool& TitleDash        );//{ _TitleDash        = TitleDash;        }
+
+	void setSpaceAsSeporator   ( const bool& SpaceAsSeporator   );
+	void setConvertUnderScores ( const bool& ConvertUnderScores );
+	void setRemoveBrackets     ( const bool& RemoveBrackets     );
+	void setRemoveDashes       ( const bool& RemoveDashes       );
+	void setRemoveYear         ( const bool& RemoveYear         );
+	void setRemoveJunk         ( const bool& RemoveJunk         );
+	void setAutoGetTitle       ( const bool& AutoGetTitle       );
+	void setUseOnlineShowName  ( const bool& UseOnlineShowName  );
 
 	void setTVShowFormat     ( const int&  TVShowFormat     );//{ ui->ShowNameComboBox->setCurrentIndex( TVShowFormat);    }
 	void setSeasonFormat     ( const int&  SeasonFormat     );//{ _SeasonFormat     = SeasonFormat;     }
@@ -35,6 +56,9 @@ public:
 	void setExtFormat        ( const int&  ExtFormat        );//{ _ExtFormat        = ExtFormat;        }
 	void setTitleGetSetting  ( const int&  TitleGetSetting  );//{ _TitleGetSetting  = TitleGetSetting;  }
 	void setTitleGetLocation ( const int&  TitleGetLocation );//{ _TitleGetLocation = TitleGetLocation; }
+
+	void setSeasonOffset  ( const int&  SeasonOffset  );//{ _TitleGetSetting  = TitleGetSetting;  }
+	void setEpisodeOffset ( const int&  EpisodeOffset );//{ _TitleGetLocation = TitleGetLocation; }
 
 private slots:
 	void on_OKPushButton_clicked();

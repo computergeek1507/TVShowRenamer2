@@ -41,6 +41,18 @@ const int& ConvertionDialog::TitleGetLocation () const { return ui->TitleSearchC
 const bool& ConvertionDialog::SeasonDash      () const { return !!ui->SeasonDashComboBox  ->currentIndex(); }
 const bool& ConvertionDialog::TitleDash       () const { return   ui->TitleDashComboBox   ->currentIndex(); }
 
+const bool& ConvertionDialog::SpaceAsSeporator   () const { return ui->SpacerCheckBox          ->isChecked(); }
+const bool& ConvertionDialog::ConvertUnderScores () const { return ui->UnderScoreCheckBox      ->isChecked(); }
+const bool& ConvertionDialog::RemoveBrackets     () const { return ui->RemoveBracketsCheckBox  ->isChecked(); }
+const bool& ConvertionDialog::RemoveDashes       () const { return ui->RemoveDashCheckBox      ->isChecked(); }
+const bool& ConvertionDialog::RemoveYear         () const { return ui->RemoveYearCheckBox      ->isChecked(); }
+const bool& ConvertionDialog::RemoveJunk         () const { return ui->RemoveExtraJunkCheckBox ->isChecked(); }
+const bool& ConvertionDialog::AutoGetTitle       () const { return ui->AutoTitleCheckBox       ->isChecked(); }
+const bool& ConvertionDialog::UseOnlineShowName  () const { return ui->OnlineShowCheckBox      ->isChecked(); }
+
+const int& ConvertionDialog::SeasonOffset  () const { return ui->SeasonOffsetSpinBox->value(); }
+const int& ConvertionDialog::EpisodeOffset () const { return ui->EpisodeOffsetSpinBox->value(); }
+
 void ConvertionDialog::setTVShowFormat     ( const int&  TVShowFormat     ){ ui->ShowNameComboBox      ->setCurrentIndex( TVShowFormat );     }
 void ConvertionDialog::setSeasonFormat     ( const int&  SeasonFormat     ){ ui->EpisodeFormatComboBox ->setCurrentIndex( SeasonFormat );     }
 void ConvertionDialog::setTitleFormat      ( const int&  TitleFormat      ){ ui->TitleFormatComboBox   ->setCurrentIndex( TitleFormat );      }
@@ -49,3 +61,16 @@ void ConvertionDialog::setTitleGetSetting  ( const int&  TitleGetSetting  ){ ui-
 void ConvertionDialog::setTitleGetLocation ( const int&  TitleGetLocation ){ ui->TitleSearchComboBox   ->setCurrentIndex( TitleGetLocation ); }
 void ConvertionDialog::setSeasonDash       ( const bool& SeasonDash       ){ ui->SeasonDashComboBox    ->setCurrentIndex( SeasonDash );       }
 void ConvertionDialog::setTitleDash        ( const bool& TitleDash        ){ ui->TitleSearchComboBox   ->setCurrentIndex( TitleDash );        }
+
+void ConvertionDialog::setSpaceAsSeporator   ( const bool& SpaceAsSeporator   ){ ui->SpacerCheckBox->setChecked( SpaceAsSeporator);   }
+void ConvertionDialog::setConvertUnderScores ( const bool& ConvertUnderScores ){ ui->SpacerCheckBox->setChecked( ConvertUnderScores); }
+void ConvertionDialog::setRemoveBrackets     ( const bool& RemoveBrackets     ){ ui->SpacerCheckBox->setChecked( RemoveBrackets);     }
+void ConvertionDialog::setRemoveDashes       ( const bool& RemoveDashes       ){ ui->SpacerCheckBox->setChecked( RemoveDashes);       }
+void ConvertionDialog::setRemoveYear         ( const bool& RemoveYear         ){ ui->SpacerCheckBox->setChecked( RemoveYear);         }
+void ConvertionDialog::setRemoveJunk         ( const bool& RemoveJunk         ){ ui->SpacerCheckBox->setChecked( RemoveJunk);         }
+void ConvertionDialog::setAutoGetTitle       ( const bool& AutoGetTitle       ){ ui->SpacerCheckBox->setChecked( AutoGetTitle);       }
+void ConvertionDialog::setUseOnlineShowName  ( const bool& UseOnlineShowName  ){ ui->SpacerCheckBox->setChecked( UseOnlineShowName);  }
+
+void ConvertionDialog::setSeasonOffset  ( const int&  SeasonOffset  ){ ui->SeasonOffsetSpinBox->setValue( SeasonOffset );  }
+void ConvertionDialog::setEpisodeOffset ( const int&  EpisodeOffset ){ ui->EpisodeOffsetSpinBox->setValue( EpisodeOffset); }
+
