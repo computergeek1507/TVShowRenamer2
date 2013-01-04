@@ -15,7 +15,6 @@ ConvertionDialog::ConvertionDialog(QWidget *parent) :
 	ui->TitleGetComboBox      ->addItems(QStringList()<<"Use File then Online"<<"Use File"<<"Online Only");
 	ui->TitleSearchComboBox   ->addItems(QStringList()<<"TVDB.com"<<"TVRage.com"<<"Epguides.com"<<"theXEM.de");
 	ui->listWidget->addItem("Default");
-
 }
 
 ConvertionDialog::~ConvertionDialog()
@@ -36,7 +35,6 @@ QHash<QString, QVariant> ConvertionDialog::GetConvertionSettings()
 	ConvertionSettings.insert( ui->SeasonDashComboBox    ->objectName(), ui->SeasonDashComboBox    ->currentIndex());
 	ConvertionSettings.insert( ui->TitleDashComboBox     ->objectName(), ui->TitleDashComboBox     ->currentIndex());
 
-
 	ConvertionSettings.insert( ui->SeasonOffsetSpinBox     ->objectName(), ui->SeasonOffsetSpinBox  ->value());
 	ConvertionSettings.insert( ui->EpisodeOffsetSpinBox    ->objectName(), ui->EpisodeOffsetSpinBox ->value());
 
@@ -54,13 +52,26 @@ QHash<QString, QVariant> ConvertionDialog::GetConvertionSettings()
 
 void ConvertionDialog::SetConvertionSettings(QHash<QString, QVariant> ConvertionSettings)
 {
-	QHashIterator<QString, QVariant> i(ConvertionSettings);
-	while (i.hasNext())
-	{
-		i.next();
-		//_ConvertionSettingsQSettings->setValue(i.key(),i.value());
-	}
-
+	ui->ShowNameComboBox      ->setCurrentIndex( ConvertionSettings[ ui->ShowNameComboBox      ->objectName() ].toInt() );
+	ui->EpisodeFormatComboBox ->setCurrentIndex( ConvertionSettings[ ui->EpisodeFormatComboBox ->objectName() ].toInt() );
+	ui->TitleFormatComboBox   ->setCurrentIndex( ConvertionSettings[ ui->TitleFormatComboBox   ->objectName() ].toInt() );
+	ui->ExtFormatComboBox     ->setCurrentIndex( ConvertionSettings[ ui->ExtFormatComboBox     ->objectName() ].toInt() );
+	ui->TitleGetComboBox      ->setCurrentIndex( ConvertionSettings[ ui->TitleGetComboBox      ->objectName() ].toInt() );
+	ui->TitleSearchComboBox   ->setCurrentIndex( ConvertionSettings[ ui->TitleSearchComboBox   ->objectName() ].toInt() );
+	ui->SeasonDashComboBox    ->setCurrentIndex( ConvertionSettings[ ui->SeasonDashComboBox    ->objectName() ].toInt() );
+	ui->TitleDashComboBox     ->setCurrentIndex( ConvertionSettings[ ui->TitleDashComboBox     ->objectName() ].toInt() );
+	
+	ui->SpacerCheckBox          ->setChecked( ConvertionSettings[ ui->SpacerCheckBox          ->objectName() ].toBool() );
+	ui->UnderScoreCheckBox      ->setChecked( ConvertionSettings[ ui->UnderScoreCheckBox      ->objectName() ].toBool() );
+	ui->RemoveBracketsCheckBox  ->setChecked( ConvertionSettings[ ui->RemoveBracketsCheckBox  ->objectName() ].toBool() );
+	ui->RemoveDashCheckBox      ->setChecked( ConvertionSettings[ ui->RemoveDashCheckBox      ->objectName() ].toBool() );
+	ui->RemoveYearCheckBox      ->setChecked( ConvertionSettings[ ui->RemoveYearCheckBox      ->objectName() ].toBool() );
+	ui->RemoveExtraJunkCheckBox ->setChecked( ConvertionSettings[ ui->RemoveExtraJunkCheckBox ->objectName() ].toBool() );
+	ui->AutoTitleCheckBox       ->setChecked( ConvertionSettings[ ui->AutoTitleCheckBox       ->objectName() ].toBool() );
+	ui->OnlineShowCheckBox      ->setChecked( ConvertionSettings[ ui->OnlineShowCheckBox      ->objectName() ].toBool() );
+	
+	ui->SeasonOffsetSpinBox  ->setValue( ConvertionSettings[ ui->SeasonOffsetSpinBox  ->objectName() ].toInt() );
+	ui->EpisodeOffsetSpinBox ->setValue( ConvertionSettings[ ui->EpisodeOffsetSpinBox ->objectName() ].toInt() );
 }
 
 void ConvertionDialog::on_OKPushButton_clicked()
