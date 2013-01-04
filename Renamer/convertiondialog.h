@@ -6,8 +6,9 @@
 #include <QSettings>
 #include <QHash>
 
-namespace Ui {
-class ConvertionDialog;
+namespace Ui
+{
+	class ConvertionDialog;
 }
 
 class ConvertionDialog : public QDialog
@@ -71,27 +72,6 @@ private slots:
 
 private:
 	Ui::ConvertionDialog *ui;
-
-	//int _TVShowFormat;
-	//int _SeasonFormat;
-	//int _TitleFormat;
-	//int _ExtFormat;
-	//int _TitleGetSetting;
-	//int _TitleGetLocation;
-
-	//int _SeasonOffset;
-	//int _EpisodeOffset;
-
-	//bool _SeasonDash;
-	//bool _TitleDash;
-	//bool _SpaceAsSeporator;
-	//bool _ConvertUnderScores;
-	//bool _RemoveBrackets;
-	//bool _RemoveDashes;
-	//bool _RemoveYear;
-	//bool _RemoveJunk;
-	//bool _AutoGetTitle;
-	//bool _UseOnlineShowName;
 };
 
 #endif // CONVERTIONDIALOG_H

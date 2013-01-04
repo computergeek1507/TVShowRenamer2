@@ -23,10 +23,13 @@ public:
 	const int& SeasonNum         () const { return _seasonNum;     }
 	const int& EpisodeNum        () const { return _episodeNum;    }
 
-	QString FullFileName    () {
+	QString FullFileName    () 
+	{
 		return _fileFolder + QString(QDir::separator()) + _fileName;
 	}
-	QString NewFullFileName () {
+
+	QString NewFullFileName ()
+	{
 		return _fileFolder + QString(QDir::separator()) + _newFileName;
 	}
 
@@ -41,7 +44,6 @@ public:
 	void setTvShowID      ( const int&  TvShowID         ){ _tvShowID      = TvShowID;      }
 	void setSeasonNum     ( const int&  SeasonNum        ){ _seasonNum     = SeasonNum;     }
 	void setEpisodeNum    ( const int&  EpisodeNum       ){ _episodeNum    = EpisodeNum;    }
-
 
 private:
 	QString _fileFolder;//origonal folder

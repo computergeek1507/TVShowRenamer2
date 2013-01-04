@@ -6,8 +6,9 @@
 #include <QMessageBox>
 
 
-namespace Ui {
-class SettingsDialog;
+namespace Ui
+{
+	class SettingsDialog;
 }
 
 class SettingsDialog : public QDialog

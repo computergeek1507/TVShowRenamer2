@@ -27,7 +27,6 @@
 
 #define COLUMN_COUNT 8
 
-
 class TVShowModel: public QAbstractTableModel
 {
 	Q_OBJECT
