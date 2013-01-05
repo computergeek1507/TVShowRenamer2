@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
-    <height>274</height>
+    <width>719</width>
+    <height>293</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -142,6 +142,9 @@
         <property name="text">
          <string>Auto Get Show Title</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -214,12 +217,18 @@
         <property name="text">
          <string>Convert &quot;.&quot; to &quot; &quot;</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="0" column="1">
        <widget class="QCheckBox" name="RemoveDashCheckBox">
         <property name="text">
          <string>Remove &quot;-&quot;</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -228,12 +237,18 @@
         <property name="text">
          <string>Convert &quot;_&quot; to &quot; &quot;</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="1" column="1">
        <widget class="QCheckBox" name="RemoveYearCheckBox">
         <property name="text">
          <string>Remove Year</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -242,12 +257,18 @@
         <property name="text">
          <string>Remove (), {},[]</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="2" column="1">
        <widget class="QCheckBox" name="RemoveExtraJunkCheckBox">
         <property name="text">
          <string>Remove Extra Info</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
