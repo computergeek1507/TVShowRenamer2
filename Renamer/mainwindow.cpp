@@ -80,7 +80,8 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionConvertion_Profiles_triggered()
 {
-	_ConvertionSettings->show();
+	if(_ConvertionSettings->exec())
+		ConvertFileName();
 }
 
 
@@ -138,8 +139,17 @@ bool MainWindow::ConvertFileName()
 
 	QString tempSpace = " ";
 	QString notTempSpace = ".";
-	QString SeasonDash ="";// "- ";
-	QString TitleDash = "- ";
+	QString SeasonDash = "";
+	QString TitleDash = "";
+
+	if(!_ConvertionSettings->SpaceAsSeporator())
+	{
+		tempSpace = ".";
+		notTempSpace = " ";
+	}
+
+	if(_ConvertionSettings->SeasonDash())SeasonDash="-"+tempSpace;
+	if(_ConvertionSettings->TitleDash())TitleDash="-"+tempSpace;
 
 	QRegExp rxFormat("(\\d+)[x|X](\\d+)");
 	QRegExp rxSeasonFormat("[s|S](\\d+)[e|E](\\d+)");
@@ -153,7 +163,27 @@ bool MainWindow::ConvertFileName()
 		QString ShowTitle = "";
 		bool found = false;
 
-		TVShowInfo.setNewFileName(QString(TVShowInfo.FileName()).replace(notTempSpace,tempSpace));
+		//replace periods(".") with spaces 
+		TVShowInfo.setNewFileName(QString(TVShowInfo.NewFileName()).replace(notTempSpace,tempSpace));
+
+		//Replace "_" with spaces
+		if(_ConvertionSettings->ConvertUnderScores())
+		{
+			TVShowInfo.setNewFileName(QString(TVShowInfo.NewFileName()).replace("_",tempSpace));
+		}
+
+		//Replace "-" with spaces
+		if(_ConvertionSettings->RemoveDashes())
+		{
+			TVShowInfo.setNewFileName(QString(TVShowInfo.NewFileName()).replace("-",tempSpace));
+		}
+
+		//Replace (), {}, and [] with spaces
+		if (_ConvertionSettings->RemoveBrackets())
+		{
+			TVShowInfo.setNewFileName(QString(TVShowInfo.NewFileName()).replace("(",tempSpace).replace(")",tempSpace)
+				.replace("{", tempSpace).replace("}", tempSpace).replace("[", tempSpace).replace("]", tempSpace));
+		}
 
 		//1x01 format
 		int pos = rxFormat.indexIn(TVShowInfo.NewFileName());
@@ -169,17 +199,47 @@ bool MainWindow::ConvertFileName()
 			//myBox.setText(List[1]+"__"+List[2]+"__"+TVShowInfo.FileName()+"__"+QString::number(pos));
 			//myBox.exec();
 		}
-
-		//s01e01 format
-		pos = rxSeasonFormat.indexIn(TVShowInfo.NewFileName());
-		List = rxSeasonFormat.capturedTexts();
-
-		if((List[1]!="")&&!found)
+		else
 		{
-			TVShowInfo.setSeasonNum(List[1].toInt());
-			TVShowInfo.setEpisodeNum(List[2].toInt());
-			TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
-			found = true;
+			//s01e01 format
+			pos = rxSeasonFormat.indexIn(TVShowInfo.NewFileName());
+			List = rxSeasonFormat.capturedTexts();
+
+			if((List[1]!=""))
+			{
+				TVShowInfo.setSeasonNum(List[1].toInt());
+				TVShowInfo.setEpisodeNum(List[2].toInt());
+				TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
+				found = true;
+			}
+			else
+			{
+				//01.01 format
+				pos = rxNumberFormat.indexIn(TVShowInfo.NewFileName());
+				List = rxNumberFormat.capturedTexts();
+
+				if((List[1]!=""))
+				{
+					TVShowInfo.setSeasonNum(List[1].toInt());
+					TVShowInfo.setEpisodeNum(List[2].toInt());
+					TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
+					found = true;
+				}
+				else
+				{
+					//S01 format
+					pos = rxSpecialFormat.indexIn(TVShowInfo.NewFileName());
+					List = rxSpecialFormat.capturedTexts();
+
+					if((List[1]!=""))
+					{
+						TVShowInfo.setSeasonNum(List[1].toInt());
+						//TVShowInfo.setEpisodeNum(List[2].toInt());
+						TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
+						found = true;
+					}
+				}
+			}
 		}
 
 		if(found)
@@ -254,6 +314,7 @@ void MainWindow::LoadSettings()
 	_ConvertionSettings->SetConvertionSettings(hash);
 	_ConvertionSettingsQSettings->endGroup();
 }
+
 void MainWindow::SaveSettings()
 {
 	_ConvertionSettingsQSettings->beginGroup("ConvertionSettings");
@@ -268,4 +329,11 @@ void MainWindow::SaveSettings()
 	_ConvertionSettingsQSettings->endGroup();
 
 	_ConvertionSettingsQSettings->sync();
+}
+
+QString MainWindow::TrimExtraChar(QString string)
+{
+	//for
+
+	return string;
 }

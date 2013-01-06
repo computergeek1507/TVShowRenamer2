@@ -53,6 +53,7 @@ private:
 	void RecurseDirectory(const QString& sDir);
 	void LoadSettings();
 	void SaveSettings();
+	QString TrimExtraChar(QString string);
 };
 
 #endif // MAINWINDOW_H
