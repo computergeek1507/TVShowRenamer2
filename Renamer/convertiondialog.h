@@ -22,8 +22,8 @@ public:
 	QHash<QString, QVariant> GetConvertionSettings();
 	void SetConvertionSettings(QHash<QString, QVariant> ConvertionSettings);
 
-	const bool& SeasonDash      () const;
-	const bool& TitleDash       () const;
+	 bool SeasonDash      () ;
+	 bool TitleDash       () ;
 
 	const bool& SpaceAsSeporator   () const;
 	const bool& ConvertUnderScores () const;
@@ -44,8 +44,8 @@ public:
 	const int& SeasonOffset  () const ;
 	const int& EpisodeOffset () const ;
 
-	void setSeasonDash       ( const bool& SeasonDash       );
-	void setTitleDash        ( const bool& TitleDash        );
+	void setSeasonDash       ( bool SeasonDash       );
+	void setTitleDash        ( bool TitleDash        );
 
 	void setSpaceAsSeporator   ( const bool& SpaceAsSeporator   );
 	void setConvertUnderScores ( const bool& ConvertUnderScores );

@@ -90,8 +90,6 @@ const int& ConvertionDialog::TitleFormat      () const { return ui->TitleFormatC
 const int& ConvertionDialog::ExtFormat        () const { return ui->ExtFormatComboBox     ->currentIndex(); }
 const int& ConvertionDialog::TitleGetSetting  () const { return ui->TitleGetComboBox      ->currentIndex(); }
 const int& ConvertionDialog::TitleGetLocation () const { return ui->TitleSearchComboBox   ->currentIndex(); }
-const bool& ConvertionDialog::SeasonDash      () const { return !!ui->SeasonDashComboBox  ->currentIndex(); }
-const bool& ConvertionDialog::TitleDash       () const { return   ui->TitleDashComboBox   ->currentIndex(); }
 
 const bool& ConvertionDialog::SpaceAsSeporator   () const { return ui->SpacerCheckBox          ->isChecked(); }
 const bool& ConvertionDialog::ConvertUnderScores () const { return ui->UnderScoreCheckBox      ->isChecked(); }
@@ -102,6 +100,22 @@ const bool& ConvertionDialog::RemoveJunk         () const { return ui->RemoveExt
 const bool& ConvertionDialog::AutoGetTitle       () const { return ui->AutoTitleCheckBox       ->isChecked(); }
 const bool& ConvertionDialog::UseOnlineShowName  () const { return ui->OnlineShowCheckBox      ->isChecked(); }
 
+bool ConvertionDialog::SeasonDash      () 
+{
+	if( ui->SeasonDashComboBox  ->currentIndex()==0 )
+		return false;
+	else 
+		return true;
+}
+bool ConvertionDialog::TitleDash       ()
+{
+	//return   ui->TitleDashComboBox   ->currentIndex();
+	if( ui->TitleDashComboBox  ->currentIndex() == 0 )
+		return false;
+	else 
+		return true;
+}
+
 const int& ConvertionDialog::SeasonOffset  () const { return ui->SeasonOffsetSpinBox->value(); }
 const int& ConvertionDialog::EpisodeOffset () const { return ui->EpisodeOffsetSpinBox->value(); }
 
@@ -111,8 +125,22 @@ void ConvertionDialog::setTitleFormat      ( const int&  TitleFormat      ){ ui-
 void ConvertionDialog::setExtFormat        ( const int&  ExtFormat        ){ ui->ExtFormatComboBox     ->setCurrentIndex( ExtFormat );        }
 void ConvertionDialog::setTitleGetSetting  ( const int&  TitleGetSetting  ){ ui->TitleGetComboBox      ->setCurrentIndex( TitleGetSetting );  }
 void ConvertionDialog::setTitleGetLocation ( const int&  TitleGetLocation ){ ui->TitleSearchComboBox   ->setCurrentIndex( TitleGetLocation ); }
-void ConvertionDialog::setSeasonDash       ( const bool& SeasonDash       ){ ui->SeasonDashComboBox    ->setCurrentIndex( SeasonDash );       }
-void ConvertionDialog::setTitleDash        ( const bool& TitleDash        ){ ui->TitleSearchComboBox   ->setCurrentIndex( TitleDash );        }
+
+void ConvertionDialog::setSeasonDash       ( bool SeasonDash       )
+{
+	if(SeasonDash)
+		ui->SeasonDashComboBox    ->setCurrentIndex( 1 );       
+	else
+		ui->SeasonDashComboBox    ->setCurrentIndex( 0 );
+}
+
+void ConvertionDialog::setTitleDash        ( bool TitleDash        )
+{
+	if(TitleDash)
+		ui->TitleSearchComboBox   ->setCurrentIndex( 1 );      
+	else
+		ui->TitleSearchComboBox   ->setCurrentIndex( 0 );
+}
 
 void ConvertionDialog::setSpaceAsSeporator   ( const bool& SpaceAsSeporator   ){ ui->SpacerCheckBox->setChecked( SpaceAsSeporator);   }
 void ConvertionDialog::setConvertUnderScores ( const bool& ConvertUnderScores ){ ui->SpacerCheckBox->setChecked( ConvertUnderScores); }
