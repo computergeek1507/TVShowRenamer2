@@ -185,6 +185,18 @@ bool MainWindow::ConvertFileName()
 				.replace("{", tempSpace).replace("}", tempSpace).replace("[", tempSpace).replace("]", tempSpace));
 		}
 
+		//Removes extra Spaces and periods
+		QStringList tempspace;
+		tempspace.append( tempSpace);
+
+		//loop to create arrays of periods/spaces
+		for (int i = 1; i < TVShowInfo.NewFileName().size(); i++)
+			tempspace.append( tempspace[i - 1] + tempSpace);
+
+		for (int k = TVShowInfo.NewFileName().size() - 1; k > 0; k--)
+			TVShowInfo.setNewFileName(QString(TVShowInfo.NewFileName()).replace(tempspace[k],tempSpace));
+
+
 		//1x01 format
 		int pos = rxFormat.indexIn(TVShowInfo.NewFileName());
 		QStringList List = rxFormat.capturedTexts();
@@ -193,7 +205,7 @@ bool MainWindow::ConvertFileName()
 		{
 			TVShowInfo.setSeasonNum(List[1].toInt());
 			TVShowInfo.setEpisodeNum(List[2].toInt());
-			TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
+			TVShowInfo.setTVShowName(TrimExtraChar(TVShowInfo.NewFileName().left(pos-1)));
 			found = true;
 			//QMessageBox myBox;
 			//myBox.setText(List[1]+"__"+List[2]+"__"+TVShowInfo.FileName()+"__"+QString::number(pos));
@@ -209,7 +221,7 @@ bool MainWindow::ConvertFileName()
 			{
 				TVShowInfo.setSeasonNum(List[1].toInt());
 				TVShowInfo.setEpisodeNum(List[2].toInt());
-				TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
+				TVShowInfo.setTVShowName(TrimExtraChar(TVShowInfo.NewFileName().left(pos-1)));
 				found = true;
 			}
 			else
@@ -222,7 +234,7 @@ bool MainWindow::ConvertFileName()
 				{
 					TVShowInfo.setSeasonNum(List[1].toInt());
 					TVShowInfo.setEpisodeNum(List[2].toInt());
-					TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
+					TVShowInfo.setTVShowName(TrimExtraChar(TVShowInfo.NewFileName().left(pos-1)));
 					found = true;
 				}
 				else
@@ -235,7 +247,7 @@ bool MainWindow::ConvertFileName()
 					{
 						TVShowInfo.setSeasonNum(List[1].toInt());
 						//TVShowInfo.setEpisodeNum(List[2].toInt());
-						TVShowInfo.setTVShowName(TVShowInfo.NewFileName().left(pos-1));
+						TVShowInfo.setTVShowName(TrimExtraChar(TVShowInfo.NewFileName().left(pos-1)));
 						found = true;
 					}
 				}
@@ -270,6 +282,7 @@ bool MainWindow::ConvertFileName()
 	}
 
 	ui->tableViewTVShowList->resizeColumnsToContents();
+
 	return true;
 }
 
@@ -333,7 +346,21 @@ void MainWindow::SaveSettings()
 
 QString MainWindow::TrimExtraChar(QString string)
 {
-	//for
+	for(int i = string.size()-1;i>=0;i--)
+	{
+		if(string[i].isLetterOrNumber())
+			break;
+		else
+			string.remove(i,1);
+	}
+
+	for(int j = 0;j<string.size();j++)
+	{
+		if(string[0].isLetterOrNumber())
+			break;
+		else
+			string.remove(0,1);
+	}
 
 	return string;
 }
