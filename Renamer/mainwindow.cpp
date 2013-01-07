@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
 	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
 	//ui->tableViewTVShowList->setColumnHidden(FILEFOLDER_COLUMN,true);
+
+	episodeTitle= new tvepisodetitle();
 }
 
 MainWindow::~MainWindow()
@@ -196,7 +198,6 @@ bool MainWindow::ConvertFileName()
 		for (int k = TVShowInfo.NewFileName().size() - 1; k > 0; k--)
 			TVShowInfo.setNewFileName(QString(TVShowInfo.NewFileName()).replace(tempspace[k],tempSpace));
 
-
 		//1x01 format
 		int pos = rxFormat.indexIn(TVShowInfo.NewFileName());
 		QStringList List = rxFormat.capturedTexts();
@@ -256,7 +257,8 @@ bool MainWindow::ConvertFileName()
 
 		if(found)
 		{
-			TVShowInfo.setTVShowName(QString(TVShowInfo.TVShowName()).trimmed());
+			episodeTitle->getTVDBID(TVShowInfo.TVShowName(),i);
+			//TVShowInfo.setTVShowName(QString(TVShowInfo.TVShowName()).trimmed());
 			QString FormatedSeasonNumber = QString::number(TVShowInfo.SeasonNum());
 			QString FormatedEpisodeNumber = QString::number(TVShowInfo.EpisodeNum());
 			//check if i is less than 10
@@ -266,7 +268,35 @@ bool MainWindow::ConvertFileName()
 			if (TVShowInfo.EpisodeNum() < 10)
 			FormatedEpisodeNumber = "0" + QString::number(TVShowInfo.EpisodeNum());
 
-			QString finalShowName = TVShowInfo.TVShowName() + tempSpace + SeasonDash + QString::number(TVShowInfo.SeasonNum()) + "x" + FormatedEpisodeNumber + tempSpace + TitleDash + ShowTitle +"."+ Extention;
+			QString finalShowName;
+
+
+			switch (_ConvertionSettings->SeasonFormat())
+			{
+			case 0:
+				finalShowName = TVShowInfo.TVShowName() + tempSpace + SeasonDash + 
+					QString::number(TVShowInfo.SeasonNum()) + "x" + FormatedEpisodeNumber + tempSpace + TitleDash + ShowTitle +"."+ Extention;
+				break;
+			case 1:
+				finalShowName = TVShowInfo.TVShowName() + tempSpace + SeasonDash + 
+					FormatedSeasonNumber + FormatedEpisodeNumber + tempSpace + TitleDash + ShowTitle +"."+ Extention;
+				break;
+			case 2:
+				finalShowName = TVShowInfo.TVShowName() + tempSpace + SeasonDash + "S"+
+					FormatedSeasonNumber +"E"+ FormatedEpisodeNumber + tempSpace + TitleDash + ShowTitle +"."+ Extention;
+				break;
+			case 3:
+				finalShowName = TVShowInfo.TVShowName() + tempSpace + SeasonDash + 
+					QString::number(TVShowInfo.SeasonNum()) + FormatedEpisodeNumber + tempSpace + TitleDash + ShowTitle +"."+ Extention;
+				break;
+			//case 4:
+				//
+				//break;
+			default:
+				finalShowName = TVShowInfo.NewFileName();
+				break;
+			}
+			//QString finalShowName = TVShowInfo.TVShowName() + tempSpace + SeasonDash + QString::number(TVShowInfo.SeasonNum()) + "x" + FormatedEpisodeNumber + tempSpace + TitleDash + ShowTitle +"."+ Extention;
 			
 			finalShowName.replace("..", ".");
 			finalShowName.replace(" .", ".");
