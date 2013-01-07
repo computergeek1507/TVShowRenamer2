@@ -13,6 +13,7 @@
 #include "tvshowmodel.h"
 #include "convertiondialog.h"
 #include "settingsdialog.h"
+#include "tvepisodetitle.h"
 
 namespace Ui
 {
@@ -47,6 +48,9 @@ private:
 	QSortFilterProxyModel *proxyModel;
 	TVShowModel *_TVShowModelList;
 	QSettings* _ConvertionSettingsQSettings;
+
+	tvepisodetitle *episodeTitle;
+
 	QStringList _UsableEXT;
 
 	bool ConvertFileName();
