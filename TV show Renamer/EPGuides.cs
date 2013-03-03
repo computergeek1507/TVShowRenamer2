@@ -19,7 +19,7 @@ namespace TV_Show_Renamer
 
         public EPGuides(string newFolder)
         {
-            folder = newFolder + "\\Temp";
+            folder = newFolder + Path.DirectorySeparatorChar + "Temp";
         }
 
         public SearchInfo findTitle(string ShowName)
@@ -96,15 +96,15 @@ namespace TV_Show_Renamer
             string returnInfo="";
             try
             {
-                if (File.Exists(folder + "//" + seriesID))//see if file exists
+                if (File.Exists(folder + Path.DirectorySeparatorChar + seriesID))//see if file exists
                 {
-                    showList = parse(folder + "\\" + seriesID);
+                    showList = parse(folder + Path.DirectorySeparatorChar + seriesID);
                 }
                 else 
                 {
                     WebClient client = new WebClient();
-                    client.DownloadFile(URL + seriesID, folder + "\\" + seriesID);
-                    showList = parse(folder + "\\" + seriesID);
+                    client.DownloadFile(URL + seriesID, folder + Path.DirectorySeparatorChar + seriesID);
+                    showList = parse(folder + Path.DirectorySeparatorChar + seriesID);
                 } 
             }
             catch (Exception e)
