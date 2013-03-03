@@ -73,14 +73,14 @@ namespace TV_Show_Renamer
         //make logo
         private void button3_Click(object sender, EventArgs e)
         {
-            if (File.Exists(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\logo.png"))
+            if (File.Exists(TVFolder + Path.DirectorySeparatorChar + folderList[comboBox1.SelectedIndex] + Path.DirectorySeparatorChar + "logo.png"))
             {
                 MessageBox.Show("Logo Already Exists");
             }
             else
             {
                 Bitmap bmp1 = CreateLogo(folderList[comboBox1.SelectedIndex]);
-                bmp1.Save(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\logo.png", System.Drawing.Imaging.ImageFormat.Png);
+                bmp1.Save(TVFolder + Path.DirectorySeparatorChar + folderList[comboBox1.SelectedIndex] + Path.DirectorySeparatorChar + "logo.png", System.Drawing.Imaging.ImageFormat.Png);
             }
         }
         private Bitmap CreateLogo(string text)
@@ -152,14 +152,14 @@ namespace TV_Show_Renamer
         //make banner
         private void button4_Click(object sender, EventArgs e)
         {
-            if (File.Exists(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\banner.jpg"))
+            if (File.Exists(TVFolder + Path.DirectorySeparatorChar + folderList[comboBox1.SelectedIndex] + Path.DirectorySeparatorChar + "banner.jpg"))
             {
                 MessageBox.Show("Banner Already Exists");
             }
             else
             {
                 Bitmap bmp1 = CreateBanner(folderList[comboBox1.SelectedIndex]);
-                bmp1.Save(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\banner.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                bmp1.Save(TVFolder + Path.DirectorySeparatorChar + folderList[comboBox1.SelectedIndex] + Path.DirectorySeparatorChar + "banner.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
             }
         }
 
@@ -172,7 +172,7 @@ namespace TV_Show_Renamer
             //ShowWrite(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\tvshow.nfo", folderList[comboBox1.SelectedIndex],totalSize);
 
             //new way
-            CreateTVShowNfoFile(TVFolder + "\\" + folderList[comboBox1.SelectedIndex] + "\\tvshow.nfo", folderList[comboBox1.SelectedIndex]);
+            CreateTVShowNfoFile(TVFolder + Path.DirectorySeparatorChar + folderList[comboBox1.SelectedIndex] + Path.DirectorySeparatorChar + "tvshow.nfo", folderList[comboBox1.SelectedIndex]);
         }
 
         public void EpisodeWrite(string fileName, string title, int season, int episode, int displayseason, int displayepisode)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using MsdnMag;
 using System.Windows.Forms;
 using System.ComponentModel;
@@ -116,12 +117,12 @@ namespace TV_Show_Renamer
 
         public string FullFileName
         {
-            get { return _fileFolder +"\\"+ _fileName; }            
+            get { return _fileFolder +Path.DirectorySeparatorChar + _fileName; }            
         }
 
         public string NewFullFileName
         {
-            get { return _fileFolder + "\\" + _newFileName; }
+            get { return _fileFolder + Path.DirectorySeparatorChar  + _newFileName; }
         }
 
         public bool AutoEdit 

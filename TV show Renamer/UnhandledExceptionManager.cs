@@ -20,6 +20,7 @@ using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using System.IO;
 
 //'--
 //'-- Generic UNHANDLED error handling class
@@ -752,7 +753,7 @@ namespace TV_Show_Renamer
         {
             try
             {
-                return System.Environment.UserDomainName + "\\" + System.Environment.UserName;
+                return System.Environment.UserDomainName + Path.DirectorySeparatorChar + System.Environment.UserName;
             }
             catch (Exception )
             {

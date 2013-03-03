@@ -925,7 +925,9 @@
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+			#if WINDOWS
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			#endif
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(500, 130);

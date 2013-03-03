@@ -24,7 +24,7 @@ namespace TV_Show_Renamer
         public thexem(string newFolder)
         {
             folder = newFolder;
-            m_cacheProvider = new XmlCacheProvider(folder + "\\Temp");
+            m_cacheProvider = new XmlCacheProvider(folder + Path.DirectorySeparatorChar + "Temp");
             m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
             m_tvdbHandler.InitCache();
         }
@@ -122,7 +122,7 @@ namespace TV_Show_Renamer
                 if (!(File.Exists(folder + "//" + seriesID.ToString()+".xml")))//see if file exists
                 {
                     WebClient client = new WebClient();
-                    client.DownloadFile("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml", folder + "\\" + seriesID.ToString()+".xml");
+                    client.DownloadFile("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml", folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml");
                     
                 }
                 //WebClient client = new WebClient();

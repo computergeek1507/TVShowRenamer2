@@ -44,7 +44,7 @@ namespace TV_Show_Renamer
         int[] _buttonColor = { 255, 240, 240, 240 };
 
         string _firstWord = "";
-        string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\TV Show Renamer";
+        string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Path.DirectorySeparatorChar +"TV Show Renamer";
 
         Form1 _main;
 
@@ -119,7 +119,7 @@ namespace TV_Show_Renamer
             StreamWriter pw = null;
             try
             {//write newpreferences file
-                pw = new StreamWriter(_dataFolder + "//newpreferences.seh");
+                pw = new StreamWriter(_dataFolder + Path.DirectorySeparatorChar +"newpreferences.seh");
                 pw.WriteLine(_removePeriod);
                 pw.WriteLine(_removeUnderscore);
                 pw.WriteLine(_removeDash);
@@ -183,7 +183,7 @@ namespace TV_Show_Renamer
             }
             try
             {//write all folder locations
-                pw = new StreamWriter(_dataFolder + "//Folders.seh");
+                pw = new StreamWriter(_dataFolder + Path.DirectorySeparatorChar +"Folders.seh");
                 pw.WriteLine(_moveFolder.Count());
                 for (int i = 0; i < _moveFolder.Count(); i++)
                     pw.WriteLine(_moveFolder[i]);
@@ -201,7 +201,7 @@ namespace TV_Show_Renamer
             }
             try
             {//write TV SHOW Infos
-                TVShowListSave(_dataFolder + "//TVShowInfo.xml", _main.TVShowInfoList);
+                TVShowListSave(_dataFolder + Path.DirectorySeparatorChar +"TVShowInfo.xml", _main.TVShowInfoList);
             }
             catch (Exception e)
             {
@@ -225,9 +225,9 @@ namespace TV_Show_Renamer
             StreamReader tr3 = null;
             try
             {
-                if (File.Exists(_dataFolder + "//newpreferences.seh"))//see if file exists
+                if (File.Exists(_dataFolder + Path.DirectorySeparatorChar +"newpreferences.seh"))//see if file exists
                 {
-                    tr3 = new StreamReader(_dataFolder + "//newpreferences.seh");
+                    tr3 = new StreamReader(_dataFolder + Path.DirectorySeparatorChar +"newpreferences.seh");
                     _removePeriod = bool.Parse(tr3.ReadLine());
                     _removeUnderscore = bool.Parse(tr3.ReadLine());
                     _removeDash = bool.Parse(tr3.ReadLine());
@@ -298,9 +298,9 @@ namespace TV_Show_Renamer
             }
             try
             {//Read TV show folders
-                if (File.Exists(_dataFolder + "//TVFolder.seh"))
+                if (File.Exists(_dataFolder + Path.DirectorySeparatorChar +"TVFolder.seh"))
                 {
-                    tr3 = new StreamReader(_dataFolder + "//TVFolder.seh");
+                    tr3 = new StreamReader(_dataFolder + Path.DirectorySeparatorChar +"TVFolder.seh");
                     int length = Int32.Parse(tr3.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
@@ -311,7 +311,7 @@ namespace TV_Show_Renamer
                         _moveFolder.Add("3");                        
                     }//end of for loop  
                     tr3.Close();
-                    File.Delete(_dataFolder + "//TVFolder.seh");
+                    File.Delete(_dataFolder + Path.DirectorySeparatorChar +"TVFolder.seh");
                 }//end of if
             }
             catch (Exception e)
@@ -327,9 +327,9 @@ namespace TV_Show_Renamer
 
             try
             {//Read Other folders 
-                if (File.Exists(_dataFolder + "//OtherFolders.seh"))//see if file exists
+                if (File.Exists(_dataFolder + Path.DirectorySeparatorChar +"OtherFolders.seh"))//see if file exists
                 {
-                    tr3 = new StreamReader(_dataFolder + "//OtherFolders.seh");
+                    tr3 = new StreamReader(_dataFolder + Path.DirectorySeparatorChar +"OtherFolders.seh");
                     int length = Int32.Parse(tr3.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
@@ -342,7 +342,7 @@ namespace TV_Show_Renamer
                         }
                     }//end of for loop  
                     tr3.Close();
-                    File.Delete(_dataFolder + "//OtherFolders.seh");
+                    File.Delete(_dataFolder + Path.DirectorySeparatorChar +"OtherFolders.seh");
                 }
             }
             catch (Exception e)
@@ -357,9 +357,9 @@ namespace TV_Show_Renamer
             }
             try
             {//Read all folders
-                if (File.Exists(_dataFolder + "//Folders.seh"))
+                if (File.Exists(_dataFolder + Path.DirectorySeparatorChar +"Folders.seh"))
                 {
-                    tr3 = new StreamReader(_dataFolder + "//Folders.seh");
+                    tr3 = new StreamReader(_dataFolder + Path.DirectorySeparatorChar +"Folders.seh");
                     int length = Int32.Parse(tr3.ReadLine());
                     for (int i = 0; i < length; i++)
                     {
@@ -382,9 +382,9 @@ namespace TV_Show_Renamer
             }
             try
             {//Read ID List folders
-                if (File.Exists(_dataFolder + "//TVShowID.seh"))
+                if (File.Exists(_dataFolder + Path.DirectorySeparatorChar +"TVShowID.seh"))
                 {
-                    tr3 = new StreamReader(_dataFolder + "//TVShowID.seh");
+                    tr3 = new StreamReader(_dataFolder + Path.DirectorySeparatorChar +"TVShowID.seh");
                     int length = Int32.Parse(tr3.ReadLine());
                     if ((length % 2 == 0) && length != 0)
                     {
@@ -393,7 +393,7 @@ namespace TV_Show_Renamer
                             _main.TVShowInfoList.Add(new TVShowInfo(tr3.ReadLine(), "", "", int.Parse(tr3.ReadLine()), -1,"-1" ));
                         }//end of for loop  
                         tr3.Close();
-                        File.Delete(_dataFolder + "//TVShowID.seh");
+                        File.Delete(_dataFolder + Path.DirectorySeparatorChar +"TVShowID.seh");
                     }//end of if
                 }
             }
@@ -410,9 +410,9 @@ namespace TV_Show_Renamer
 
             try
             {
-                if (File.Exists(_dataFolder + "//TVShowInfo.xml"))//see if file exists
+                if (File.Exists(_dataFolder + Path.DirectorySeparatorChar +"TVShowInfo.xml"))//see if file exists
                 {
-                    TVShowListLoad(_dataFolder + "//TVShowInfo.xml", _main.TVShowInfoList);
+                    TVShowListLoad(_dataFolder + Path.DirectorySeparatorChar +"TVShowInfo.xml", _main.TVShowInfoList);
                 }//end of if. 
             }
             catch (Exception e)
@@ -423,15 +423,15 @@ namespace TV_Show_Renamer
             //delete temp folder daily
             try
             {
-                if ((Directory.Exists(_dataFolder + "\\Temp")))
+                if ((Directory.Exists(_dataFolder + Path.DirectorySeparatorChar +"Temp")))
                 {
                     if (deleteTemp)
                     {
-                        Directory.Delete(_dataFolder + "\\Temp",true);
-                        Directory.CreateDirectory(_dataFolder + "\\Temp");
+                        Directory.Delete(_dataFolder + Path.DirectorySeparatorChar +"Temp",true);
+                        Directory.CreateDirectory(_dataFolder + Path.DirectorySeparatorChar +"Temp");
                     }
                 }else
-                    Directory.CreateDirectory(_dataFolder + "\\Temp");
+                    Directory.CreateDirectory(_dataFolder + Path.DirectorySeparatorChar +"Temp");
 
             }
             catch (Exception e)
