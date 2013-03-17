@@ -54,6 +54,14 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secretSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secretResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF6ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secretF8ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,14 +120,7 @@
             this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
             this.AddFilesThread = new System.ComponentModel.BackgroundWorker();
             this.TitleThread = new System.ComponentModel.BackgroundWorker();
-            this.secretF4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secretF5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secretF1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secretF2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secretF3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secretF6ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secretF7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secretF8ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.folderBrowserDialog3 = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -271,6 +272,78 @@
             this.secretResetToolStripMenuItem.Text = "Secret Reset";
             this.secretResetToolStripMenuItem.Visible = false;
             this.secretResetToolStripMenuItem.Click += new System.EventHandler(this.secretResetToolStripMenuItem_Click);
+            // 
+            // secretF1ToolStripMenuItem
+            // 
+            this.secretF1ToolStripMenuItem.Name = "secretF1ToolStripMenuItem";
+            this.secretF1ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.secretF1ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF1ToolStripMenuItem.Text = "Secret F1";
+            this.secretF1ToolStripMenuItem.Visible = false;
+            this.secretF1ToolStripMenuItem.Click += new System.EventHandler(this.secretF1ToolStripMenuItem_Click);
+            // 
+            // secretF2ToolStripMenuItem
+            // 
+            this.secretF2ToolStripMenuItem.Name = "secretF2ToolStripMenuItem";
+            this.secretF2ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.secretF2ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF2ToolStripMenuItem.Text = "Secret F2";
+            this.secretF2ToolStripMenuItem.Visible = false;
+            this.secretF2ToolStripMenuItem.Click += new System.EventHandler(this.secretF2ToolStripMenuItem_Click);
+            // 
+            // secretF3ToolStripMenuItem
+            // 
+            this.secretF3ToolStripMenuItem.Name = "secretF3ToolStripMenuItem";
+            this.secretF3ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.secretF3ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF3ToolStripMenuItem.Text = "Secret F3";
+            this.secretF3ToolStripMenuItem.Visible = false;
+            this.secretF3ToolStripMenuItem.Click += new System.EventHandler(this.secretF3ToolStripMenuItem_Click);
+            // 
+            // secretF4ToolStripMenuItem
+            // 
+            this.secretF4ToolStripMenuItem.Name = "secretF4ToolStripMenuItem";
+            this.secretF4ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.secretF4ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF4ToolStripMenuItem.Text = "Secret F4";
+            this.secretF4ToolStripMenuItem.Visible = false;
+            this.secretF4ToolStripMenuItem.Click += new System.EventHandler(this.secretF4ToolStripMenuItem_Click);
+            // 
+            // secretF5ToolStripMenuItem
+            // 
+            this.secretF5ToolStripMenuItem.Name = "secretF5ToolStripMenuItem";
+            this.secretF5ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.secretF5ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF5ToolStripMenuItem.Text = "Secret F5";
+            this.secretF5ToolStripMenuItem.Visible = false;
+            this.secretF5ToolStripMenuItem.Click += new System.EventHandler(this.secretF5ToolStripMenuItem_Click);
+            // 
+            // secretF6ToolStripMenuItem
+            // 
+            this.secretF6ToolStripMenuItem.Name = "secretF6ToolStripMenuItem";
+            this.secretF6ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
+            this.secretF6ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF6ToolStripMenuItem.Text = "Secret F6";
+            this.secretF6ToolStripMenuItem.Visible = false;
+            this.secretF6ToolStripMenuItem.Click += new System.EventHandler(this.secretF6ToolStripMenuItem_Click);
+            // 
+            // secretF7ToolStripMenuItem
+            // 
+            this.secretF7ToolStripMenuItem.Name = "secretF7ToolStripMenuItem";
+            this.secretF7ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
+            this.secretF7ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF7ToolStripMenuItem.Text = "Secret F7";
+            this.secretF7ToolStripMenuItem.Visible = false;
+            this.secretF7ToolStripMenuItem.Click += new System.EventHandler(this.secretF7ToolStripMenuItem_Click);
+            // 
+            // secretF8ToolStripMenuItem
+            // 
+            this.secretF8ToolStripMenuItem.Name = "secretF8ToolStripMenuItem";
+            this.secretF8ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.secretF8ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.secretF8ToolStripMenuItem.Text = "Secret F8";
+            this.secretF8ToolStripMenuItem.Visible = false;
+            this.secretF8ToolStripMenuItem.Click += new System.EventHandler(this.secretF8ToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -837,78 +910,6 @@
             this.TitleThread.WorkerSupportsCancellation = true;
             this.TitleThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.TitleThread_DoWork);
             // 
-            // secretF4ToolStripMenuItem
-            // 
-            this.secretF4ToolStripMenuItem.Name = "secretF4ToolStripMenuItem";
-            this.secretF4ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.secretF4ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretF4ToolStripMenuItem.Text = "Secret F4";
-            this.secretF4ToolStripMenuItem.Visible = false;
-            this.secretF4ToolStripMenuItem.Click += new System.EventHandler(this.secretF4ToolStripMenuItem_Click);
-            // 
-            // secretF5ToolStripMenuItem
-            // 
-            this.secretF5ToolStripMenuItem.Name = "secretF5ToolStripMenuItem";
-            this.secretF5ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.secretF5ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretF5ToolStripMenuItem.Text = "Secret F5";
-            this.secretF5ToolStripMenuItem.Visible = false;
-            this.secretF5ToolStripMenuItem.Click += new System.EventHandler(this.secretF5ToolStripMenuItem_Click);
-            // 
-            // secretF1ToolStripMenuItem
-            // 
-            this.secretF1ToolStripMenuItem.Name = "secretF1ToolStripMenuItem";
-            this.secretF1ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.secretF1ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretF1ToolStripMenuItem.Text = "Secret F1";
-            this.secretF1ToolStripMenuItem.Visible = false;
-            this.secretF1ToolStripMenuItem.Click += new System.EventHandler(this.secretF1ToolStripMenuItem_Click);
-            // 
-            // secretF2ToolStripMenuItem
-            // 
-            this.secretF2ToolStripMenuItem.Name = "secretF2ToolStripMenuItem";
-            this.secretF2ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.secretF2ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretF2ToolStripMenuItem.Text = "Secret F2";
-            this.secretF2ToolStripMenuItem.Visible = false;
-            this.secretF2ToolStripMenuItem.Click += new System.EventHandler(this.secretF2ToolStripMenuItem_Click);
-            // 
-            // secretF3ToolStripMenuItem
-            // 
-            this.secretF3ToolStripMenuItem.Name = "secretF3ToolStripMenuItem";
-            this.secretF3ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.secretF3ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretF3ToolStripMenuItem.Text = "Secret F3";
-            this.secretF3ToolStripMenuItem.Visible = false;
-            this.secretF3ToolStripMenuItem.Click += new System.EventHandler(this.secretF3ToolStripMenuItem_Click);
-            // 
-            // secretF6ToolStripMenuItem
-            // 
-            this.secretF6ToolStripMenuItem.Name = "secretF6ToolStripMenuItem";
-            this.secretF6ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-            this.secretF6ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretF6ToolStripMenuItem.Text = "Secret F6";
-            this.secretF6ToolStripMenuItem.Visible = false;
-            this.secretF6ToolStripMenuItem.Click += new System.EventHandler(this.secretF6ToolStripMenuItem_Click);
-            // 
-            // secretF7ToolStripMenuItem
-            // 
-            this.secretF7ToolStripMenuItem.Name = "secretF7ToolStripMenuItem";
-            this.secretF7ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.secretF7ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretF7ToolStripMenuItem.Text = "Secret F7";
-            this.secretF7ToolStripMenuItem.Visible = false;
-            this.secretF7ToolStripMenuItem.Click += new System.EventHandler(this.secretF7ToolStripMenuItem_Click);
-            // 
-            // secretF8ToolStripMenuItem
-            // 
-            this.secretF8ToolStripMenuItem.Name = "secretF8ToolStripMenuItem";
-            this.secretF8ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
-            this.secretF8ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.secretF8ToolStripMenuItem.Text = "Secret F8";
-            this.secretF8ToolStripMenuItem.Visible = false;
-            this.secretF8ToolStripMenuItem.Click += new System.EventHandler(this.secretF8ToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -925,9 +926,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-			#if WINDOWS
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			#endif
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(500, 130);
@@ -944,6 +943,7 @@
             this.contextMenuStrip4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -1031,6 +1031,7 @@
         private System.Windows.Forms.ToolStripMenuItem secretF6ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secretF7ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secretF8ToolStripMenuItem;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog3;
     }
 }
 
