@@ -16,7 +16,6 @@ using SevenZip;
 using System.Collections;
 using System.Text.RegularExpressions;
 
-
 namespace TV_Show_Renamer
 {
     public partial class Form1 : Form
@@ -1549,6 +1548,11 @@ namespace TV_Show_Renamer
                 return;
             if (selected4.Count() == 0)
                 return;
+            object searchProvider;
+
+            //if (fileList[selected4[mainindex]].TVShowID == -1)
+             //   fileList[selected4[mainindex]].TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);
+
             switch (newMainSettings.TVDataBase)
             {
                 case 0://TVDB
@@ -1570,10 +1574,10 @@ namespace TV_Show_Renamer
                                 if (fileList[selected4[mainindex]].TVShowID != -1)
                                 {
                                     TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID = newID.SelectedValue;
-                                    TVShowInfoList[fileList[selected4[mainindex]].TVShowID].RealTVShowName = newID.Title;
+                                    TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVShowNameTVDB = newID.Title;
                                 }
                                 else
-                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, newID.Title, "", newID.SelectedValue, -1, "-1"));
+                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, "", newID.SelectedValue, newID.Title, -1,"", "-1",""));
                             }
                         }
                     }
@@ -1584,9 +1588,7 @@ namespace TV_Show_Renamer
                         if (TitleThread.CancellationPending) return;
                         TVRage GetTitles = new TVRage();
 
-                        if (fileList[selected4[mainindex2]].TVShowID == -1)
-                            fileList[selected4[mainindex2]].TVShowID = SearchTVShowName(fileList[selected4[mainindex2]].TVShowName);
-
+                        
                         if (fileList[selected4[mainindex2]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID != -1)
                             fileList[selected4[mainindex2]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
                         else
@@ -1598,10 +1600,10 @@ namespace TV_Show_Renamer
                                 if (fileList[selected4[mainindex2]].TVShowID != -1)
                                 {
                                     TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID = newID.SelectedValue;
-                                    TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RealTVShowName = newID.Title;
+                                    TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].TVShowNameRage = newID.Title;
                                 }
                                 else
-                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex2]].TVShowName, newID.Title, "", -1, newID.SelectedValue,"-1"));
+                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex2]].TVShowName, "", -1,"", newID.SelectedValue, newID.Title,"-1",""));
                             }
                         }
                     }
@@ -1626,10 +1628,10 @@ namespace TV_Show_Renamer
                                 if (fileList[selected4[mainindex3]].TVShowID != -1)
                                 {
                                     TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID = newID.NewTitle;
-                                    TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].RealTVShowName = newID.Title;
+                                    TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].TVShowNameEPG = newID.Title;
                                 }
                                 else
-                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex3]].TVShowName, newID.Title, "", -1, -1, newID.NewTitle));
+                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex3]].TVShowName, "", -1,"", -1, "",newID.NewTitle, newID.Title));
                             }
                         }
                     }
@@ -1653,10 +1655,10 @@ namespace TV_Show_Renamer
                                 if (fileList[selected4[mainindex]].TVShowID != -1)
                                 {
                                     TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID = newID.SelectedValue;
-                                    TVShowInfoList[fileList[selected4[mainindex]].TVShowID].RealTVShowName = newID.Title;
+                                    TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVShowNameTVDB = newID.Title;
                                 }
                                 else
-                                    TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, newID.Title, "", newID.SelectedValue, -1, "-1"));
+                                     TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, "", newID.SelectedValue, newID.Title, -1,"", "-1",""));
                             }
                         }
                     }
@@ -2151,7 +2153,22 @@ namespace TV_Show_Renamer
                 {
                     if (EditFileList[index].TVShowID != -1)
                     {
-                        string newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].RealTVShowName;
+                        string newTvshowName = null;
+
+                        switch (newMainSettings.TVDataBase)
+                        {
+                            case 0://TVDB
+                                newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameTVDB;
+                                break;
+                            case 1:
+                                newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameRage;
+                                break;
+                            case 2:
+                                newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameEPG;
+                                break;                            
+                            default:
+                                break;
+                        }
                         if (newTvshowName != "")
                         {
                             tvshowName = newTvshowName;

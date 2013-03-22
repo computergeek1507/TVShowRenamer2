@@ -15,31 +15,30 @@ namespace TV_Show_Renamer
         {
             _TVShowName = tVShowName;
         }
-        public TVShowInfo(string tVShowName, string realTVShowName,string tVShowFolder, int tvdbID, int rageTVID, string epguidesID)
+        public TVShowInfo(string tVShowName, string tVShowFolder, int tvdbID, string tVShowNametvdb, int rageTVID, string tVShowNamerage, string epguidesID,string tVShowNameepg)
         {
             _TVShowName = tVShowName;
-            if(realTVShowName!="")_realTVName = realTVShowName;
             if (tVShowFolder != "") _TVShowFolder = tVShowFolder;
             if (tvdbID != -1) _tvdbID = tvdbID;
+            if (tVShowNametvdb != "") _TVShowNametvdb = tVShowNametvdb;
             if (rageTVID != -1) _rageTVID = rageTVID;
+            if (tVShowNamerage != "") _TVShowNamerage = tVShowNamerage;
             if (epguidesID != "-1") _epguidesID = epguidesID;
+            if (tVShowNameepg != "") _TVShowNameepg = tVShowNameepg;
         }
         string _TVShowName="";
-        string _realTVName="";
         string _TVShowFolder = "";
         int _tvdbID=-1;
+        string _TVShowNametvdb = "";
         int _rageTVID=-1;
+        string _TVShowNamerage = "";
         string _epguidesID = "-1";
+        string _TVShowNameepg = "";
 
         public string TVShowName
         {
             get { return _TVShowName; }
             set { _TVShowName = value; }
-        }
-        public string RealTVShowName
-        {
-            get { return _realTVName; }
-            set { _realTVName = value; }
         }
         public string TVShowFolder
         {
@@ -51,15 +50,30 @@ namespace TV_Show_Renamer
             get { return _tvdbID; }
             set { _tvdbID = value; }
         }
+        public string TVShowNameTVDB
+        {
+            get { return _TVShowNametvdb; }
+            set { _TVShowNametvdb = value; }
+        }
         public int RageTVID
         {
             get { return _rageTVID; }
             set { _rageTVID = value; }
         }
+        public string TVShowNameRage
+        {
+            get { return _TVShowNamerage; }
+            set { _TVShowNamerage = value; }
+        }
         public string EpguidesID
         {
             get { return _epguidesID; }
             set { _epguidesID = value; }
+        }
+        public string TVShowNameEPG
+        {
+            get { return _TVShowNameepg; }
+            set { _TVShowNameepg = value; }
         }
     };    
     public class TVClass
@@ -70,7 +84,7 @@ namespace TV_Show_Renamer
         string _fileTitle="";//Title files        
         string _newFileName;//new file name
         bool _auto = true;//autoconvert
-        int _tvShowID = -1;//TVDB id number
+        int _tvShowID = -1;//tv show Index
         int _seasonNum = -1;//Season Number 
         int _episodeNum = -1;//Episode Number
         string _TVShowName = ""; //Show Name
