@@ -390,7 +390,7 @@ namespace TV_Show_Renamer
                     {
                         for (int i = 0; i < length; i = i + 2)
                         {
-                            _main.TVShowInfoList.Add(new TVShowInfo(tr3.ReadLine(), "", "", int.Parse(tr3.ReadLine()), -1,"-1" ));
+                            _main.TVShowInfoList.Add(new TVShowInfo(tr3.ReadLine(), "", int.Parse(tr3.ReadLine()),"", -1,"","-1",""));
                         }//end of for loop  
                         tr3.Close();
                         File.Delete(_dataFolder + Path.DirectorySeparatorChar +"TVShowID.seh");
@@ -453,11 +453,13 @@ namespace TV_Show_Renamer
             {
                 XElement rootElem = new XElement("TVShow");
                 rootElem.Add(new XElement("TVShowName", saveItem[i].TVShowName));
-                rootElem.Add(new XElement("RealTVShowName", saveItem[i].RealTVShowName));
                 rootElem.Add(new XElement("TVShowFolder", saveItem[i].TVShowFolder));
                 rootElem.Add(new XElement("TVDBID", saveItem[i].TVDBID));
+                rootElem.Add(new XElement("TVDBShowName", saveItem[i].TVShowNameTVDB));
                 rootElem.Add(new XElement("RageTVID", saveItem[i].RageTVID));
+                rootElem.Add(new XElement("RageShowName", saveItem[i].TVShowNameRage));
                 rootElem.Add(new XElement("EpguidesID", saveItem[i].EpguidesID));
+                rootElem.Add(new XElement("EPGShowName", saveItem[i].TVShowNameEPG));
 
                 MainrootElem.Add(rootElem);
             }
@@ -474,15 +476,17 @@ namespace TV_Show_Renamer
                             select new
                             {
                                 TVShowName = TVShowList.Element("TVShowName").Value,
-                                RealTVShowName = TVShowList.Element("RealTVShowName").Value,
                                 TVShowFolder = TVShowList.Element("TVShowFolder").Value,
                                 TVDBID = TVShowList.Element("TVDBID").Value,
+                                TVDBShowName = TVShowList.Element("TVDBShowName").Value,
                                 RageTVID = TVShowList.Element("RageTVID").Value,
-                                EpguidesID = TVShowList.Element("EpguidesID").Value
+                                RageShowName = TVShowList.Element("RageShowName").Value,
+                                EpguidesID = TVShowList.Element("EpguidesID").Value,
+                                EPGShowName = TVShowList.Element("EPGShowName").Value
                             };
 
             foreach (var wd in TVShowLists)            
-                loadedItem.Add(new TVShowInfo(wd.TVShowName, wd.RealTVShowName, wd.TVShowFolder, Int32.Parse(wd.TVDBID),Int32.Parse(wd.RageTVID),wd.EpguidesID));            
+                loadedItem.Add(new TVShowInfo(wd.TVShowName, wd.TVShowFolder, Int32.Parse(wd.TVDBID),wd.TVDBShowName,Int32.Parse(wd.RageTVID),wd.RageShowName,wd.EpguidesID,wd.EPGShowName));            
         }
 
         #region declartions
