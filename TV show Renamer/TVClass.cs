@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using MsdnMag;
 using System.Windows.Forms;
 using System.ComponentModel;
 
@@ -221,95 +220,4 @@ namespace TV_Show_Renamer
         }        
     }//end of class
 
-    public class MyProgressSink : FileOperationProgressSink
-    {
-        List<int> _selected = new List<int>();
-        BindingList<TVClass> _fileList = new BindingList<TVClass>();
-        //List<string> _newNames = new List<string>();
-        //List<string> _newFolder = new List<string>();
-        string preFileName = "";
-        string preFolderName = "";
-
-        string temp;
-
-        int progress = 0;
-        public MyProgressSink(List<int> selected,List<string> newFolder, BindingList<TVClass> fileList)
-        {
-            _selected = selected;
-            _fileList = fileList;
-            //_newFolder = newFolder;
-        }
-        public MyProgressSink()
-        {            
-        } 
-        public override void PreRenameItem(uint dwFlags, IShellItem psiItem, string pszNewName)
-        {
-            //MessageBox.Show("PreRenameItem " + pszNewName);
-        }
-        public override void PostRenameItem(uint dwFlags, IShellItem psiItem, string pszNewName, uint hrRename, IShellItem psiNewlyCreated) 
-        {
-            //MessageBox.Show("PostRenameItem " + pszNewName);
-            //_fileList[_selected[progress]].NewFileName = pszNewName;
-        }
-        public override void PreMoveItem(uint dwFlags, IShellItem psiItem, IShellItem psiDestinationFolder, string pszNewName)
-        {
-            //MessageBox.Show("PreMoveItem " + pszNewName);
-            preFileName = pszNewName;
-            preFolderName = psiDestinationFolder.ToString();
-        }        
-        public override void PostMoveItem(uint dwFlags, IShellItem psiItem, IShellItem psiDestinationFolder, string pszNewName, uint hrMove, IShellItem psiNewlyCreated)
-        {
-            //_fileList[_selected[progress]].FileFolder = psiDestinationFolder.ToString();
-            //_fileList[_selected[progress]].NewFileName = pszNewName;
-            //_fileList[_selected[progress]].AutoEdit = false;  
-            //_newFolder.Add(psiDestinationFolder.ToString());
-            //_newNames.Add(pszNewName);
-            //if (premoveName == pszNewName) 
-            //{
-            //    _newNames.Add(pszNewName);  
-            //}
-            //premoveName = "";
-            //MessageBox.Show("PostMoveItem " + pszNewName);
-
-            temp = psiDestinationFolder.GetParent().ToString();
-            if (!preFileName.ToUpper().Contains(pszNewName.ToUpper()) || !preFolderName.ToUpper().Contains(psiDestinationFolder.ToString().ToUpper()))
-            {
-                _fileList[_selected[progress]].FileFolder = psiDestinationFolder.ToString();
-                _fileList[_selected[progress]].NewFileName = pszNewName;
-                _fileList[_selected[progress]].AutoEdit = false; 
-                progress++;
-            }
-        }
-
-        public override void PreCopyItem(uint dwFlags, IShellItem psiItem, IShellItem psiDestinationFolder, string pszNewName)
-        {
-            //preFileName = pszNewName;
-            //preFolderName = psiDestinationFolder.ToString();
-
-            //MessageBox.Show("PreCopyItem " + pszNewName);
-        }
-
-        public override void PostCopyItem(uint dwFlags, IShellItem psiItem, IShellItem psiDestinationFolder, string pszNewName, uint hrCopy, IShellItem psiNewlyCreated)
-        {
-            //MessageBox.Show("PostCopyItem " + pszNewName);
-            //progress++;
-        }
-
-        public override void FinishOperations(uint hrResult)
-        {
-            //if (_selected.Count == 0) return;
-            //for (int i = 1; i < _newNames.Count;i=i+2 ) 
-            //{
-            //    _fileList[_selected[i/2]].NewFileName = _newNames[_selected[(i/2)+1]];
-            //    _fileList[_selected[i/2]].FileFolder = _newFolder[_selected[i/2]];
-            //    _fileList[_selected[i/2]].AutoEdit = false;            
-            //}
-            //MessageBox.Show(hrResult.ToString());
-        }
-        //public override void StartOperations()
-        //{
-        //    MessageBox.Show("Start Copy");
-        //}
-    }
-    
 }//end of namespace
