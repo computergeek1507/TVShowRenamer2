@@ -1849,8 +1849,10 @@ namespace TV_Show_Renamer
                 var Showname = episode.Groups["series_name"].Value;
                 var Season = episode.Groups["season_num"].Value;
                 var Episode = episode.Groups["ep_num"].Value;
+                var Episode2 = episode.Groups["extra_ep_num"].Value;
+                var quality = episode.Groups["extra_info"].Value;
 
-                Console.WriteLine(Showname + " " + Season + " " + Episode);
+                Console.WriteLine(Showname + " " + Season + " " + Episode + " " + Episode2 + " " + quality);
 
                 //remove extention
                 newfilename = newfilename.Replace(extend, temp + "&&&&");
