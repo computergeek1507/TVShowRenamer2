@@ -203,6 +203,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConversionOptions.resx">
       <DependentUpon>ConversionOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="download.resx">
       <DependentUpon>download.cs</DependentUpon>
@@ -210,12 +211,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExceptionDialogue.resx">
       <DependentUpon>ExceptionDialogue.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FolderControl.resx">
       <DependentUpon>FolderControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FolderSelect.resx">
       <DependentUpon>FolderSelect.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

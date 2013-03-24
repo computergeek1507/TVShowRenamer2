@@ -33,15 +33,15 @@ namespace TV_Show_Renamer
         //load text file
         private void getTextConvert()
         {
-            if (!File.Exists(commonAppData + "//convertlibrary.seh"))
+            if (!File.Exists(commonAppData + Path.DirectorySeparatorChar + "convertlibrary.seh"))
             {
-                StreamWriter sw = new StreamWriter(commonAppData + "//convertlibrary.seh");
+                StreamWriter sw = new StreamWriter(commonAppData + Path.DirectorySeparatorChar + "convertlibrary.seh");
                 sw.WriteLine("0");
                 sw.Close();//close writer stream
             }
             else
             {   //read junk file 
-                StreamReader tr = new StreamReader(commonAppData + "//convertlibrary.seh");
+                StreamReader tr = new StreamReader(commonAppData + Path.DirectorySeparatorChar + "convertlibrary.seh");
                 textConvert.Clear();//clear old list
 
                 int size = Int32.Parse(tr.ReadLine());//read number of lines
@@ -171,7 +171,7 @@ namespace TV_Show_Renamer
         private void Text_Converter_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
-            StreamWriter sw = new StreamWriter(commonAppData + "//convertlibrary.seh");
+            StreamWriter sw = new StreamWriter(commonAppData + Path.DirectorySeparatorChar + "convertlibrary.seh");
             sw.WriteLine(textConvert.Count());
             for (int j = 0; j < textConvert.Count(); j++)            
                 sw.WriteLine(textConvert[j]);            
