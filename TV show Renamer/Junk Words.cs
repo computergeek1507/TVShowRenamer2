@@ -44,14 +44,14 @@ namespace TV_Show_Renamer
         //read file that has user junk in it
         private void getuserjunk()
         {
-            if (!File.Exists(commonAppData + "//userlibrary.seh"))
+            if (!File.Exists(commonAppData + Path.DirectorySeparatorChar + "userlibrary.seh"))
                 {
-                StreamWriter sw = new StreamWriter(commonAppData + "//userlibrary.seh");
+                StreamWriter sw = new StreamWriter(commonAppData + Path.DirectorySeparatorChar + "userlibrary.seh");
                 sw.WriteLine("0");                
                 sw.Close();//close writer stream
             }else
             {//read junk file 
-                StreamReader tr = new StreamReader(commonAppData + "//userlibrary.seh");
+                StreamReader tr = new StreamReader(commonAppData + Path.DirectorySeparatorChar + "userlibrary.seh");
                 userwords.Clear();//clear old list
 
                 int size = Int32.Parse(tr.ReadLine());//read number of lines
@@ -163,7 +163,7 @@ namespace TV_Show_Renamer
         private void junk_words_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
-            StreamWriter sw = new StreamWriter(commonAppData + "//userlibrary.seh");
+            StreamWriter sw = new StreamWriter(commonAppData + Path.DirectorySeparatorChar + "userlibrary.seh");
             sw.WriteLine(userwords.Count());
             for (int j = 0; j < userwords.Count(); j++)            
                 sw.WriteLine(userwords[j]);

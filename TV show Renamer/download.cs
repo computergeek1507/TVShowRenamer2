@@ -47,8 +47,8 @@ namespace TV_Show_Renamer
         {
             try
             {
-                if (File.Exists(commonAppData + "//library.seh"))               
-                    File.Delete(commonAppData + "//library.seh");                
+                if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "library.seh"))               
+                    File.Delete(commonAppData + Path.DirectorySeparatorChar + "library.seh");                
             }
             catch (Exception q)
             {
@@ -56,8 +56,8 @@ namespace TV_Show_Renamer
             }
             try
             {
-                if (File.Exists(commonAppData + "//version.xml"))
-                    File.Delete(commonAppData + "//version.xml");                
+                if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "version.xml"))
+                    File.Delete(commonAppData + Path.DirectorySeparatorChar + "version.xml");                
             }
             catch (Exception q)
             {
@@ -65,8 +65,8 @@ namespace TV_Show_Renamer
             }
             try
             {
-                if (File.Exists(commonAppData + "//webversion.xml"))
-                    File.Delete(commonAppData + "//webversion.xml");                
+                if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "webversion.xml"))
+                    File.Delete(commonAppData + Path.DirectorySeparatorChar + "webversion.xml");                
             }
             catch (Exception q)
             {
@@ -74,8 +74,8 @@ namespace TV_Show_Renamer
             }
             try
             {
-                if (File.Exists(commonAppData + "//preferences.seh"))
-                    File.Delete(commonAppData + "//preferences.seh");               
+                if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "preferences.seh"))
+                    File.Delete(commonAppData + Path.DirectorySeparatorChar + "preferences.seh");               
             }
             catch (Exception q)
             {

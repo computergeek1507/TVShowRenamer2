@@ -19,7 +19,7 @@ namespace TV_Show_Renamer
         {
             logFolder = folder;                        
             // Create a writer and open the file:
-            log = File.AppendText(logFolder + "//logfile.txt");            
+            log = File.AppendText(logFolder + Path.DirectorySeparatorChar + "logfile.txt");            
             // Write to the file:
             log.WriteLine(DateTime.Now + " - Program started :)");
             //log.Close();

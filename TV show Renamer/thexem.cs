@@ -119,7 +119,7 @@ namespace TV_Show_Renamer
 
             try
             {
-                if (!(File.Exists(folder + "//" + seriesID.ToString()+".xml")))//see if file exists
+                if (!(File.Exists(folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml")))//see if file exists
                 {
                     WebClient client = new WebClient();
                     client.DownloadFile("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml", folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml");
@@ -137,7 +137,7 @@ namespace TV_Show_Renamer
 
 
                     //XDocument EpisodeList = XDocument.Load("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml");
-                    XDocument EpisodeList = XDocument.Load(folder + "//" + seriesID.ToString()+".xml");
+                    XDocument EpisodeList = XDocument.Load(folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml");
 
                     //EpisodeList.Save("f://test.xml");
                     var Categorys = from Episode in EpisodeList.Descendants("Episode")

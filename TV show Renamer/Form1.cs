@@ -355,82 +355,18 @@ namespace TV_Show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                    if (menu1.Count() != 0)
-                    {
-                        string[] folderSettings = menu1[0].Tag.ToString().Split('?');
-
-                        if (!(System.IO.Directory.Exists(folderSettings[1])))
-                        {
-                            MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
-                            return;
-                        }
-
-                        if (int.Parse(folderSettings[0]) == 1)
-                        {
-                            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                            {
-                                if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
-                                    fileList[i].FileFolder = folderSettings[1];
-                            }
-                        }
-                        else if (int.Parse(folderSettings[0]) > 1)
-                        {
-                            List<string> folderlist = folderFinder(folderSettings[1]);
-                            string TVFolder = "";
-                            for (int z = 0; z < fileList.Count; z++)
-                            {
-                                string fullFileName = fileList[z].FullFileName;
-                                TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
-
-                                if (TVFolder == "")
-                                {
-                                    FolderSelect folderdialog = new FolderSelect(fileList[z].TVShowName,folderlist);
-
-                                    if (folderdialog.ShowDialog() == DialogResult.OK)
-                                    {
-                                        folderlist.Add(folderdialog.OutputFolder);
-	                                    TVFolder = folderdialog.OutputFolder;
-                                    }
-                                    else
-                                    {
-                                        if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                        //if(MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                           fileList[z].FileFolder = (folderSettings[1]);
-                                        continue;
-                                    }
-                                    folderdialog.Close();
-                                }
-
-                                if (fileList[z].SeasonNum > 0 && int.Parse(folderSettings[0]) == 3)
-                                {
-                                    if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
-                                        System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-                                    
-                                    if(MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
-                                       fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-                                }
-                                else//if no season is selected 
-                                {
-                                    if(MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
-                                        fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
-                                }//end of if-else                        
-                            }//end of for loop 
-                        }
-                    }
-                    else//catch if nothing is selected
-                    {
-                        if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
-                        {
-                            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                            {
-                                if(MoveFile(fileList[i].FullFileName, (folderBrowserDialog2.SelectedPath + "\\" + fileList[i].FileName)))
-                                    fileList[i].FileFolder = folderBrowserDialog2.SelectedPath;
-                            }
-                        }
-                        else
-                            return;
-                    
+                ToolStripMenuItem output = new ToolStripMenuItem();
+                if (menu1.Count() != 0)
+                {
+                    output = menu1[0];
                 }
+                else
+                {
+                    //output = new ToolStripMenuItem();
+                    output.Name = "browserMenu";
+                }
+
+                moveFilestoOutoutFolder(output, true, false);
             }
             else
                 MessageBox.Show("No Files Selected");
@@ -442,76 +378,18 @@ namespace TV_Show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                    if (menu1.Count() != 0)
-                    {
-                        string[] folderSettings = menu1[0].Tag.ToString().Split('?');
-                        if (!(System.IO.Directory.Exists(folderSettings[1])))
-                        {
-                            MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
-                            return;
-                        }
-
-                        if (int.Parse(folderSettings[0]) == 1)
-                        {
-                            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                            {
-                                CopyFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName));
-                            }
-                        }
-                        else if (int.Parse(folderSettings[0]) > 1)
-                        {
-                            List<string> folderlist = folderFinder(folderSettings[1]);
-                            string TVFolder = "";
-                            for (int z = 0; z < fileList.Count; z++)
-                            {
-                                string fullFileName = fileList[z].FullFileName;
-                                TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
-
-                                if (TVFolder == "")
-                                {
-                                    FolderSelect folderdialog = new FolderSelect(fileList[z].TVShowName, folderlist);
-
-                                    if (folderdialog.ShowDialog() == DialogResult.OK)
-                                    {
-                                        folderlist.Add(folderdialog.OutputFolder);
-                                        TVFolder = folderdialog.OutputFolder;
-                                    }
-                                    else
-                                    {
-                                        if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                            //if(MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                            fileList[z].FileFolder = (folderSettings[1]);
-                                        continue;
-                                    }
-                                    folderdialog.Close();
-                                }
-
-                                if (fileList[z].SeasonNum > 0 && int.Parse(folderSettings[0]) == 3)
-                                {
-                                    if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
-                                        System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-                                    CopyFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName);
-                                }
-                                else
-                                {//if no season is selected 
-                                    CopyFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName);
-                                }
-                            }//end of for loop 
-                        }
-                    }
-                    else//catch if nothing is selected
-                    {
-                        if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
-                        {
-                            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                            {
-                                CopyFile(fileList[i].FullFileName, (folderBrowserDialog2.SelectedPath + "\\" + fileList[i].FileName));
-                            }
-                        }
-                        else
-                            return;
-                    
+                ToolStripMenuItem output = new ToolStripMenuItem();
+                if (menu1.Count() != 0)
+                {
+                    output = menu1[0];
                 }
+                else
+                {
+                    //output = new ToolStripMenuItem();
+                    output.Name = "browserMenu";
+                }
+
+                moveFilestoOutoutFolder(output, true, true);
             }
             else
                 MessageBox.Show("No Files Selected");
@@ -577,294 +455,50 @@ namespace TV_Show_Renamer
         #endregion
 
         #region Folder Control Stuff
+
+        //move all
         private void MenuItemClickHandler1(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
             if (dataGridView1.CurrentRow != null)
             {
-                //open folder browser
-                if (clickedItem.Name == "browserMenu")
-                {
-                    if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
-                        clickedItem.Tag = "1?" + folderBrowserDialog2.SelectedPath;
-                    else
-                        return;
-                }
-                string[] folderSettings = clickedItem.Tag.ToString().Split('?');
-                if (!(System.IO.Directory.Exists(folderSettings[1])))
-                {
-                    MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
-                    return;
-                }
-                    if (int.Parse(folderSettings[0]) == 1)
-                    {
-                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                        {
-                            if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
-                            fileList[i].FileFolder = folderSettings[1];
-                        }
-                    }
-                    else if (int.Parse(folderSettings[0]) > 1)
-                    {
-                        List<string> folderlist = folderFinder(folderSettings[1]);
-                        string TVFolder = "";
-                        for (int z = 0; z < fileList.Count; z++)
-                        {
-                            string fullFileName = fileList[z].FullFileName;
-                            TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
-
-                            if (TVFolder == "")
-                            {
-                                FolderSelect folderdialog = new FolderSelect(fileList[z].TVShowName, folderlist);
-
-                                if (folderdialog.ShowDialog() == DialogResult.OK)
-                                {
-                                    folderlist.Add(folderdialog.OutputFolder);
-                                    TVFolder = folderdialog.OutputFolder;
-                                }
-                                else
-                                {
-                                    if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                        //if(MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                        fileList[z].FileFolder = (folderSettings[1]);
-                                    continue;
-                                }
-                                folderdialog.Close();
-                            }
-
-                            if (fileList[z].SeasonNum > 0 && int.Parse(folderSettings[0]) == 3)
-                            {
-                                if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
-                                    System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-
-                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
-                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-                            }
-                            else//if no season is selected 
-                            {
-                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
-                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
-                            }//end of if-else                        
-                        }//end of for loop 
-                    
-                }
+                moveFilestoOutoutFolder(clickedItem, true, false);
             }
             else//catch if nothing is selected
                 MessageBox.Show("No Files Selected");
         }
 
+        //copy all
         private void MenuItemClickHandler2(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
             if (dataGridView1.CurrentRow != null)
             {
-                //open folder browser
-                if (clickedItem.Name == "browserMenu")
-                {
-                    if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
-                        clickedItem.Tag = "1?" + folderBrowserDialog2.SelectedPath;
-                    else
-                        return;
-                }
-                string[] folderSettings = clickedItem.Tag.ToString().Split('?');
-                if (!(System.IO.Directory.Exists(folderSettings[1])))
-                {
-                    MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
-                    return;
-                }
-                    if (int.Parse(folderSettings[0]) == 1)
-                    {
-                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                        {
-                            CopyFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName));
-                        }
-                    }
-                    else if (int.Parse(folderSettings[0]) > 1)
-                    {
-                        List<string> folderlist = folderFinder(folderSettings[1]);
-                        string TVFolder = "";
-                        for (int z = 0; z < fileList.Count; z++)
-                        {
-                            string fullFileName = fileList[z].FullFileName;
-                            TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
-
-                            if (TVFolder == "")
-                            {
-                                FolderSelect folderdialog = new FolderSelect(fileList[z].TVShowName, folderlist);
-
-                                if (folderdialog.ShowDialog() == DialogResult.OK)
-                                {
-                                    folderlist.Add(folderdialog.OutputFolder);
-                                    TVFolder = folderdialog.OutputFolder;
-                                }
-                                else
-                                {
-                                    if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                        //if(MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                        fileList[z].FileFolder = (folderSettings[1]);
-                                    continue;
-                                }
-                                folderdialog.Close();
-                            }
-
-                            if (fileList[z].SeasonNum > 0 && int.Parse(folderSettings[0]) == 3)
-                            {
-                                if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
-                                    System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-                                CopyFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName);
-                            }
-                            else
-                            {//if no season is selected
-                                CopyFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName);
-                            }
-                        }//end of for loop 
-                }
+                moveFilestoOutoutFolder(clickedItem, true, true);
             }
             else//catch if nothing is selected
                 MessageBox.Show("No Files Selected");
         }
 
+        //move selected
         private void MenuItemClickHandler3(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
             if (dataGridView1.CurrentRow != null)
             {
-                //open folder browser
-                if (clickedItem.Name == "browserMenu")
-                {
-                    if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
-                        clickedItem.Tag = "1?" + folderBrowserDialog2.SelectedPath;
-                    else
-                        return;
-                }
-                string[] folderSettings = clickedItem.Tag.ToString().Split('?');
-                if (!(System.IO.Directory.Exists(folderSettings[1])))
-                {
-                    MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
-                    return;
-                }                
-                    if (int.Parse(folderSettings[0]) == 1)
-                    {
-                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                        {
-                            if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName)))
-                            fileList[i].FileFolder = folderSettings[1];
-                        }
-                    }
-                    else if (int.Parse(folderSettings[0]) > 1)
-                    {
-                        List<string> folderlist = folderFinder(folderSettings[1]);
-                        string TVFolder = "";
-                        for (int z = 0; z < fileList.Count; z++)
-                        {
-                            string fullFileName = fileList[z].FullFileName;
-                            TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
-
-                            if (TVFolder == "")
-                            {
-                                FolderSelect folderdialog = new FolderSelect(fileList[z].TVShowName, folderlist);
-
-                                if (folderdialog.ShowDialog() == DialogResult.OK)
-                                {
-                                    folderlist.Add(folderdialog.OutputFolder);
-                                    TVFolder = folderdialog.OutputFolder;
-                                }
-                                else
-                                {
-                                    if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                        //if(MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                        fileList[z].FileFolder = (folderSettings[1]);
-                                    continue;
-                                }
-                                folderdialog.Close();
-                            }
-
-                            if (fileList[z].SeasonNum > 0 && int.Parse(folderSettings[0]) == 3)
-                            {
-                                if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
-                                    System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-
-                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName))
-                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-                            }
-                            else//if no season is selected 
-                            {
-                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName))
-                                fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
-                            }//end of if-else                        
-                        }//end of for loop                     
-                }
+                moveFilestoOutoutFolder(clickedItem, false, false);
             }
             else//catch if nothing is selected
                 MessageBox.Show("No Files Selected");
         }
 
+        //copy selected
         private void MenuItemClickHandler4(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
             if (dataGridView1.CurrentRow != null)
             {
-                //open folder browser
-                if (clickedItem.Name == "browserMenu")
-                {
-                    if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
-                        clickedItem.Tag = "1?" + folderBrowserDialog2.SelectedPath;
-                    else
-                        return;
-                }
-                string[] folderSettings = clickedItem.Tag.ToString().Split('?');
-                if (!(System.IO.Directory.Exists(folderSettings[1])))
-                {
-                    MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
-                    return;
-                }
-                    if (int.Parse(folderSettings[0]) == 1)
-                    {
-                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                        {
-                            CopyFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName));
-                        }
-                    }
-                    else if (int.Parse(folderSettings[0]) > 1)
-                    {
-                        List<string> folderlist = folderFinder(folderSettings[1]);
-                        string TVFolder = "";
-                        for (int z = 0; z < fileList.Count; z++)
-                        {
-                            string fullFileName = fileList[z].FullFileName;
-                            TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
-
-                            if (TVFolder == "")
-                            {
-                                FolderSelect folderdialog = new FolderSelect(fileList[z].TVShowName, folderlist);
-
-                                if (folderdialog.ShowDialog() == DialogResult.OK)
-                                {
-                                    folderlist.Add(folderdialog.OutputFolder);
-                                    TVFolder = folderdialog.OutputFolder;
-                                }
-                                else
-                                {
-                                    if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                        //if(MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName))
-                                        fileList[z].FileFolder = (folderSettings[1]);
-                                    continue;
-                                }
-                                folderdialog.Close();
-                            }
-
-                            if (fileList[z].SeasonNum > 0 && int.Parse(folderSettings[0]) == 3)
-                            {
-                                if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
-                                    System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-                                CopyFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName);
-                            }
-                            else
-                            {//if no season is selected
-                                CopyFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName);
-                            }
-                        }//end of for loop 
-                }
+                moveFilestoOutoutFolder(clickedItem, false, true);
             }
             else//catch if nothing is selected
                 MessageBox.Show("No Files Selected");
@@ -1092,7 +726,7 @@ namespace TV_Show_Renamer
                     }
                     WebClient webClient = new WebClient();
                     webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-                    webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), newMainSettings.DataFolder + "\\webversion.xml");
+                    webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), newMainSettings.DataFolder + Path.DirectorySeparatorChar + "webversion.xml");
 
                 }
                 else
@@ -1162,7 +796,7 @@ namespace TV_Show_Renamer
                     }
                     WebClient webClient = new WebClient();
                     webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(CompletedSilent);
-                    webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), newMainSettings.DataFolder + "\\webversion.xml");
+                    webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), newMainSettings.DataFolder + Path.DirectorySeparatorChar + "webversion.xml");
 
                 }
                 else
@@ -1206,7 +840,7 @@ namespace TV_Show_Renamer
         //get info off internet
         public List<String> updateXmlRead()
         {
-            string document = newMainSettings.DataFolder + "//webversion.xml";
+            string document = newMainSettings.DataFolder + Path.DirectorySeparatorChar + "webversion.xml";
             XmlDataDocument myxmlDocument = new XmlDataDocument();
             myxmlDocument.Load(document);
             XmlTextReader xmlReader = new XmlTextReader(document);
@@ -1229,7 +863,7 @@ namespace TV_Show_Renamer
             xmlReader.Close();
             try
             {
-                System.IO.File.Delete(newMainSettings.DataFolder + "//webversion.xml");
+                System.IO.File.Delete(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "webversion.xml");
             }
             catch (Exception)
             {
@@ -1241,7 +875,7 @@ namespace TV_Show_Renamer
         //read local info
         public List<String> localXmlRead()
         {
-            string document = newMainSettings.DataFolder + "//version.xml";
+            string document = newMainSettings.DataFolder + Path.DirectorySeparatorChar + "version.xml";
             XmlDataDocument myxmlDocument = new XmlDataDocument();
             myxmlDocument.Load(document);
             XmlTextReader xmlReader = new XmlTextReader(document);
@@ -1282,11 +916,11 @@ namespace TV_Show_Renamer
                     MessageBox.Show("Problem with Server\nPlease Contact Admin");
                     return;
                 }*/
-                if (File.Exists(newMainSettings.DataFolder + "//library.seh"))
-                    File.Delete(newMainSettings.DataFolder + "//library.seh");
+                if (File.Exists(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh"))
+                    File.Delete(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh");
                 WebClient webClient2 = new WebClient();
                 webClient2.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed2);
-                webClient2.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/library.seh"), newMainSettings.DataFolder + "\\library.seh");
+                webClient2.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/library.seh"), newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh");
             }
             else
             {
@@ -1433,6 +1067,96 @@ namespace TV_Show_Renamer
         #endregion
 
         #region Private Methods
+
+        private void moveFilestoOutoutFolder(ToolStripMenuItem MoveSeetings, bool allFiles,bool copy)
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                //open folder browser
+                if (MoveSeetings.Name == "browserMenu")
+                {
+                    if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
+                        MoveSeetings.Tag = "1?" + folderBrowserDialog2.SelectedPath;
+                    else
+                        return;
+                }
+
+                string[] folderSettings = MoveSeetings.Tag.ToString().Split('?');
+
+                if (!(System.IO.Directory.Exists(folderSettings[1])))
+                {
+                    MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
+                    return;
+                }
+
+                if (int.Parse(folderSettings[0]) == 1)
+                {
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Selected || allFiles)
+                        {
+                            if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName), copy))
+                            {
+                                if(!copy)
+                                    fileList[i].FileFolder = folderSettings[1];
+                            }
+                        }
+                    }
+                }
+                else if (int.Parse(folderSettings[0]) > 1)
+                {
+                    List<string> folderlist = folderFinder(folderSettings[1]);
+                    string TVFolder = "";
+                    for (int z = 0; z < fileList.Count; z++)
+                    {
+                        if (dataGridView1.Rows[z].Selected || allFiles)
+                        {
+                            string fullFileName = fileList[z].FullFileName;
+                            TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
+
+                            if (TVFolder == "")
+                            {
+                                FolderSelect folderdialog = new FolderSelect(fileList[z].TVShowName, folderlist);
+
+                                if (folderdialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    folderlist.Add(folderdialog.OutputFolder);
+                                    TVFolder = folderdialog.OutputFolder;
+                                }
+                                else
+                                {
+                                    if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName, copy))
+                                    {
+                                        if (!copy)
+                                            fileList[z].FileFolder = (folderSettings[1]);
+                                    }
+                                    folderdialog.Close();
+                                    continue;
+                                }
+                                folderdialog.Close();
+                            }
+
+                            if (fileList[z].SeasonNum > 0 && int.Parse(folderSettings[0]) == 3)
+                            {
+                                if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
+                                    System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+
+                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName,copy))
+                                    fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+                            }
+                            else//if no season is selected 
+                            {
+                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName,copy))
+                                    fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+                            }//end of if-else                        
+                        }
+                    }//end of for loop 
+                }
+               
+            }
+            else
+                MessageBox.Show("No Files Selected");
+        }
 
         private void addFilesToThread(ThreadAdd newItems)
         {
@@ -2349,11 +2073,11 @@ namespace TV_Show_Renamer
         private void XmlWrite()
         {
             //get size of library file
-            StreamReader tr = new StreamReader(newMainSettings.DataFolder + "//library.seh");
+            StreamReader tr = new StreamReader(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh");
             int size = Int32.Parse(tr.ReadLine());//read number of lines
             tr.Close();//close reader stream
 
-            XmlTextWriter xmlWriter = new XmlTextWriter(newMainSettings.DataFolder + "//version.xml", null);
+            XmlTextWriter xmlWriter = new XmlTextWriter(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "version.xml", null);
             xmlWriter.Formatting = Formatting.Indented;
             xmlWriter.WriteStartDocument();
             xmlWriter.WriteStartElement("version");
@@ -2380,12 +2104,12 @@ namespace TV_Show_Renamer
         //check to see if there are older files        
         private void fileChecker()
         {
-            if (!File.Exists(newMainSettings.DataFolder + "//version.xml"))
+            if (!File.Exists(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "version.xml"))
                 this.XmlWrite();
             else
             {
                 //check to see if version.xml is the newest
-                string document = newMainSettings.DataFolder + "//version.xml";
+                string document = newMainSettings.DataFolder + Path.DirectorySeparatorChar + "version.xml";
                 int fileVer = 10000000;
                 int libVer = 10000000;
                 XmlDataDocument myxmlDocument = new XmlDataDocument();
@@ -2412,7 +2136,7 @@ namespace TV_Show_Renamer
                 if (appVersion > fileVer)
                     this.XmlWrite();
                 //if library is bigger rewrite info file
-                StreamReader tr2 = new StreamReader(newMainSettings.DataFolder + "//library.seh");
+                StreamReader tr2 = new StreamReader(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh");
                 int size2 = Int32.Parse(tr2.ReadLine());//read number of lines
                 tr2.Close();//close reader stream
                 if (size2 > libVer)
@@ -2441,90 +2165,6 @@ namespace TV_Show_Renamer
                 progressBar1.BeginInvoke(action);
                 //progressBar1.Hide();                
             }
-        }
-
-        //Move All Files
-        private void moveAllFiles(string Outputfolder)
-        {
-            try
-            {
-            for (int z = 0; z < fileList.Count; z++)
-                {
-                    string fullFileName = fileList[z].FullFileName;                    
-                    MoveFile(fileList[z].FullFileName, Outputfolder + "\\" + fileList[z].FileName);
-                    Log.WriteLog(fullFileName + " Moved to " + Outputfolder);
-                    //clear stuff                    
-                    fileList[z].FileFolder = (Outputfolder);
-                }                
-            }
-            catch (Exception t)
-            {
-                MessageBox.Show("Error with Operation\n" + t.ToString());
-                Log.WriteLog(t.ToString());
-            }
-        }
-
-        //Move Selected Files
-        private void moveSelectedFiles(string outputFolder)
-        {
-            try
-            {
-                for (int z = 0; z < dataGridView1.Rows.Count; z++)
-                {
-                    if (dataGridView1.Rows[z].Selected)
-                    {
-                        MoveFile(fileList[z].FullFileName, outputFolder + "\\" + fileList[z].FileName);
-                        Log.WriteLog(fileList[z].FullFileName + " Moved to " + outputFolder);
-                        //clear stuff                    
-                        fileList[z].FileFolder = (outputFolder);
-                    }
-                }
-                
-            }
-            catch (Exception t)
-            {
-                MessageBox.Show("Error with Operation\n" + t.ToString());
-                Log.WriteLog(t.ToString());
-            }                       
-        }
-
-        //Copy All Files
-        private void copyAllFiles(string Outputfolder)
-        {
-            try
-            {
-                for (int z = 0; z < fileList.Count; z++)
-                {
-                    CopyFile(fileList[z].FullFileName, Outputfolder + "\\" + fileList[z].FileName);
-                    Log.WriteLog(fileList[z].FullFileName + " Copied to " + Outputfolder);
-                }
-            }
-            catch (Exception t)
-            {
-                MessageBox.Show("Error with Operation\n" + t.ToString());
-                Log.WriteLog(t.ToString());
-            }            
-        }
-
-        //Copy Selected Files
-        private void copySelectedFiles(string outputFolder)
-        {
-            try
-            {
-                for (int z = 0; z < dataGridView1.Rows.Count; z++)
-                {
-                    if (dataGridView1.Rows[z].Selected)
-                    {
-                        CopyFile(fileList[z].FullFileName, outputFolder + "\\" + fileList[z].FileName);
-                        Log.WriteLog(fileList[z].FullFileName + " Copied to " + outputFolder);
-                    }
-                }                
-            }
-            catch (Exception t)
-            {
-                MessageBox.Show("Error with Operation\n" + t.ToString());
-                Log.WriteLog(t.ToString());
-            }            
         }
 
         //detete Selected Titles
@@ -2772,9 +2412,9 @@ namespace TV_Show_Renamer
             //startlist.Add("tv");
 
             //if no file exist make a default file
-            if (!File.Exists(newMainSettings.DataFolder + "//library.seh"))
+            if (!File.Exists(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh"))
             {
-                StreamWriter sw = new StreamWriter(newMainSettings.DataFolder + "//library.seh");
+                StreamWriter sw = new StreamWriter(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh");
                 sw.WriteLine(startlist.Count());
                 for (int j = 0; j < startlist.Count(); j++)
                     sw.WriteLine(startlist[j]);
@@ -2782,12 +2422,12 @@ namespace TV_Show_Renamer
             }
             else
             {//check to see if this is the newest file
-                StreamReader tr2 = new StreamReader(newMainSettings.DataFolder + "//library.seh");
+                StreamReader tr2 = new StreamReader(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh");
                 int size2 = Int32.Parse(tr2.ReadLine());//read number of lines
                 tr2.Close();//close reader stream
                 if (startlist.Count() > size2)
                 {//replace if array is bigger than file
-                    StreamWriter sw = new StreamWriter(newMainSettings.DataFolder + "//library.seh");
+                    StreamWriter sw = new StreamWriter(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh");
                     sw.WriteLine(startlist.Count());
                     for (int j = 0; j < startlist.Count(); j++)
                         sw.WriteLine(startlist[j]);
@@ -2796,7 +2436,7 @@ namespace TV_Show_Renamer
             }//end of if
 
             //read junk file 
-            StreamReader tr = new StreamReader(newMainSettings.DataFolder + "//library.seh");
+            StreamReader tr = new StreamReader(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh");
 
             junklist.Clear();//clear old list
 
@@ -2809,45 +2449,20 @@ namespace TV_Show_Renamer
 
         }//end of junk remover
 
-        private bool MoveFile(string oldLocation, string newLocation)
+        private bool MoveFile(string oldLocation, string newLocation,bool copy)
         {
             if (oldLocation == newLocation) return true;
             try
             {
-                FileSystem.MoveFile(oldLocation, newLocation, UIOption.AllDialogs);
-                Log.WriteLog(oldLocation + " Moved to " + newLocation);
-            }
-            catch (FileNotFoundException r)
-            {
-                MessageBox.Show("File have been changed or moved \n" + oldLocation);
-                Log.WriteLog(r.ToString());
-                return false;
-            }
-            catch (IOException g)
-            {
-                MessageBox.Show("File already exists or is in use\n" + oldLocation);
-                Log.WriteLog(g.ToString());
-                return false;
-            }
-            catch (OperationCanceledException)
-            {
-                return false;
-            }
-            catch (Exception t)
-            {
-                MessageBox.Show("Error with Operation\n" + t.ToString());
-                Log.WriteLog(t.ToString());
-                return false;
-            }
-            return true;
-        }
-
-        private bool CopyFile(string oldLocation, string newLocation)
-        {
-            try
-            {
-                FileSystem.CopyFile(oldLocation, newLocation, UIOption.AllDialogs);
-                Log.WriteLog(oldLocation + " Coped to " + newLocation);
+                if (copy) {
+                    FileSystem.CopyFile(oldLocation, newLocation, UIOption.AllDialogs);
+                    Log.WriteLog(oldLocation + " Coped to " + newLocation);
+                }
+                else
+                {
+                    FileSystem.MoveFile(oldLocation, newLocation, UIOption.AllDialogs);
+                    Log.WriteLog(oldLocation + " Moved to " + newLocation);
+                }
             }
             catch (FileNotFoundException r)
             {
@@ -3406,6 +3021,12 @@ namespace TV_Show_Renamer
             }
             //write log
             Log.closeLog();
-        }        
+        }
+
+        public static bool IsRunningOnMono()
+        {
+            return Type.GetType("Mono.Runtime") != null;
+        }
+
     }//end of form1 partial class    
 }//end of namespace
