@@ -1112,7 +1112,16 @@ namespace TV_Show_Renamer
                         if (dataGridView1.Rows[z].Selected || allFiles)
                         {
                             string fullFileName = fileList[z].FullFileName;
-                            TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
+
+                            if (fileList[z].TVShowID != -1) 
+                            {
+                                if (TVShowInfoList[fileList[z].TVShowID].TVShowFolder != "")                                
+                                    TVFolder = TVShowInfoList[fileList[z].TVShowID].TVShowFolder;
+                                else
+                                    TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
+                            }
+                            else
+                                TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
 
                             if (TVFolder == "")
                             {
@@ -1121,6 +1130,13 @@ namespace TV_Show_Renamer
                                 if (folderdialog.ShowDialog() == DialogResult.OK)
                                 {
                                     folderlist.Add(folderdialog.OutputFolder);
+                                    if (fileList[z].TVShowID != -1)
+                                    {
+                                        TVShowInfoList[fileList[z].TVShowID].TVShowFolder = folderdialog.OutputFolder;
+                                    }
+                                    else
+                                        TVShowInfoList.Add(new TVShowInfo(fileList[z].TVShowName, folderdialog.OutputFolder, -1, "", -1, "", "-1", ""));
+
                                     TVFolder = folderdialog.OutputFolder;
                                 }
                                 else
@@ -1141,13 +1157,19 @@ namespace TV_Show_Renamer
                                 if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
                                     System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
 
-                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName,copy))
-                                    fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName, copy))
+                                {
+                                    if (!copy)
+                                        fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+                                }
                             }
                             else//if no season is selected 
                             {
-                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName,copy))
-                                    fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+                                if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName, copy))
+                                {
+                                    if (!copy)
+                                        fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+                                }
                             }//end of if-else                        
                         }
                     }//end of for loop 
