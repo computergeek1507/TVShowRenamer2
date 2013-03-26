@@ -28,9 +28,9 @@ namespace TV_Show_Renamer
         }
         string _TVShowName="";
         string _TVShowFolder = "";
-        int _tvdbID=-1;
+        int _tvdbID = -1;
         string _TVShowNametvdb = "";
-        int _rageTVID=-1;
+        int _rageTVID = -1;
         string _TVShowNamerage = "";
         string _epguidesID = "-1";
         string _TVShowNameepg = "";
