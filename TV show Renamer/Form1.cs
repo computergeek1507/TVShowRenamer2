@@ -1586,19 +1586,19 @@ namespace TV_Show_Renamer
                     temp = ".";
 
 
-                string Standard = @"^((?<series_name>.+?)[. _-]+)?s(?<season_num>\d+)[. _-]*e(?<ep_num>\d+)(([. _-]*e|-)(?<extra_ep_num>(?!(1080|720)[pi])\d+))*[. _-]*((?<extra_info>.+?)((?<![. _-])-(?<release_group>[^-]+))?)?$";
+                //string Standard = @"^((?<series_name>.+?)[. _-]+)?s(?<season_num>\d+)[. _-]*e(?<ep_num>\d+)(([. _-]*e|-)(?<extra_ep_num>(?!(1080|720)[pi])\d+))*[. _-]*((?<extra_info>.+?)((?<![. _-])-(?<release_group>[^-]+))?)?$";
 
-                var regexStandard = new Regex(Standard, RegexOptions.IgnoreCase);
+                //var regexStandard = new Regex(Standard, RegexOptions.IgnoreCase);
 
-                Match episode = regexStandard.Match(newfilename);
+                //Match episode = regexStandard.Match(newfilename);
 
-                var Showname = episode.Groups["series_name"].Value;
-                var Season = episode.Groups["season_num"].Value;
-                var Episode = episode.Groups["ep_num"].Value;
-                var Episode2 = episode.Groups["extra_ep_num"].Value;
-                var quality = episode.Groups["extra_info"].Value;
+                //var Showname = episode.Groups["series_name"].Value;
+                //var Season = episode.Groups["season_num"].Value;
+                //var Episode = episode.Groups["ep_num"].Value;
+                //var Episode2 = episode.Groups["extra_ep_num"].Value;
+                //var quality = episode.Groups["extra_info"].Value;
 
-                Console.WriteLine(Showname + " " + Season + " " + Episode + " " + Episode2 + " " + quality);
+                //Console.WriteLine(Showname + " " + Season + " " + Episode + " " + Episode2 + " " + quality);
 
                 //remove extention
                 newfilename = newfilename.Replace(extend, temp + "&&&&");
