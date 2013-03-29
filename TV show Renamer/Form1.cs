@@ -21,18 +21,19 @@ namespace TV_Show_Renamer
     public partial class Form1 : Form
     {
         //Constructor with arguments
-        public Form1(string[] args)
-        {//check to see if program is already running
-            bool isDupeFound = false;
-            foreach (Process myProcess in Process.GetProcesses())
-            {
-                if (myProcess.ProcessName == Process.GetCurrentProcess().ProcessName)
-                {
-                    if (isDupeFound)
-                        Process.GetCurrentProcess().Kill();
-                    isDupeFound = true;
-                }
-            }
+        public Form1 (string[] args)
+		{//check to see if program is already running
+			if (!IsRunningOnMono ())
+			{
+				bool isDupeFound = false;
+				foreach (Process myProcess in Process.GetProcesses()) {
+					if (myProcess.ProcessName == Process.GetCurrentProcess ().ProcessName) {
+						if (isDupeFound)
+							Process.GetCurrentProcess ().Kill ();
+						isDupeFound = true;
+					}
+				}
+			}
             InitializeComponent();
             dataGridView1.DataSource = fileList;
             this.loadEverything();
@@ -46,18 +47,19 @@ namespace TV_Show_Renamer
         }
 
         //Constructor
-        public Form1()
-        {//check to see if program is already running
-            bool isDupeFound = false;
-            foreach (Process myProcess in Process.GetProcesses())
-            {
-                if (myProcess.ProcessName == Process.GetCurrentProcess().ProcessName)
-                {
-                    if (isDupeFound)
-                        Process.GetCurrentProcess().Kill();
-                    isDupeFound = true;
-                }
-            }
+        public Form1 ()
+		{//check to see if program is already running
+			if (!IsRunningOnMono ())
+			{
+				bool isDupeFound = false;
+				foreach (Process myProcess in Process.GetProcesses()) {
+					if (myProcess.ProcessName == Process.GetCurrentProcess ().ProcessName) {
+						if (isDupeFound)
+							Process.GetCurrentProcess ().Kill ();
+						isDupeFound = true;
+					}
+				}
+			}
             InitializeComponent();
             dataGridView1.DataSource = fileList;
             this.loadEverything();
