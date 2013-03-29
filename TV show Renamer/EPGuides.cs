@@ -107,7 +107,7 @@ namespace TV_Show_Renamer
                     showList = parse(folder + Path.DirectorySeparatorChar + seriesID);
                 } 
             }
-            catch (Exception e)
+            catch (Exception)
             {                
             }
             if (!(showList.Count == 0)) 
