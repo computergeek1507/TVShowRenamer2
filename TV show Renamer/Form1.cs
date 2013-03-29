@@ -1576,6 +1576,7 @@ namespace TV_Show_Renamer
                 int startIndex = -1;
                 int endIndex = -1;
 
+
                 EditFileList[index].GetTitle = true;
 
                 if (!newMainSettings.DashSeason)
@@ -1945,25 +1946,39 @@ namespace TV_Show_Renamer
                     }
                 }
 
-                if (newMainSettings.TitleFormat != 5 && EditFileList[index].GetTitle)
+                if (newMainSettings.TitleFormat != 5 && EditFileList[index].GetTitle )
                 {
+                    string foundshowTitle = "";
                     switch (newMainSettings.TitleSelection)
                     {
+                       
                         case 0:
                             if (!secondTime)
                             {
-                                showTitle = "";
+                                foundshowTitle = "";
                                 if (endIndex != newfilename.Length - 5)
-                                    showTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex + 5)).Trim();
-                                if (showTitle != "")
+                                {
+                                    foundshowTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex + 5)).Trim();
+                                }
+                                if (foundshowTitle != "")
+                                {
                                     EditFileList[index].GetTitle = false;
+                                    showTitle = foundshowTitle;
+                                }
                             }
                             break;
                         case 1:
-                            EditFileList[index].GetTitle = false;
-                            showTitle = "";
+                            //EditFileList[index].GetTitle = false;
+                            //foundshowTitle = "";
                             if (endIndex != newfilename.Length - 5)
+                            {
                                 showTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex + 5)).Trim();
+                            }
+                            if (foundshowTitle != "")
+                            {
+                                EditFileList[index].GetTitle = false;
+                                showTitle = foundshowTitle;
+                            }
                             break;
                         case 2:
 
@@ -1995,7 +2010,7 @@ namespace TV_Show_Renamer
                             break;
                     }
                 }
-                else
+                else if( newMainSettings.TitleFormat == 5)
                 {
                     EditFileList[index].FileTitle = showTitle = "";
                     EditFileList[index].GetTitle = false;
@@ -3047,6 +3062,7 @@ namespace TV_Show_Renamer
             Log.closeLog();
         }
 
+        //check for linux
         public static bool IsRunningOnMono()
         {
             return Type.GetType("Mono.Runtime") != null;
