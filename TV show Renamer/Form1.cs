@@ -78,8 +78,6 @@ namespace TV_Show_Renamer
 
         static Queue convertionQueue = new Queue();
 
-        static Queue titleQueue = new Queue();
-
         //create other forms
         static junk_words userJunk = new junk_words();
         static Text_Converter textConvert = new Text_Converter();
@@ -130,7 +128,6 @@ namespace TV_Show_Renamer
         private void removeSelectedMenuItem_Click(object sender, EventArgs e)
         {
             AddFilesThread.CancelAsync();
-            TitleThread.CancelAsync();
             deleteSelectedFiles();
         }
 
@@ -138,7 +135,6 @@ namespace TV_Show_Renamer
         private void clearListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddFilesThread.CancelAsync();
-            TitleThread.CancelAsync();
             fileList.Clear();
             convertionQueue.Clear();
             dataGridView1.Refresh();
@@ -448,9 +444,10 @@ namespace TV_Show_Renamer
                     if (fileList[i].FileTitle == "")
                         selected.Add(i);
                 }
-                //TestTitle(selected);
-                if (!TitleThread.IsBusy)
-                    TitleThread.RunWorkerAsync(selected);
+				ThreadAdd TitlesToGet = new ThreadAdd();
+				TitlesToGet.AddType = "getTitles";
+				TitlesToGet.ObjectToAdd = selected;
+				addFilesToThread(TitlesToGet);
             }
         }
 
@@ -1007,6 +1004,7 @@ namespace TV_Show_Renamer
                 worked = true;
                 int r = dataGridView1.CurrentRow.Index;
                 fileList[r].FileTitle = title;
+				autoConvert();
             }
             else
                 MessageBox.Show("No files selected");
@@ -1027,41 +1025,52 @@ namespace TV_Show_Renamer
             deleteSelectedTitles();
         }
 
-        //return selected titles index
-        public List<int> getSelected()
-        {
-            List<int> u = new List<int>();
-            if (dataGridView1.CurrentRow != null)
+		//return selected titles index
+		public List<int> getSelected()
+		{
+			List<int> u = new List<int>();
+			Int32 selectedCellCount = dataGridView1.GetCellCount(DataGridViewElementStates.Selected);
+            if (selectedCellCount > 0)
             {
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Selected)
-                        u.Add(i);
-                }
-            }
-            return u;
+				for (int i = 0; i < selectedCellCount; i++)
+				{
+					u.Add(dataGridView1.SelectedCells[i].RowIndex);
+
+				}
+			}
+
+			//if (dataGridView1.CurrentRow != null)
+			//{
+			//    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+			//    {
+			//        if (dataGridView1.Rows[i].Selected)
+			//            u.Add(i);
+			//    }
+			//}
+			List<int> liIDs = u.Distinct().ToList<int>();
+			liIDs.Sort();
+			return liIDs;
         }
 
-        //return selected titles
-        public List<string> getSelectedFileNames()
-        {
-            List<string> u = new List<string>();
-            if (dataGridView1.CurrentRow != null)
-            {
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Selected)
-                        u.Add(fileList[i].FileName);
-                }
-            }
-            return u;
-        }
+		////return selected titles
+		//public List<string> getSelectedFileNames()
+		//{
+		//    List<string> u = new List<string>();
+		//    if (dataGridView1.CurrentRow != null)
+		//    {
+		//        for (int i = 0; i < dataGridView1.Rows.Count; i++)
+		//        {
+		//            if (dataGridView1.Rows[i].Selected)
+		//                u.Add(fileList[i].FileName);
+		//        }
+		//    }
+		//    return u;
+		//}
 
         //close app for update
         public void CloseForUpdates()
         {
             AddFilesThread.CancelAsync();
-            TitleThread.CancelAsync();
             newMainSettings.ClosedForUpdates = true;
             Application.Exit();
         }
@@ -1241,6 +1250,10 @@ namespace TV_Show_Renamer
                     e.Result = "NoTitle";
                     fileRenamer(fileList, true);
                     break;
+				case "getTitles":
+					List<int> selected = (List<int>)tempInfo.ObjectToAdd;
+					getOnlineTitles(selected);
+					break;
                 default:
                     MessageBox.Show("default");
                     break;
@@ -1262,9 +1275,7 @@ namespace TV_Show_Renamer
                 if (e.Result.ToString() == "NoTitle")
                     getTitle = false;
             }
-            if (convertionQueue.Count != 0)
-                TitleThread.RunWorkerAsync();
-            else
+            if (convertionQueue.Count == 0)
             {
                 if (newMainSettings.AutoGetTitle && fileList.Count != 0 && getTitle && newMainSettings.TitleSelection != 1)
                 {
@@ -1280,18 +1291,18 @@ namespace TV_Show_Renamer
                     //TestTitle(selected);
                     if (selected.Count != 0)
                     {
-                        if (!TitleThread.IsBusy)
-                            TitleThread.RunWorkerAsync(selected);
+						ThreadAdd TitlesToGet = new ThreadAdd();
+						TitlesToGet.AddType = "getTitles";
+						TitlesToGet.ObjectToAdd = selected;
+						addFilesToThread(TitlesToGet);
                     }
                 }
             }
         }
 
-        private void TitleThread_DoWork(object sender, DoWorkEventArgs e)
+		private void getOnlineTitles(List<int> selected4)
         {
-            if (TitleThread.CancellationPending) return;
             if (fileList.Count == 0) return;
-            List<int> selected4 = (List<int>)e.Argument;
             if (selected4 == null)
                 return;
             if (selected4.Count() == 0)
@@ -1306,7 +1317,6 @@ namespace TV_Show_Renamer
                 case 0://TVDB
                     for (int mainindex = 0; mainindex < selected4.Count; mainindex++)
                     {
-                        if (TitleThread.CancellationPending) return;
                         NewTVDB GetTitles = new NewTVDB(newMainSettings.DataFolder);
                         if (fileList[selected4[mainindex]].TVShowID == -1)
                             fileList[selected4[mainindex]].TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);
@@ -1333,7 +1343,6 @@ namespace TV_Show_Renamer
                 case 1:
                     for (int mainindex2 = 0; mainindex2 < selected4.Count; mainindex2++)
                     {
-                        if (TitleThread.CancellationPending) return;
                         TVRage GetTitles = new TVRage();
 
                         
@@ -1359,7 +1368,6 @@ namespace TV_Show_Renamer
                 case 2:
                     for (int mainindex3 = 0; mainindex3 < selected4.Count; mainindex3++)
                     {
-                        if (TitleThread.CancellationPending) return;
                         EPGuides GetTitles = new EPGuides(newMainSettings.DataFolder);
 
                         if (fileList[selected4[mainindex3]].TVShowID == -1)
@@ -1387,7 +1395,6 @@ namespace TV_Show_Renamer
                 case 3://XEM
                     for (int mainindex = 0; mainindex < selected4.Count; mainindex++)
                     {
-                        if (TitleThread.CancellationPending) return;
                         thexem GetTitles = new thexem(newMainSettings.DataFolder);
                         if (fileList[selected4[mainindex]].TVShowID == -1)
                             fileList[selected4[mainindex]].TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);
@@ -2211,14 +2218,13 @@ namespace TV_Show_Renamer
         {
             if (dataGridView1.CurrentRow != null)
             {
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+				List<int> selected = getSelected();
+				for (int i = 0; i < selected.Count; i++)
                 {
-                    if (dataGridView1.Rows[i].Selected)
-                    {
-                        if (fileList[i].FileTitle == "")
+					if (fileList[selected[i]].FileTitle == "")
                             continue;
-                        fileList[i].FileTitle = "";
-                    }
+					fileList[selected[i]].FileTitle = "";
+                    
                 }
                 autoConvert();
             }
@@ -2227,12 +2233,17 @@ namespace TV_Show_Renamer
         //detete Selected Files
         private void deleteSelectedFiles()
         {
-            for (int i = dataGridView1.Rows.Count - 1; i >= 0; i--)
-            {
-                if (dataGridView1.Rows[i].Selected)
-                    fileList.RemoveAt(i);
-            }
-            dataGridView1.Refresh();
+			if (dataGridView1.CurrentRow != null)
+			{
+
+				List<int> selected = getSelected();
+				for (int i = selected.Count - 1; i >= 0; i--)
+				{
+					if (dataGridView1.Rows[selected[i]].Selected)
+						fileList.RemoveAt(selected[i]);
+				}
+				dataGridView1.Refresh();
+			}
         }
 
         //new way to add files from folder
@@ -2932,15 +2943,17 @@ namespace TV_Show_Renamer
             {
                 if (fileList.Count != 0 && ConnectionExists()) //if files are selected
                 {
-                    List<int> selected = new List<int>();
-                    for (int i = 0; i < fileList.Count; i++)
-                    {
-                        if ((dataGridView1.Rows[i].Selected) && fileList[i].SeasonNum != -1 && fileList[i].EpisodeNum != -1 && fileList[i].AutoEdit)
-                            selected.Add(i);
-                    }
+					List<int> selected = getSelected();
+					//for (int i = 0; i < fileList.Count; i++)
+					//{
+					//    if ((dataGridView1.Rows[i].Selected) && fileList[i].SeasonNum != -1 && fileList[i].EpisodeNum != -1 && fileList[i].AutoEdit)
+					//        selected.Add(i);
+					//}
                     //TestTitle(selected);
-                    if (!TitleThread.IsBusy)
-                        TitleThread.RunWorkerAsync(selected);
+					ThreadAdd TitlesToGet = new ThreadAdd();
+					TitlesToGet.AddType = "getTitles";
+					TitlesToGet.ObjectToAdd = selected;
+					addFilesToThread(TitlesToGet);
                 }
             }
             else//catch if nothing is selected
