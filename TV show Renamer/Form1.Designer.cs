@@ -1,33 +1,33 @@
 ﻿namespace TV_Show_Renamer
 {
-    partial class Form1
-    {
-        
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class Form1
+	{
+		
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent ()
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent ()
 		{
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -118,7 +118,7 @@
 			this.getTitlesOffIMBDOfSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
 			this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
-			this.AddFilesThread = new System.ComponentModel.BackgroundWorker();
+			this.ConvertionThread = new System.ComponentModel.BackgroundWorker();
 			this.folderBrowserDialog3 = new System.Windows.Forms.FolderBrowserDialog();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -162,10 +162,10 @@
 			this.menuStrip1.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
 			this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.optionsToolStripMenuItem,
-            this.otherOptionsToolStripMenuItem,
-            this.toolsToolStripMenuItem});
+			this.fileToolStripMenuItem,
+			this.optionsToolStripMenuItem,
+			this.otherOptionsToolStripMenuItem,
+			this.toolsToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(685, 24);
@@ -177,23 +177,23 @@
 			this.fileToolStripMenuItem.Checked = true;
 			this.fileToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addFilesToolStripMenuItem,
-            this.addFolderToolStripMenuItem,
-            this.toolStripSeparator5,
-            this.removeSelectedMenuItem,
-            this.clearListToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.exitToolStripMenuItem,
-            this.secretSaveToolStripMenuItem,
-            this.secretResetToolStripMenuItem,
-            this.secretF1ToolStripMenuItem,
-            this.secretF2ToolStripMenuItem,
-            this.secretF3ToolStripMenuItem,
-            this.secretF4ToolStripMenuItem,
-            this.secretF5ToolStripMenuItem,
-            this.secretF6ToolStripMenuItem,
-            this.secretF7ToolStripMenuItem,
-            this.secretF8ToolStripMenuItem});
+			this.addFilesToolStripMenuItem,
+			this.addFolderToolStripMenuItem,
+			this.toolStripSeparator5,
+			this.removeSelectedMenuItem,
+			this.clearListToolStripMenuItem,
+			this.toolStripSeparator1,
+			this.exitToolStripMenuItem,
+			this.secretSaveToolStripMenuItem,
+			this.secretResetToolStripMenuItem,
+			this.secretF1ToolStripMenuItem,
+			this.secretF2ToolStripMenuItem,
+			this.secretF3ToolStripMenuItem,
+			this.secretF4ToolStripMenuItem,
+			this.secretF5ToolStripMenuItem,
+			this.secretF6ToolStripMenuItem,
+			this.secretF7ToolStripMenuItem,
+			this.secretF8ToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
@@ -347,8 +347,8 @@
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.moveToToolStripMenuItem1,
-            this.copyToToolStripMenuItem});
+			this.moveToToolStripMenuItem1,
+			this.copyToToolStripMenuItem});
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
 			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.optionsToolStripMenuItem.Text = "Edit";
@@ -368,15 +368,15 @@
 			// otherOptionsToolStripMenuItem
 			// 
 			this.otherOptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.addTitleToolStripMenuItem,
-            this.textConverterToolStripMenuItem,
-            this.addJunkWordsToolStripMenuItem,
-            this.toolStripMenuItem3,
-            this.toolStripSeparator3,
-            this.toolStripMenuItem4,
-            this.toolStripSeparator11,
-            this.defaultSettingsToolStripMenuItem});
+			this.toolStripMenuItem1,
+			this.addTitleToolStripMenuItem,
+			this.textConverterToolStripMenuItem,
+			this.addJunkWordsToolStripMenuItem,
+			this.toolStripMenuItem3,
+			this.toolStripSeparator3,
+			this.toolStripMenuItem4,
+			this.toolStripSeparator11,
+			this.defaultSettingsToolStripMenuItem});
 			this.otherOptionsToolStripMenuItem.Name = "otherOptionsToolStripMenuItem";
 			this.otherOptionsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
 			this.otherOptionsToolStripMenuItem.Text = "Tools";
@@ -456,11 +456,11 @@
 			// toolsToolStripMenuItem
 			// 
 			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.checkForUpdatesToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.settingsMenuItem,
-            this.toolStripSeparator6,
-            this.aboutToolStripMenuItem});
+			this.checkForUpdatesToolStripMenuItem,
+			this.toolStripSeparator2,
+			this.settingsMenuItem,
+			this.toolStripSeparator6,
+			this.aboutToolStripMenuItem});
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
 			this.toolsToolStripMenuItem.Text = "Settings";
@@ -553,8 +553,8 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.RoyalBlue;
 			this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
 			this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
 			this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
@@ -569,19 +569,19 @@
 			this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.oldName,
-            this.newname,
-            this.filefolder,
-            this.fileextention,
-            this.TVShowID,
-            this.TVShowName,
-            this.titles,
-            this.SeasonNum,
-            this.EpisodeNum,
-            this.fullfolder,
-            this.newfullfolder,
-            this.GetTitle,
-            this.edittitle});
+			this.oldName,
+			this.newname,
+			this.filefolder,
+			this.fileextention,
+			this.TVShowID,
+			this.TVShowName,
+			this.titles,
+			this.SeasonNum,
+			this.EpisodeNum,
+			this.fullfolder,
+			this.newfullfolder,
+			this.GetTitle,
+			this.edittitle});
 			this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
 			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
@@ -763,19 +763,19 @@
 			// contextMenuStrip1
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveNameToolStripMenuItem,
-            this.toolStripSeparator7,
-            this.moveSelectedToolStripMenuItem,
-            this.copySelectedToolStripMenuItem,
-            this.toolStripSeparator9,
-            this.removeSelectedToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.toolStripMenuItem6,
-            this.toolStripMenuItem5,
-            this.toolStripSeparator10,
-            this.toolStripMenuItem7,
-            this.toolStripSeparator8,
-            this.viewFolderToolStripMenuItem});
+			this.saveNameToolStripMenuItem,
+			this.toolStripSeparator7,
+			this.moveSelectedToolStripMenuItem,
+			this.copySelectedToolStripMenuItem,
+			this.toolStripSeparator9,
+			this.removeSelectedToolStripMenuItem,
+			this.toolStripSeparator4,
+			this.toolStripMenuItem6,
+			this.toolStripMenuItem5,
+			this.toolStripSeparator10,
+			this.toolStripMenuItem7,
+			this.toolStripSeparator8,
+			this.viewFolderToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
 			this.contextMenuStrip1.ShowImageMargin = false;
 			this.contextMenuStrip1.Size = new System.Drawing.Size(182, 210);
@@ -875,7 +875,7 @@
 			// contextMenuStrip4
 			// 
 			this.contextMenuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.getTitlesOffIMBDOfSelectedToolStripMenuItem});
+			this.getTitlesOffIMBDOfSelectedToolStripMenuItem});
 			this.contextMenuStrip4.Name = "contextMenuStrip4";
 			this.contextMenuStrip4.ShowImageMargin = false;
 			this.contextMenuStrip4.Size = new System.Drawing.Size(217, 26);
@@ -890,19 +890,19 @@
 			// progressBar1
 			// 
 			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.progressBar1.Location = new System.Drawing.Point(120, 432);
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(206, 23);
 			this.progressBar1.TabIndex = 32;
 			this.progressBar1.Visible = false;
 			// 
-			// AddFilesThread
+			// ConvertionThread
 			// 
-			this.AddFilesThread.WorkerReportsProgress = true;
-			this.AddFilesThread.WorkerSupportsCancellation = true;
-			this.AddFilesThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.AddFilesThread_DoWork);
-			this.AddFilesThread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.AddFilesThread_RunWorkerCompleted);
+			this.ConvertionThread.WorkerReportsProgress = true;
+			this.ConvertionThread.WorkerSupportsCancellation = true;
+			this.ConvertionThread.DoWork += new System.ComponentModel.DoWorkEventHandler(this.AddFilesThread_DoWork);
+			this.ConvertionThread.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.AddFilesThread_RunWorkerCompleted);
 			// 
 			// Form1
 			// 
@@ -938,93 +938,93 @@
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
-        }
+		}
 
-        #endregion
+		#endregion
 
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.ToolStripMenuItem x01ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem s01E01ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openFileDialog2;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addFilesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearListToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem otherOptionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addTitleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem textConverterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addJunkWordsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem defaultSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button5;
-        public System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem removeSelectedMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem saveNameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem moveSelectedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copySelectedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeSelectedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
-        private System.Windows.Forms.ToolStripMenuItem getTitlesOffIMBDOfSelectedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripMenuItem secretSaveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem secretResetToolStripMenuItem;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem moveToToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem copyToToolStripMenuItem;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-		private System.ComponentModel.BackgroundWorker AddFilesThread;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
-        public System.Windows.Forms.DataGridViewTextBoxColumn oldName;
-        public System.Windows.Forms.DataGridViewTextBoxColumn newname;
-        public System.Windows.Forms.DataGridViewTextBoxColumn filefolder;
-        public System.Windows.Forms.DataGridViewTextBoxColumn fileextention;
-        public System.Windows.Forms.DataGridViewTextBoxColumn TVShowID;
-        public System.Windows.Forms.DataGridViewTextBoxColumn TVShowName;
-        public System.Windows.Forms.DataGridViewTextBoxColumn titles;
-        public System.Windows.Forms.DataGridViewTextBoxColumn SeasonNum;
-        public System.Windows.Forms.DataGridViewTextBoxColumn EpisodeNum;
-        public System.Windows.Forms.DataGridViewTextBoxColumn fullfolder;
-        public System.Windows.Forms.DataGridViewTextBoxColumn newfullfolder;
-        public System.Windows.Forms.DataGridViewTextBoxColumn GetTitle;
-        public System.Windows.Forms.DataGridViewTextBoxColumn edittitle;
-        private System.Windows.Forms.ToolStripMenuItem secretF4ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem secretF5ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem secretF1ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem secretF2ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem secretF3ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem secretF6ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem secretF7ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem secretF8ToolStripMenuItem;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog3;
-    }
+		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+		private System.Windows.Forms.ToolStripMenuItem x01ToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem s01E01ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem;
+		private System.Windows.Forms.OpenFileDialog openFileDialog2;
+		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addFilesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addFolderToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearListToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem otherOptionsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addTitleToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem textConverterToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem addJunkWordsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem defaultSettingsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button5;
+		public System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripMenuItem removeSelectedMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+		private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem saveNameToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem moveSelectedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem copySelectedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem removeSelectedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewFolderToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
+		private System.Windows.Forms.ToolStripMenuItem getTitlesOffIMBDOfSelectedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+		private System.Windows.Forms.ToolStripMenuItem secretSaveToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem secretResetToolStripMenuItem;
+		private System.Windows.Forms.ProgressBar progressBar1;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem moveToToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem copyToToolStripMenuItem;
+		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+		private System.ComponentModel.BackgroundWorker ConvertionThread;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+		public System.Windows.Forms.DataGridViewTextBoxColumn oldName;
+		public System.Windows.Forms.DataGridViewTextBoxColumn newname;
+		public System.Windows.Forms.DataGridViewTextBoxColumn filefolder;
+		public System.Windows.Forms.DataGridViewTextBoxColumn fileextention;
+		public System.Windows.Forms.DataGridViewTextBoxColumn TVShowID;
+		public System.Windows.Forms.DataGridViewTextBoxColumn TVShowName;
+		public System.Windows.Forms.DataGridViewTextBoxColumn titles;
+		public System.Windows.Forms.DataGridViewTextBoxColumn SeasonNum;
+		public System.Windows.Forms.DataGridViewTextBoxColumn EpisodeNum;
+		public System.Windows.Forms.DataGridViewTextBoxColumn fullfolder;
+		public System.Windows.Forms.DataGridViewTextBoxColumn newfullfolder;
+		public System.Windows.Forms.DataGridViewTextBoxColumn GetTitle;
+		public System.Windows.Forms.DataGridViewTextBoxColumn edittitle;
+		private System.Windows.Forms.ToolStripMenuItem secretF4ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem secretF5ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem secretF1ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem secretF2ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem secretF3ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem secretF6ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem secretF7ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem secretF8ToolStripMenuItem;
+		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog3;
+	}
 }
 
