@@ -14,9 +14,10 @@ namespace TV_Show_Renamer
 		int intSelected = -1;
 		public int selected { get { return intSelected; } }
 
-		public SelectMenu(List<string> select)
+		public SelectMenu(List<string> select, string showName)
 		{
 			InitializeComponent();
+			label1.Text = showName;
 			dataGridView1.Rows.Clear();
 			for (int z = 0; z < select.Count; z++)
 			{
@@ -24,10 +25,11 @@ namespace TV_Show_Renamer
 				dataGridView1.Rows[z].Cells[0].Value = select[z];
 			}
 		}
-		public SelectMenu(List<string> select,string header)
+		public SelectMenu(List<string> select, string header, string showName)
 		{
 			InitializeComponent();
 			this.Text = header;
+			label1.Text = showName;
 			dataGridView1.Rows.Clear();
 			for (int z = 0; z < select.Count; z++)
 			{
@@ -35,19 +37,21 @@ namespace TV_Show_Renamer
 				dataGridView1.Rows[z].Cells[0].Value = select[z];
 			}
 		}
-		public SelectMenu(List<TVShowInfo> select)
+		public SelectMenu(List<TVShowInfo> select, string showName)
 		{
 			InitializeComponent();
 			dataGridView1.Rows.Clear();
+			label1.Text = showName;
 			for (int z = 0; z < select.Count; z++)
 			{
 				dataGridView1.Rows.Add();
 				dataGridView1.Rows[z].Cells[0].Value = select[z].TVShowName;
 			}
 		}
-		public SelectMenu(List<SearchInfo> select)
+		public SelectMenu(List<SearchInfo> select,string showName)
 		{
 			InitializeComponent();
+			label1.Text = showName;
 			dataGridView1.Rows.Clear();
 			for (int z = 0; z < select.Count; z++)
 			{

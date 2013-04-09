@@ -33,6 +33,7 @@ namespace TV_Show_Renamer
 		private void buttonCreate_Click(object sender, EventArgs e)
 		{
 			string text = label2.Text;
+			this.Hide();
 			if (InputBox.Show("Create New Folder", "Folder Name:", ref text) == DialogResult.OK)
 			{
 				_outputFolder = text;
@@ -44,7 +45,8 @@ namespace TV_Show_Renamer
 
 		private void buttonSelect_Click(object sender, EventArgs e)
 		{
-			SelectMenu SelectMain = new SelectMenu(_folderList,"Select TV Show Folder");
+			this.Hide();
+			SelectMenu SelectMain = new SelectMenu(_folderList, "Select TV Show Folder", label2.Text);
 			if (SelectMain.ShowDialog() == DialogResult.OK)
 			{
 				int selectedid = SelectMain.selected;

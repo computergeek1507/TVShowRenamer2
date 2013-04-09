@@ -1102,22 +1102,33 @@ namespace TV_Show_Renamer
 
 				if (int.Parse(folderSettings[0]) == 1)
 				{
+					List<string> OldLocation = new List<string>();
+					List<string> NewLocation = new List<string>();
+
 					for (int i = 0; i < dataGridView1.Rows.Count; i++)
 					{
 						if (dataGridView1.Rows[i].Selected || allFiles)
 						{
-							if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName), copy))
-							{
-								if(!copy)
-									fileList[i].FileFolder = folderSettings[1];
-							}
+							OldLocation.Add(fileList[i].FullFileName);
+							NewLocation.Add(folderBrowserDialog2.SelectedPath + "\\" + fileList[i].FileName);
+
+							//if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName), copy))
+							//{
+							//	if(!copy)
+							//		fileList[i].FileFolder = folderSettings[1];
+							//}
 						}
 					}
+					ScottsFileSystem.MoveFiles(OldLocation, NewLocation,copy);
 				}
 				else if (int.Parse(folderSettings[0]) > 1)
 				{
 					List<string> folderlist = folderFinder(folderSettings[1]);
 					string TVFolder = "";
+
+					List<string> OldLocation = new List<string>();
+					List<string> NewLocation = new List<string>();
+
 					for (int z = 0; z < fileList.Count; z++)
 					{
 						if (dataGridView1.Rows[z].Selected || allFiles)
@@ -1126,7 +1137,7 @@ namespace TV_Show_Renamer
 
 							if (fileList[z].TVShowID != -1) 
 							{
-								if (TVShowInfoList[fileList[z].TVShowID].TVShowFolder != "")								
+								if (TVShowInfoList[fileList[z].TVShowID].TVShowFolder != "")
 									TVFolder = TVShowInfoList[fileList[z].TVShowID].TVShowFolder;
 								else
 									TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
@@ -1152,11 +1163,13 @@ namespace TV_Show_Renamer
 								}
 								else
 								{
-									if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName, copy))
-									{
-										if (!copy)
-											fileList[z].FileFolder = (folderSettings[1]);
-									}
+									OldLocation.Add(fullFileName);
+									NewLocation.Add(folderSettings[1] + "\\" + fileList[z].FileName);
+									//if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName, copy))
+									//{
+									//	if (!copy)
+									//		fileList[z].FileFolder = (folderSettings[1]);
+									//}
 									folderdialog.Close();
 									continue;
 								}
@@ -1168,24 +1181,29 @@ namespace TV_Show_Renamer
 								if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
 									System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
 
-								if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName, copy))
-								{
-									if (!copy)
-										fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
-								}
+								OldLocation.Add(fullFileName);
+								NewLocation.Add(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName);
+								//if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName, copy))
+								//{
+								//	if (!copy)
+								//		fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
+								//}
 							}
 							else//if no season is selected 
 							{
-								if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName, copy))
-								{
-									if (!copy)
-										fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
-								}
+								OldLocation.Add(fullFileName);
+								NewLocation.Add(folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName);
+								//if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName, copy))
+								//{
+								//	if (!copy)
+								//		fileList[z].FileFolder = (folderSettings[1] + "\\" + TVFolder);
+								//}
 							}//end of if-else						
 						}
 					}//end of for loop 
+					ScottsFileSystem.MoveFiles(OldLocation, NewLocation,copy);
 				}
-			   
+				
 			}
 			else
 				MessageBox.Show("No Files Selected");
@@ -1310,7 +1328,6 @@ namespace TV_Show_Renamer
 					ConvertionThread.RunWorkerAsync();
 					return;
 				}
-			
 			}
 			progressBar1.MarqueeAnimationSpeed = 0;
 			progressBar1.Visible = false;
@@ -1361,7 +1378,6 @@ namespace TV_Show_Renamer
 					{
 						TVRage GetTitles = new TVRage();
 
-						
 						if (fileList[selected4[mainindex2]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID != -1)
 							fileList[selected4[mainindex2]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
 						else
@@ -2515,45 +2531,45 @@ namespace TV_Show_Renamer
 
 		}//end of junk remover
 
-		private bool MoveFile(string oldLocation, string newLocation,bool copy)
-		{
-			if (oldLocation == newLocation) return true;
-			try
-			{
-				if (copy) {
-					FileSystem.CopyFile(oldLocation, newLocation, UIOption.AllDialogs);
-					Log.WriteLog(oldLocation + " Coped to " + newLocation);
-				}
-				else
-				{
-					FileSystem.MoveFile(oldLocation, newLocation, UIOption.AllDialogs);
-					Log.WriteLog(oldLocation + " Moved to " + newLocation);
-				}
-			}
-			catch (FileNotFoundException r)
-			{
-				MessageBox.Show("File have been changed or moved \n" + oldLocation);
-				Log.WriteLog(r.ToString());
-				return false;
-			}
-			catch (IOException g)
-			{
-				MessageBox.Show("File already exists or is in use\n" + oldLocation);
-				Log.WriteLog(g.ToString());
-				return false;
-			}
-			catch (OperationCanceledException)
-			{
-				return false;
-			}
-			catch (Exception t)
-			{
-				MessageBox.Show("Error with Operation\n" + t.ToString());
-				Log.WriteLog(t.ToString());
-				return false;
-			}
-			return true;
-		}
+		//private bool MoveFile(string oldLocation, string newLocation,bool copy)
+		//{
+		//    if (oldLocation == newLocation) return true;
+		//    try
+		//    {
+		//        if (copy) {
+		//            FileSystem.CopyFile(oldLocation, newLocation, UIOption.AllDialogs);
+		//            Log.WriteLog(oldLocation + " Coped to " + newLocation);
+		//        }
+		//        else
+		//        {
+		//            FileSystem.MoveFile(oldLocation, newLocation, UIOption.AllDialogs);
+		//            Log.WriteLog(oldLocation + " Moved to " + newLocation);
+		//        }
+		//    }
+		//    catch (FileNotFoundException r)
+		//    {
+		//        MessageBox.Show("File have been changed or moved \n" + oldLocation);
+		//        Log.WriteLog(r.ToString());
+		//        return false;
+		//    }
+		//    catch (IOException g)
+		//    {
+		//        MessageBox.Show("File already exists or is in use\n" + oldLocation);
+		//        Log.WriteLog(g.ToString());
+		//        return false;
+		//    }
+		//    catch (OperationCanceledException)
+		//    {
+		//        return false;
+		//    }
+		//    catch (Exception t)
+		//    {
+		//        MessageBox.Show("Error with Operation\n" + t.ToString());
+		//        Log.WriteLog(t.ToString());
+		//        return false;
+		//    }
+		//    return true;
+		//}
 
 		/// <summary>
 		/// extract contents of zip/rar file

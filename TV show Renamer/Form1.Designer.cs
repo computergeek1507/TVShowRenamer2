@@ -162,10 +162,10 @@
 			this.menuStrip1.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
 			this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.fileToolStripMenuItem,
-			this.optionsToolStripMenuItem,
-			this.otherOptionsToolStripMenuItem,
-			this.toolsToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.optionsToolStripMenuItem,
+            this.otherOptionsToolStripMenuItem,
+            this.toolsToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(685, 24);
@@ -177,23 +177,23 @@
 			this.fileToolStripMenuItem.Checked = true;
 			this.fileToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.addFilesToolStripMenuItem,
-			this.addFolderToolStripMenuItem,
-			this.toolStripSeparator5,
-			this.removeSelectedMenuItem,
-			this.clearListToolStripMenuItem,
-			this.toolStripSeparator1,
-			this.exitToolStripMenuItem,
-			this.secretSaveToolStripMenuItem,
-			this.secretResetToolStripMenuItem,
-			this.secretF1ToolStripMenuItem,
-			this.secretF2ToolStripMenuItem,
-			this.secretF3ToolStripMenuItem,
-			this.secretF4ToolStripMenuItem,
-			this.secretF5ToolStripMenuItem,
-			this.secretF6ToolStripMenuItem,
-			this.secretF7ToolStripMenuItem,
-			this.secretF8ToolStripMenuItem});
+            this.addFilesToolStripMenuItem,
+            this.addFolderToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.removeSelectedMenuItem,
+            this.clearListToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.exitToolStripMenuItem,
+            this.secretSaveToolStripMenuItem,
+            this.secretResetToolStripMenuItem,
+            this.secretF1ToolStripMenuItem,
+            this.secretF2ToolStripMenuItem,
+            this.secretF3ToolStripMenuItem,
+            this.secretF4ToolStripMenuItem,
+            this.secretF5ToolStripMenuItem,
+            this.secretF6ToolStripMenuItem,
+            this.secretF7ToolStripMenuItem,
+            this.secretF8ToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
@@ -347,8 +347,8 @@
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.moveToToolStripMenuItem1,
-			this.copyToToolStripMenuItem});
+            this.moveToToolStripMenuItem1,
+            this.copyToToolStripMenuItem});
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
 			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.optionsToolStripMenuItem.Text = "Edit";
@@ -368,15 +368,15 @@
 			// otherOptionsToolStripMenuItem
 			// 
 			this.otherOptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripMenuItem1,
-			this.addTitleToolStripMenuItem,
-			this.textConverterToolStripMenuItem,
-			this.addJunkWordsToolStripMenuItem,
-			this.toolStripMenuItem3,
-			this.toolStripSeparator3,
-			this.toolStripMenuItem4,
-			this.toolStripSeparator11,
-			this.defaultSettingsToolStripMenuItem});
+            this.toolStripMenuItem1,
+            this.addTitleToolStripMenuItem,
+            this.textConverterToolStripMenuItem,
+            this.addJunkWordsToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.toolStripSeparator3,
+            this.toolStripMenuItem4,
+            this.toolStripSeparator11,
+            this.defaultSettingsToolStripMenuItem});
 			this.otherOptionsToolStripMenuItem.Name = "otherOptionsToolStripMenuItem";
 			this.otherOptionsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
 			this.otherOptionsToolStripMenuItem.Text = "Tools";
@@ -456,11 +456,11 @@
 			// toolsToolStripMenuItem
 			// 
 			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.checkForUpdatesToolStripMenuItem,
-			this.toolStripSeparator2,
-			this.settingsMenuItem,
-			this.toolStripSeparator6,
-			this.aboutToolStripMenuItem});
+            this.checkForUpdatesToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.settingsMenuItem,
+            this.toolStripSeparator6,
+            this.aboutToolStripMenuItem});
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
 			this.toolsToolStripMenuItem.Text = "Settings";
@@ -553,10 +553,10 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.RoyalBlue;
 			this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-			this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+			this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
 			this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
 			this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -569,19 +569,19 @@
 			this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.oldName,
-			this.newname,
-			this.filefolder,
-			this.fileextention,
-			this.TVShowID,
-			this.TVShowName,
-			this.titles,
-			this.SeasonNum,
-			this.EpisodeNum,
-			this.fullfolder,
-			this.newfullfolder,
-			this.GetTitle,
-			this.edittitle});
+            this.oldName,
+            this.newname,
+            this.filefolder,
+            this.fileextention,
+            this.TVShowID,
+            this.TVShowName,
+            this.titles,
+            this.SeasonNum,
+            this.EpisodeNum,
+            this.fullfolder,
+            this.newfullfolder,
+            this.GetTitle,
+            this.edittitle});
 			this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
 			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
@@ -660,6 +660,7 @@
 			this.fileextention.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.fileextention.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
 			this.fileextention.Visible = false;
+			this.fileextention.Width = 95;
 			// 
 			// TVShowID
 			// 
@@ -671,6 +672,7 @@
 			this.TVShowID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.TVShowID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
 			this.TVShowID.Visible = false;
+			this.TVShowID.Width = 105;
 			// 
 			// TVShowName
 			// 
@@ -726,6 +728,7 @@
 			this.fullfolder.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.fullfolder.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
 			this.fullfolder.Visible = false;
+			this.fullfolder.Width = 71;
 			// 
 			// newfullfolder
 			// 
@@ -748,6 +751,7 @@
 			this.GetTitle.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.GetTitle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
 			this.GetTitle.Visible = false;
+			this.GetTitle.Width = 69;
 			// 
 			// edittitle
 			// 
@@ -763,19 +767,19 @@
 			// contextMenuStrip1
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.saveNameToolStripMenuItem,
-			this.toolStripSeparator7,
-			this.moveSelectedToolStripMenuItem,
-			this.copySelectedToolStripMenuItem,
-			this.toolStripSeparator9,
-			this.removeSelectedToolStripMenuItem,
-			this.toolStripSeparator4,
-			this.toolStripMenuItem6,
-			this.toolStripMenuItem5,
-			this.toolStripSeparator10,
-			this.toolStripMenuItem7,
-			this.toolStripSeparator8,
-			this.viewFolderToolStripMenuItem});
+            this.saveNameToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.moveSelectedToolStripMenuItem,
+            this.copySelectedToolStripMenuItem,
+            this.toolStripSeparator9,
+            this.removeSelectedToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.toolStripMenuItem6,
+            this.toolStripMenuItem5,
+            this.toolStripSeparator10,
+            this.toolStripMenuItem7,
+            this.toolStripSeparator8,
+            this.viewFolderToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
 			this.contextMenuStrip1.ShowImageMargin = false;
 			this.contextMenuStrip1.Size = new System.Drawing.Size(182, 210);
@@ -875,7 +879,7 @@
 			// contextMenuStrip4
 			// 
 			this.contextMenuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.getTitlesOffIMBDOfSelectedToolStripMenuItem});
+            this.getTitlesOffIMBDOfSelectedToolStripMenuItem});
 			this.contextMenuStrip4.Name = "contextMenuStrip4";
 			this.contextMenuStrip4.ShowImageMargin = false;
 			this.contextMenuStrip4.Size = new System.Drawing.Size(217, 26);
@@ -890,7 +894,7 @@
 			// progressBar1
 			// 
 			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.progressBar1.Location = new System.Drawing.Point(120, 432);
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(206, 23);
