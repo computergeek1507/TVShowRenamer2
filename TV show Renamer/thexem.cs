@@ -63,7 +63,7 @@ namespace TV_Show_Renamer
 				{
 					if (selectionList.Count() == 0)
 					{
-						SelectMenu SelectMain = new SelectMenu(seriesName);
+						SelectMenu SelectMain = new SelectMenu(seriesName, ShowName);
 						if (SelectMain.ShowDialog() == DialogResult.OK)
 						{
 							int selectedid = SelectMain.selected;
@@ -87,7 +87,7 @@ namespace TV_Show_Renamer
 						}
 						if (idNumber == -1)
 						{
-							SelectMenu SelectMain2 = new SelectMenu(seriesName);
+							SelectMenu SelectMain2 = new SelectMenu(seriesName, ShowName);
 							if (SelectMain2.ShowDialog() == DialogResult.OK)
 							{
 								int selectedid = SelectMain2.selected;

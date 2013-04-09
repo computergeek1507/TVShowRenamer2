@@ -233,5 +233,12 @@ namespace TV_Show_Renamer
 			set { _episodeTitle = value; }
 		}		
 	}//end of class
-
+	public static class ScottsFileSystem
+	{
+		public static void MoveFiles(List<string> sourceFiles, List<string> destFiles,bool copy)
+		{
+			CopyFilesDialog copyfiles = new CopyFilesDialog(sourceFiles, destFiles, copy);
+			copyfiles.Show();
+		}
+	}
 }//end of namespace
