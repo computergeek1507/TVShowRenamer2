@@ -140,7 +140,7 @@ namespace TV_Show_Renamer
 					}
 				}
 				//TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
-				////List<String> epList = new List<string>();
+				////List<string> epList = new List<string>();
 
 				//foreach (TvdbEpisode esp in s.Episodes)
 				//{
