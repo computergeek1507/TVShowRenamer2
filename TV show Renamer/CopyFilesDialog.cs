@@ -61,7 +61,7 @@ namespace TV_Show_Renamer
         }
 
         // Methods
-        private void updateCopy(Int32 totalFiles, Int32 copiedFiles, Int64 totalBytes, Int64 copiedBytes, String currentFilename)
+        private void updateCopy(Int32 totalFiles, Int32 copiedFiles, Int64 totalBytes, Int64 copiedBytes, string currentFilename)
         {
             if (InvokeRequired)
             {
@@ -83,7 +83,7 @@ namespace TV_Show_Renamer
 
 
 		// Methods
-		private void updateMove(Int32 totalFiles, Int32 copiedFiles, Int64 totalBytes, Int64 copiedBytes, String currentFilename)
+		private void updateMove(Int32 totalFiles, Int32 copiedFiles, Int64 totalBytes, Int64 copiedBytes, string currentFilename)
 		{
 			if (InvokeRequired)
 			{

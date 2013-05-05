@@ -12,7 +12,7 @@ namespace TV_Show_Renamer
 {
 	public partial class Addtitle : Form
 	{		
-		//List<String> title = new List<String>();
+		//List<string> title = new List<string>();
 		BindingList<TVClass> names = new BindingList<TVClass>();
 			  
 		Form1 Main;

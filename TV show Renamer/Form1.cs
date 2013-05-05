@@ -837,7 +837,7 @@ namespace TV_Show_Renamer
 		}//update complete method silently
 
 		//get info off internet
-		public List<String> updateXmlRead()
+		public List<string> updateXmlRead()
 		{
 			string document = newMainSettings.DataFolder + Path.DirectorySeparatorChar + "webversion.xml";
 			XmlDataDocument myxmlDocument = new XmlDataDocument();
@@ -872,7 +872,7 @@ namespace TV_Show_Renamer
 		}//end of WebXMLReader Method
 
 		//read local info
-		public List<String> localXmlRead()
+		public List<string> localXmlRead()
 		{
 			string document = newMainSettings.DataFolder + Path.DirectorySeparatorChar + "version.xml";
 			XmlDataDocument myxmlDocument = new XmlDataDocument();
@@ -1110,7 +1110,7 @@ namespace TV_Show_Renamer
 						if (dataGridView1.Rows[i].Selected || allFiles)
 						{
 							OldLocation.Add(fileList[i].FullFileName);
-							NewLocation.Add(folderBrowserDialog2.SelectedPath + "\\" + fileList[i].FileName);
+							NewLocation.Add(folderSettings[1] + "\\" + fileList[i].FileName);
 
 							//if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName), copy))
 							//{

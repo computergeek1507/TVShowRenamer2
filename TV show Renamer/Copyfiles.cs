@@ -20,7 +20,7 @@ namespace TV_Show_Renamer
             Error = exception;
         }
 
-        public String File { get; private set; } // readonly  
+        public string File { get; private set; } // readonly  
         public Exception Error { get; private set; }
         public bool Cancel;
     }
@@ -36,14 +36,14 @@ namespace TV_Show_Renamer
     {
 
         // Variables
-        private List<String> files = new List<String>();
-        private readonly List<String> newFilenames = new List<String>();
+        private List<string> files = new List<string>();
+        private readonly List<string> newFilenames = new List<string>();
         private Int32 _totalFiles = 0;
         private Int32 _totalFilesCopied = 0;
-        private readonly String _destinationDir = "";
-        private readonly String _sourceDir = "";
-        private String _currentFilename;
-        private Boolean _cancel = false;
+        private readonly string _destinationDir = "";
+        private readonly string _sourceDir = "";
+        private string _currentFilename;
+        private bool _cancel = false;
         private Thread _copyThread;
         private const int ERROR_REQUEST_ABORTED = 1235;
 
@@ -58,7 +58,7 @@ namespace TV_Show_Renamer
         public delegate void FileCopyCompleteEventHandler(object sender, FileCopyCompleteEventArgs e);
 
 
-        public CopyFiles(List<String> sourceFiles, List<String> destFiles, bool moveNotCopy)
+        public CopyFiles(List<string> sourceFiles, List<string> destFiles, bool moveNotCopy)
         {
             if (sourceFiles.Count != destFiles.Count) throw new Exception("Array Length Mismatch");
 
@@ -68,23 +68,23 @@ namespace TV_Show_Renamer
             _moveNotCopy = moveNotCopy;
         }
 
-        public delegate void CopyProgressHandlerDelegate(Int32 totalFiles, Int32 copiedFiles, Int64 totalBytes, Int64 copiedBytes, String currentFilename);
+        public delegate void CopyProgressHandlerDelegate(Int32 totalFiles, Int32 copiedFiles, Int64 totalBytes, Int64 copiedBytes, string currentFilename);
         public event CopyProgressHandlerDelegate ProgressEventCopy;
 
-		public delegate void MoveProgressHandlerDelegate(Int32 totalFiles, Int32 copiedFiles, Int64 totalBytes, Int64 copiedBytes, String currentFilename);
+		public delegate void MoveProgressHandlerDelegate(Int32 totalFiles, Int32 copiedFiles, Int64 totalBytes, Int64 copiedBytes, string currentFilename);
 		public event MoveProgressHandlerDelegate ProgressEventMove;
 
         // Methods
-        private List<String> GetFiles(String sourceDir)
+        private List<string> GetFiles(string sourceDir)
         {
 
             // Variables
-            String[] fileEntries;
-            String[] subdirEntries;
+            string[] fileEntries;
+            string[] subdirEntries;
 
             //Add root files in this DIR to the list
             fileEntries = System.IO.Directory.GetFiles(sourceDir);
-            List<String> foundFiles = fileEntries.ToList();
+            List<string> foundFiles = fileEntries.ToList();
 
             //Loop the DIR's in the current DIR
             subdirEntries = System.IO.Directory.GetDirectories(sourceDir);
@@ -135,17 +135,18 @@ namespace TV_Show_Renamer
                 Int32 index = 0;
 
                 //If we have been a sourceDIR then find all the files to copy
-                if (!String.IsNullOrEmpty(_sourceDir))
+                if (!string.IsNullOrEmpty(_sourceDir))
                     files = GetFiles(_sourceDir);
                 _totalFiles = files.Count;
 
                 //Loop each file and copy it.
-                foreach (String filename in files.ToArray())
+                foreach (string filename in files.ToArray())
                 {
-                    String tempFilepath;
+                    string tempFilepath;
+					bool overWrite = true;
 
                     //If we have a source directory, strip that off the filename
-                    if (!String.IsNullOrEmpty(_sourceDir))
+                    if (!string.IsNullOrEmpty(_sourceDir))
                     {
                         tempFilepath = filename;
                         tempFilepath = tempFilepath.Replace(_sourceDir, "").TrimStart(Path.DirectorySeparatorChar);
@@ -154,7 +155,7 @@ namespace TV_Show_Renamer
                     //otherwise strip off all the folder path
                     else
                     {
-                        tempFilepath = String.IsNullOrEmpty(_destinationDir) ? newFilenames[index] : System.IO.Path.Combine(_destinationDir, newFilenames[index]);
+                        tempFilepath = string.IsNullOrEmpty(_destinationDir) ? newFilenames[index] : System.IO.Path.Combine(_destinationDir, newFilenames[index]);
                     }
 
                     //Save the new DIR path and check the DIR exsits,
@@ -174,7 +175,17 @@ namespace TV_Show_Renamer
 
                     if (_moveNotCopy)
                     {
-                        result = NativeMethods.MoveFileEx(filename, tempFilepath, new NativeMethods.MoveProgressDelegate(this.MoveProgressHandler), IntPtr.Zero, ref _cancel, 0);
+						if( overWrite)
+						{
+							result = NativeMethods.MoveFileEx(filename, tempFilepath, new NativeMethods.MoveProgressDelegate
+								(this.MoveProgressHandler), IntPtr.Zero, ref _cancel, NativeMethods.MoveFileFlags.COPY_FILE_OPEN_SOURCE_FOR_WRITE);
+						}
+						else
+						{
+							result = NativeMethods.MoveFileEx(filename, tempFilepath, new NativeMethods.MoveProgressDelegate
+								(this.MoveProgressHandler), IntPtr.Zero, ref _cancel, NativeMethods.MoveFileFlags.COPY_FILE_FAIL_IF_EXISTS);
+						}
+                        //result = NativeMethods.MoveFileEx(filename, tempFilepath, new NativeMethods.MoveProgressDelegate(this.MoveProgressHandler), IntPtr.Zero, ref _cancel, 0);
                     }
                     else
                     {

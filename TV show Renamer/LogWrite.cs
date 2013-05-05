@@ -41,7 +41,7 @@ namespace TV_Show_Renamer
 			log.WriteLine(DateTime.Now + " - [" + oldName + "] Saved as [" + newName + "]");
 		}
 	   
-		//save function calls (List String)
+		//save function calls (List string)
 		//public void convertWriteLog2( List<string> oldName,List<string> newName )
 		//{
 		 //   for (int i = 0; i < oldName.Count(); i++)			 
