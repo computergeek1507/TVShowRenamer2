@@ -26,9 +26,9 @@ namespace TV_Show_Renamer
 
 		//downlaod file after checks to see if it was there
 		public void downloadUpdate(string location2)
-		{			
+		{
 			label1.Text = location2;
-						
+
 			WebClient webClient = new WebClient();
 			webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
 			webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
@@ -39,7 +39,7 @@ namespace TV_Show_Renamer
 		//methoid for progress bar
 		private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
 		{
-			progressBar1.Value = e.ProgressPercentage;			
+			progressBar1.Value = e.ProgressPercentage;
 		}
 
 		//runs when download completes
@@ -47,8 +47,8 @@ namespace TV_Show_Renamer
 		{
 			try
 			{
-				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "library.seh"))			   
-					File.Delete(commonAppData + Path.DirectorySeparatorChar + "library.seh");				
+				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "library.seh"))
+					File.Delete(commonAppData + Path.DirectorySeparatorChar + "library.seh");
 			}
 			catch (Exception q)
 			{
@@ -57,7 +57,7 @@ namespace TV_Show_Renamer
 			try
 			{
 				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "version.xml"))
-					File.Delete(commonAppData + Path.DirectorySeparatorChar + "version.xml");				
+					File.Delete(commonAppData + Path.DirectorySeparatorChar + "version.xml");
 			}
 			catch (Exception q)
 			{
@@ -66,7 +66,7 @@ namespace TV_Show_Renamer
 			try
 			{
 				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "webversion.xml"))
-					File.Delete(commonAppData + Path.DirectorySeparatorChar + "webversion.xml");				
+					File.Delete(commonAppData + Path.DirectorySeparatorChar + "webversion.xml");
 			}
 			catch (Exception q)
 			{
@@ -75,23 +75,23 @@ namespace TV_Show_Renamer
 			try
 			{
 				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "preferences.seh"))
-					File.Delete(commonAppData + Path.DirectorySeparatorChar + "preferences.seh");			   
+					File.Delete(commonAppData + Path.DirectorySeparatorChar + "preferences.seh");
 			}
 			catch (Exception q)
 			{
 				window.writeLog("Error when deleting preferences.seh before update" + q.ToString());
-			}			
+			}
 
 			ProcessStartInfo startInfo2 = new ProcessStartInfo(label1.Text);
 			//startInfo2.Verb = "runas";
 			Process.Start(startInfo2);
 			
-			window.CloseForUpdates();			
+			window.CloseForUpdates();
 		}
 
 		//loads with form
 		private void download_Load(object sender, EventArgs e)
-		{			
+		{
 			this.Show();
 			//this.downloadUpdate(commonAppData);
 			saveFileDialog1.Filter = "Installer (*.exe)|*.exe";
@@ -111,15 +111,15 @@ namespace TV_Show_Renamer
 
 		//cancel button
 		private void button1_Click(object sender, EventArgs e)
-		{			
-			window.Show();			
+		{
+			window.Show();
 			this.Close();
-		}	   
+		}
 
 		//run when form closes
 		private void download_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			window.Show();
-		}  
+		}
 	}//end of class
 }//end of namespace

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 
 namespace TV_Show_Renamer
-{	
+{
 	public class TVShowInfo
 	{
 		//public TVShowInfo() { }
@@ -75,7 +75,7 @@ namespace TV_Show_Renamer
 			get { return _TVShowNameepg; }
 			set { _TVShowNameepg = value; }
 		}
-	};	
+	};
 	public class TVClass
 	{
 		string _fileFolder;//origonal folder

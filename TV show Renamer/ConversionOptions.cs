@@ -25,9 +25,9 @@ namespace TV_Show_Renamer
 		string[] TVSearch = { "TVDB.com", "TVRage.com", "Epguides.com", "theXEM.de" };
 
 		public ConversionOptions(Form1 temp,MainSettings tempSettings)
-		{			
+		{
 			InitializeComponent();
-			
+
 			Main = temp;
 			newMainSettings = tempSettings;
 			comboBox1.DataSource = programSettings;
@@ -88,7 +88,7 @@ namespace TV_Show_Renamer
 		{
 			newMainSettings.SeasonFormat = comboBox2.SelectedIndex;
 			convert();
-		}	   
+		}
 		//TitleFormat
 		private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -136,7 +136,7 @@ namespace TV_Show_Renamer
 		{
 			newMainSettings.RemoveUnderscore = checkBox2.Checked;
 			convert();
-		}		
+		}
 		//remove dash
 		private void checkBox3_CheckedChanged(object sender, EventArgs e)
 		{
@@ -224,7 +224,6 @@ namespace TV_Show_Renamer
 			//this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
 			//this.comboBox8.SelectedIndexChanged += new System.EventHandler(this.comboBox8_SelectedIndexChanged);
 		}
-		
-		
+
 	}//end of class
 }//end of namespace

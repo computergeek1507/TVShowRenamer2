@@ -168,7 +168,7 @@ namespace TV_Show_Renamer
 				pw.WriteLine(_main.dataGridView1.Columns["titles"].Visible);
 				pw.WriteLine(_main.dataGridView1.Columns["SeasonNum"].Visible);
 				pw.WriteLine(_main.dataGridView1.Columns["EpisodeNum"].Visible);
-				
+
 				pw.Close();//close writer stream
 			}
 			catch (Exception e)
@@ -282,9 +282,9 @@ namespace TV_Show_Renamer
 					_main.dataGridView1.Columns["titles"].Visible = bool.Parse(tr3.ReadLine());
 					_main.dataGridView1.Columns["SeasonNum"].Visible = bool.Parse(tr3.ReadLine());
 					_main.dataGridView1.Columns["EpisodeNum"].Visible = bool.Parse(tr3.ReadLine());
-					
-					tr3.Close();//close reader stream										
-				}//end of if. 
+
+					tr3.Close();//close reader stream
+				}//end of if.
 			}
 			catch (Exception e)
 			{
@@ -307,8 +307,8 @@ namespace TV_Show_Renamer
 						if (length == 0)
 							break;
 						_moveFolder.Add("TV Folder "+(i+1).ToString());
-						_moveFolder.Add(tr3.ReadLine());						
-						_moveFolder.Add("3");						
+						_moveFolder.Add(tr3.ReadLine());
+						_moveFolder.Add("3");
 					}//end of for loop  
 					tr3.Close();
 					File.Delete(_dataFolder + Path.DirectorySeparatorChar +"TVFolder.seh");
@@ -338,7 +338,7 @@ namespace TV_Show_Renamer
 						_moveFolder.Add(tr3.ReadLine());
 						if (i % 2 == 1)
 						{
-							_moveFolder.Add("1");							
+							_moveFolder.Add("1");
 						}
 					}//end of for loop  
 					tr3.Close();
@@ -366,7 +366,7 @@ namespace TV_Show_Renamer
 						if (length == 0)
 							break;
 						_moveFolder.Add(tr3.ReadLine());
-						}//end of for loop  
+						}//end of for loop
 					tr3.Close();
 				}//end of if
 			}
@@ -438,7 +438,7 @@ namespace TV_Show_Renamer
 			{
 				_main.Log.WriteLog("Can't Delete Temp Folder\n" + e.ToString());
 				returnValue = false;
-			}		  
+			}
 
 			return returnValue;
 		}//end of loadsettings methods
@@ -485,7 +485,7 @@ namespace TV_Show_Renamer
 								EPGShowName = TVShowList.Element("EPGShowName").Value
 							};
 
-			foreach (var wd in TVShowLists)			
+			foreach (var wd in TVShowLists)
 				loadedItem.Add(new TVShowInfo(wd.TVShowName, wd.TVShowFolder, Int32.Parse(wd.TVDBID),wd.TVDBShowName,Int32.Parse(wd.RageTVID),wd.RageShowName,wd.EpguidesID,wd.EPGShowName));			
 		}
 
