@@ -19,11 +19,6 @@ namespace TV_Show_Renamer
 				return TVShowID;
 			ShowName = ShowName.Replace("Gold Rush Alaska", "Gold Rush");
 			ShowName = ShowName.Replace("Tosh 0", "Tosh.0");
-			//var doc = XDocument.Load(FileLocation);
-			//var emp = doc.Descendants("category").FirstOrDefault();
-			//numericUpDown1.Value = decimal.Parse(emp.Element("application").Value);
-			//numericUpDown2.Value = decimal.Parse(emp.Element("library").Value);
-			//numericUpDown3.Value = decimal.Parse(emp.Element("settings").Value);
 			List<SearchInfo> FinalList = new List<SearchInfo>();
 
 			XDocument ShowList = XDocument.Load("http://services.tvrage.com/feeds/search.php?show=" + ShowName);

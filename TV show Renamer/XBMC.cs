@@ -85,7 +85,6 @@ namespace TV_Show_Renamer
 		}
 		private Bitmap CreateLogo(string text)
 		{
-
 			Bitmap objBmpImage = new Bitmap(1, 1);
 			Graphics objGraphics = Graphics.FromImage(objBmpImage);
 			int intWidth = 400;
@@ -99,7 +98,7 @@ namespace TV_Show_Renamer
 				objFont = new Font("Arial", FontSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
 				fontWidth = (int)objGraphics.MeasureString(text, objFont).Width;
 				fontHeight = (int)objGraphics.MeasureString(text, objFont).Height;
-				FontSize--;			
+				FontSize--;
 			}
 			
 			objBmpImage = new Bitmap(objBmpImage, new Size(intWidth, intHeight));
@@ -113,12 +112,10 @@ namespace TV_Show_Renamer
 			objGraphics.DrawString(text, objFont, Brushes.White, new RectangleF(0, 0,400,155), strFormat);
 			objGraphics.Flush();
 			return (objBmpImage);
-
 		}
 
 		private Bitmap CreateBanner(string text)
 		{
-
 			Bitmap objBmpImage = new Bitmap(1, 1);
 			Graphics objGraphics = Graphics.FromImage(objBmpImage);
 			int intWidth = 758;
@@ -146,7 +143,6 @@ namespace TV_Show_Renamer
 			objGraphics.DrawString(text, objFont, Brushes.White, new RectangleF(0, 0, 758, 140), strFormat);
 			objGraphics.Flush();
 			return (objBmpImage);
-
 		}
 
 		//make banner
@@ -246,13 +242,12 @@ namespace TV_Show_Renamer
 						continue;
 					//if thumb file dont convert
 					if (origName == "Thumbs.db")
-						continue;					
+						continue;
 					//check if its a legal file type
 					if ((exten == ".avi" || exten == ".mkv" || exten == ".mp4" || exten == ".mpg" || exten == ".m4v" || exten == ".mpeg" || exten == ".mov" || exten == ".rm" || exten == ".rmvb" || exten == ".wmv" || exten == ".webm"))
 					{
 						size++;
 					}
-
 				}
 
 				// Recurse into subdirectories of this directory.
@@ -364,9 +359,8 @@ namespace TV_Show_Renamer
 				rootElem.Add(actorElem);
 			
 
-			infoDoc.Add(rootElem);		   
+			infoDoc.Add(rootElem);
 			infoDoc.Save(fileName);
-		   
 		}
 
 	}

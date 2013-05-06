@@ -11,28 +11,28 @@ using System.Windows.Forms;
 namespace TV_Show_Renamer
 {
 	public partial class Addtitle : Form
-	{		
+	{
 		//List<string> title = new List<string>();
 		BindingList<TVClass> names = new BindingList<TVClass>();
-			  
 		Form1 Main;
 
 		public Addtitle(BindingList<TVClass> tvlist, Form1 test)
 		{
 			InitializeComponent();
 			Main = test;
-			names = tvlist;			
+			names = tvlist;
 			this.Show();
 		}
-		
-		//autoconvert method 
-		private void convert() {
+
+		//autoconvert method
+		private void convert()
+		{
 			Main.autoConvert();
 		}
 
 		//add title button
 		private void button2_Click(object sender, EventArgs e)
-		{			
+		{
 				if (textBox1.Text != "" || textBox1.Text != " " || textBox1.Text != "  ")
 				{
 					if (Main.addTitle(textBox1.Text))
@@ -40,15 +40,15 @@ namespace TV_Show_Renamer
 						textBox1.Text = null;
 						convert();
 					}
-				}			
+				}
 		}
-		   
-		//clear titles				
+
+		//clear titles
 		private void button3_Click(object sender, EventArgs e)
 		{
 			Main.clearTitles();
-		}			  
-	 
+		}
+
 		private void button4_Click(object sender, EventArgs e)
 		{
 			Main.removeTitle();

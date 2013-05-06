@@ -188,16 +188,6 @@ namespace TV_Show_Renamer
 				newMainSettings.FirstWord = "";
 				autoConvert();
 			}
-			//if (text!= "")
-			//{
-			//	newMainSettings.FirstWord = text;
-			//	autoConvert();
-			//}
-			//else
-			//{
-			//	newMainSettings.FirstWord = "";
-			//	autoConvert();
-			//}
 		}//end of form closing
 
 		//XBMC Tools
@@ -355,14 +345,9 @@ namespace TV_Show_Renamer
 			{
 				ToolStripMenuItem output = new ToolStripMenuItem();
 				if (menu1.Count() != 0)
-				{
 					output = menu1[0];
-				}
 				else
-				{
-					//output = new ToolStripMenuItem();
 					output.Name = "browserMenu";
-				}
 
 				moveFilestoOutoutFolder(output, true, false);
 			}
@@ -378,14 +363,9 @@ namespace TV_Show_Renamer
 			{
 				ToolStripMenuItem output = new ToolStripMenuItem();
 				if (menu1.Count() != 0)
-				{
 					output = menu1[0];
-				}
 				else
-				{
-					//output = new ToolStripMenuItem();
 					output.Name = "browserMenu";
-				}
 
 				moveFilestoOutoutFolder(output, true, true);
 			}
@@ -460,9 +440,7 @@ namespace TV_Show_Renamer
 		{
 			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
 			if (dataGridView1.CurrentRow != null)
-			{
 				moveFilestoOutoutFolder(clickedItem, true, false);
-			}
 			else//catch if nothing is selected
 				MessageBox.Show("No Files Selected");
 		}
@@ -472,9 +450,7 @@ namespace TV_Show_Renamer
 		{
 			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
 			if (dataGridView1.CurrentRow != null)
-			{
 				moveFilestoOutoutFolder(clickedItem, true, true);
-			}
 			else//catch if nothing is selected
 				MessageBox.Show("No Files Selected");
 		}
@@ -484,9 +460,7 @@ namespace TV_Show_Renamer
 		{
 			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
 			if (dataGridView1.CurrentRow != null)
-			{
 				moveFilestoOutoutFolder(clickedItem, false, false);
-			}
 			else//catch if nothing is selected
 				MessageBox.Show("No Files Selected");
 		}
@@ -496,9 +470,7 @@ namespace TV_Show_Renamer
 		{
 			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
 			if (dataGridView1.CurrentRow != null)
-			{
 				moveFilestoOutoutFolder(clickedItem, false, true);
-			}
 			else//catch if nothing is selected
 				MessageBox.Show("No Files Selected");
 		}
@@ -681,7 +653,6 @@ namespace TV_Show_Renamer
 				WebReq = null;
 				return true;
 			}
-
 			catch
 			{
 				WebReq = null;
@@ -726,7 +697,6 @@ namespace TV_Show_Renamer
 					WebClient webClient = new WebClient();
 					webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
 					webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), newMainSettings.DataFolder + Path.DirectorySeparatorChar + "webversion.xml");
-
 				}
 				else
 				{
@@ -762,14 +732,28 @@ namespace TV_Show_Renamer
 					if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
 					{   //libaray update crap
 						if (MessageBox.Show("There is a library update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
-							this.libarayUpdate();
+						{
+							MethodInvoker action6 = delegate
+							{
+								this.libarayUpdate();
+							};
+							this.BeginInvoke(action6);
+							//this.libarayUpdate();
+						}
 					}
 				}
 			}
 			else if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
 			{   //libaray update crap
 				if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
-					this.libarayUpdate();
+				{
+					MethodInvoker action6 = delegate
+					{
+						this.libarayUpdate();
+					};
+					this.BeginInvoke(action6);
+					//this.libarayUpdate();
+				}
 			}
 			else  //no updats available
 				MessageBox.Show("No updates available");
@@ -796,7 +780,6 @@ namespace TV_Show_Renamer
 					WebClient webClient = new WebClient();
 					webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(CompletedSilent);
 					webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), newMainSettings.DataFolder + Path.DirectorySeparatorChar + "webversion.xml");
-
 				}
 				else
 					Log.WriteLog("Server is unavalible Please try again later");
@@ -825,14 +808,28 @@ namespace TV_Show_Renamer
 					if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
 					{   //libaray update crap
 						if (MessageBox.Show("There is a library update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
-							this.libarayUpdate();
+						{
+							MethodInvoker action6 = delegate
+							{
+								this.libarayUpdate();
+							};
+							this.BeginInvoke(action6);
+							//this.libarayUpdate();
+						}
 					}
 				}
 			}
 			else if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
 			{   //libaray update crap
 				if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
-					this.libarayUpdate();
+				{
+					MethodInvoker action6 = delegate
+					{
+						this.libarayUpdate();
+					};
+					this.BeginInvoke(action6);
+					//this.libarayUpdate();
+				}
 			}
 		}//update complete method silently
 
@@ -902,19 +899,6 @@ namespace TV_Show_Renamer
 		{
 			if (this.ConnectionExists())
 			{
-				/*check is not working
-				  try
-				{
-					WebRequest request = WebRequest.Create(new Uri("http://update.scottnation.com/TV_Show_Renamer/library.seh"));
-					request.Method = "HEAD";
-					WebResponse response = request.GetResponse();
-					Console.WriteLine("{0} {1}", response.ContentLength, response.ContentType);
-				}
-				catch (Exception)
-				{
-					MessageBox.Show("Problem with Server\nPlease Contact Admin");
-					return;
-				}*/
 				if (File.Exists(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh"))
 					File.Delete(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "library.seh");
 				WebClient webClient2 = new WebClient();
@@ -933,6 +917,7 @@ namespace TV_Show_Renamer
 		{
 			Log.WriteLog("Libary Update completed");
 			MessageBox.Show("Update completed!");
+			junkRemover();
 		}
 
 		//full Update
@@ -1035,7 +1020,6 @@ namespace TV_Show_Renamer
 				for (int i = 0; i < selectedCellCount; i++)
 				{
 					u.Add(dataGridView1.SelectedCells[i].RowIndex);
-
 				}
 			}
 
@@ -1153,9 +1137,7 @@ namespace TV_Show_Renamer
 								{
 									folderlist.Add(folderdialog.OutputFolder);
 									if (fileList[z].TVShowID != -1)
-									{
 										TVShowInfoList[fileList[z].TVShowID].TVShowFolder = folderdialog.OutputFolder;
-									}
 									else
 										TVShowInfoList.Add(new TVShowInfo(fileList[z].TVShowName, folderdialog.OutputFolder, -1, "", -1, "", "-1", ""));
 
@@ -1203,7 +1185,6 @@ namespace TV_Show_Renamer
 					}//end of for loop 
 					ScottsFileSystem.MoveFiles(OldLocation, NewLocation,copy);
 				}
-				
 			}
 			else
 				MessageBox.Show("No Files Selected");
@@ -1535,7 +1516,7 @@ namespace TV_Show_Renamer
 				indexofTVshow = folderName.IndexOf(showName, StringComparison.InvariantCultureIgnoreCase);
 				if (indexofTVshow != -1 && difference < 3)
 					return folderName;
-			}//end of for loop			
+			}//end of for loop
 			return "";
 		}//end of infofinder method
 
@@ -1614,7 +1595,6 @@ namespace TV_Show_Renamer
 				string formattedEpisode = "";
 				int startIndex = -1;
 				int endIndex = -1;
-
 
 				EditFileList[index].GetTitle = true;
 
@@ -2199,13 +2179,13 @@ namespace TV_Show_Renamer
 					switch (xmlReader.NodeType)
 					{
 						case XmlNodeType.Element:
-							{
-								if (xmlReader.Name == "application")
-									fileVer = Convert.ToInt32(xmlReader.ReadString());
-								if (xmlReader.Name == "library")
-									libVer = Convert.ToInt32(xmlReader.ReadString());
-								break;
-							}//end of case 
+						{
+							if (xmlReader.Name == "application")
+								fileVer = Convert.ToInt32(xmlReader.ReadString());
+							if (xmlReader.Name == "library")
+								libVer = Convert.ToInt32(xmlReader.ReadString());
+							break;
+						}//end of case 
 					}//end of switch
 				}//end of while loop
 				myxmlDocument.RemoveAll();
@@ -2256,7 +2236,6 @@ namespace TV_Show_Renamer
 					if (fileList[selected[i]].FileTitle == "")
 							continue;
 					fileList[selected[i]].FileTitle = "";
-					
 				}
 				autoConvert();
 			}
@@ -2267,7 +2246,6 @@ namespace TV_Show_Renamer
 		{
 			if (dataGridView1.CurrentRow != null)
 			{
-
 				List<int> selected = getSelected();
 				for (int i = selected.Count - 1; i >= 0; i--)
 				{
