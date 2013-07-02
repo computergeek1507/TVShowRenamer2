@@ -4,259 +4,134 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Collections;
-
+using System.Windows.Forms;
 
 namespace TV_Show_Renamer_Server
 {
-    public class TVRage
-    {
-        //string folder = null;
-        //int format = -1;
-        //int season = -1;
-        //int episode = -1;
-        //string tvdbTitle = null;
-        //string fileName = "";
-        //int TVShowID = -1;
+	public class TVRage
+	{
+		List<SearchInfo> selectionList = new List<SearchInfo>();
 
-        public string findTitle(string tvdbTitle, int season,int episode)
-        {
-            string finalTitle = "%%%%";
-            if (tvdbTitle == null)
-                return finalTitle;
+		public SearchInfo findTitle(string ShowName)
+		{
+			SearchInfo TVShowID = new SearchInfo();
+			if (ShowName == null)
+				return TVShowID;
+			ShowName = ShowName.Replace("Gold Rush Alaska", "Gold Rush");
+			ShowName = ShowName.Replace("Tosh 0", "Tosh.0");
+			List<SearchInfo> FinalList = new List<SearchInfo>();
 
-            Show MainInfo = this.FindShow(tvdbTitle);
-            if (MainInfo.Seasons.Count >= season - 1) {
-                if (MainInfo.Seasons[season - 1].Episodes.Count >= episode - 1)
-                {
-                    finalTitle = MainInfo.Seasons[season - 1].Episodes[episode - 1].Title.ToString();
-                    finalTitle = finalTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");          
-                }            
-            }
-            return finalTitle;
-        }
-        
-        public string infoFinder(string fileName, int format, int season, int episode)
-        {
-            string tvdbTitle = null;
-            string test = fileName;
-            int you = -1;
-            int i = season;
-            int j = episode;
+			XDocument ShowList = XDocument.Load("http://services.tvrage.com/feeds/search.php?show=" + ShowName);
 
-            string newi = season.ToString();
-            string newj = j.ToString();
-            //check if i is less than 10
-            if (i < 10)
-                newi = "0" + i.ToString();
-            //check if j is less than 10
-            if (j < 10)
-                newj = "0" + j.ToString();
-            //make string to compare changed name too
-            switch (format)
-            {
-                case 1:
-                    you = test.IndexOf(i.ToString() + "x" + newj);
-                    break;
-                case 2:
-                    you = test.IndexOf(newi + newj);
-                    break;
-                case 3:
-                    you = test.IndexOf("S" + newi + "E" + newj);
-                    //you = test.IndexOf("S" + newi + "e" + newj);
-                    break;
-                case 4:
-                    you = test.IndexOf(i.ToString() + newj);
-                    break;
-            }
-            //stop loop when name is change                    
-            if (you != -1)
-            {
-                season = i;
-                episode = j;
-                if (you == 0)
-                    tvdbTitle = test.Remove(you, test.Length - (you));
-                else
-                    tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
-                //tvdbTitle = test.Remove(you - 1, test.Length - (you - 1));
-            }
-            return tvdbTitle;
-        }
-        
-        private List<Show> Cache = new List<Show>();
+			var Categorys = from Show in ShowList.Descendants("show")
+							select new
+							{
+								ShowID = Show.Element("showid").Value,
+								Name = Show.Element("name").Value,
+							};
 
-        private Show FindShow(string showName)
-        {
-            return FindShow(showName, true);
-        }
+			foreach (var wd in Categorys)
+			{
+				FinalList.Add(new SearchInfo(wd.Name, Int32.Parse(wd.ShowID)));
+			}
 
-        //http://www.tvrage.com/feeds/episode_list.php?show=Lost
-        private Show FindShow(string showName, bool checkCache)
-        {
-            if (checkCache)
-            {
-                foreach (Show shows in Cache)
-                {
-                    if (shows.Name.ToLowerInvariant() == showName.ToLowerInvariant())
-                    {
-                        return shows;
-                    }
-                }
-            }
+			if (FinalList != null && FinalList.Count > 0)
+			{
+				if (FinalList.Count() == 0) return TVShowID;  //return if nothing found
+				int selectedSeriesId = -1;
+				string selectedTitle = "";
+				if (FinalList.Count() == 1)
+				{
+					selectedSeriesId = FinalList[0].SelectedValue;
+					selectedTitle = FinalList[0].Title;
+				}
+				else
+				{
+					if (FinalList.Count() != 0)
+					{
+						SelectMenu SelectMain = new SelectMenu(FinalList, ShowName);
+						if (SelectMain.ShowDialog() == DialogResult.OK)
+						{
+							int selectedid = SelectMain.selected;
+							if (selectedid == -1) return TVShowID;
+							selectedSeriesId = FinalList[selectedid].SelectedValue;
+							selectedTitle = FinalList[selectedid].Title;
+							SelectMain.Close();
+						}
+						else
+						{
+							int idNumber = -1;
+							foreach (SearchInfo testIdem in selectionList)
+							{
+								if (testIdem.Title == ShowName)
+								{
+									idNumber = testIdem.SelectedValue;
+									break;
+								}
+							}
+							if (idNumber == -1)
+							{
+								SelectMenu SelectMain2 = new SelectMenu(FinalList, ShowName);
+								if (SelectMain2.ShowDialog() == DialogResult.OK)
+								{
+									int selectedid = SelectMain2.selected;
+									if (selectedid == -1) return TVShowID;
+									selectionList.Add(new SearchInfo(ShowName, selectedid));
+									selectedSeriesId = FinalList[selectedid].SelectedValue;
+									selectedTitle = FinalList[selectedid].Title;
+									SelectMain2.Close();
+								}
+							}
+							else
+							{
+								selectedSeriesId = FinalList[idNumber].SelectedValue;
+							}
+						}
+					}
+				}
 
-            Show show = new Show(showName);
-            try
-            {
-                XElement xml = XDocument.Load("http://www.tvrage.com/feeds/episode_list.php?show=" + showName).Element("Show");
-                show.Name = xml.Element("name").Value;
-                show.TotalSeasons = xml.Element("totalseasons").Value;
+				if (selectedSeriesId == -1) return TVShowID;   //return if nothing is found
+				TVShowID.SelectedValue = selectedSeriesId;
+				TVShowID.Title = selectedTitle;
+			}
+			TVShowID.Title = TVShowID.Title.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
+			return TVShowID;
+		}
 
-                foreach (XElement seasons in xml.Element("Episodelist").Elements())
-                {
-                    Season season = new Season();
-                    if (seasons.Attribute("no") != null)
-                    {
-                        season.SeasonNumber = int.Parse(seasons.Attribute("no").Value);
-                    }
-                    foreach (XElement episodes in seasons.Elements("episode"))
-                    {
-                        season.Episodes.Add(new Episode(episodes));
-                    }
-                    show.Seasons.Add(season);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            Cache.Add(show);
-            return show;
-        }
-    }
+		public string getTitle(int seriesID, int season, int episode)
+		{
+			string newTitle = null;
 
-    public class Show : IEnumerable
-    {
-        public string Name;
-        public string TotalSeasons;
-        public List<Season> Seasons = new List<Season>();
+			try
+			{
+				if (season < 100)
+				{
+					string seporater = "x0";
+					if (episode > 10)
+					{
+						seporater = "x";
+					}
+					XDocument EpisodeList = XDocument.Load("http://services.tvrage.com/feeds/episodeinfo.php?sid=" + seriesID.ToString() + "&ep=" + season.ToString() + seporater + episode.ToString());
 
-        public Show() { }
+					var Categorys = from Episode in EpisodeList.Descendants("episode")
+									select new
+									{
+										Title = Episode.Element("title").Value,
+									};
 
-        public Show(string showName)
-        {
-            this.Name = showName;
-        }
+					foreach (var wd in Categorys)
+					{
+						newTitle = wd.Title;
+					}
+				}
+				//newTitle = ;
+			}
+			catch (Exception) { }
 
-        public Season FindSeason(int number)
-        {
-            foreach (Season season in Seasons)
-            {
-                if (season.SeasonNumber == number)
-                {
-                    return season;
-                }
-            }
-            return null;
-        }
-
-        public Episode FindEpisode(int season, int episode)
-        {
-            Season findSeason = FindSeason(season);
-            if (findSeason != null)
-            {
-                return findSeason.FindEpisode(episode);
-            }
-            return null;
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            return Seasons.GetEnumerator();
-        }
-    }
-    public class Season : IEnumerable
-    {
-        public int SeasonNumber;
-        public List<Episode> Episodes = new List<Episode>();
-
-        public Season() { }
-
-        public Season(int seasonNumber)
-        {
-            SeasonNumber = seasonNumber;
-        }
-
-        public Episode FindEpisode(int number)
-        {
-            foreach (Episode episode in Episodes)
-            {
-                if (int.Parse(episode.SeasonNumber) == number)
-                {
-                    return episode;
-                }
-            }
-            return null;
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            return Episodes.GetEnumerator();
-        }
-    }
-    public class Episode
-    {
-        public string EpisodeNumber;
-        public string SeasonNumber;
-        public string ProdNumber;
-        public string AirDate;
-        public string Link;
-        public string Title;
-
-        public Episode() { }
-
-        public Episode(int episodeNumber, string title)
-        {
-            SeasonNumber = episodeNumber.ToString();
-            Title = title;
-        }
-
-        public Episode(XElement xe)
-        {
-            EpisodeNumber = xe.ToString("epnum");
-            SeasonNumber = xe.ToString("seasonnum");
-            ProdNumber = xe.ToString("prodnum");
-            AirDate = xe.ToString("airdate");
-            Link = xe.ToString("link");
-            Title = xe.ToString("title");
-        }
-    }
-    public static class Extensions
-    {
-        public static string ToString(this XElement xe, string name)
-        {
-            XElement xeItem = xe.Element(name);
-            if (xeItem != null)
-            {
-                return xeItem.Value;
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        public static int ToInt(this XElement xe, string name)
-        {
-            XElement xeItem = xe.Element(name);
-            if (xeItem != null)
-            {
-                int number;
-                bool result = int.TryParse(xeItem.Value, out number);
-                if (result)
-                {
-                    return number;
-                }
-            }
-            return -1;
-        }
-    }
+			if (newTitle == null)
+				return "";
+			newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
+			return newTitle;
+		}
+	}
 }
