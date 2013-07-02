@@ -18,6 +18,8 @@ namespace TV_Show_Renamer_Server
     };
     public sealed class ListBoxLog : IDisposable
     {
+		private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+			(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private const string DEFAULT_MESSAGE_FORMAT = "{0} [{5}] : {8}";
         private const int DEFAULT_MAX_LINES_IN_LISTBOX = 2000;
 
@@ -55,21 +57,27 @@ namespace TV_Show_Renamer_Server
                 switch (logEvent.Level)
                 {
                     case Level.Critical:
+						log.Fatal(logEvent.Message);
                         color = Color.White;
                         break;
                     case Level.Error:
+						log.Error(logEvent.Message);
                         color = Color.Red;
                         break;
                     case Level.Warning:
+						log.Warn(logEvent.Message);
                         color = Color.Goldenrod;
                         break;
                     case Level.Info:
+						log.Info(logEvent.Message);
                         color = Color.Green;
                         break;
                     case Level.Verbose:
+						log.Debug(logEvent.Message);
                         color = Color.Blue;
                         break;
                     default:
+						log.Debug(logEvent.Message);
                         color = Color.Black;
                         break;
                 }
@@ -217,6 +225,7 @@ namespace TV_Show_Renamer_Server
         public void Log(Level level, string format, params object[] args) { Log(level, (format == null) ? null : string.Format(format, args)); }
         public void Log(Level level, string message)
         {
+			//log.
             WriteEvent(new LogEvent(level, message));
         }
 

@@ -73,6 +73,10 @@ namespace TV_Show_Renamer_Server
             _folderOptions = folderOptions;
             _searchFolder = searchFolder;
         }
+
+		public CategoryInfo()
+		{}
+
         public string CategoryTitle
         {
             get { return _categoryTitle; }
@@ -189,42 +193,75 @@ namespace TV_Show_Renamer_Server
 
     public class TVShowSettings
     {
-        string _ShowFolder;
-        string _RealShowName;
-        string _SearchName;
+		string _SearchName;
+		string _ShowFolder ;
+		string _TVDBShowName ;
+		string _TVRageShowName ;
 
         int _TVDBSeriesID = -1;//TVDB id number
+		int _TVRageSeriesID = -1;
 
-        public TVShowSettings(string showFolder, string realShowName, string searchName, int tVDBSeriesID)
-        {
-            _ShowFolder = showFolder;
-            _RealShowName = realShowName;
-            _SearchName = searchName;
-            _TVDBSeriesID = tVDBSeriesID;
-        }
+		bool _UseTVDBNumbering = false;
+		bool _SeriesEnded = false;
 
+		//public TVShowSettings(string searchName, string showFolder, string tVDBShowName, int tVDBSeriesID, string tVRageShowName, int tVRageSeriesID)
+		//{
+		//    _SearchName = searchName;
+		//    _ShowFolder = showFolder;
+		//    _TVDBShowName = tVDBShowName;
+		//    _TVRageShowName = tVRageShowName;
+		//    _TVRageSeriesID = tVRageSeriesID;
+		//    _TVDBSeriesID = tVDBSeriesID;
+		//}
+		public TVShowSettings(string searchName,string showFolder)
+		{
+			_SearchName = searchName;
+			_ShowFolder = showFolder;
+		}
+
+		public TVShowSettings()
+		{}
+
+		public string SearchName
+		{
+			get { return _SearchName; }
+			set { _SearchName = value; }
+		}
         public string ShowFolder
         {
             get { return _ShowFolder; }
             set { _ShowFolder = value; }
         }
-
-        public string RealShowName
+		public string TVDBShowName
         {
-            get { return _RealShowName; }
-            set { _RealShowName = value; }
+			get { return _TVDBShowName; }
+			set { _TVDBShowName = value; }
         }
-
-        public string SearchName
-        {
-            get { return _SearchName; }
-            set { _SearchName = value; }
-        }
+		public string TVRageShowName
+		{
+			get { return _TVRageShowName; }
+			set { _TVRageShowName = value; }
+		}
         public int TVDBSeriesID
         {
             get { return _TVDBSeriesID; }
             set { _TVDBSeriesID = value; }
         }
+		public int TVRageSeriesID
+		{
+			get { return _TVRageSeriesID; }
+			set { _TVRageSeriesID = value; }
+		}
+		public bool UseTVDBNumbering
+		{
+			get { return _UseTVDBNumbering; }
+			set { _UseTVDBNumbering = value; }
+		}
+		public bool SeriesEnded
+		{
+			get { return _SeriesEnded; }
+			set { _SeriesEnded = value; }
+		}
     }//end of class
 
     public class SearchInfo
@@ -269,5 +306,34 @@ namespace TV_Show_Renamer_Server
             get { return _selected; }
             set { _selected = value; }
         }
-    }//end of class//end of class
+    }
+
+	public class TVDBObject
+	{
+		public tvdbinfo TVDBID;
+	}
+
+	public class ThreadAdd { public string AddType; public object ObjectToAdd;};
+
+	public class piccache
+	{
+		public int banner;
+		public int poster;
+	}
+
+	public class tvdbinfo 
+	{
+		public bool air_by_date;
+		public piccache cache;
+		public string language;
+		public string next_ep_airdate;
+		public bool paused;
+		public string quality;
+		public string show_name;
+		public string status;
+		public int tvrage_id;
+		public string tvrage_name;
+
+	
+	}
 }//end of namespace
