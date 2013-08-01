@@ -44,7 +44,7 @@ namespace TV_Show_Renamer
 		int[] _buttonColor = { 255, 240, 240, 240 };
 
 		string _firstWord = "";
-		string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Path.DirectorySeparatorChar +"TV Show Renamer";
+		string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + Path.DirectorySeparatorChar + "TV Show Renamer";
 
 		Form1 _main;
 

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TV_Show_Renamer</RootNamespace>
     <AssemblyName>TV Show Renamer</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ManifestCertificateThumbprint>09ACF9756AC48AC40CA13E7DADE788A77997F470</ManifestCertificateThumbprint>
     <ManifestKeyFile>TV show Renamer_TemporaryKey.pfx</ManifestKeyFile>
@@ -46,6 +46,7 @@
     <ApplicationVersion>2.8.1.1</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,9 +73,15 @@
     <StartupObject>TV_Show_Renamer.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MediaInfoDotNet">
+      <HintPath>packages\MediaInfoDotNet.0.7.62.40921\lib\net40\MediaInfoDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="SevenZipSharp">
-      <HintPath>Resources\SevenZipSharp.dll</HintPath>
+    <Reference Include="policy.2.0.taglib-sharp">
+      <HintPath>packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpCompress">
+      <HintPath>packages\sharpcompress.0.9\lib\net40\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -93,6 +100,9 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
+    <Reference Include="taglib-sharp">
+      <HintPath>packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="TvdbLib">
       <HintPath>Resources\TvdbLib.dll</HintPath>
     </Reference>
@@ -268,6 +278,8 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="MediaInfoDotNet.dll.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -326,16 +338,13 @@
   <ItemGroup>
     <Content Include="TVcustom.ico" />
     <Content Include="TVcustom.png" />
+    <Content Include="x64\MediaInfo.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\MediaInfo.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\licence.rtf" />
-    <Resource Include="Resources\32-bit\7z.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\SevenZipSharp.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\64-bit\7z.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <None Include="Resources\Program1.png" />
     <Resource Include="Resources\TvdbLib.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
