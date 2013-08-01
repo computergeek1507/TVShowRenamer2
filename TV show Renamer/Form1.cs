@@ -10,9 +10,10 @@ using System.IO;
 using System.Xml;
 using System.Net;
 using System.Diagnostics;
-using Microsoft.VisualBasic.FileIO;
+//using Microsoft.VisualBasic.FileIO;
 using System.Threading;
-using SevenZip;
+using SharpCompress.Common;
+using SharpCompress.Archive;
 using System.Collections;
 using System.Text.RegularExpressions;
 
@@ -1220,7 +1221,7 @@ namespace TV_Show_Renamer
 					{
 						FileInfo fi3 = new FileInfo(pendingFileName);
 						if (fi3.Extension == ".zip" || fi3.Extension == ".rar" || fi3.Extension == ".r01" || fi3.Extension == ".001" || fi3.Extension == ".7z")
-							archiveExtrector(pendingFileName, fi3.Name, true);
+							archiveExtrector(fi3);
 						else
 						{
 							if (fi3.Extension == "" || fi3.Extension == null)
@@ -2202,28 +2203,28 @@ namespace TV_Show_Renamer
 			}//end of if-else
 		}
 
-		private void extr_Extracting(object sender, ProgressEventArgs e)
-		{
-			int progress = e.PercentDone;
-			if (progress < progressBar1.Maximum)
-			{
-				MethodInvoker action = delegate
-				{
-					progressBar1.Value = progress;
-				};
-				progressBar1.BeginInvoke(action);
-				//progressBar1.Value = progress;
-			}
-			if (progress == progressBar1.Maximum)
-			{
-				MethodInvoker action = delegate
-				{
-					progressBar1.Hide();
-				};
-				progressBar1.BeginInvoke(action);
-				//progressBar1.Hide();				
-			}
-		}
+		//private void extr_Extracting(object sender, ProgressEventArgs e)
+		//{
+		//    int progress = e.PercentDone;
+		//    if (progress < progressBar1.Maximum)
+		//    {
+		//        MethodInvoker action = delegate
+		//        {
+		//            progressBar1.Value = progress;
+		//        };
+		//        progressBar1.BeginInvoke(action);
+		//        //progressBar1.Value = progress;
+		//    }
+		//    if (progress == progressBar1.Maximum)
+		//    {
+		//        MethodInvoker action = delegate
+		//        {
+		//            progressBar1.Hide();
+		//        };
+		//        progressBar1.BeginInvoke(action);
+		//        //progressBar1.Hide();				
+		//    }
+		//}
 
 		//detete Selected Titles
 		private void deleteSelectedTitles()
@@ -2342,7 +2343,7 @@ namespace TV_Show_Renamer
 					continue;
 				//check if its a legal file type
 				if (exten == ".zip" || exten == ".rar" || exten == ".r01" || exten == ".7z")
-					archiveExtrector(fi.FullName, fi.Name, false);
+					archiveExtrector(fi);
 			}
 		}
 
@@ -2553,304 +2554,57 @@ namespace TV_Show_Renamer
 		/// extract contents of zip/rar file
 		/// </summary>
 		/// <param name="zipfile">full file path</param>
-		/// <param name="zipName">just file name</param>
-		/// <param name="add">add file to data grid</param>
-		private void archiveExtrector(string zipfile, string zipName, bool add)
+		private void archiveExtrector(FileInfo zipFile)
 		{
-			List<string> info = new List<string>();
-			string archiveName = null;
-			int archiveIndex = -1;
-			FileInfo fi8 = new FileInfo(zipfile);
-			SevenZipExtractor mainExtrector;
+			//List<string> info = new List<string>();
+			//FileInfo fi8 = new FileInfo(zipfile);
+			//SevenZipExtractor mainExtrector;
 			try
 			{
-				mainExtrector = new SevenZipExtractor(zipfile);
-			}
-			catch (SevenZipArchiveException)
-			{
-				password passwordYou = new password(zipfile, zipName);
-
-				if (passwordYou.ShowDialog() == DialogResult.OK)
+				string newFolder = zipFile.FullName.Replace(zipFile.Extension, "") + Path.DirectorySeparatorChar;
+				if (!(System.IO.Directory.Exists(newFolder)))
+					System.IO.Directory.CreateDirectory(newFolder);
+				var compressed = ArchiveFactory.Open(zipFile);
+				MethodInvoker action2 = delegate
 				{
-					this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
-					passwordYou.Close();
-				}
-				return;
-			}
-			catch (SevenZipLibraryException)
-			{
-				MessageBox.Show("Incorrect 7z.dll for your version of Windows");
-				return;
-			}
-			int sizeOfArchive = 0;
-			try
-			{
-				sizeOfArchive = (int)mainExtrector.FilesCount;
-			}
-			catch (SevenZipArchiveException)
-			{
-				//Call Passord Method
-				password passwordYou = new password(zipfile, zipName);
-				if (passwordYou.ShowDialog() == DialogResult.OK)
-				{
-					this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
-					passwordYou.Close();
-				}
-				return;
-			}
-
-			MethodInvoker action2 = delegate
-			{
-				progressBar1.Maximum = 100;
-				progressBar1.Value = 0;
-				progressBar1.Show();
-			};
-			progressBar1.BeginInvoke(action2);
-			mainExtrector.Extracting += extr_Extracting;
-
-			for (int j = 0; j < sizeOfArchive; j++)
-			{
-				archiveName = mainExtrector.ArchiveFileNames[j];
-				string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000").Replace(".mpeg", "0000").Replace(".mov", "0000").Replace(".rm", "0000").Replace(".rmvb", "0000").Replace(".wmv", "0000").Replace(".webm", "0000");
-
-				if (testArchiveName != archiveName)
-				{
-					archiveIndex = j;
-					break;
-				}
-			}
-			if (archiveIndex == -1)
-			{
-				MethodInvoker action3 = delegate
-				{
-					progressBar1.Hide();
+					progressBar1.Maximum = (compressed.Entries.Count() * 10)+1;
+					progressBar1.Value = 0;
+					progressBar1.Show();
 				};
-				progressBar1.BeginInvoke(action3);
-				return;
-			}
-			try
-			{
-				mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
-				if (add)
+				this.BeginInvoke(action2);
+				
+				foreach (var entry in compressed.Entries)
 				{
-					FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
-					for (int i = 0; i < fileList.Count(); i++)
+					if (!entry.IsDirectory)
 					{
-						if (fi9.Name == fileList[i].FileName)
-						{
-							MethodInvoker action3 = delegate
-							{
-								progressBar1.Hide();
-							};
-							progressBar1.BeginInvoke(action3);
-							return;
-						}
+						entry.WriteToDirectory(newFolder, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
 					}
-					//add file names
-					MethodInvoker action = delegate
+					//Increment the ProgressBar value by 1
+					MethodInvoker action3 = delegate
 					{
-						fileList.Add(new TVClass(fi9.DirectoryName, fi9.Name, fi9.Extension));
+						if(progressBar1.Value + progressBar1.Step <= progressBar1.Maximum)
+							progressBar1.PerformStep();
 					};
-					dataGridView1.BeginInvoke(action);
+					this.BeginInvoke(action3);
 				}
+
+				ProcessDir(newFolder, 0);
+				fileRenamer(fileList, false);
+				//autoConvert();
 			}
-			catch (SevenZipArchiveException)
+			catch (Exception e)
 			{
-				//Call Passord Method
-				password passwordYou = new password(zipfile, zipName);
-				if (passwordYou.ShowDialog() == DialogResult.OK)
-				{
-					this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
-					passwordYou.Close();
-				}
-				MethodInvoker action3 = delegate
-				{
-					progressBar1.Hide();
-				};
-				progressBar1.BeginInvoke(action3);
+				Log.WriteLog(e.Message.ToString());
+				MessageBox.Show("error");
 				return;
 			}
-			catch (FileNotFoundException)
-			{
-				MethodInvoker action3 = delegate
-				{
-					progressBar1.Hide();
-				};
-				progressBar1.BeginInvoke(action3);
-				return;
-			}
-			catch (IOException)
-			{
-				MethodInvoker action3 = delegate
-				{
-					progressBar1.Hide();
-				};
-				progressBar1.BeginInvoke(action3);
-				return;
-			}
-			autoConvert();
-			mainExtrector.Extracting -= extr_Extracting;
-			mainExtrector.Dispose();
+
 			MethodInvoker action4 = delegate
 			{
-				progressBar1.Hide();
-			};
-			progressBar1.BeginInvoke(action4);
-		}
-
-		/// <summary>
-		/// extract contents of zip/rar file with Passord
-		/// </summary>
-		/// <param name="zipfile">full file path</param>
-		/// <param name="zipName">just file name</param>
-		/// <param name="password">file name password</param>
-		/// <param name="add">add file to data grid</param>
-		private void archiveExtrector(string zipfile, string zipName, string password, bool add)
-		{
-			List<string> info = new List<string>();
-			string archiveName = null;
-			int archiveIndex = -1;
-			FileInfo fi8 = new FileInfo(zipfile);
-			SevenZipExtractor mainExtrector;
-			if (password == "") return;
-			try
-			{
-				mainExtrector = new SevenZipExtractor(zipfile, password);
-			}
-			catch (SevenZipArchiveException)
-			{
-				password passwordYou = new password(zipfile, zipName);
-
-				if (passwordYou.ShowDialog() == DialogResult.OK)
-				{
-					this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
-					passwordYou.Close();
-				}
-				return;
-			}
-			catch (SevenZipLibraryException)
-			{
-				MessageBox.Show("Incorrect 7z.dll for your version of Windows");
-				return;
-			}
-
-			int sizeOfArchive = 0;
-			try
-			{
-				sizeOfArchive = (int)mainExtrector.FilesCount;
-			}
-			catch (SevenZipArchiveException)
-			{   //add password
-				password passwordYou = new password(zipfile, zipName);
-
-				if (passwordYou.ShowDialog() == DialogResult.OK)
-				{
-					this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
-					passwordYou.Close();
-				}
-				return;
-			}
-
-			MethodInvoker action2 = delegate
-			{
-				progressBar1.Maximum = 100;
 				progressBar1.Value = 0;
-				progressBar1.Show();
-
-			};
-			progressBar1.BeginInvoke(action2);
-			mainExtrector.Extracting += extr_Extracting;
-
-			for (int j = 0; j < sizeOfArchive; j++)
-			{
-				archiveName = mainExtrector.ArchiveFileNames[j];
-				string testArchiveName = archiveName.Replace(".avi", "0000").Replace(".mkv", "0000").Replace(".mp4", "0000").Replace(".m4v", "0000").Replace(".mpg", "0000").Replace(".mpeg", "0000").Replace(".mov", "0000").Replace(".rm", "0000").Replace(".rmvb", "0000").Replace(".wmv", "0000").Replace(".webm", "0000");
-
-				if (testArchiveName != archiveName)
-				{
-					archiveIndex = j;
-					break;
-				}
-			}
-
-			if (archiveIndex == -1)
-			{
-				MethodInvoker action3 = delegate
-				{
-					progressBar1.Hide();
-				};
-				progressBar1.BeginInvoke(action3);
-				return;
-			}
-
-			try
-			{
-				mainExtrector.ExtractFile(archiveIndex, File.Create(fi8.DirectoryName + "\\" + archiveName));
-				if (add)
-				{
-					FileInfo fi9 = new FileInfo(fi8.DirectoryName + "\\" + archiveName);
-					for (int i = 0; i < fileList.Count(); i++)
-					{
-						if (fi9.Name == fileList[i].FileName)
-						{
-							MethodInvoker action3 = delegate
-							{
-								progressBar1.Hide();
-							};
-							progressBar1.BeginInvoke(action3);
-							return;
-						}
-					}
-					//add file name
-					MethodInvoker action = delegate
-					{
-						fileList.Add(new TVClass(fi9.DirectoryName, fi9.Name, fi9.Extension));
-					};
-					dataGridView1.BeginInvoke(action);
-				}
-			}
-			catch (SevenZipArchiveException)
-			{
-				//Call Passord Method
-				password passwordYou = new password(zipfile, zipName);
-				if (passwordYou.ShowDialog() == DialogResult.OK)
-				{
-					this.archiveExtrector(zipfile, zipName, passwordYou.Password, add);
-					passwordYou.Close();
-				}
-				MethodInvoker action3 = delegate
-				{
-					progressBar1.Hide();
-				};
-				progressBar1.BeginInvoke(action3);
-				return;
-			}
-			catch (FileNotFoundException)
-			{
-				MethodInvoker action3 = delegate
-				{
-					progressBar1.Hide();
-				};
-				progressBar1.BeginInvoke(action3);
-				return;
-			}
-			catch (IOException)
-			{
-				MethodInvoker action3 = delegate
-				{
-					progressBar1.Hide();
-				};
-				progressBar1.BeginInvoke(action3);
-				return;
-			}
-			autoConvert();
-			mainExtrector.Extracting -= extr_Extracting;
-			mainExtrector.Dispose();
-			MethodInvoker action4 = delegate
-			{
 				progressBar1.Hide();
 			};
-			progressBar1.BeginInvoke(action4);
+			this.BeginInvoke(action4);
 		}
 
 		//drag and drop

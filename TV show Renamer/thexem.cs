@@ -23,8 +23,8 @@ namespace TV_Show_Renamer
 
 		public thexem(string newFolder)
 		{
-			folder = newFolder;
-			m_cacheProvider = new XmlCacheProvider(folder + Path.DirectorySeparatorChar + "Temp");
+			folder = newFolder + Path.DirectorySeparatorChar + "Temp";
+			m_cacheProvider = new XmlCacheProvider(folder);
 			m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
 			m_tvdbHandler.InitCache();
 		}
@@ -135,6 +135,8 @@ namespace TV_Show_Renamer
 				//http://thexem.de/proxy/tvdb/scene/api/1D62F2F90030C444/series/\1/all/$INFO[language].xml
 				//http://thexem.de/proxy/tvdb/scene/api/{1}/series/{2}/all/{3}.xml
 
+				//get individual epidose data
+				//http://www.thetvdb.com/api/BC08025A4C3F3D10/episodes/1053651/en.xml
 
 					//XDocument EpisodeList = XDocument.Load("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml");
 					XDocument EpisodeList = XDocument.Load(folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml");

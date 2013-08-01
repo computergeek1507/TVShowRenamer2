@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Threading;
 
 namespace TV_Show_Renamer
 {
@@ -130,7 +131,7 @@ namespace TV_Show_Renamer
 
 		public string FullFileName
 		{
-			get { return _fileFolder +Path.DirectorySeparatorChar + _fileName; }			
+			get { return _fileFolder + Path.DirectorySeparatorChar + _fileName; }
 		}
 
 		public string NewFullFileName
@@ -237,6 +238,8 @@ namespace TV_Show_Renamer
 	{
 		public static void MoveFiles(List<string> sourceFiles, List<string> destFiles,bool copy)
 		{
+			// move some files
+			
 			CopyFilesDialog copyfiles = new CopyFilesDialog(sourceFiles, destFiles, copy);
 			copyfiles.Show();
 		}
