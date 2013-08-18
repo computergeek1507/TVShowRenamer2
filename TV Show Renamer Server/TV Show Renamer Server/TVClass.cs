@@ -306,6 +306,128 @@ namespace TV_Show_Renamer_Server
             get { return _selected; }
             set { _selected = value; }
         }
+<<<<<<< .mine
+    }
+
+	public class OnlineShowInfo
+	{
+		string _ShowName;
+		//string _newTitle = "";
+		int _ShowID;
+		string _StartYear;
+
+		public OnlineShowInfo(string showName, int showID,string startYear)
+		{
+			_ShowName = showName;
+			_ShowID = showID;
+			_StartYear = startYear;
+		}
+
+		public OnlineShowInfo(string showName, int showID)
+		{
+			_ShowName = showName;
+			_ShowID = showID;
+			_StartYear = "";
+		}
+
+		public OnlineShowInfo()
+		{
+			_ShowName = "";
+			_ShowID = -1;
+			_StartYear = "";
+		}
+
+		public string ShowName
+		{
+			get { return _ShowName; }
+			set { _ShowName = value; }
+		}
+
+		public int ShowID
+		{
+			get { return _ShowID; }
+			set { _ShowID = value; }
+		}
+
+		public string StartYear
+		{
+			get { return _StartYear; }
+			set { _StartYear = value; }
+		}
+	}
+
+	public class ThreadAdd { public string AddType; public object ObjectToAdd;};
+
+	public class piccache
+	{
+		public int banner;
+		public int poster;
+	}
+
+	public class tvdbinfo 
+	{
+		public bool air_by_date;
+		public piccache cache;
+		public string language;
+		public string next_ep_airdate;
+		public bool paused;
+		public string quality;
+		public string show_name;
+		public string status;
+		public int tvrage_id;
+		public string tvrage_name;
+
+	
+	}
+
+	public class EPGuigeReturnObject
+	{
+		string _tvshowName;
+		string _episodeNumber;
+		string _episodeNumber2;
+		string _episodeDate;
+		string _episodeTitle;
+
+		public EPGuigeReturnObject(string tvshowName, string episodeNumber, string episodeNumber2, string episodeDate, string episodeTitle)
+		{
+			_tvshowName = tvshowName;
+			_episodeNumber = episodeNumber;
+			_episodeNumber2 = episodeNumber2;
+			_episodeDate = episodeDate;
+			_episodeTitle = episodeTitle;
+
+		}
+		public string TVShowName
+		{
+			get { return _tvshowName; }
+			set { _tvshowName = value; }
+		}
+
+		public string EpisodeNumber
+		{
+			get { return _episodeNumber; }
+			set { _episodeNumber = value; }
+		}
+
+		public string EpisodeNumber2
+		{
+			get { return _episodeNumber2; }
+			set { _episodeNumber2 = value; }
+		}
+
+		public string EpisodeDate
+		{
+			get { return _episodeDate; }
+			set { _episodeDate = value; }
+		}
+
+		public string EpisodeTitle
+		{
+			get { return _episodeTitle; }
+			set { _episodeTitle = value; }
+		}
+	}//end of class
+=======
     }
 
 	public class TVDBObject
@@ -336,4 +458,5 @@ namespace TV_Show_Renamer_Server
 
 	
 	}
+>>>>>>> .r102380
 }//end of namespace
