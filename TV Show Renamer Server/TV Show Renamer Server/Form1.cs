@@ -14,7 +14,6 @@ using System.Runtime.InteropServices;
 using System.Net;
 using System.Collections;
 using System.Diagnostics;
-<<<<<<< .mine
 using Microsoft.CSharp;
 using TweetSharp;
 //using MongoDB.Bson;
@@ -26,13 +25,10 @@ using XBMCRPC.List;
 using XBMCRPC.List.Item;
 using XBMCRPC.Methods;
 using XBMCRPC.Video.Fields;
-=======
 using Microsoft.CSharp;
 using TweetSharp;
 //using MongoDB.Bson;
 //using MongoDB.Driver;
->>>>>>> .r102380
-
 
 namespace TV_Show_Renamer_Server
 {
@@ -62,15 +58,10 @@ namespace TV_Show_Renamer_Server
 
 
         //get working directory
-<<<<<<< .mine
+
 		string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + Path.DirectorySeparatorChar + "TV Show Renamer Server";
         //Thread t;
         //bool on = true;
-=======
-		string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + Path.DirectorySeparatorChar + "TV Show Renamer Server";
-        Thread t;
-        bool on = true;
->>>>>>> .r102380
         static Queue TheadQueue = new Queue();
         LogWrite MainLog = new LogWrite();//log object 
         List<CategoryInfo> CategoryList = new List<CategoryInfo>();
@@ -192,11 +183,7 @@ namespace TV_Show_Renamer_Server
             }
             catch (Exception)
             {
-<<<<<<< .mine
 				listBoxLog.Log(Level.Error, "Error Saving Preference File");
-=======
-				listBoxLog.Log(Level.Error, "Error Loading Preference File");
->>>>>>> .r102380
             }
             try
             {//write categoryXML file
@@ -204,15 +191,9 @@ namespace TV_Show_Renamer_Server
             }
             catch (Exception)
             {
-<<<<<<< .mine
 				listBoxLog.Log(Level.Error, "Error Saving CategoryList File");
             }
-=======
-				listBoxLog.Log(Level.Error, "Error Loading CategoryList File");
-            }
->>>>>>> .r102380
 
-<<<<<<< .mine
 			try
 			{
 				XmlSerializer serializer = new XmlSerializer(typeof(List<TVShowSettings> ));
@@ -226,21 +207,7 @@ namespace TV_Show_Renamer_Server
 				listBoxLog.Log(Level.Error, "Error Saving TV Show File");
 				MessageBox.Show(e.Message);
 			}
-=======
-			try
-			{
-				XmlSerializer serializer = new XmlSerializer(typeof(List<TVShowSettings> ));
-				TextWriter writer = new StreamWriter(commonAppData + Path.DirectorySeparatorChar + "TVShowList.xml");
-				serializer.Serialize(writer, _TVShowList);
-				writer.Close();
-			}
-			catch (Exception e )
-			{
 
-				listBoxLog.Log(Level.Error, "Error Loading TV Show File");
-				MessageBox.Show(e.Message);
-			}
->>>>>>> .r102380
         }
 
         //load settings file
@@ -248,11 +215,8 @@ namespace TV_Show_Renamer_Server
         {
             try
             {
-<<<<<<< .mine
+
 				if (System.IO.File.Exists(commonAppData + Path.DirectorySeparatorChar + "preferences.seh"))//see if file exists
-=======
-				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "preferences.seh"))//see if file exists
->>>>>>> .r102380
                 {
 					StreamReader tr3 = new StreamReader(commonAppData + Path.DirectorySeparatorChar + "preferences.seh");
                     var readtemp = tr3.ReadLine();
@@ -267,18 +231,13 @@ namespace TV_Show_Renamer_Server
 
             try
             {
-<<<<<<< .mine
 				if (System.IO.File.Exists(commonAppData + Path.DirectorySeparatorChar + "CategoryList.xml"))//see if file exists
-=======
-				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "CategoryList.xml"))//see if file exists
->>>>>>> .r102380
                 {
 					this.categoryLoad(commonAppData + Path.DirectorySeparatorChar + "CategoryList.xml", CategoryList);
                 }//end of if. 
             }
             catch (Exception e)
             {
-<<<<<<< .mine
 				listBoxLog.Log(Level.Error, "Error Loading Category File");
 				MessageBox.Show(e.Message);
             }
@@ -294,25 +253,8 @@ namespace TV_Show_Renamer_Server
 			}
 			catch (Exception e)
 			{
-=======
-				listBoxLog.Log(Level.Error, "Error Loading Category File");
-				MessageBox.Show(e.Message);
-            }
-			try
-			{
-				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "TVShowList.xml"))//see if file exists
-				{
-					XmlSerializer serializer = new XmlSerializer(typeof(List<TVShowSettings>));
-					FileStream reader = new FileStream(commonAppData + Path.DirectorySeparatorChar + "TVShowList.xml", FileMode.Open);
-					_TVShowList = (List<TVShowSettings>)serializer.Deserialize(reader);
-					reader.Close();
-				}
-			}
-			catch (Exception e)
-			{
->>>>>>> .r102380
 
-<<<<<<< .mine
+
 				listBoxLog.Log(Level.Error, "Error Loading TV Show File");
 				MessageBox.Show(e.Message);
 			}
@@ -330,11 +272,6 @@ namespace TV_Show_Renamer_Server
 			{
 				log.Error("Can't Delete Temp Folder",e);
 			}
-=======
-				listBoxLog.Log(Level.Error, "Error Loading TV Show File");
-				MessageBox.Show(e.Message);
-			}
->>>>>>> .r102380
             
         }//end of loadsettings methods
 
@@ -356,7 +293,6 @@ namespace TV_Show_Renamer_Server
         {
 			_TVShowList.Clear();
             List<string> newitems = folderFinder(folderTextBox.Text);
-<<<<<<< .mine
 			foreach (string newTVShow in newitems) 
 			{
 				_TVShowList.Add(getTVShowSettings(newTVShow));
@@ -365,27 +301,13 @@ namespace TV_Show_Renamer_Server
 
 			TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
             //main.Show();
-=======
-			foreach (string newTVShow in newitems) 
-			{
-				_TVShowList.Add(new TVShowSettings(newTVShow, newTVShow));
-			}
 
-
-			TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text);
-            main.Show();
->>>>>>> .r102380
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-<<<<<<< .mine
 			TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
             //main.Show();
-=======
-			TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text);
-            main.Show();
->>>>>>> .r102380
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -564,7 +486,6 @@ namespace TV_Show_Renamer_Server
 			//    revFoldersIn.Add(foldersIn[y - 1]);
 			//return revFoldersIn;
         }
-<<<<<<< .mine
 
 		private void button5_Click(object sender, EventArgs e)
 		{
@@ -614,24 +535,31 @@ namespace TV_Show_Renamer_Server
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-			var xbmc = new XBMCRPC.Client("192.168.5.145", 80, "xbmc", "");
-            var ret0 =  xbmc.JSONRPC.Introspect();
-			//var ret2 = xbmc.VideoLibrary.GetTVShows(TVShow.AllFields());
-			//var ret66 = xbmc.VideoLibrary.GetTVShowDetails(0);
-            var ret55 =  xbmc.VideoLibrary.Scan();
-			string temp = "";
-            //var ret1 =  xbmc.Application.GetProperties(Client.AllValues<Name>());
-            //var ret2 =  xbmc.VideoLibrary.GetTVShows(TVShow.AllFields());
-            //var ret3 =  xbmc.VideoLibrary.SetMovieDetails(5801, playcount: 10);
-            //var ret4 =  xbmc.VideoLibrary.GetMovies(Movie.AllFields(), new Limits() { start = 1566, end = 1570 });
-            //var ret4a =  xbmc.Files.PrepareDownload(ret4.movies[0].thumbnail);
-            
-            //var ret5 =  xbmc.Files.GetSources();
-            //var ret6 = await xbmc.Files.GetDirectory(@"C:\Users\steve_000\Music\Amazon MP3\die ärzte\auch", Media.music, Files.AllFields());
-            //var ret7 =  xbmc.Playlist.GetItems(0, properties: All.AllFields());
-            //var ret7a =  xbmc.Playlist.GetItems(1, properties: All.AllFields());
-            //var ret8 =  xbmc.Playlist.GetPlaylists();
-            //var ret9 =  xbmc.Player.GetActivePlayers();
+            try
+            {
+                var xbmc = new XBMCRPC.Client("192.168.5.145", 80, "xbmc", "");
+                var ret0 = xbmc.JSONRPC.Introspect();
+                //var ret2 = xbmc.VideoLibrary.GetTVShows(TVShow.AllFields());
+                //var ret66 = xbmc.VideoLibrary.GetTVShowDetails(0);
+                var ret55 = xbmc.VideoLibrary.Scan();
+                string temp = "";
+                //var ret1 =  xbmc.Application.GetProperties(Client.AllValues<Name>());
+                //var ret2 =  xbmc.VideoLibrary.GetTVShows(TVShow.AllFields());
+                //var ret3 =  xbmc.VideoLibrary.SetMovieDetails(5801, playcount: 10);
+                //var ret4 =  xbmc.VideoLibrary.GetMovies(Movie.AllFields(), new Limits() { start = 1566, end = 1570 });
+                //var ret4a =  xbmc.Files.PrepareDownload(ret4.movies[0].thumbnail);
+
+                //var ret5 =  xbmc.Files.GetSources();
+                //var ret6 = await xbmc.Files.GetDirectory(@"C:\Users\steve_000\Music\Amazon MP3\die ärzte\auch", Media.music, Files.AllFields());
+                //var ret7 =  xbmc.Playlist.GetItems(0, properties: All.AllFields());
+                //var ret7a =  xbmc.Playlist.GetItems(1, properties: All.AllFields());
+                //var ret8 =  xbmc.Playlist.GetPlaylists();
+                //var ret9 =  xbmc.Player.GetActivePlayers();
+            }
+            catch(Exception exp)
+            {
+                MessageBox.Show(exp.Message.ToString());
+            }
 		}
 
 		private TVShowSettings getTVShowSettings(string showFolderName) 
@@ -656,54 +584,4 @@ namespace TV_Show_Renamer_Server
 		}
 		
 	}
-=======
-
-		private void button5_Click(object sender, EventArgs e)
-		{
-			//http://192.168.5.148:8081/api/5ae981cf1517ca6fef6e1a61256fc0cd/?cmd=shows
-
-			WebClient client = new WebClient();
-			Stream stream = client.OpenRead("http://192.168.5.148:8081/api/5ae981cf1517ca6fef6e1a61256fc0cd/?cmd=shows");
-			StreamReader reader = new StreamReader(stream);
-
-			//Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JObject.Parse(reader.ReadLine());
-
-			// instead of WriteLine, 2 or 3 lines of code here using WebClient to download the file
-			//Console.WriteLine((string)jObject["albums"][0]["cover_image_url"]);
-
-			var results = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(reader.ReadToEnd());
-			var alldata = results["data"];
-			//var name = alldata[0];
-
-			//dynamic parsedObject = Newtonsoft.Json.JsonConvert.DeserializeObject(alldata);
-			foreach (dynamic entry in alldata)
-			{
-				string TVDB = entry.Name; // "test"
-				dynamic value = entry.Value; // { inner: "text-value" }
-				string ShowName = (string)value["show_name"];
-				for (int i = 0; i < _TVShowList.Count;i++ )
-				{
-					if (ShowName.CompareTo(_TVShowList[i].SearchName) == 0)
-					{
-						_TVShowList[i].TVDBShowName = ShowName;
-						_TVShowList[i].TVDBSeriesID = Int32.Parse(TVDB);
-						_TVShowList[i].TVRageShowName = (string)value["tvrage_name"];
-						_TVShowList[i].TVRageSeriesID = Int32.Parse((string)value["tvrage_id"]);
-						if (((string)value["tvrage_id"]) == "Ended")
-							_TVShowList[i].SeriesEnded = true;
-						break;
-					}
-
-				}
-
-				
-			}
-
-			stream.Close();
-
-			
-		}
-        
-    }
->>>>>>> .r102380
 }

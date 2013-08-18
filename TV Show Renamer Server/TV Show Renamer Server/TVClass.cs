@@ -306,7 +306,7 @@ namespace TV_Show_Renamer_Server
             get { return _selected; }
             set { _selected = value; }
         }
-<<<<<<< .mine
+
     }
 
 	public class OnlineShowInfo
@@ -427,36 +427,5 @@ namespace TV_Show_Renamer_Server
 			set { _episodeTitle = value; }
 		}
 	}//end of class
-=======
-    }
 
-	public class TVDBObject
-	{
-		public tvdbinfo TVDBID;
-	}
-
-	public class ThreadAdd { public string AddType; public object ObjectToAdd;};
-
-	public class piccache
-	{
-		public int banner;
-		public int poster;
-	}
-
-	public class tvdbinfo 
-	{
-		public bool air_by_date;
-		public piccache cache;
-		public string language;
-		public string next_ep_airdate;
-		public bool paused;
-		public string quality;
-		public string show_name;
-		public string status;
-		public int tvrage_id;
-		public string tvrage_name;
-
-	
-	}
->>>>>>> .r102380
 }//end of namespace
