@@ -56,6 +56,7 @@ namespace TV_Show_Renamer_Server
 			TVRageTextBox.Text = _MainTVShowList[index].TVRageShowName;
 			TVRageIDTextBox.Text = _MainTVShowList[index].TVRageSeriesID.ToString();
 			checkBox1.Checked = _MainTVShowList[index].UseTVDBNumbering;
+            checkBox2.Checked = _MainTVShowList[index].SeriesEnded;
 			//MessageBox.Show(listBox1.SelectedItem.ToString());
 		}
 
@@ -70,17 +71,32 @@ namespace TV_Show_Renamer_Server
 			_MainTVShowList[index].TVRageShowName   = TVRageTextBox.Text;
 			_MainTVShowList[index].TVRageSeriesID   = Int32.Parse(TVRageIDTextBox.Text);
 			_MainTVShowList[index].UseTVDBNumbering = checkBox1.Checked;
+            _MainTVShowList[index].SeriesEnded      = checkBox2.Checked;
 
 		}
 
 		private void folderButton_Click(object sender, EventArgs e)
 		{
-			folderBrowserDialog1.SelectedPath = _RootDir + Path.DirectorySeparatorChar + TVShowFolderTextBox.Text + Path.DirectorySeparatorChar;
-			if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-			{
-				string tempString = folderBrowserDialog1.SelectedPath;
-				TVShowFolderTextBox.Text = tempString.Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
-			}//end of if
+
+            string[] subdirectoryEntries = Directory.GetDirectories(_RootDir);
+            new List<string>(subdirectoryEntries);
+
+            SelectMenu SelectMain = new SelectMenu(new List<string>(subdirectoryEntries), showNameTextBox.Text, "Select TV Show Folder");
+            if (SelectMain.ShowDialog() == DialogResult.OK)
+            {
+                int selectedid = SelectMain.selected;
+                if (selectedid == -1) return;
+                TVShowFolderTextBox.Text = subdirectoryEntries[selectedid].Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
+                SelectMain.Close();
+            }
+
+
+            //folderBrowserDialog1.SelectedPath = _RootDir + Path.DirectorySeparatorChar + TVShowFolderTextBox.Text + Path.DirectorySeparatorChar;
+            //if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            //{
+            //    string tempString = folderBrowserDialog1.SelectedPath;
+            //    TVShowFolderTextBox.Text = tempString.Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
+            //}//end of if
 		}
 
 		private void button1_Click(object sender, EventArgs e)
