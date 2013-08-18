@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,9 +27,9 @@ namespace TV_Show_Renamer_Server
 			SearchInfo TVShowID = new SearchInfo();
 			if (ShowName == null)
 				return TVShowID;
-		   
-			ShowName = ShowName.Replace("Gold Rush Alaska", "Gold Rush");
-			ShowName = ShowName.Replace("Tosh 0", "Tosh.0");
+
+			//ShowName = ShowName.Replace("Gold Rush Alaska", "Gold Rush");
+			//ShowName = ShowName.Replace("Tosh 0", "Tosh.0");
 			WebClient client = new WebClient();
 			client.DownloadFile("http://epguides.com/common/allshows.txt", folder + "/allshows.txt");
 			List<SearchInfo> TVShowList = parseCSV(folder + "/allshows.txt", ShowName);
@@ -51,7 +51,7 @@ namespace TV_Show_Renamer_Server
 							int selectedid = SelectMain.selected;
 							if (selectedid == -1) return TVShowID;
 							selectionList.Add(TVShowList[selectedid]);
-							SearchInfo temp = TVShowList[selectedid];							
+							SearchInfo temp = TVShowList[selectedid];
 							SelectMain.Close();
 							return temp;
 						}

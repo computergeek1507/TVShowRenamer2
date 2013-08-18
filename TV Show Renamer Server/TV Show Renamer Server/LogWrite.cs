@@ -8,36 +8,15 @@ namespace TV_Show_Renamer_Server
 {
     public class LogWrite
     {
+		private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+			(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         string logFolder = null;
-        StreamWriter log;
+        //StreamWriter log;
         
-        /// <summary>
-        /// Start Log Writer
-        /// </summary>
-        /// <param name="folder">log location</param>
-        public void startLog(string folder)
-        {
-            logFolder = folder;                        
-            // Create a writer and open the file:
-            if (!File.Exists(logFolder+"//logfile.txt"))            
-                log = new StreamWriter(logFolder + "//logfile.txt");            
-            else            
-                log = File.AppendText(logFolder + "//logfile.txt");            
-            // Write to the file:
-            log.WriteLine(DateTime.Now + " - Program started :)");
-        }
-
-        // Close Log
-        public void closeLog()
-        {
-            log.WriteLine(DateTime.Now + " - Program Closed :(");
-            log.Close();
-        }
-
         //save function calls 
         public void WriteLog( string oldName,string newName)
         {
-            log.WriteLine(DateTime.Now + " - [" + oldName + "] Saved as [" + newName + "]");
+            log.Info("[" + oldName + "] Saved as [" + newName + "]");
         }
        
         //save function calls (List String)
@@ -50,20 +29,20 @@ namespace TV_Show_Renamer_Server
         //move function calls
         public void moveWriteLog(string oldName, string directory)
         {
-            log.WriteLine(DateTime.Now + " - [" + oldName + "] Moved to [" + directory + "]");            
+            log.Info("[" + oldName + "] Moved to [" + directory + "]");            
         }
         
         //write string
         public void WriteLog( string error)
         {            
-            log.WriteLine(DateTime.Now + " - "+error);
+            log.Info(error);
         }
 
         //write string List
         public void WriteLog( List<string> error)
         {
             foreach (string i in error)            
-                log.WriteLine(DateTime.Now + " - " + i);            
+                log.Info(i);            
         }
     }//end of LogWrite Class
 }//end of namespace
