@@ -60,7 +60,6 @@ namespace TV_Show_Renamer_Server
 			}
 		}
 
-<<<<<<< .mine
 		public SelectMenu(List<OnlineShowInfo> select,string showName,string title)
 		{
 			InitializeComponent();
@@ -72,37 +71,21 @@ namespace TV_Show_Renamer_Server
 			{
 				dataGridView1.Rows.Add();
 				dataGridView1.Rows[z].Cells[0].Value = select[z].ShowName;
-=======
-		private void button2_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
->>>>>>> .r102380
 
-<<<<<<< .mine
+
+
 				dataGridView1.Rows[z].Cells[1].Value = select[z].StartYear.ToString();
 			}
 		}
-=======
-		private void button1_Click(object sender, EventArgs e)
-		{			
-			intSelected = dataGridView1.CurrentRow.Index;
-		}
->>>>>>> .r102380
 
-<<<<<<< .mine
+
+
 		private void button2_Click(object sender, EventArgs e)
 		{
 			this.Close();
 		}
-=======
-		private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-		{
-			intSelected = dataGridView1.CurrentRow.Index;
-		}
->>>>>>> .r102380
 
-<<<<<<< .mine
+
 		private void button1_Click(object sender, EventArgs e)
 		{			
 			intSelected = dataGridView1.CurrentRow.Index;
@@ -122,15 +105,5 @@ namespace TV_Show_Renamer_Server
 				this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 		}
 	}//end of class
-=======
-		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			intSelected = dataGridView1.CurrentRow.Index;
-			if (intSelected != -1)		   
-				this.DialogResult = System.Windows.Forms.DialogResult.OK;			
-			else			
-				this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-		}
-	}//end of class
->>>>>>> .r102380
+
 }//end of namespace
