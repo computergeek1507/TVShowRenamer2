@@ -518,8 +518,11 @@ namespace TV_Show_Renamer_Server
 						_TVShowList[i].TVDBSeriesID = Int32.Parse(TVDB);
 						_TVShowList[i].TVRageShowName = (string)value["tvrage_name"];
 						_TVShowList[i].TVRageSeriesID = Int32.Parse((string)value["tvrage_id"]);
-						if (((string)value["tvrage_id"]) == "Ended")
-							_TVShowList[i].SeriesEnded = true;
+                        if (((string)value["status"]) == "Ended")
+                        {
+                            _TVShowList[i].SeriesEnded = true;
+                            Debug.WriteLine(ShowName + "" + _TVShowList[i].SeriesEnded.ToString());
+                        }
 						break;
 					}
 
