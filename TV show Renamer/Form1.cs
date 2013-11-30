@@ -1929,6 +1929,7 @@ namespace TV_Show_Renamer
 						switch (newMainSettings.TVDataBase)
 						{
 							case 0://TVDB
+                            case 4://XEM.de
 								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameTVDB;
 								break;
 							case 1:
@@ -1940,7 +1941,7 @@ namespace TV_Show_Renamer
 							default:
 								break;
 						}
-						if (newTvshowName != "")
+                        if (newTvshowName != "" && newTvshowName != null)
 						{
 							tvshowName = newTvshowName;
 							useOldTiltle = false;
