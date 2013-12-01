@@ -24,7 +24,7 @@ namespace TV_Show_Renamer
 		//add folder button
 		private void button1_Click(object sender, EventArgs e)
 		{
-			if (textBox1.Text != "")
+			if ((!String.IsNullOrEmpty(textBox1.Text.Trim())) && (!String.IsNullOrEmpty(textBox2.Text.Trim())))
 			{
 				//int x = dataGridView1.CurrentCell.ColumnIndex;
 				Main.AddFolder(textBox1.Text, textBox2.Text, addIndex);

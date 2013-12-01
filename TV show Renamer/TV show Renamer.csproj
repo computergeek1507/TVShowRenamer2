@@ -78,14 +78,14 @@
     <Reference Include="CrashReporter.NET">
       <HintPath>packages\CrashReporterdotNet.1.3\lib\CrashReporter.NET.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="policy.2.0.taglib-sharp">
       <HintPath>packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="SharpCompress">
+    <Reference Include="SharpCompress, Version=0.10.2.0, Culture=neutral, PublicKeyToken=beaf6f427e128133, processorArchitecture=MSIL">
       <HintPath>packages\sharpcompress.0.10.2\lib\net40\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -155,6 +155,12 @@
     <Compile Include="ExceptionDialogue.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FileExists.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileExists.Designer.cs">
+      <DependentUpon>FileExists.cs</DependentUpon>
+    </Compile>
     <Compile Include="FolderControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +210,7 @@
     <Compile Include="thexem.cs" />
     <Compile Include="TVClass.cs" />
     <Compile Include="TVRage.cs" />
+    <Compile Include="TVRenamer.cs" />
     <Compile Include="UnhandledExceptionManager.cs" />
     <Compile Include="XBMC.cs">
       <SubType>Form</SubType>
@@ -236,6 +243,9 @@
     <EmbeddedResource Include="ExceptionDialogue.resx">
       <DependentUpon>ExceptionDialogue.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileExists.resx">
+      <DependentUpon>FileExists.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FolderControl.resx">
       <DependentUpon>FolderControl.cs</DependentUpon>
@@ -342,12 +352,6 @@
   <ItemGroup>
     <Content Include="TVcustom.ico" />
     <Content Include="TVcustom.png" />
-    <Content Include="x64\MediaInfo.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\MediaInfo.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Resources\licence.rtf" />
     <None Include="Resources\Program1.png" />
     <Resource Include="Resources\TvdbLib.dll">

@@ -66,7 +66,7 @@ namespace TV_Show_Renamer
 		}
 
 		private void button1_Click(object sender, EventArgs e)
-		{			
+		{
 			intSelected = dataGridView1.CurrentRow.Index;
 		}
 
@@ -78,9 +78,9 @@ namespace TV_Show_Renamer
 		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			intSelected = dataGridView1.CurrentRow.Index;
-			if (intSelected != -1)		   
-				this.DialogResult = System.Windows.Forms.DialogResult.OK;			
-			else			
+			if (intSelected != -1)
+				this.DialogResult = System.Windows.Forms.DialogResult.OK;
+			else
 				this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 		}
 	}//end of class

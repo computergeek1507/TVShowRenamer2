@@ -12,7 +12,7 @@ namespace TV_Show_Renamer
 {
 	public partial class Settings : Form
 	{
-		Form1 Main;		
+		Form1 Main;
 
 		public Settings(Form1 test, bool zipCheck)
 		{
@@ -73,7 +73,7 @@ namespace TV_Show_Renamer
 		private void checkBox1_CheckedChanged(object sender, EventArgs e)
 		{
 			Main.changeZIPstate( checkBox1.Checked);
-		}		
+		}
 		
 		//folder options	 
 		private void button4_Click(object sender, EventArgs e)
@@ -81,8 +81,8 @@ namespace TV_Show_Renamer
 			FolderControl folderAdd = new FolderControl(Main);
 			folderAdd.Location = new Point(this.Location.X + ((this.Size.Width - folderAdd.Size.Width) / 2), this.Location.Y + ((this.Size.Height - folderAdd.Size.Height) / 2));
 			this.Hide();
-			if (folderAdd.ShowDialog() == DialogResult.OK)			
-				this.Close();			
+			if (folderAdd.ShowDialog() == DialogResult.OK)
+				this.Close();
 		}
 
 		//button color settings
@@ -94,7 +94,7 @@ namespace TV_Show_Renamer
 				Main.newMainSettings.ButtonColor[0] = colorDialog1.Color.A;
 				Main.newMainSettings.ButtonColor[1] = colorDialog1.Color.R;
 				Main.newMainSettings.ButtonColor[2] = colorDialog1.Color.G;
-				Main.newMainSettings.ButtonColor[3] = colorDialog1.Color.B;				
+				Main.newMainSettings.ButtonColor[3] = colorDialog1.Color.B;
 			}
 		}
 

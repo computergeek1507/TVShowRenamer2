@@ -58,7 +58,8 @@ namespace TV_Show_Renamer
 		}
 
 		//change to default settings
-		public void defaultSettings() {
+		public void defaultSettings()
+		{
 			_removePeriod = true;
 			_removeUnderscore = true;
 			_removeDash = true;
@@ -430,7 +431,8 @@ namespace TV_Show_Renamer
 						Directory.Delete(_dataFolder + Path.DirectorySeparatorChar +"Temp",true);
 						Directory.CreateDirectory(_dataFolder + Path.DirectorySeparatorChar +"Temp");
 					}
-				}else
+				}
+				else
 					Directory.CreateDirectory(_dataFolder + Path.DirectorySeparatorChar +"Temp");
 
 			}

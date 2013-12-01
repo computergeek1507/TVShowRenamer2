@@ -79,15 +79,17 @@ namespace TV_Show_Renamer
 	};
 	public class TVClass
 	{
-		string _fileFolder;//origonal folder
-		string _fileName;//origonal file name
-		string _fileExtention;//origonal file Extention
+		string _fileFolder;//original folder
+		string _fileName;//original file name
+		string _fileExtention;//original file Extension
 		string _fileTitle="";//Title files		
 		string _newFileName;//new file name
-		bool _auto = true;//autoconvert
+		bool _auto = true;//auto-convert
 		int _tvShowID = -1;//tv show Index
 		int _seasonNum = -1;//Season Number 
 		int _episodeNum = -1;//Episode Number
+        int _episodeNum2 = -1;//Episode Number 2
+        string _quality = "";
 		string _TVShowName = ""; //Show Name
 		bool _getTitle = true;//autoGetTitle
 
@@ -157,6 +159,12 @@ namespace TV_Show_Renamer
 			set { _TVShowName = value; }
 		}
 
+        public string Quality
+        {
+            get { return _quality; }
+            set { _quality = value; }
+        }
+
 		public int SeasonNum
 		{
 			get { return _seasonNum; }
@@ -168,6 +176,12 @@ namespace TV_Show_Renamer
 			get { return _episodeNum; }
 			set { _episodeNum = value; }
 		}
+
+        public int EpisodeNum2
+        {
+            get { return _episodeNum2; }
+            set { _episodeNum2 = value; }
+        }
 
 		public bool GetTitle
 		{
@@ -183,7 +197,9 @@ namespace TV_Show_Renamer
 			_tvShowID = -1;
 			_seasonNum = -1;
 			_episodeNum = -1;
+            _episodeNum2 = -1;
 			_TVShowName = "";
+            _quality = "";
 			_getTitle = true;
 		}
 	}//end of class

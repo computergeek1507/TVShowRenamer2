@@ -23,6 +23,7 @@ namespace TV_Show_Renamer
 		string[] extSettings = { ".ext", ".Ext",".EXT" };
 		string[] titleGetSettings = { "Use File then Online", "Use File", "Online Only" };
 		string[] TVSearch = { "TVDB.com", "TVRage.com", "Epguides.com", "theXEM.de" };
+		string[] Delimiter = { " ", "." };
 
 		public ConversionOptions(Form1 temp,MainSettings tempSettings)
 		{
@@ -38,6 +39,7 @@ namespace TV_Show_Renamer
 			comboBox6.DataSource = titleGetSettings;
 			comboBox7.DataSource = extSettings;
 			comboBox8.DataSource = TVSearch;
+			comboBox9.DataSource = Delimiter;
 			comboBox1.SelectedIndex = newMainSettings.ProgramFormat;
 			comboBox2.SelectedIndex = newMainSettings.SeasonFormat;
 			comboBox3.SelectedIndex = newMainSettings.TitleFormat;
@@ -46,7 +48,16 @@ namespace TV_Show_Renamer
 			comboBox6.SelectedIndex = newMainSettings.TitleSelection;
 			comboBox7.SelectedIndex = newMainSettings.ExtFormat;
 			comboBox8.SelectedIndex = newMainSettings.TVDataBase;
-			checkBox1.Checked = newMainSettings.RemovePeriod;
+			if (newMainSettings.RemovePeriod)
+				comboBox9.SelectedIndex = 0;
+			else
+			{
+				comboBox9.SelectedIndex = 1;
+				comboBox4.Enabled = false;
+				comboBox5.Enabled = false;
+			}
+
+			//checkBox1.Checked = newMainSettings.RemovePeriod;
 			checkBox2.Checked = newMainSettings.RemoveUnderscore;
 			checkBox3.Checked = newMainSettings.RemoveDash;
 			checkBox4.Checked = newMainSettings.RemoveBracket;
@@ -65,7 +76,9 @@ namespace TV_Show_Renamer
 			this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
 			this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
 			this.comboBox8.SelectedIndexChanged += new System.EventHandler(this.comboBox8_SelectedIndexChanged);
-			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			this.comboBox9.SelectedIndexChanged += new System.EventHandler(this.comboBox9_SelectedIndexChanged);
+			
+			//this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
 			this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
 			this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
 			this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
@@ -125,10 +138,22 @@ namespace TV_Show_Renamer
 			newMainSettings.TVDataBase = comboBox8.SelectedIndex;
 			convert();
 		}
-		//remove period
-		private void checkBox1_CheckedChanged(object sender, EventArgs e)
+		//convert period
+		private void comboBox9_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			newMainSettings.RemovePeriod = checkBox1.Checked;
+			if (comboBox9.SelectedIndex == 0)
+			{
+				newMainSettings.RemovePeriod = true;
+				comboBox4.Enabled = true;
+				comboBox5.Enabled = true;
+			}
+			else 
+			{
+				newMainSettings.RemovePeriod = false;
+				comboBox4.Enabled = false;
+				comboBox5.Enabled = false;
+			}
+			//newMainSettings.RemovePeriod = comboBox9.SelectedIndex == 0;
 			convert();
 		}
 		//remove underscore
