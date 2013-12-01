@@ -91,12 +91,12 @@ namespace TV_Show_Renamer
             foreach (string subdir in subdirEntries)
             {
 
-                //Dont open Folder Redirects as this can end up in an infinate loop
+                //Don't open Folder Redirects as this can end up in an infinite loop
                 if ((System.IO.File.GetAttributes(subdir) &
                      System.IO.FileAttributes.ReparsePoint) !=
                      System.IO.FileAttributes.ReparsePoint)
                 {
-                    //Run recursivly to follow this DIR tree 
+                    //Run recursively to follow this DIR tree 
                     //adding all the files along the way
                     foundFiles.AddRange(GetFiles(subdir));
                 }

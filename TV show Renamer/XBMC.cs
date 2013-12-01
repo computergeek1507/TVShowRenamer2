@@ -53,7 +53,6 @@ namespace TV_Show_Renamer
 		private BindingList<string> folderFinder(string folderwatch)
 		{
 			BindingList<string> foldersIn = new BindingList<string>();
-			
 
 			System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch);
 			try
@@ -219,7 +218,7 @@ namespace TV_Show_Renamer
 			emp.Add(new XElement("runtime", ""));
 			emp.Add(new XElement("playcount","0"));
 			emp.Add(new XElement("episodeguide", ""));
-			emp.Add(new XElement("id","tt338"));			
+			emp.Add(new XElement("id","tt338"));
 
 			doc.Add(emp);
 
@@ -301,11 +300,9 @@ namespace TV_Show_Renamer
 				actorElem.Add(new XElement("name", string.Empty));
 				actorElem.Add(new XElement("role", string.Empty));
 				actorElem.Add(new XElement("thumb", string.Empty));
-				rootElem.Add(actorElem);		 
+				rootElem.Add(actorElem);
 
-			
-
-			infoDoc.Add(rootElem);			
+			infoDoc.Add(rootElem);
 			infoDoc.Save(fileName);
 			
 		}

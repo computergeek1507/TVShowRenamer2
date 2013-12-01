@@ -33,7 +33,7 @@ namespace TV_Show_Renamer
 		//add title button
 		private void button2_Click(object sender, EventArgs e)
 		{
-				if (textBox1.Text != "" || textBox1.Text != " " || textBox1.Text != "  ")
+				if (!String.IsNullOrEmpty(textBox1.Text.Trim())) 
 				{
 					if (Main.addTitle(textBox1.Text))
 					{
@@ -65,7 +65,7 @@ namespace TV_Show_Renamer
 		{
 			if (e.KeyChar == (char)13)
 			{
-				if (textBox1.Text != "" || textBox1.Text != " " || textBox1.Text != "  ")
+				if (!String.IsNullOrEmpty(textBox1.Text.Trim())) 
 				{
 					if (Main.addTitle(textBox1.Text))
 					{

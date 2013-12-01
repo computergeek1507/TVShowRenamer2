@@ -45,39 +45,43 @@ namespace TV_Show_Renamer
 		private void getuserjunk()
 		{
 			if (!File.Exists(commonAppData + Path.DirectorySeparatorChar + "userlibrary.seh"))
-				{
+			{
 				StreamWriter sw = new StreamWriter(commonAppData + Path.DirectorySeparatorChar + "userlibrary.seh");
-				sw.WriteLine("0");				
+				sw.WriteLine("0");
 				sw.Close();//close writer stream
-			}else
+			}
+			else
 			{//read junk file 
 				StreamReader tr = new StreamReader(commonAppData + Path.DirectorySeparatorChar + "userlibrary.seh");
 				userwords.Clear();//clear old list
 
 				int size = Int32.Parse(tr.ReadLine());//read number of lines
 				//if file is blank return nothing
-				if (size == 0)				
-					return;				
+				if (size == 0)
+					return;
 				//read words from file
-				for (int i = 0; i < size; i++)				
+				for (int i = 0; i < size; i++)
 					userwords.Add(tr.ReadLine());
 				tr.Close();//close reader stream
-			}			
+			}
 		}//end of getuserjunk method
 
 		//add word button
 		private void button1_Click(object sender, EventArgs e)
 		{
-			string newword = textBox1.Text;
+			//string newword = textBox1.Text;
 
-			if (newword == "" || newword == " " || newword == "  "||newword ==null)			
-				return;			
+			//if (newword == "" || newword == " " || newword == "  "||newword ==null)
+			if(!String.IsNullOrEmpty(textBox1.Text.Trim()))
+				return;
 
 			//check to see if new word is in main library
-			for (int i = 0; i < junkwords.Count; i++) {
-				if (newword==junkwords[i]) {
+			for (int i = 0; i < junkwords.Count; i++)
+			{
+				if (textBox1.Text == junkwords[i])
+				{
 					MessageBox.Show("Word already in Junk Library");
-					return;				
+					return;
 				}
 			}//end of for
 			//check to see if new word has been added b4
@@ -85,7 +89,7 @@ namespace TV_Show_Renamer
 			{
 				for (int i = 0; i < userwords.Count; i++)
 				{
-					if (newword == userwords[i])
+					if (textBox1.Text == userwords[i])
 					{
 						MessageBox.Show("Word already in Junk Library");
 						return;
@@ -93,7 +97,7 @@ namespace TV_Show_Renamer
 				}//end of for
 			}//end of if
 			//add word
-			userwords.Add(newword);//add junkword
+			userwords.Add(textBox1.Text);//add junkword
 
 			dataGridView1.Rows.Clear();
 			for (int i = 0; i < userwords.Count(); i++)
@@ -104,8 +108,8 @@ namespace TV_Show_Renamer
 
 			textBox1.Text = null;//clear box
 			this.dataGridView1.CurrentCell = this.dataGridView1[0, dataGridView1.RowCount - 1];
-			convert();					   
-		 }
+			convert();
+		}
 		
 		//autoconvert method 
 		private void convert()
@@ -116,9 +120,9 @@ namespace TV_Show_Renamer
 		//return junk words
 		public List<string> getjunk() 
 		{
-			return userwords;		
-		}		
-						
+			return userwords;
+		}
+
 		//remove button
 		private void button2_Click(object sender, EventArgs e)
 		{
@@ -132,8 +136,8 @@ namespace TV_Show_Renamer
 					{
 						userwords.RemoveAt(i);
 						y = i - 1;
-					}				   
-				}				
+					}
+				}
 				dataGridView1.Rows.Clear();
 				for (int i = 0; i < userwords.Count(); i++)
 				{
@@ -156,7 +160,7 @@ namespace TV_Show_Renamer
 				{
 					dataGridView1.Rows.Add();
 					dataGridView1.Rows[i].Cells[0].Value = userwords[i];
-				}			   
+				}
 			}
 		}
 
@@ -165,7 +169,7 @@ namespace TV_Show_Renamer
 			e.Cancel = true;
 			StreamWriter sw = new StreamWriter(commonAppData + Path.DirectorySeparatorChar + "userlibrary.seh");
 			sw.WriteLine(userwords.Count());
-			for (int j = 0; j < userwords.Count(); j++)			
+			for (int j = 0; j < userwords.Count(); j++)
 				sw.WriteLine(userwords[j]);
 			sw.Close();//close writer stream
 			this.Hide();
@@ -176,15 +180,16 @@ namespace TV_Show_Renamer
 		{
 			if (e.KeyChar == (char)13)
 			{
-				string newword = textBox1.Text;
+				//string newword = textBox1.Text;
 
-				if (newword == "" || newword == " " || newword == "  " || newword == null)
+				//if (newword == "" || newword == " " || newword == "  " || newword == null)
+				if (!String.IsNullOrEmpty(textBox1.Text.Trim()))
 					return;
 
 				//check to see if new word is in main library
 				for (int i = 0; i < junkwords.Count; i++)
 				{
-					if (newword == junkwords[i])
+					if (textBox1.Text == junkwords[i])
 					{
 						MessageBox.Show("Word already in Junk Library");
 						return;
@@ -195,15 +200,15 @@ namespace TV_Show_Renamer
 				{
 					for (int i = 0; i < userwords.Count; i++)
 					{
-						if (newword == userwords[i])
+						if (textBox1.Text == userwords[i])
 						{
 							MessageBox.Show("Word already in Junk Library");
-							//return;
+							return;
 						}//end of if
 					}//end of for
 				}//end of if
 				//add word
-				userwords.Add(newword);//add junkword
+				userwords.Add(textBox1.Text);//add junkword
 
 				dataGridView1.Rows.Clear();
 				for (int i = 0; i < userwords.Count(); i++)

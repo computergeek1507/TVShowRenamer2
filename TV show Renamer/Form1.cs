@@ -287,6 +287,7 @@ namespace TV_Show_Renamer
 		//secret F2
 		private void secretF2ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			if (!newMainSettings.RemovePeriod) return;
 			newMainSettings.DashSeason = !newMainSettings.DashSeason;
 			//MessageBox.Show(newMainSettings.ProgramFormat.ToString());
 			autoConvert();
@@ -302,6 +303,7 @@ namespace TV_Show_Renamer
 		//secret F4
 		private void secretF4ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			if (!newMainSettings.RemovePeriod) return;
 			newMainSettings.DashTitle = !newMainSettings.DashTitle;
 			autoConvert();
 		}
@@ -1599,15 +1601,19 @@ namespace TV_Show_Renamer
 
 				EditFileList[index].GetTitle = true;
 
-				if (!newMainSettings.DashSeason)
-					seasonDash = "- ";
-				if (!newMainSettings.DashTitle)
-					titleDash = "- ";
+		
 				if (newMainSettings.RemovePeriod)
 					temp = " ";
 				else
 					temp = ".";
 
+				if (newMainSettings.RemovePeriod)
+				{
+					if (!newMainSettings.DashSeason)
+						seasonDash = "-" + temp;
+					if (!newMainSettings.DashTitle)
+						titleDash = "-" + temp;
+				}
 
 				//string Standard = @"^((?<series_name>.+?)[. _-]+)?s(?<season_num>\d+)[. _-]*e(?<ep_num>\d+)(([. _-]*e|-)(?<extra_ep_num>(?!(1080|720)[pi])\d+))*[. _-]*((?<extra_info>.+?)((?<![. _-])-(?<release_group>[^-]+))?)?$";
 
@@ -1653,6 +1659,8 @@ namespace TV_Show_Renamer
 				//replace periods(".") with spaces 
 				if (newMainSettings.RemovePeriod)
 					newfilename = newfilename.Replace(".", temp);
+				else
+					newfilename = newfilename.Replace(" ", temp);
 
 				//Replace "_" with spaces
 				if (newMainSettings.RemoveUnderscore)
@@ -1711,7 +1719,7 @@ namespace TV_Show_Renamer
 				{
 					newfilename = newfilename.Replace(tempspace[k], " ");
 					newfilename = newfilename.Replace(tempper[k], ".");
-				}//end of for						  
+				}//end of for
 
 				#region Regular Format
 				//loop for seasons
@@ -1750,8 +1758,8 @@ namespace TV_Show_Renamer
 							output = i.ToString() + "x" + newj;
 
 							newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
-							newfilename = newfilename.Replace(temp + newi + newj + temp, temp + output + temp);//0101						
-							newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1			   
+							newfilename = newfilename.Replace(temp + newi + newj + temp, temp + output + temp);//0101
+							newfilename = newfilename.Replace("s" + i.ToString() + "e" + j.ToString() + temp, output + temp);//s1e1
 							newfilename = newfilename.Replace("s" + i.ToString() + "e" + newj + temp, output + temp);//s1e01
 							newfilename = newfilename.Replace("s" + newi + "e" + newj + temp, output + temp);//s01e01
 							newfilename = newfilename.Replace("s" + newi + " e" + newj + temp, output + temp);//s01 e01
@@ -1759,7 +1767,7 @@ namespace TV_Show_Renamer
 							newfilename = newfilename.Replace("season " + i.ToString() + " episode " + j.ToString() + temp, output + temp);//season 1 episode 1
 							newfilename = newfilename.Replace(temp + i.ToString() + temp + newj + temp, temp + output + temp);//1 01
 
-							startIndex = newfilename.IndexOf(temp + output + temp);//find index						
+							startIndex = newfilename.IndexOf(temp + output + temp);//find index
 							if (startIndex != -1)
 							{
 								if (i > 9) { endIndex = startIndex + 6; } else { endIndex = startIndex + 5; }
@@ -1772,7 +1780,7 @@ namespace TV_Show_Renamer
 						{
 							output = newi + newj;
 
-							newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101 
+							newfilename = newfilename.Replace(temp + i.ToString() + newj + temp, temp + output + temp);//101
 							newfilename = newfilename.Replace(temp + i.ToString() + "x" + newj + temp, temp + output + temp);//1x01
 							newfilename = newfilename.Replace("s" + newi + "e" + newj + temp, output + temp);//s01e01
 							newfilename = newfilename.Replace("s" + newi + " e" + newj + temp, output + temp);//s01 e01
@@ -1831,7 +1839,7 @@ namespace TV_Show_Renamer
 							}
 						}
 
-						//stop loop when name is change					
+						//stop loop when name is change
 						if (startIndex != -1)
 						{
 							EditFileList[index].SeasonNum = i + newMainSettings.SeasonOffset;
@@ -1915,9 +1923,9 @@ namespace TV_Show_Renamer
 					addSeasonFormat = false;
 				}
 
-				tvshowName = newfilename.Substring(0, startIndex).Trim();
+				tvshowName = newfilename.Substring(0, startIndex).Trim(temp.ToCharArray());
 
-				EditFileList[index].TVShowID = SearchTVShowName(tvshowName);
+				EditFileList[index].TVShowID = SearchTVShowName(tvshowName.Replace(temp," "));
 
 				bool useOldTiltle = true;
 				if (newMainSettings.GetTVShowName)
@@ -1929,19 +1937,19 @@ namespace TV_Show_Renamer
 						switch (newMainSettings.TVDataBase)
 						{
 							case 0://TVDB
-                            case 4://XEM.de
-								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameTVDB;
+							case 4://XEM.de
+								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameTVDB.Replace(" ",temp);
 								break;
 							case 1:
-								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameRage;
+								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameRage.Replace(" ", temp);
 								break;
 							case 2:
-								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameEPG;
-								break;							
+								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameEPG.Replace(" ", temp);
+								break;
 							default:
 								break;
 						}
-                        if (newTvshowName != "" && newTvshowName != null)
+						if (newTvshowName != "" && newTvshowName != null)
 						{
 							tvshowName = newTvshowName;
 							useOldTiltle = false;
@@ -1972,14 +1980,13 @@ namespace TV_Show_Renamer
 					string foundshowTitle = "";
 					switch (newMainSettings.TitleSelection)
 					{
-					   
 						case 0:
 							if (!secondTime)
 							{
 								foundshowTitle = "";
 								if (endIndex != newfilename.Length - 5)
 								{
-									foundshowTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex + 5)).Trim();
+									foundshowTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex + 5)).Trim(temp.ToCharArray());
 								}
 								if (foundshowTitle != "")
 								{
@@ -1993,7 +2000,7 @@ namespace TV_Show_Renamer
 							//foundshowTitle = "";
 							if (endIndex != newfilename.Length - 5)
 							{
-								showTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex + 5)).Trim();
+								showTitle = newfilename.Substring(endIndex, newfilename.Length - (endIndex + 5)).Trim(temp.ToCharArray());
 							}
 							if (foundshowTitle != "")
 							{

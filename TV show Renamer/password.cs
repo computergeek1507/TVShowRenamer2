@@ -29,12 +29,14 @@ namespace TV_Show_Renamer
 		//ok button		
 		private void button1_Click(object sender, EventArgs e)
 		{
-			password2 = textBox1.Text;
-			if (password2 == "" || password2==null)
+			
+			//if (password2 == "" || password2==null)
+			if (!String.IsNullOrEmpty(textBox1.Text.Trim()))
 			{
 				MessageBox.Show("No Password Entered");
 				return;
 			}
+			password2 = textBox1.Text;
 			this.Hide();
 		}
 
@@ -54,7 +56,7 @@ namespace TV_Show_Renamer
 			if (e.KeyChar == (char)13)
 			{
 				password2 = textBox1.Text;
-				if (password2 != "" || password2 != " " || password2 != null)
+				if (!String.IsNullOrEmpty(textBox1.Text.Trim()))
 					this.DialogResult = System.Windows.Forms.DialogResult.OK;
 				else
 					this.DialogResult = System.Windows.Forms.DialogResult.Cancel;

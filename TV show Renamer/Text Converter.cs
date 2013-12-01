@@ -46,11 +46,11 @@ namespace TV_Show_Renamer
 
 				int size = Int32.Parse(tr.ReadLine());//read number of lines
 				//if file is blank return nothing
-				if (size == 0)				
-					return;				
+				if (size == 0)
+					return;
 				//read words from file
-				for (int i = 0; i < size; i++)				
-					textConvert.Add(tr.ReadLine());			   
+				for (int i = 0; i < size; i++)
+					textConvert.Add(tr.ReadLine());
 				tr.Close();//close reader stream
 			}//end of method
 		}//end of getTextConvert method
@@ -66,11 +66,11 @@ namespace TV_Show_Renamer
 		{
 			return textConvert;
 		}
-			   
+
 		//add text to be converted
 		private void button2_Click(object sender, EventArgs e)
 		{
-			if ((textBox1.Text != "") || (textBox1.Text != "0000"))
+			if ((!String.IsNullOrEmpty(textBox1.Text.Trim()))|| (textBox1.Text.Trim() != "0000"))
 			{
 				textConvert.Add(textBox1.Text);
 				textConvert.Add(textBox2.Text);
@@ -184,7 +184,7 @@ namespace TV_Show_Renamer
 		{
 			if (e.KeyChar == (char)13)
 			{
-				if ((textBox1.Text != "") && (textBox1.Text != "0000") && (textBox1.Text != " ") && (textBox1.Text != null))
+				if ((!String.IsNullOrEmpty(textBox1.Text.Trim())) || (textBox1.Text.Trim() != "0000"))
 				{
 					textConvert.Add(textBox1.Text);
 					textConvert.Add(textBox2.Text);
