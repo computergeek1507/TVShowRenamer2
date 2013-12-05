@@ -250,13 +250,73 @@ namespace TV_Show_Renamer
 			set { _episodeTitle = value; }
 		}		
 	}//end of class
+
+	public class FileCopyData
+	{
+		//public FileCopyData() { }
+
+		public FileCopyData(string sourceFullFilePath, string destinationFileName, string destinationFolder, int dataGridIndex, bool movedNotCopied)
+		{
+			_SourceFullFilePath  = sourceFullFilePath;
+			_DestinationFileName = destinationFileName;
+			_DestinationFolder   = destinationFolder;
+			_index               = dataGridIndex;
+			_MovedNotCopied      = movedNotCopied;
+		}
+		string _SourceFullFilePath = "";
+		//string _SourceFolder = "";
+		string _DestinationFileName = "";
+		string _DestinationFolder = "";
+		int _index = -1;
+		bool _Successful = true;
+		bool _MovedNotCopied = false;
+
+		public string SourceFullFilePath
+		{
+			get { return _SourceFullFilePath; }
+			set { _SourceFullFilePath = value; }
+		}
+		//public string SourceFolder
+		//{
+		//    get { return _SourceFolder; }
+		//    set { _SourceFolder = value; }
+		//}
+		public string DestinationFileName
+		{
+			get { return _DestinationFileName; }
+			set { _DestinationFileName = value; }
+		}
+
+		public string DestinationFolder
+		{
+			get { return _DestinationFolder; }
+			set { _DestinationFolder = value; }
+		}
+
+		public int DataGridIndex
+		{
+			get { return _index; }
+			set { _index = value; }
+		}
+
+		public bool CopySuccessful
+		{
+			get { return _Successful; }
+			set { _Successful = value; }
+		}
+		public bool MovedNotCopied
+		{
+			get { return _MovedNotCopied; }
+			set { _MovedNotCopied = value; }
+		}
+	};
 	public static class ScottsFileSystem
 	{
-		public static void MoveFiles(List<string> sourceFiles, List<string> destFiles,bool copy)
+		public static void MoveFiles(List<FileCopyData> Files,bool copy)
 		{
 			// move some files
 			
-			CopyFilesDialog copyfiles = new CopyFilesDialog(sourceFiles, destFiles, copy);
+			CopyFilesDialog copyfiles = new CopyFilesDialog(Files, copy);
 			copyfiles.Show();
 		}
 	}
