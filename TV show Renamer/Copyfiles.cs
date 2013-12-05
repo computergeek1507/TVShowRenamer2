@@ -36,8 +36,8 @@ namespace TV_Show_Renamer
     {
 
         // Variables
-        private List<string> files = new List<string>();
-        private readonly List<string> newFilenames = new List<string>();
+		private List<FileCopyData> files = new List<FileCopyData>();
+
         private Int32 _totalFiles = 0;
         private Int32 _totalFilesCopied = 0;
         private readonly string _destinationDir = "";
@@ -58,13 +58,13 @@ namespace TV_Show_Renamer
         public delegate void FileCopyCompleteEventHandler(object sender, FileCopyCompleteEventArgs e);
 
 
-        public CopyFiles(List<string> sourceFiles, List<string> destFiles, bool moveNotCopy)
+        public CopyFiles(List<FileCopyData> Files, bool moveNotCopy)
         {
-            if (sourceFiles.Count != destFiles.Count) throw new Exception("Array Length Mismatch");
+            //if (sourceFiles.Count != destFiles.Count) throw new Exception("Array Length Mismatch");
 
-            files = sourceFiles;
+			files = Files;
             _totalFiles = files.Count;
-            newFilenames = destFiles;
+            //newFilenames = destFiles;
             _moveNotCopy = moveNotCopy;
         }
 
@@ -134,42 +134,45 @@ namespace TV_Show_Renamer
                 Exception lastError = null;
                 Int32 index = 0;
 
-                //If we have been a sourceDIR then find all the files to copy
-                if (!string.IsNullOrEmpty(_sourceDir))
-                    files = GetFiles(_sourceDir);
-                _totalFiles = files.Count;
+				////If we have been a sourceDIR then find all the files to copy
+				//if (!string.IsNullOrEmpty(_sourceDir))
+				//    files = GetFiles(_sourceDir);
+				//_totalFiles = files.Count;
 
                 //Loop each file and copy it.
-                foreach (string filename in files.ToArray())
+				foreach (FileCopyData filename in files)
                 {
                     string tempFilepath;
 					bool overWrite = true;
 
                     //If we have a source directory, strip that off the filename
-                    if (!string.IsNullOrEmpty(_sourceDir))
-                    {
-                        tempFilepath = filename;
-                        tempFilepath = tempFilepath.Replace(_sourceDir, "").TrimStart(Path.DirectorySeparatorChar);
-                        tempFilepath = System.IO.Path.Combine(_destinationDir, tempFilepath);
-                    }
-                    //otherwise strip off all the folder path
-                    else
-                    {
-                        tempFilepath = string.IsNullOrEmpty(_destinationDir) ? newFilenames[index] : System.IO.Path.Combine(_destinationDir, newFilenames[index]);
-                    }
+					//if (!string.IsNullOrEmpty(_sourceDir))
+					//{
+					//    tempFilepath = filename.SourceFullFilePath;
+					//    tempFilepath = tempFilepath.Replace(_sourceDir, "").TrimStart(Path.DirectorySeparatorChar);
+					//    tempFilepath = System.IO.Path.Combine(_destinationDir, tempFilepath);
+					//}
+					////otherwise strip off all the folder path
+					//else
+					//{
+					//    tempFilepath = string.IsNullOrEmpty(_destinationDir) ? newFilenames[index] : System.IO.Path.Combine(_destinationDir, newFilenames[index]);
+					//}
+
+					tempFilepath = System.IO.Path.Combine(filename.DestinationFolder, filename.DestinationFileName);
+					//tempFilepath = filename.DestinationFolder + "\\" + filename.DestinationFileName;
 
                     //Save the new DIR path and check the DIR exsits,
                     //if it does not then create it so the files can copy
-                    string tempDirPath = Path.GetDirectoryName(tempFilepath);
-                    if (!System.IO.Directory.Exists(tempDirPath))
-                        System.IO.Directory.CreateDirectory(tempDirPath);
+					string tempDirPath = Path.GetDirectoryName(filename.DestinationFolder);
+					if (!System.IO.Directory.Exists(filename.DestinationFolder))
+						System.IO.Directory.CreateDirectory(filename.DestinationFolder);
 
                     //Have be been told to stop copying files
                     if (_cancel)
                         break;
 
                     //Set the file thats just about to get copied
-                    _currentFilename = filename;
+                    _currentFilename = filename.SourceFullFilePath;
 
                     bool result = false;
 
@@ -177,19 +180,19 @@ namespace TV_Show_Renamer
                     {
 						if( overWrite)
 						{
-							result = NativeMethods.MoveFileEx(filename, tempFilepath, new NativeMethods.MoveProgressDelegate
+							result = NativeMethods.MoveFileEx(filename.SourceFullFilePath, tempFilepath, new NativeMethods.MoveProgressDelegate
 								(this.MoveProgressHandler), IntPtr.Zero, ref _cancel, NativeMethods.MoveFileFlags.COPY_FILE_OPEN_SOURCE_FOR_WRITE);
 						}
 						else
 						{
-							result = NativeMethods.MoveFileEx(filename, tempFilepath, new NativeMethods.MoveProgressDelegate
+							result = NativeMethods.MoveFileEx(filename.SourceFullFilePath, tempFilepath, new NativeMethods.MoveProgressDelegate
 								(this.MoveProgressHandler), IntPtr.Zero, ref _cancel, NativeMethods.MoveFileFlags.COPY_FILE_FAIL_IF_EXISTS);
 						}
                         //result = NativeMethods.MoveFileEx(filename, tempFilepath, new NativeMethods.MoveProgressDelegate(this.MoveProgressHandler), IntPtr.Zero, ref _cancel, 0);
                     }
                     else
                     {
-                        result = NativeMethods.CopyFileEx(filename, tempFilepath, new NativeMethods.CopyProgressDelegate(this.CopyProgressHandler), IntPtr.Zero, ref _cancel, 0);
+						result = NativeMethods.CopyFileEx(filename.SourceFullFilePath, tempFilepath, new NativeMethods.CopyProgressDelegate(this.CopyProgressHandler), IntPtr.Zero, ref _cancel, 0);
                     }
                     //bool result = NativeMethods.CopyFileEx(filename, tempFilepath, new NativeMethods.CopyProgressDelegate(this.CopyProgressHandler), IntPtr.Zero, ref _cancel, 0);
 
@@ -201,10 +204,10 @@ namespace TV_Show_Renamer
                             lastError = new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
                         else
                             _cancel = true;
-                        OnFileCopied(filename, lastError);
+						OnFileCopied(filename.SourceFullFilePath, lastError);
                     }
                     else
-                        OnFileCopied(filename);
+						OnFileCopied(filename.SourceFullFilePath);
 
                     index++;
                 }

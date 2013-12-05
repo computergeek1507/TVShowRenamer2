@@ -10,7 +10,7 @@ using System.IO;
 using System.Xml;
 using System.Net;
 using System.Diagnostics;
-//using Microsoft.VisualBasic.FileIO;
+using Microsoft.VisualBasic.FileIO;
 using System.Threading;
 using SharpCompress.Common;
 using SharpCompress.Archive;
@@ -1089,15 +1089,17 @@ namespace TV_Show_Renamer
 
 				if (int.Parse(folderSettings[0]) == 1)
 				{
-					List<string> OldLocation = new List<string>();
-					List<string> NewLocation = new List<string>();
+					//List<string> OldLocation = new List<string>();
+					//List<string> NewLocation = new List<string>();
+					List<FileCopyData> FilesToMove = new List<FileCopyData>();
 
 					for (int i = 0; i < dataGridView1.Rows.Count; i++)
 					{
 						if (dataGridView1.Rows[i].Selected || allFiles)
 						{
-							OldLocation.Add(fileList[i].FullFileName);
-							NewLocation.Add(folderSettings[1] + "\\" + fileList[i].FileName);
+							//OldLocation.Add(fileList[i].FullFileName);
+							//NewLocation.Add(folderSettings[1] + "\\" + fileList[i].FileName);
+							FilesToMove.Add(new FileCopyData(fileList[i].FullFileName,fileList[i].FileName,folderSettings[1],i,copy));
 
 							//if (MoveFile(fileList[i].FullFileName, (folderSettings[1] + "\\" + fileList[i].FileName), copy))
 							//{
@@ -1106,15 +1108,16 @@ namespace TV_Show_Renamer
 							//}
 						}
 					}
-					ScottsFileSystem.MoveFiles(OldLocation, NewLocation,copy);
+					ScottsFileSystem.MoveFiles(FilesToMove, copy);
 				}
 				else if (int.Parse(folderSettings[0]) > 1)
 				{
 					List<string> folderlist = folderFinder(folderSettings[1]);
 					string TVFolder = "";
 
-					List<string> OldLocation = new List<string>();
-					List<string> NewLocation = new List<string>();
+					//List<string> OldLocation = new List<string>();
+					//List<string> NewLocation = new List<string>();
+					List<FileCopyData> FilesToMove = new List<FileCopyData>();
 
 					for (int z = 0; z < fileList.Count; z++)
 					{
@@ -1148,8 +1151,9 @@ namespace TV_Show_Renamer
 								}
 								else
 								{
-									OldLocation.Add(fullFileName);
-									NewLocation.Add(folderSettings[1] + "\\" + fileList[z].FileName);
+									//OldLocation.Add(fullFileName);
+									//NewLocation.Add(folderSettings[1] + "\\" + fileList[z].FileName);
+									FilesToMove.Add(new FileCopyData(fullFileName, fileList[z].FileName, folderSettings[1], z, copy));
 									//if (MoveFile(fullFileName, folderSettings[1] + "\\" + fileList[z].FileName, copy))
 									//{
 									//	if (!copy)
@@ -1166,8 +1170,9 @@ namespace TV_Show_Renamer
 								if (!(System.IO.Directory.Exists(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString())))
 									System.IO.Directory.CreateDirectory(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString());
 
-								OldLocation.Add(fullFileName);
-								NewLocation.Add(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName);
+								//OldLocation.Add(fullFileName);
+								//NewLocation.Add(folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName);
+								FilesToMove.Add(new FileCopyData(fullFileName, fileList[z].FileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\", z, copy));
 								//if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\Season " + fileList[z].SeasonNum.ToString() + "\\" + fileList[z].FileName, copy))
 								//{
 								//	if (!copy)
@@ -1176,8 +1181,9 @@ namespace TV_Show_Renamer
 							}
 							else//if no season is selected 
 							{
-								OldLocation.Add(fullFileName);
-								NewLocation.Add(folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName);
+								//OldLocation.Add(fullFileName);
+								//NewLocation.Add(folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName);
+								FilesToMove.Add(new FileCopyData(fullFileName, fileList[z].FileName, folderSettings[1] + "\\" + TVFolder + "\\", z, copy));
 								//if (MoveFile(fullFileName, folderSettings[1] + "\\" + TVFolder + "\\" + fileList[z].FileName, copy))
 								//{
 								//	if (!copy)
@@ -1186,7 +1192,7 @@ namespace TV_Show_Renamer
 							}//end of if-else						
 						}
 					}//end of for loop 
-					ScottsFileSystem.MoveFiles(OldLocation, NewLocation,copy);
+					ScottsFileSystem.MoveFiles(FilesToMove, copy);
 				}
 			}
 			else
@@ -2572,28 +2578,39 @@ namespace TV_Show_Renamer
 				string newFolder = zipFile.FullName.Replace(zipFile.Extension, "") + Path.DirectorySeparatorChar;
 				if (!(System.IO.Directory.Exists(newFolder)))
 					System.IO.Directory.CreateDirectory(newFolder);
-				var compressed = ArchiveFactory.Open(zipFile);
-				MethodInvoker action2 = delegate
+				//var compressed = ArchiveFactory.Open(zipFile);
+				//MethodInvoker action2 = delegate
+				//{
+				//    progressBar1.Maximum = (compressed.Entries.Count() * 10)+1;
+				//    progressBar1.Value = 0;
+				//    progressBar1.Show();
+				//};
+				//this.BeginInvoke(action2);
+
+				using (IArchive archive = ArchiveFactory.Open(zipFile))
 				{
-					progressBar1.Maximum = (compressed.Entries.Count() * 10)+1;
-					progressBar1.Value = 0;
-					progressBar1.Show();
-				};
-				this.BeginInvoke(action2);
-				
-				foreach (var entry in compressed.Entries)
-				{
-					if (!entry.IsDirectory)
+					MethodInvoker action2 = delegate
 					{
-						entry.WriteToDirectory(newFolder, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
-					}
-					//Increment the ProgressBar value by 1
-					MethodInvoker action3 = delegate
-					{
-						if(progressBar1.Value + progressBar1.Step <= progressBar1.Maximum)
-							progressBar1.PerformStep();
+						progressBar1.Maximum = (archive.Entries.Count() * 10) + 1;
+						progressBar1.Value = 0;
+						progressBar1.Show();
 					};
-					this.BeginInvoke(action3);
+					this.BeginInvoke(action2);
+
+					foreach (IArchiveEntry entry in archive.Entries)
+					{
+						if (!entry.IsDirectory)
+						{
+							entry.WriteToDirectory(newFolder, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
+						}
+						//Increment the ProgressBar value by 1
+						MethodInvoker action3 = delegate
+						{
+							if (progressBar1.Value + progressBar1.Step <= progressBar1.Maximum)
+								progressBar1.PerformStep();
+						};
+						this.BeginInvoke(action3);
+					}
 				}
 
 				ProcessDir(newFolder, 0);

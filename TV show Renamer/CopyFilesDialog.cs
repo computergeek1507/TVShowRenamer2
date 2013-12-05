@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Net;
 using System.Windows.Forms;
 
 namespace TV_Show_Renamer
@@ -13,10 +14,10 @@ namespace TV_Show_Renamer
     {
         private CopyFiles f;
 
-        public CopyFilesDialog(List<string> sourceFiles, List<string> destFiles, bool Copy)
+        public CopyFilesDialog(List<FileCopyData> Files, bool Copy)
         {
             InitializeComponent();
-			f = new CopyFiles(sourceFiles, destFiles, !Copy);
+			f = new CopyFiles(Files, !Copy);
 			if(Copy)
 				f.ProgressEventCopy += new CopyFiles.CopyProgressHandlerDelegate(updateCopy);
 			else
@@ -124,5 +125,19 @@ namespace TV_Show_Renamer
         {
             f.Copy();
         }
+
+		private void DownloadFile(string source,string destination)
+		{
+			//string source = @"C:\Silverlight.PDF.pdf";
+			//string destination = @"C:aa\Silverlight.PDF.pdf";
+
+			WebClient wc = new WebClient();
+			wc.DownloadFileAsync(new Uri(source), destination);
+			wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
+		}
+		void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
+		{
+			Prog_CurrentFile.Value = e.ProgressPercentage;
+		}
     }
 }

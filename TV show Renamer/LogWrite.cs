@@ -8,6 +8,7 @@ namespace TV_Show_Renamer
 {
 	public class LogWrite
 	{
+		//private static readonly log4net.ILog log2 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 		string logFolder = null;
 		StreamWriter log;
 
@@ -22,7 +23,8 @@ namespace TV_Show_Renamer
 			log = File.AppendText(logFolder + Path.DirectorySeparatorChar + "logfile.txt");
 			// Write to the file:
 			log.WriteLine(DateTime.Now + " - Program started :)");
-			//log.Close();
+			log.Close();
+			//log2.Debug("Program started :)");
 		}
 
 		// Close Log
@@ -33,12 +35,14 @@ namespace TV_Show_Renamer
 				log.WriteLine(DateTime.Now + " - Program Closed :(");
 				log.Close();
 			}
+			//log2.Debug("Program Closed :(");
 		}
 
 		//save function calls 
 		public void WriteLog( string oldName,string newName)
 		{
 			log.WriteLine(DateTime.Now + " - [" + oldName + "] Saved as [" + newName + "]");
+			//log2.Debug("[" + oldName + "] Saved as [" + newName + "]");
 		}
 
 		//save function calls (List string)
@@ -52,18 +56,21 @@ namespace TV_Show_Renamer
 		public void moveWriteLog(string oldName, string directory)
 		{
 			log.WriteLine(DateTime.Now + " - [" + oldName + "] Moved to [" + directory + "]");
+			//log2.Debug("[" + oldName + "] Moved as [" + directory + "]");
 		}
 
 		//write string
 		public void WriteLog( string error)
 		{
 			log.WriteLine(DateTime.Now + " - "+error);
+			//log2.Debug(error);
 		}
 
 		//write string List
 		public void WriteLog( List<string> error)
 		{
 			foreach (string i in error)
+				//log2.Debug(i);
 				log.WriteLine(DateTime.Now + " - " + i);
 		}
 	}//end of LogWrite Class
