@@ -5,40 +5,40 @@ namespace XBMCRPC.Video.Fields
 {
    public enum TVShowItem
    {
-       title,
-       genre,
-       year,
-       rating,
-       plot,
-       studio,
-       mpaa,
-       cast,
-       playcount,
-       episode,
-       imdbnumber,
-       premiered,
-       votes,
-       lastplayed,
-       fanart,
-       thumbnail,
-       file,
-       originaltitle,
-       sorttitle,
-       episodeguide,
-       season,
-       watchedepisodes,
-       dateadded,
-       tag,
-       art,
+	   title,
+	   genre,
+	   year,
+	   rating,
+	   plot,
+	   studio,
+	   mpaa,
+	   cast,
+	   playcount,
+	   episode,
+	   imdbnumber,
+	   premiered,
+	   votes,
+	   lastplayed,
+	   fanart,
+	   thumbnail,
+	   file,
+	   originaltitle,
+	   sorttitle,
+	   episodeguide,
+	   season,
+	   watchedepisodes,
+	   dateadded,
+	   tag,
+	   art,
    }
    public class TVShow : List<TVShowItem>
    {
-         public static TVShow AllFields()
-         {
-             var items = Enum.GetValues(typeof (TVShowItem));
-             var list = new TVShow();
-             list.AddRange(items.Cast<TVShowItem>());
-             return list;
-         }
+		 public static TVShow AllFields()
+		 {
+			 var items = Enum.GetValues(typeof (TVShowItem));
+			 var list = new TVShow();
+			 list.AddRange(items.Cast<TVShowItem>());
+			 return list;
+		 }
    }
 }

@@ -50,19 +50,19 @@ namespace TV_Show_Renamer_Server
 		public System.IO.FileStream fs;
 	}
 
-    public struct HTTPRequestParams
-    {
-        public string Method;
-        public string URL;
-        public string Version;
-        public Hashtable Args;
-        public bool Execute;
-        public Hashtable Headers;
-        public int BodySize;
-        public byte[] BodyData;
-    }
+	public struct HTTPRequestParams
+	{
+		public string Method;
+		public string URL;
+		public string Version;
+		public Hashtable Args;
+		public bool Execute;
+		public Hashtable Headers;
+		public int BodySize;
+		public byte[] BodyData;
+	}
 
-    /// <summary>
+	/// <summary>
 	/// Summary description for HTTPRequest.
 	/// </summary>
 	public class HTTPRequest
@@ -87,12 +87,12 @@ namespace TV_Show_Renamer_Server
 			this.HTTPResponse.BodySize = 0;
 		}
 
-        public void WriteLog(string EventMessage)
-        {
-            Debug.WriteLine(EventMessage);
-        }
+		public void WriteLog(string EventMessage)
+		{
+			Debug.WriteLine(EventMessage);
+		}
 
-        public void Process()
+		public void Process()
 		{
 			myReadBuffer = new byte[client.ReceiveBufferSize];
 			String myCompleteMessage = "";
@@ -109,8 +109,8 @@ namespace TV_Show_Renamer_Server
 				// binary data buffer index
 				int bfndx = 0;
 
-                //Example request
-                // HTTP GET /billing/servlet/comm.billing.GetBalance?Date=17:54:24&CustomerID=8057 HTTP/1.1
+				//Example request
+				// HTTP GET /billing/servlet/comm.billing.GetBalance?Date=17:54:24&CustomerID=8057 HTTP/1.1
 
 				// Incoming message may be larger than the buffer size.
 				do
@@ -276,33 +276,33 @@ namespace TV_Show_Renamer_Server
 				
 				HTTPResponse.Version = "HTTP/1.1";
 
-                string StatusString;
-                if (ParserState != RState.OK)
-                {
-                    HTTPResponse.Status = (int)HTTPResponseStatus.BAD_REQUEST;
-                    StatusString = "400 Bad Request";
-                }
-                else
-                {
+				string StatusString;
+				if (ParserState != RState.OK)
+				{
+					HTTPResponse.Status = (int)HTTPResponseStatus.BAD_REQUEST;
+					StatusString = "400 Bad Request";
+				}
+				else
+				{
 					HTTPResponse.Status = (int)HTTPResponseStatus.OK;
-                    StatusString = "200 Ok";
-                }
+					StatusString = "200 Ok";
+				}
 
 				this.HTTPResponse.Headers = new Hashtable();
 				this.HTTPResponse.Headers.Add("Server", "HTTPServer/1.0.*");
-                this.HTTPResponse.Headers.Add("Date", DateTime.Now.ToString("r"));
+				this.HTTPResponse.Headers.Add("Date", DateTime.Now.ToString("r"));
 
-                try
-                {
-                    // if (HTTPResponse.Status == (int)HTTPResponseStatus.OK)
-                    this.Parent.OnResponse.Invoke(ref this.HTTPRequestParams, ref this.HTTPResponse);
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e.ToString());
-                }
+				try
+				{
+					// if (HTTPResponse.Status == (int)HTTPResponseStatus.OK)
+					this.Parent.OnResponse.Invoke(ref this.HTTPRequestParams, ref this.HTTPResponse);
+				}
+				catch (Exception e)
+				{
+					Debug.WriteLine(e.ToString());
+				}
 
-                string HeadersString = this.HTTPResponse.Version + " " + StatusString + "\n";
+				string HeadersString = this.HTTPResponse.Version + " " + StatusString + "\n";
 				
 				foreach (DictionaryEntry Header in this.HTTPResponse.Headers) 
 				{

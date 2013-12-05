@@ -11,53 +11,53 @@ using System.Xml.Serialization;
 
 namespace TV_Show_Renamer_Server
 {
-    public class Settings
-    {
-        /// <summary>
-        /// Save object to Xml file
-        /// </summary>
-        static public bool SaveToXml<T>(string path, T obj)
-        {
-            bool result = true;
+	public class Settings
+	{
+		/// <summary>
+		/// Save object to Xml file
+		/// </summary>
+		static public bool SaveToXml<T>(string path, T obj)
+		{
+			bool result = true;
 
-            try
-            {
-                StreamWriter sw = new StreamWriter(path);
-                new XmlSerializer(obj.GetType()).Serialize(sw, obj);
-                sw.Close();
-            }
-            catch (Exception ex)
-            {
-                result = false;
-                MessageBox.Show(ex.ToString());
-            }
+			try
+			{
+				StreamWriter sw = new StreamWriter(path);
+				new XmlSerializer(obj.GetType()).Serialize(sw, obj);
+				sw.Close();
+			}
+			catch (Exception ex)
+			{
+				result = false;
+				MessageBox.Show(ex.ToString());
+			}
 
-            return result;
-        }
+			return result;
+		}
 
-        /// <summary>
-        /// Load object from Xml file
-        /// </summary>
-        static public T LoadFromXml<T>(string path, T defaultObj)
-        {
-            T obj = defaultObj;
+		/// <summary>
+		/// Load object from Xml file
+		/// </summary>
+		static public T LoadFromXml<T>(string path, T defaultObj)
+		{
+			T obj = defaultObj;
 
-            if (File.Exists(path))
-            {
-                try
-                {
-                    StreamReader sr = new StreamReader(path);
-                    obj = (T)new XmlSerializer(typeof(T)).Deserialize(sr);
-                    sr.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                    obj = defaultObj;
-                }
-            }
+			if (File.Exists(path))
+			{
+				try
+				{
+					StreamReader sr = new StreamReader(path);
+					obj = (T)new XmlSerializer(typeof(T)).Deserialize(sr);
+					sr.Close();
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.ToString());
+					obj = defaultObj;
+				}
+			}
 
-            return obj;
-        }
-    }
+			return obj;
+		}
+	}
 }
