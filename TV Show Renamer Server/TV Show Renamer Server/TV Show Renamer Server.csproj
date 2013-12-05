@@ -91,6 +91,7 @@
     </Reference>
     <Reference Include="Winsock2007">
       <HintPath>.\Winsock2007.dll</HintPath>
+      <Aliases>global</Aliases>
     </Reference>
   </ItemGroup>
   <ItemGroup>

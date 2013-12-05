@@ -47,7 +47,7 @@ namespace TV_Show_Renamer_Server
 				{
 					if (list[i].Id != 0)
 					{
-						FinalList.Add(new OnlineShowInfo(list[i].SeriesName, list[i].Id,list[i].FirstAired.ToString("yyyy")));
+						FinalList.Add(new OnlineShowInfo(list[i].SeriesName, list[i].Id, list[i].FirstAired.ToString("yyyy"), getStatus(list[i].Id)));
 
 						bool m = Regex.IsMatch(list[i].SeriesName, @"\(\d{1,4}\)", RegexOptions.IgnoreCase);
 						if (m)
@@ -143,6 +143,19 @@ namespace TV_Show_Renamer_Server
 			newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
 			return newTitle;
 		}
+
+		public string getStatus(int seriesID) 
+		{
+			try
+			{				
+					TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+					return s.Status;
+			}
+			catch (Exception) { }
+
+			return "";
+		}
+
 		string removeSymbols(string word) 
 		{
 			char[] arr = word.ToCharArray();

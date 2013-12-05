@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace TV_Show_Renamer_Server
 {
-    public partial class TVShowOptions : Form
-    {
+	public partial class TVShowOptions : Form
+	{
 
-        List<TVShowSettings> _MainTVShowList;
+		List<TVShowSettings> _MainTVShowList;
 		string _RootDir;
 		NewTVDB TVDB;
 		//int oldIndex = -1;
@@ -22,29 +22,29 @@ namespace TV_Show_Renamer_Server
 
 		public TVShowOptions(List<TVShowSettings> tvShowList, string rootDir, string commonAppData)
 
-        {
-            InitializeComponent();
+		{
+			InitializeComponent();
 
-            _MainTVShowList = tvShowList;
+			_MainTVShowList = tvShowList;
 			_RootDir = rootDir;
 			TVDB = new NewTVDB(commonAppData);
 			listBox1.DataSource = _MainTVShowList;
 			listBox1.DisplayMember = "SearchName";
-            //foreach (TVShowSettings item in tvShowList)
-            //{
-            //    listBox1.Items.Add(item.SearchName);
-            //}
+			//foreach (TVShowSettings item in tvShowList)
+			//{
+			//	listBox1.Items.Add(item.SearchName);
+			//}
 			this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
 			this.Show();
 
-        }
+		}
 
-        public TVShowOptions()
-        {
-            InitializeComponent();
+		public TVShowOptions()
+		{
+			InitializeComponent();
 			this.Show();
 
-        }
+		}
 
 		private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -56,7 +56,7 @@ namespace TV_Show_Renamer_Server
 			TVRageTextBox.Text = _MainTVShowList[index].TVRageShowName;
 			TVRageIDTextBox.Text = _MainTVShowList[index].TVRageSeriesID.ToString();
 			checkBox1.Checked = _MainTVShowList[index].UseTVDBNumbering;
-            checkBox2.Checked = _MainTVShowList[index].SeriesEnded;
+			checkBox2.Checked = _MainTVShowList[index].SeriesEnded;
 			//MessageBox.Show(listBox1.SelectedItem.ToString());
 		}
 
@@ -64,39 +64,39 @@ namespace TV_Show_Renamer_Server
 		{
 			int index = listBox1.SelectedIndex;
 
-			_MainTVShowList[index].SearchName       = showNameTextBox.Text;
-			_MainTVShowList[index].ShowFolder       = TVShowFolderTextBox.Text;
-			_MainTVShowList[index].TVDBShowName     = TVDBNameTextBox.Text;
-			_MainTVShowList[index].TVDBSeriesID     = Int32.Parse(TVDBIDTextBox.Text);
+			_MainTVShowList[index].SearchName	   = showNameTextBox.Text;
+			_MainTVShowList[index].ShowFolder	   = TVShowFolderTextBox.Text;
+			_MainTVShowList[index].TVDBShowName	 = TVDBNameTextBox.Text;
+			_MainTVShowList[index].TVDBSeriesID	 = Int32.Parse(TVDBIDTextBox.Text);
 			_MainTVShowList[index].TVRageShowName   = TVRageTextBox.Text;
 			_MainTVShowList[index].TVRageSeriesID   = Int32.Parse(TVRageIDTextBox.Text);
 			_MainTVShowList[index].UseTVDBNumbering = checkBox1.Checked;
-            _MainTVShowList[index].SeriesEnded      = checkBox2.Checked;
+			_MainTVShowList[index].SeriesEnded	  = checkBox2.Checked;
 
 		}
 
 		private void folderButton_Click(object sender, EventArgs e)
 		{
 
-            string[] subdirectoryEntries = Directory.GetDirectories(_RootDir);
-            new List<string>(subdirectoryEntries);
+			string[] subdirectoryEntries = Directory.GetDirectories(_RootDir);
+			new List<string>(subdirectoryEntries);
 
-            SelectMenu SelectMain = new SelectMenu(new List<string>(subdirectoryEntries), showNameTextBox.Text, "Select TV Show Folder");
-            if (SelectMain.ShowDialog() == DialogResult.OK)
-            {
-                int selectedid = SelectMain.selected;
-                if (selectedid == -1) return;
-                TVShowFolderTextBox.Text = subdirectoryEntries[selectedid].Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
-                SelectMain.Close();
-            }
+			SelectMenu SelectMain = new SelectMenu(new List<string>(subdirectoryEntries), showNameTextBox.Text, "Select TV Show Folder");
+			if (SelectMain.ShowDialog() == DialogResult.OK)
+			{
+				int selectedid = SelectMain.selected;
+				if (selectedid == -1) return;
+				TVShowFolderTextBox.Text = subdirectoryEntries[selectedid].Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
+				SelectMain.Close();
+			}
 
 
-            //folderBrowserDialog1.SelectedPath = _RootDir + Path.DirectorySeparatorChar + TVShowFolderTextBox.Text + Path.DirectorySeparatorChar;
-            //if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            //{
-            //    string tempString = folderBrowserDialog1.SelectedPath;
-            //    TVShowFolderTextBox.Text = tempString.Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
-            //}//end of if
+			//folderBrowserDialog1.SelectedPath = _RootDir + Path.DirectorySeparatorChar + TVShowFolderTextBox.Text + Path.DirectorySeparatorChar;
+			//if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+			//{
+			//	string tempString = folderBrowserDialog1.SelectedPath;
+			//	TVShowFolderTextBox.Text = tempString.Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
+			//}//end of if
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -108,6 +108,7 @@ namespace TV_Show_Renamer_Server
 			{
 				TVDBNameTextBox.Text = newTVDBID.ShowName;
 				TVDBIDTextBox.Text = newTVDBID.ShowID.ToString();
+				checkBox2.Checked = (newTVDBID.ShowStatus == "Ended") ? true : false;
 			}
 			
 		}
@@ -119,9 +120,10 @@ namespace TV_Show_Renamer_Server
 			{
 				TVRageTextBox.Text = newRageID.ShowName;
 				TVRageIDTextBox.Text = newRageID.ShowID.ToString();
+				checkBox2.Checked = (newRageID.ShowStatus == "Canceled/Ended") ? true : false;
 			}
 
 		}
 
-    }
+	}
 }

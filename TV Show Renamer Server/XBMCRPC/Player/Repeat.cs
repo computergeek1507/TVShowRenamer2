@@ -2,8 +2,8 @@ namespace XBMCRPC.Player
 {
    public enum Repeat
    {
-       off,
-       one,
-       all,
+	   off,
+	   one,
+	   all,
    }
 }

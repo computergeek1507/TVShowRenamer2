@@ -35,14 +35,15 @@ namespace TV_Show_Renamer_Server
 								{
 									ShowID = Show.Element("showid").Value,
 									Name = Show.Element("name").Value,
-									YearStarted = Show.Element("started").Value
+									YearStarted = Show.Element("started").Value,
+									Status = Show.Element("status").Value
 								};
 
 
 
 				foreach (var wd in Categorys)
 				{
-					FinalList.Add(new OnlineShowInfo(wd.Name, Int32.Parse(wd.ShowID),wd.YearStarted));
+					FinalList.Add(new OnlineShowInfo(wd.Name, Int32.Parse(wd.ShowID),wd.YearStarted,wd.Status));
 				}
 			}
 			catch (Exception e) { }

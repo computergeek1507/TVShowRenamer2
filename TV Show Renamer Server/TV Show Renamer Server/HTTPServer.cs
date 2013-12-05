@@ -15,52 +15,52 @@ namespace TV_Show_Renamer_Server
 	/// </summary>
 	public class HTTPServer
 	{
-        TcpListener listener = null;
+		TcpListener listener = null;
 
-        public delegate void ResponseDelegate(ref HTTPRequestParams rq, ref HTTPResponse rp);
-        public ResponseDelegate OnResponse = null;
+		public delegate void ResponseDelegate(ref HTTPRequestParams rq, ref HTTPResponse rp);
+		public ResponseDelegate OnResponse = null;
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="responseHandler">method to handle HTTP requests</param>
-        public HTTPServer(ResponseDelegate OnResponse)
-        {
-            this.OnResponse = OnResponse;
-        }
-
-        /// <summary>
-        /// Start the listener
-        /// </summary>
-        /// <param name="portNum">Port on which to listen</param>
-		public void Start(int portNum)
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="responseHandler">method to handle HTTP requests</param>
+		public HTTPServer(ResponseDelegate OnResponse)
 		{
-            if (null == listener)
-            {
-                listener = new TcpListener(IPAddress.Any, portNum);
-                listener.Start();
-            }
-        }
-
-        /// <summary>
-        /// Stop the listener
-        /// </summary>
-		public void Stop()
-		{
-            if (null != listener)
-            {
-                listener.Stop();
-                listener = null;
-            }
+			this.OnResponse = OnResponse;
 		}
 
-        public void Update()
-        {
-            if (null != listener && listener.Pending())
-            {
-                HTTPRequest newRequest = new HTTPRequest(listener.AcceptTcpClient(), this);
-                newRequest.Process();
-            }
-        }
+		/// <summary>
+		/// Start the listener
+		/// </summary>
+		/// <param name="portNum">Port on which to listen</param>
+		public void Start(int portNum)
+		{
+			if (null == listener)
+			{
+				listener = new TcpListener(IPAddress.Any, portNum);
+				listener.Start();
+			}
+		}
+
+		/// <summary>
+		/// Stop the listener
+		/// </summary>
+		public void Stop()
+		{
+			if (null != listener)
+			{
+				listener.Stop();
+				listener = null;
+			}
+		}
+
+		public void Update()
+		{
+			if (null != listener && listener.Pending())
+			{
+				HTTPRequest newRequest = new HTTPRequest(listener.AcceptTcpClient(), this);
+				newRequest.Process();
+			}
+		}
 	}
 }

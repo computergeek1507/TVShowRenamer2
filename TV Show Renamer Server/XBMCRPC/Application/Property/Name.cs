@@ -2,9 +2,9 @@ namespace XBMCRPC.Application.Property
 {
    public enum Name
    {
-       volume,
-       muted,
-       name,
-       version,
+	   volume,
+	   muted,
+	   name,
+	   version,
    }
 }
