@@ -1108,7 +1108,7 @@ namespace TV_Show_Renamer
 							//}
 						}
 					}
-					ScottsFileSystem.MoveFiles(FilesToMove, copy);
+					ScottsFileSystem.MoveFiles(FilesToMove, copy,this);
 				}
 				else if (int.Parse(folderSettings[0]) > 1)
 				{
@@ -1192,7 +1192,7 @@ namespace TV_Show_Renamer
 							}//end of if-else						
 						}
 					}//end of for loop 
-					ScottsFileSystem.MoveFiles(FilesToMove, copy);
+					ScottsFileSystem.MoveFiles(FilesToMove, copy,this);
 				}
 			}
 			else
