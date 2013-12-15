@@ -312,12 +312,39 @@ namespace TV_Show_Renamer
 	};
 	public static class ScottsFileSystem
 	{
-		public static void MoveFiles(List<FileCopyData> Files,bool copy)
+		public static void MoveFiles(List<FileCopyData> Files,bool copy,Form1 mainWindow)
 		{
-			// move some files
+		//    // move some files
+		//    ShellFileOperation fo = new ShellFileOperation();
+
+		//    List<string> source = new List<string>();
+		//    List<string> dest = new List<string>();
+
+		//    foreach (FileCopyData fileData in Files) 
+		//    {
+		//        source.Add(fileData.SourceFullFilePath);
+		//        // _fileFolder + Path.DirectorySeparatorChar  + _newFileName;
+		//        dest.Add(fileData.DestinationFolder + Path.DirectorySeparatorChar + fileData.DestinationFileName);
+		//    }
 			
-			CopyFilesDialog copyfiles = new CopyFilesDialog(Files, copy);
-			copyfiles.Show();
+		//    if(copy)
+		//        fo.Operation = ShellFileOperation.FileOperations.FO_COPY;
+		//    else
+		//        fo.Operation = ShellFileOperation.FileOperations.FO_MOVE;
+		//    fo.OwnerWindow = mainWindow.Handle;
+		//    fo.SourceFiles = source;
+		//    fo.DestFiles = dest;
+
+		//    bool RetVal = fo.DoOperation();
+		//    if (RetVal)
+		//        MessageBox.Show("Copy Complete without errors!");
+		//    else
+		//        MessageBox.Show("Copy Complete with errors!");
+
+			//fo.NameMappings.Length;
+			
+			//CopyFilesDialog copyfiles = new CopyFilesDialog(Files, copy);
+			//copyfiles.Show();
 		}
 	}
 }//end of namespace

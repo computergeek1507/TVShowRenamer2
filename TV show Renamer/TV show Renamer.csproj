@@ -138,13 +138,6 @@
     <Compile Include="ConversionOptions.Designer.cs">
       <DependentUpon>ConversionOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Copyfiles.cs" />
-    <Compile Include="CopyFilesDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CopyFilesDialog.Designer.cs">
-      <DependentUpon>CopyFilesDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="download.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,12 +147,6 @@
     <Compile Include="EPGuides.cs" />
     <Compile Include="ExceptionDialogue.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FileExists.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FileExists.Designer.cs">
-      <DependentUpon>FileExists.cs</DependentUpon>
     </Compile>
     <Compile Include="FolderControl.cs">
       <SubType>Form</SubType>
@@ -233,9 +220,6 @@
       <DependentUpon>ConversionOptions.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="CopyFilesDialog.resx">
-      <DependentUpon>CopyFilesDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="download.resx">
       <DependentUpon>download.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -243,9 +227,6 @@
     <EmbeddedResource Include="ExceptionDialogue.resx">
       <DependentUpon>ExceptionDialogue.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FileExists.resx">
-      <DependentUpon>FileExists.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FolderControl.resx">
       <DependentUpon>FolderControl.cs</DependentUpon>

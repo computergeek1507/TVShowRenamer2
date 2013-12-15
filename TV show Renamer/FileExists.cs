@@ -10,7 +10,7 @@ using System.IO;
 
 namespace TV_Show_Renamer
 {
-	enum FileOptions { Overwrite, Rename, Skip };
+	public enum FileOptions { Overwrite, Rename, Skip };
 
 	public partial class FileExists : Form
 	{
