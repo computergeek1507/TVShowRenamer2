@@ -1083,7 +1083,7 @@ namespace TV_Show_Renamer
 
 				if (!(System.IO.Directory.Exists(folderSettings[1])))
 				{
-					MessageBox.Show("Folder Location Has Been Deleleted or Move", "Folder Unavailable");
+					MessageBox.Show("Folder Location Has Been Deleted or Move", "Folder Unavailable");
 					return;
 				}
 
@@ -1108,7 +1108,16 @@ namespace TV_Show_Renamer
 							//}
 						}
 					}
-					ScottsFileSystem.MoveFiles(FilesToMove, copy,this);
+					if (ScottsFileSystem.MoveFiles(FilesToMove, copy, this) && !copy) 
+					{
+						foreach (FileCopyData fileInfo in FilesToMove)
+						{
+							fileList[fileInfo.DataGridIndex].FileFolder = fileInfo.DestinationFolder;
+							fileList[fileInfo.DataGridIndex].FileName = fileInfo.DestinationFileName;
+							fileList[fileInfo.DataGridIndex].NewFileName = fileInfo.DestinationFileName;
+						}
+						autoConvert();
+					}
 				}
 				else if (int.Parse(folderSettings[0]) > 1)
 				{
@@ -1192,7 +1201,16 @@ namespace TV_Show_Renamer
 							}//end of if-else						
 						}
 					}//end of for loop 
-					ScottsFileSystem.MoveFiles(FilesToMove, copy,this);
+					if (ScottsFileSystem.MoveFiles(FilesToMove, copy, this)&&!copy)
+					{
+						foreach (FileCopyData fileInfo in FilesToMove)
+						{
+							fileList[fileInfo.DataGridIndex].FileFolder = fileInfo.DestinationFolder;
+							fileList[fileInfo.DataGridIndex].FileName = fileInfo.DestinationFileName;
+							fileList[fileInfo.DataGridIndex].NewFileName = fileInfo.DestinationFileName;
+						}
+						autoConvert();
+					}
 				}
 			}
 			else
@@ -1330,7 +1348,7 @@ namespace TV_Show_Renamer
 				return;
 			if (selected4.Count() == 0)
 				return;
-			object searchProvider;
+			//object searchProvider;
 
 			//if (fileList[selected4[mainindex]].TVShowID == -1)
 			 //   fileList[selected4[mainindex]].TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);

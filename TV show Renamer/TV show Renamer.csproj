@@ -193,6 +193,7 @@
     <Compile Include="SelectMenu.Designer.cs">
       <DependentUpon>SelectMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShellFileOperation.cs" />
     <Compile Include="SimpleMail.cs" />
     <Compile Include="thexem.cs" />
     <Compile Include="TVClass.cs" />
