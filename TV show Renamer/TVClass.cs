@@ -95,6 +95,7 @@ namespace TV_Show_Renamer
 
 		public TVClass(string fileFolder, string fileName, string fileExtention)
 		{
+			if (fileFolder.EndsWith(Path.DirectorySeparatorChar.ToString())) fileFolder = fileFolder.TrimEnd(Path.DirectorySeparatorChar);
 			_fileFolder = fileFolder;
 			_fileName = _newFileName = fileName;
 			_fileExtention = fileExtention;
@@ -116,7 +117,11 @@ namespace TV_Show_Renamer
 		public string FileFolder
 		{
 			get { return _fileFolder; }
-			set { _fileFolder = value; }
+			set 
+			{
+				if (value.EndsWith(Path.DirectorySeparatorChar.ToString())) value = value.TrimEnd(Path.DirectorySeparatorChar);
+				_fileFolder = value;
+			}
 		}
 
 		public string FileExtention
@@ -312,39 +317,57 @@ namespace TV_Show_Renamer
 	};
 	public static class ScottsFileSystem
 	{
-		public static void MoveFiles(List<FileCopyData> Files,bool copy,Form1 mainWindow)
+		public static bool MoveFiles(List<FileCopyData> Files, bool copy, Form1 mainWindow)
 		{
-		//    // move some files
-		//    ShellFileOperation fo = new ShellFileOperation();
+			// move some files
+			ShellFileOperation fo = new ShellFileOperation();
 
-		//    List<string> source = new List<string>();
-		//    List<string> dest = new List<string>();
+			List<string> source = new List<string>();
+			List<string> dest = new List<string>();
 
-		//    foreach (FileCopyData fileData in Files) 
-		//    {
-		//        source.Add(fileData.SourceFullFilePath);
-		//        // _fileFolder + Path.DirectorySeparatorChar  + _newFileName;
-		//        dest.Add(fileData.DestinationFolder + Path.DirectorySeparatorChar + fileData.DestinationFileName);
-		//    }
-			
-		//    if(copy)
-		//        fo.Operation = ShellFileOperation.FileOperations.FO_COPY;
-		//    else
-		//        fo.Operation = ShellFileOperation.FileOperations.FO_MOVE;
-		//    fo.OwnerWindow = mainWindow.Handle;
-		//    fo.SourceFiles = source;
-		//    fo.DestFiles = dest;
+			foreach (FileCopyData fileData in Files)
+			{
+				source.Add(fileData.SourceFullFilePath);
+				// _fileFolder + Path.DirectorySeparatorChar  + _newFileName;
+				dest.Add(fileData.DestinationFolder + Path.DirectorySeparatorChar + fileData.DestinationFileName);
+			}
 
-		//    bool RetVal = fo.DoOperation();
-		//    if (RetVal)
-		//        MessageBox.Show("Copy Complete without errors!");
-		//    else
-		//        MessageBox.Show("Copy Complete with errors!");
+			if (copy)
+				fo.Operation = ShellFileOperation.FileOperations.FO_COPY;
+			else
+				fo.Operation = ShellFileOperation.FileOperations.FO_MOVE;
+			fo.OwnerWindow = mainWindow.Handle;
+			fo.SourceFiles = source;
+			fo.DestFiles = dest;
+
+			bool RetVal = fo.DoOperation();
+			if (RetVal)
+			{
+				foreach (ShellNameMapping newName in fo.NameMappings)
+				{
+					for (int i = 0; i < Files.Count; i++)
+					{
+						if (newName.DestinationPath == (Files[i].DestinationFolder + Files[i].DestinationFileName))
+						{
+							FileInfo newFile = new FileInfo(newName.RenamedDestinationPath);
+							Files[i].DestinationFileName = newFile.Name;
+						}
+					}
+				}
+				//MessageBox.Show("Copy Complete without errors!");
+				return true;
+			}
+			else
+			{
+				MessageBox.Show("Copy Complete with errors!");
+			}
 
 			//fo.NameMappings.Length;
 			
 			//CopyFilesDialog copyfiles = new CopyFilesDialog(Files, copy);
 			//copyfiles.Show();
+
+			return false;
 		}
 	}
 }//end of namespace

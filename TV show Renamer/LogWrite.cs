@@ -23,14 +23,14 @@ namespace TV_Show_Renamer
 			log = File.AppendText(logFolder + Path.DirectorySeparatorChar + "logfile.txt");
 			// Write to the file:
 			log.WriteLine(DateTime.Now + " - Program started :)");
-			log.Close();
+			//log.Close();
 			//log2.Debug("Program started :)");
 		}
 
 		// Close Log
 		public void closeLog()
 		{
-			if (log != null)
+			if (log.BaseStream != null)
 			{
 				log.WriteLine(DateTime.Now + " - Program Closed :(");
 				log.Close();

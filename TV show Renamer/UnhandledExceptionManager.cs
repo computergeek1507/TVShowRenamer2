@@ -20,6 +20,7 @@ using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using System.Net;
 using System.IO;
 
 //'--
@@ -1078,15 +1079,21 @@ namespace TV_Show_Renamer
 		//--
 		private static string GetCurrentIP()
 		{
-			try
-			{
-				string strIP = System.Net.Dns.GetHostByName(System.Net.Dns.GetHostName()).AddressList[0].ToString();
-				return strIP;
-			}
-			catch (Exception )
-			{
-				return "127.0.0.1";
-			}
+
+    string strHostName = System.Net.Dns.GetHostName();
+ 
+    IPHostEntry ipEntry = System.Net.Dns.GetHostEntry(strHostName);
+     
+    foreach (IPAddress ipAddress in ipEntry.AddressList)
+    {
+        if (ipAddress.AddressFamily.ToString() == "InterNetwork")
+        {
+            return ipAddress.ToString();
+        }
+    }
+ 
+    return "-";
+
 		}
 
 		const string _strKeyNotPresent = "The key <{0}> is not present in the <appSettings> section of .config file";
