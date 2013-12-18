@@ -10,6 +10,10 @@ using TvdbLib.Data;
 using System.IO;
 using TvdbLib.Cache;
 using System.Net;
+using Newtonsoft.Json;
+using Microsoft.CSharp;
+using System.Collections;
+using System.Diagnostics;
 
 namespace TV_Show_Renamer
 {
@@ -119,10 +123,34 @@ namespace TV_Show_Renamer
 
 			try
 			{
+				int seasonScale = season;
+				int episodeScale = episode;
+				using (var client = new WebClient())
+				{
+					var json = client.DownloadString(String.Format("http://thexem.de/map/all?id={0}&origin=tvdb", seriesID));
+
+					RootObject m = JsonConvert.DeserializeObject<RootObject>(json);
+
+					foreach (Datum showData in m.data)
+					{
+						if (showData.scene.episode == episode && showData.scene.season == season)
+						{
+							seasonScale = showData.tvdb.season;
+							episodeScale = showData.tvdb.episode;
+							break;
+						}
+					
+					}
+				}
+				if (seasonScale == 0 && episodeScale == 0)
+					return "";
+				
+
+
 				if (!(File.Exists(folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml")))//see if file exists
 				{
 					WebClient client = new WebClient();
-					client.DownloadFile("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml", folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml");
+					client.DownloadFile("http://www.thetvdb.com//api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml", folder + Path.DirectorySeparatorChar + seriesID.ToString() + ".xml");
 					
 				}
 				//WebClient client = new WebClient();
@@ -159,7 +187,7 @@ namespace TV_Show_Renamer
 
 						int XMLSeason = Int32.Parse(wd.SeasonNumber);
 						int XMLEpisode = Int32.Parse(wd.EpisodeNumber);
-						if (XMLSeason == season && XMLEpisode == episode)
+						if (XMLSeason == seasonScale && XMLEpisode == episodeScale)
 						{
 							newTitle = wd.EpisodeName;
 							break;
@@ -177,5 +205,72 @@ namespace TV_Show_Renamer
 			newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
 			return newTitle;
 		}
+	}
+
+	public class Scene
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Tvdb
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Tvdb2
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Rage
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Trakt
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Trakt2
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Anidb
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Datum
+	{
+		public Scene scene { get; set; }
+		public Tvdb tvdb { get; set; }
+		public Tvdb2 tvdb_2 { get; set; }
+		public Rage rage { get; set; }
+		public Trakt trakt { get; set; }
+		public Trakt2 trakt_2 { get; set; }
+		public Anidb anidb { get; set; }
+	}
+
+	public class RootObject
+	{
+		public string result { get; set; }
+		public List<Datum> data { get; set; }
+		public string message { get; set; }
 	}
 }
