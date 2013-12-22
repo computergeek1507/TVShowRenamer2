@@ -19,14 +19,14 @@ namespace TV_Show_Renamer
 		TvdbHandler m_tvdbHandler = null;
 		List<SearchInfo> selectionList = new List<SearchInfo>();
 
-		string folder = null;
+		//string folder = null;
 
 		//string tvdbTitle = null;
 
-		public NewTVDB(string newFolder)
+		public NewTVDB(string Folder)
 		{
-			folder = newFolder;
-			m_cacheProvider = new XmlCacheProvider(folder+Path.DirectorySeparatorChar + "Temp");
+			//folder = newFolder;
+			m_cacheProvider = new XmlCacheProvider(Folder + Path.DirectorySeparatorChar + "Temp");
 			m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
 			m_tvdbHandler.InitCache();
 		}
@@ -117,7 +117,7 @@ namespace TV_Show_Renamer
 
 		public string getTitle(int seriesID, int season, int episode)
 		{
-			string newTitle = null;
+			string newTitle = "";
 			//TvdbEpisode e;
 			try
 			{
@@ -154,8 +154,6 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception) { }
 			
-			if (newTitle == null)
-				return "";
 			newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
 			return newTitle;
 		}

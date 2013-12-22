@@ -85,7 +85,7 @@ namespace TV_Show_Renamer
 		string _fileTitle="";//Title files		
 		string _newFileName;//new file name
 		bool _auto = true;//auto-convert
-		int _tvShowID = -1;//tv show Index
+		int _seriesID = -1;//Series Index
 		int _seasonNum = -1;//Season Number 
 		int _episodeNum = -1;//Episode Number
 		int _episodeNum2 = -1;//Episode Number 2
@@ -152,10 +152,10 @@ namespace TV_Show_Renamer
 			set { _auto = value; }
 		}
 
-		public int TVShowID
+		public int SeriesID
 		{
-			get { return _tvShowID; }
-			set { _tvShowID = value; }
+			get { return _seriesID; }
+			set { _seriesID = value; }
 		}
 
 		public string TVShowName
@@ -164,11 +164,11 @@ namespace TV_Show_Renamer
 			set { _TVShowName = value; }
 		}
 
-		//public string Quality
-		//{
-		//    get { return _quality; }
-		//    set { _quality = value; }
-		//}
+		public string Quality
+		{
+			get { return _quality; }
+			set { _quality = value; }
+		}
 
 		public int SeasonNum
 		{
@@ -182,11 +182,11 @@ namespace TV_Show_Renamer
 			set { _episodeNum = value; }
 		}
 
-		//public int EpisodeNum2
-		//{
-		//    get { return _episodeNum2; }
-		//    set { _episodeNum2 = value; }
-		//}
+		public int EpisodeNum2
+		{
+			get { return _episodeNum2; }
+			set { _episodeNum2 = value; }
+		}
 
 		public bool GetTitle
 		{
@@ -199,7 +199,7 @@ namespace TV_Show_Renamer
 			_fileTitle = "";
 			_newFileName = "";
 			_auto = true;
-			_tvShowID = -1;
+			_seriesID = -1;
 			_seasonNum = -1;
 			_episodeNum = -1;
 			_episodeNum2 = -1;

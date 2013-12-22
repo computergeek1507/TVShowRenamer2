@@ -119,89 +119,54 @@ namespace TV_Show_Renamer
 	 
 		public string getTitle(int seriesID, int season, int episode)
 		{
-			string newTitle = null;
+			string newTitle = "";
 
 			try
 			{
-				int seasonScale = season;
-				int episodeScale = episode;
-				using (var client = new WebClient())
+				if (season > 100)
 				{
-					var json = client.DownloadString(String.Format("http://thexem.de/map/all?id={0}&origin=tvdb", seriesID));
-
-					RootObject m = JsonConvert.DeserializeObject<RootObject>(json);
-
-					foreach (Datum showData in m.data)
+					TvdbEpisode e = m_tvdbHandler.GetEpisode(seriesID, new DateTime(episode, season / 100, season % 100), TvdbLanguage.DefaultLanguage);
+					newTitle = e.EpisodeName;
+				}
+				else
+				{
+					int seasonScale = season;
+					int episodeScale = episode;
+					using (var client = new WebClient())
 					{
-						if (showData.scene.episode == episode && showData.scene.season == season)
+						var json = client.DownloadString(String.Format("http://thexem.de/map/all?id={0}&origin=tvdb", seriesID));
+
+						RootObject m = JsonConvert.DeserializeObject<RootObject>(json);
+
+						foreach (Datum showData in m.data)
 						{
-							seasonScale = showData.tvdb.season;
-							episodeScale = showData.tvdb.episode;
-							break;
+							if (showData.scene.episode == episode && showData.scene.season == season)
+							{
+								seasonScale = showData.tvdb.season;
+								episodeScale = showData.tvdb.episode;
+								break;
+							}
 						}
-					
 					}
-				}
-				if (seasonScale == 0 && episodeScale == 0)
-					return "";
-				
+					//if (seasonScale == 0 && episodeScale == 0)
+					//	return "";
 
-
-				if (!(File.Exists(folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml")))//see if file exists
-				{
-					WebClient client = new WebClient();
-					client.DownloadFile("http://www.thetvdb.com//api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml", folder + Path.DirectorySeparatorChar + seriesID.ToString() + ".xml");
-					
-				}
-				//WebClient client = new WebClient();
-				//Stream stream = client.OpenRead("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml");
-				//StreamReader reader = new StreamReader(stream);
-				//string content = reader.ReadToEnd();
-				//File.WriteAllText("f://test.xml", content);
-				//MessageBox.Show(content);
-
-				//http://thexem.de/proxy/tvdb/scene/api/1D62F2F90030C444/series/\1/all/$INFO[language].xml
-				//http://thexem.de/proxy/tvdb/scene/api/{1}/series/{2}/all/{3}.xml
-
-				//get individual epidose data
-				//http://www.thetvdb.com/api/BC08025A4C3F3D10/episodes/1053651/en.xml
-
-					//XDocument EpisodeList = XDocument.Load("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml");
-					XDocument EpisodeList = XDocument.Load(folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml");
-
-					//EpisodeList.Save("f://test.xml");
-					var Categorys = from Episode in EpisodeList.Descendants("Episode")
-									select new
-									{
-										ID = Episode.Element("id").Value,
-										CombinEpisode = Episode.Element("Combined_episodenumber").Value,
-										CombinSeason = Episode.Element("Combined_season").Value,
-										EpisodeName = Episode.Element("EpisodeName").Value,
-										EpisodeNumber = Episode.Element("EpisodeNumber").Value,
-										SeasonNumber = Episode.Element("SeasonNumber").Value,
-										AbsoluteNumber = Episode.Element("absolute_number").Value
-									};
-
-					foreach (var wd in Categorys)
+					TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+					foreach (TvdbEpisode esp in s.Episodes)
 					{
-
-						int XMLSeason = Int32.Parse(wd.SeasonNumber);
-						int XMLEpisode = Int32.Parse(wd.EpisodeNumber);
-						if (XMLSeason == seasonScale && XMLEpisode == episodeScale)
+						if (seasonScale == esp.SeasonNumber && episodeScale == esp.EpisodeNumber)
 						{
-							newTitle = wd.EpisodeName;
+							newTitle = esp.EpisodeName;
 							break;
 						}
 					}
-				//newTitle = ;
+				}
 			}
 			catch (Exception e ) 
 			{
-				MessageBox.Show(e.Message.ToString());			
+				MessageBox.Show(e.Message.ToString());
 			}
 
-			if (newTitle == null)
-				return "";
 			newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
 			return newTitle;
 		}

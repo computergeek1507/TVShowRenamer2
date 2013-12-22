@@ -31,7 +31,7 @@ namespace TV_Show_Renamer
 		{
 			
 			//if (password2 == "" || password2==null)
-			if (!String.IsNullOrEmpty(textBox1.Text.Trim()))
+			if (String.IsNullOrEmpty(textBox1.Text.Trim()))
 			{
 				MessageBox.Show("No Password Entered");
 				return;
