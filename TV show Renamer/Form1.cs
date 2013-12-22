@@ -1134,10 +1134,10 @@ namespace TV_Show_Renamer
 						{
 							string fullFileName = fileList[z].FullFileName;
 
-							if (fileList[z].TVShowID != -1) 
+							if (fileList[z].SeriesID != -1) 
 							{
-								if (TVShowInfoList[fileList[z].TVShowID].TVShowFolder != "")
-									TVFolder = TVShowInfoList[fileList[z].TVShowID].TVShowFolder;
+								if (TVShowInfoList[fileList[z].SeriesID].TVShowFolder != "")
+									TVFolder = TVShowInfoList[fileList[z].SeriesID].TVShowFolder;
 								else
 									TVFolder = infoFinder(fileList[z].TVShowName, folderlist);
 							}
@@ -1151,8 +1151,8 @@ namespace TV_Show_Renamer
 								if (folderdialog.ShowDialog() == DialogResult.OK)
 								{
 									folderlist.Add(folderdialog.OutputFolder);
-									if (fileList[z].TVShowID != -1)
-										TVShowInfoList[fileList[z].TVShowID].TVShowFolder = folderdialog.OutputFolder;
+									if (fileList[z].SeriesID != -1)
+										TVShowInfoList[fileList[z].SeriesID].TVShowFolder = folderdialog.OutputFolder;
 									else
 										TVShowInfoList.Add(new TVShowInfo(fileList[z].TVShowName, folderdialog.OutputFolder, -1, "", -1, "", "-1", ""));
 
@@ -1350,8 +1350,8 @@ namespace TV_Show_Renamer
 				return;
 			//object searchProvider;
 
-			//if (fileList[selected4[mainindex]].TVShowID == -1)
-			 //   fileList[selected4[mainindex]].TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);
+			//if (fileList[selected4[mainindex]].SeriesID == -1)
+			 //   fileList[selected4[mainindex]].SeriesID = SearchSeriesName(fileList[selected4[mainindex]].TVShowName);
 
 			switch (newMainSettings.TVDataBase)
 			{
@@ -1359,21 +1359,21 @@ namespace TV_Show_Renamer
 					for (int mainindex = 0; mainindex < selected4.Count; mainindex++)
 					{
 						NewTVDB GetTitles = new NewTVDB(newMainSettings.DataFolder);
-						if (fileList[selected4[mainindex]].TVShowID == -1)
-							fileList[selected4[mainindex]].TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);
+						if (fileList[selected4[mainindex]].SeriesID == -1)
+							fileList[selected4[mainindex]].SeriesID = SearchSeriesName(fileList[selected4[mainindex]].TVShowName);
 
-						if (fileList[selected4[mainindex]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID != -1)
-							fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+						if (fileList[selected4[mainindex]].SeriesID != -1 && TVShowInfoList[fileList[selected4[mainindex]].SeriesID].TVDBID != -1)
+							fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex]].SeriesID].TVDBID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
 						else
 						{
 							SearchInfo newID = GetTitles.findTitle(fileList[selected4[mainindex]].TVShowName);
 							if (newID.SelectedValue != -1)
 							{
 								fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(newID.SelectedValue, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
-								if (fileList[selected4[mainindex]].TVShowID != -1)
+								if (fileList[selected4[mainindex]].SeriesID != -1)
 								{
-									TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID = newID.SelectedValue;
-									TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVShowNameTVDB = newID.Title;
+									TVShowInfoList[fileList[selected4[mainindex]].SeriesID].TVDBID = newID.SelectedValue;
+									TVShowInfoList[fileList[selected4[mainindex]].SeriesID].TVShowNameTVDB = newID.Title;
 								}
 								else
 									TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, "", newID.SelectedValue, newID.Title, -1,"", "-1",""));
@@ -1386,18 +1386,18 @@ namespace TV_Show_Renamer
 					{
 						TVRage GetTitles = new TVRage();
 
-						if (fileList[selected4[mainindex2]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID != -1)
-							fileList[selected4[mainindex2]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
+						if (fileList[selected4[mainindex2]].SeriesID != -1 && TVShowInfoList[fileList[selected4[mainindex2]].SeriesID].RageTVID != -1)
+							fileList[selected4[mainindex2]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex2]].SeriesID].RageTVID, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
 						else
 						{
 							SearchInfo newID = GetTitles.findTitle(fileList[selected4[mainindex2]].TVShowName);
 							if (newID.SelectedValue != -1)
 							{
 								fileList[selected4[mainindex2]].FileTitle = GetTitles.getTitle(newID.SelectedValue, fileList[selected4[mainindex2]].SeasonNum, fileList[selected4[mainindex2]].EpisodeNum);
-								if (fileList[selected4[mainindex2]].TVShowID != -1)
+								if (fileList[selected4[mainindex2]].SeriesID != -1)
 								{
-									TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].RageTVID = newID.SelectedValue;
-									TVShowInfoList[fileList[selected4[mainindex2]].TVShowID].TVShowNameRage = newID.Title;
+									TVShowInfoList[fileList[selected4[mainindex2]].SeriesID].RageTVID = newID.SelectedValue;
+									TVShowInfoList[fileList[selected4[mainindex2]].SeriesID].TVShowNameRage = newID.Title;
 								}
 								else
 									TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex2]].TVShowName, "", -1,"", newID.SelectedValue, newID.Title,"-1",""));
@@ -1410,21 +1410,21 @@ namespace TV_Show_Renamer
 					{
 						EPGuides GetTitles = new EPGuides(newMainSettings.DataFolder);
 
-						if (fileList[selected4[mainindex3]].TVShowID == -1)
-							fileList[selected4[mainindex3]].TVShowID = SearchTVShowName(fileList[selected4[mainindex3]].TVShowName);
+						if (fileList[selected4[mainindex3]].SeriesID == -1)
+							fileList[selected4[mainindex3]].SeriesID = SearchSeriesName(fileList[selected4[mainindex3]].TVShowName);
 
-						if (fileList[selected4[mainindex3]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID != "-1")
-							fileList[selected4[mainindex3]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID, fileList[selected4[mainindex3]].SeasonNum, fileList[selected4[mainindex3]].EpisodeNum);
+						if (fileList[selected4[mainindex3]].SeriesID != -1 && TVShowInfoList[fileList[selected4[mainindex3]].SeriesID].EpguidesID != "-1")
+							fileList[selected4[mainindex3]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex3]].SeriesID].EpguidesID, fileList[selected4[mainindex3]].SeasonNum, fileList[selected4[mainindex3]].EpisodeNum);
 						else
 						{
 							SearchInfo newID = GetTitles.findTitle(fileList[selected4[mainindex3]].TVShowName);
 							if (newID.SelectedValue != -1)
 							{
 								fileList[selected4[mainindex3]].FileTitle = GetTitles.getTitle(newID.NewTitle, fileList[selected4[mainindex3]].SeasonNum, fileList[selected4[mainindex3]].EpisodeNum);
-								if (fileList[selected4[mainindex3]].TVShowID != -1)
+								if (fileList[selected4[mainindex3]].SeriesID != -1)
 								{
-									TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].EpguidesID = newID.NewTitle;
-									TVShowInfoList[fileList[selected4[mainindex3]].TVShowID].TVShowNameEPG = newID.Title;
+									TVShowInfoList[fileList[selected4[mainindex3]].SeriesID].EpguidesID = newID.NewTitle;
+									TVShowInfoList[fileList[selected4[mainindex3]].SeriesID].TVShowNameEPG = newID.Title;
 								}
 								else
 									TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex3]].TVShowName, "", -1,"", -1, "",newID.NewTitle, newID.Title));
@@ -1436,21 +1436,21 @@ namespace TV_Show_Renamer
 					for (int mainindex = 0; mainindex < selected4.Count; mainindex++)
 					{
 						thexem GetTitles = new thexem(newMainSettings.DataFolder);
-						if (fileList[selected4[mainindex]].TVShowID == -1)
-							fileList[selected4[mainindex]].TVShowID = SearchTVShowName(fileList[selected4[mainindex]].TVShowName);
+						if (fileList[selected4[mainindex]].SeriesID == -1)
+							fileList[selected4[mainindex]].SeriesID = SearchSeriesName(fileList[selected4[mainindex]].TVShowName);
 
-						if (fileList[selected4[mainindex]].TVShowID != -1 && TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID != -1)
-							fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
+						if (fileList[selected4[mainindex]].SeriesID != -1 && TVShowInfoList[fileList[selected4[mainindex]].SeriesID].TVDBID != -1)
+							fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(TVShowInfoList[fileList[selected4[mainindex]].SeriesID].TVDBID, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
 						else
 						{
 							SearchInfo newID = GetTitles.findTitle(fileList[selected4[mainindex]].TVShowName);
 							if (newID.SelectedValue != -1)
 							{
 								fileList[selected4[mainindex]].FileTitle = GetTitles.getTitle(newID.SelectedValue, fileList[selected4[mainindex]].SeasonNum, fileList[selected4[mainindex]].EpisodeNum);
-								if (fileList[selected4[mainindex]].TVShowID != -1)
+								if (fileList[selected4[mainindex]].SeriesID != -1)
 								{
-									TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVDBID = newID.SelectedValue;
-									TVShowInfoList[fileList[selected4[mainindex]].TVShowID].TVShowNameTVDB = newID.Title;
+									TVShowInfoList[fileList[selected4[mainindex]].SeriesID].TVDBID = newID.SelectedValue;
+									TVShowInfoList[fileList[selected4[mainindex]].SeriesID].TVShowNameTVDB = newID.Title;
 								}
 								else
 									 TVShowInfoList.Add(new TVShowInfo(fileList[selected4[mainindex]].TVShowName, "", newID.SelectedValue, newID.Title, -1,"", "-1",""));
@@ -1464,74 +1464,18 @@ namespace TV_Show_Renamer
 			autoConvertNoTitle();
 		}
 
-		private int SearchTVShowName(string TVShowName)
+		private int SearchSeriesName(string SeriesName)
 		{
 			int i = 0;
 			foreach (TVShowInfo SearchInfo in TVShowInfoList)
 			{
-				int difference = Math.Abs(SearchInfo.TVShowName.Length - TVShowName.Length);
-				if (SearchInfo.TVShowName.ToUpper().Contains(TVShowName.ToUpper()) && difference < 6)
+				int difference = Math.Abs(SearchInfo.TVShowName.Length - SeriesName.Length);
+				if (SearchInfo.TVShowName.ToUpper().Contains(SeriesName.ToUpper()) && difference < 6)
 					return i;
 				i++;
 			}
 			return -1;
 		}
-
-		//Search TV Show TVDB ID List
-		//private int SearchTVDBID(string TVShowName)
-		//{
-		//	foreach (TVShowInfo SearchInfo in TVShowInfoList)
-		//	{
-		//		int difference = Math.Abs(SearchInfo.TVShowName.Length - TVShowName.Length);
-		//		if (SearchInfo.TVShowName.ToUpper().Contains(TVShowName.ToUpper()) && difference < 8)
-		//			return SearchInfo.TVDBID;				
-		//	}
-		//	return -1;
-		//}
-
-		////Search TV Show TVRage ID List
-		//private int SearchTVRageID(string TVShowName)
-		//{
-		//	foreach (TVShowInfo SearchInfo in TVShowInfoList)
-		//	{
-		//		if (TVShowName == SearchInfo.TVShowName)
-		//			return SearchInfo.RageTVID;
-		//	}
-		//	return -1;
-		//}
-
-		////Search TV Show Epguides ID List
-		//private int SearchEpguidesID(string TVShowName)
-		//{
-		//	foreach (TVShowInfo SearchInfo in TVShowInfoList)
-		//	{
-		//		if (TVShowName == SearchInfo.TVShowName)
-		//			return SearchInfo.EpguidesID;
-		//	}
-		//	return -1;
-		//}
-
-		////Search TV Show Real Name List
-		//private string SearchRealName(string TVShowName)
-		//{
-		//	foreach (TVShowInfo SearchInfo in TVShowInfoList)
-		//	{
-		//		if (TVShowName == SearchInfo.TVShowName)
-		//			return SearchInfo.RealTVShowName;
-		//	}
-		//	return "";
-		//}
-
-		////Search TV Show Folder List
-		//private string SearchTVShowFolder(string TVShowName)
-		//{
-		//	foreach (TVShowInfo SearchInfo in TVShowInfoList)
-		//	{
-		//		if (TVShowName == SearchInfo.TVShowName)
-		//			return SearchInfo.TVShowFolder;
-		//	}
-		//	return "";
-		//}
 
 		//returns folderName if folder exsist
 		private string infoFinder(string showName, List<string> folderlist)
@@ -1606,6 +1550,9 @@ namespace TV_Show_Renamer
 		{//make temp function
 			for (int index = 0; index < EditFileList.Count(); index++)
 			{
+
+				//TVRenamer.renameFile(EditFileList[index]);
+
 				bool addSeasonFormat = true;
 
 				if (!EditFileList[index].AutoEdit)
@@ -1949,12 +1896,12 @@ namespace TV_Show_Renamer
 
 				tvshowName = newfilename.Substring(0, startIndex).Trim(temp.ToCharArray());
 
-				EditFileList[index].TVShowID = SearchTVShowName(tvshowName.Replace(temp," "));
+				EditFileList[index].SeriesID = SearchSeriesName(tvshowName.Replace(temp," "));
 
 				bool useOldTiltle = true;
 				if (newMainSettings.GetTVShowName)
 				{
-					if (EditFileList[index].TVShowID != -1)
+					if (EditFileList[index].SeriesID != -1)
 					{
 						string newTvshowName = null;
 
@@ -1962,13 +1909,13 @@ namespace TV_Show_Renamer
 						{
 							case 0://TVDB
 							case 4://XEM.de
-								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameTVDB.Replace(" ",temp);
+								newTvshowName = TVShowInfoList[EditFileList[index].SeriesID].TVShowNameTVDB.Replace(" ", temp);
 								break;
 							case 1:
-								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameRage.Replace(" ", temp);
+								newTvshowName = TVShowInfoList[EditFileList[index].SeriesID].TVShowNameRage.Replace(" ", temp);
 								break;
 							case 2:
-								newTvshowName = TVShowInfoList[EditFileList[index].TVShowID].TVShowNameEPG.Replace(" ", temp);
+								newTvshowName = TVShowInfoList[EditFileList[index].SeriesID].TVShowNameEPG.Replace(" ", temp);
 								break;
 							default:
 								break;
@@ -2307,6 +2254,9 @@ namespace TV_Show_Renamer
 					//if thumb file dont convert
 					if (origName == "Thumbs.db")
 						continue;
+					//skip sample files 
+					if (origName.ToUpper().Contains("SAMPLE"))
+						continue;
 					//zip fix
 					if ((exten == ".zip" || exten == ".rar" || exten == ".r01" || exten == ".7z") && newMainSettings.OpenZIPs)
 						continue;
@@ -2489,6 +2439,7 @@ namespace TV_Show_Renamer
 			startlist.Add("brrip");
 			startlist.Add("fever");
 			startlist.Add("twiz");
+			startlist.Add("biq");
 			startlist.Add("diverge");
 			startlist.Add("www.directlinkspot.com");
 			startlist.Add("www directlinkspot com");
@@ -2751,11 +2702,11 @@ namespace TV_Show_Renamer
 				if (fileList.Count != 0 && ConnectionExists()) //if files are selected
 				{
 					List<int> selected = getSelected();
-					//for (int i = 0; i < fileList.Count; i++)
-					//{
-					//	if ((dataGridView1.Rows[i].Selected) && fileList[i].SeasonNum != -1 && fileList[i].EpisodeNum != -1 && fileList[i].AutoEdit)
-					//		selected.Add(i);
-					//}
+					for (int i = 0; i < fileList.Count; i++)
+					{
+						if ((dataGridView1.Rows[i].Selected) && fileList[i].SeasonNum != -1 && fileList[i].EpisodeNum != -1 && fileList[i].AutoEdit)
+							selected.Add(i);
+					}
 					//TestTitle(selected);
 					ThreadAdd TitlesToGet = new ThreadAdd();
 					TitlesToGet.AddType = "getTitles";

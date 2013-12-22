@@ -72,7 +72,7 @@ namespace TV_Show_Renamer
 			//string newword = textBox1.Text;
 
 			//if (newword == "" || newword == " " || newword == "  "||newword ==null)
-			if(!String.IsNullOrEmpty(textBox1.Text.Trim()))
+			if(String.IsNullOrEmpty(textBox1.Text.Trim()))
 				return;
 
 			//check to see if new word is in main library
@@ -183,7 +183,7 @@ namespace TV_Show_Renamer
 				//string newword = textBox1.Text;
 
 				//if (newword == "" || newword == " " || newword == "  " || newword == null)
-				if (!String.IsNullOrEmpty(textBox1.Text.Trim()))
+				if (String.IsNullOrEmpty(textBox1.Text.Trim()))
 					return;
 
 				//check to see if new word is in main library
