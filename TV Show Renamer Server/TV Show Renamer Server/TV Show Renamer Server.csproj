@@ -143,6 +143,7 @@
     <Compile Include="HTMLBuilder.cs" />
     <Compile Include="HTTPRequest.cs" />
     <Compile Include="HTTPServer.cs" />
+    <Compile Include="InputBox.cs" />
     <Compile Include="LinkFinder.cs" />
     <Compile Include="ListBoxLog.cs" />
     <Compile Include="LogWrite.cs" />
