@@ -9,47 +9,47 @@ using System.Windows.Forms;
 
 namespace TV_Show_Renamer_Server
 {
-    public partial class AlertForm : Form
-    {
+	public partial class AlertForm : Form
+	{
 
-        #region PROPERTIES
+		#region PROPERTIES
 
-        public string Message
-        {
-            set { labelMessage.Text = value; }
-        }
+		public string Message
+		{
+			set { labelMessage.Text = value; }
+		}
 
-        public int ProgressValue
-        {
-            set { progressBar1.Value = value; }
-        }
+		public int ProgressValue
+		{
+			set { progressBar1.Value = value; }
+		}
 
-        #endregion
+		#endregion
 
-        #region METHODS
+		#region METHODS
 
-        public AlertForm()
-        {
-            InitializeComponent();
-        }
+		public AlertForm()
+		{
+			InitializeComponent();
+		}
 
-        #endregion
+		#endregion
 
-        #region EVENTS
+		#region EVENTS
 
-        public event EventHandler<EventArgs> Canceled;
+		public event EventHandler<EventArgs> Canceled;
 
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            // Create a copy of the event to work with
-            EventHandler<EventArgs> ea = Canceled;
-            /* If there are no subscribers, eh will be null so we need to check
-             * to avoid a NullReferenceException. */
-            if (ea != null)
-                ea(this, e);
-        }
+		private void buttonCancel_Click(object sender, EventArgs e)
+		{
+			// Create a copy of the event to work with
+			EventHandler<EventArgs> ea = Canceled;
+			/* If there are no subscribers, eh will be null so we need to check
+			 * to avoid a NullReferenceException. */
+			if (ea != null)
+				ea(this, e);
+		}
 
-        #endregion
+		#endregion
 
-    }
+	}
 }

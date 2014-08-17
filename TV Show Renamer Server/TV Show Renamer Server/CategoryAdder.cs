@@ -80,6 +80,6 @@ namespace TV_Show_Renamer_Server
 			this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.Hide();
 		}
-		   
+			
 	}
 }

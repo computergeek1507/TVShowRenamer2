@@ -47,8 +47,8 @@ namespace TV_Show_Renamer_Server
 				{
 					if (list[i].Id != 0)
 					{
-                        bool ended = (getStatus(list[i].Id) == "Ended") ? true : false;
-                        FinalList.Add(new OnlineShowInfo(list[i].SeriesName, list[i].Id, list[i].FirstAired.ToString("yyyy"), ended));
+						bool ended = (getStatus(list[i].Id) == "Ended") ? true : false;
+						FinalList.Add(new OnlineShowInfo(list[i].SeriesName, list[i].Id, list[i].FirstAired.ToString("yyyy"), ended));
 
 						bool m = Regex.IsMatch(list[i].SeriesName, @"\(\d{1,4}\)", RegexOptions.IgnoreCase);
 						if (m)

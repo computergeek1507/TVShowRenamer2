@@ -55,7 +55,7 @@ namespace TV_Show_Renamer_Server
 		const int HowDeepToScan = 4;
 		List<FileSystemWatcher> myWatcher1 = new List<FileSystemWatcher>();
 
-        AlertForm alert;
+		AlertForm alert;
 
 		//get working directory
 
@@ -69,7 +69,7 @@ namespace TV_Show_Renamer_Server
 		public static ListBoxLog listBoxLog;
 		//NewTVDB TVDB;
 		thexem theXEM;
-        TMDb TMDbClient;
+		TMDb TMDbClient;
 		
 		public MainForm()
 		{
@@ -77,9 +77,10 @@ namespace TV_Show_Renamer_Server
 			listBoxLog = new ListBoxLog(listBox1);
 			//TVDB = new NewTVDB(commonAppData);
 			theXEM = new thexem(commonAppData);
-            TMDbClient = new TMDb(commonAppData);
+			TMDbClient = new TMDb(commonAppData);
 		}
 
+			
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			//check or create file folder
@@ -208,7 +209,6 @@ namespace TV_Show_Renamer_Server
 			}
 			catch (Exception e )
 			{
-
 				listBoxLog.Log(Level.Error, "Error Saving TV Show File");
 				MessageBox.Show(e.Message);
 			}
@@ -296,41 +296,16 @@ namespace TV_Show_Renamer_Server
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-            if (backgroundWorker1.IsBusy != true)
-            {
-                // create a new instance of the alert form
-                alert = new AlertForm();
-                // event handler for the Cancel button in AlertForm
-                alert.Canceled += new EventHandler<EventArgs>(buttonCancel_Click);
-                alert.Show();
-                // Start the asynchronous operation.
-                backgroundWorker1.RunWorkerAsync();
-            }
-
-
-            ////_TVShowList.Clear();
-            //List<string> newitems = folderFinder(folderTextBox.Text);
-            //foreach (string newTVShow in newitems) 
-            //{
-            // bool showFound = false;
-            // for (int i = 0; i < _TVShowList.Count(); i++) 
-            // {
-            //    if(_TVShowList[i].ShowFolder.CompareTo(newTVShow)==0)
-            //    {
-            //         showFound = true;
-            //         break;
-            //    }				
-            // }
-            // if (!showFound)
-            // {
-            //    _TVShowList.Add(getTVShowSettings(new TVShowSettings(newTVShow, newTVShow)));
-            // }
-            //}
-
-
-            //TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
-			//main.Show();
-
+			if (backgroundWorker1.IsBusy != true)
+			{
+				// create a new instance of the alert form
+				alert = new AlertForm();
+				// event handler for the Cancel button in AlertForm
+				alert.Canceled += new EventHandler<EventArgs>(buttonCancel_Click);
+				alert.Show();
+				// Start the asynchronous operation.
+				backgroundWorker1.RunWorkerAsync();
+			}
 		}
 
 		private void button2_Click(object sender, EventArgs e)
@@ -505,11 +480,11 @@ namespace TV_Show_Renamer_Server
 		//get list of folders
 		private List<string> folderFinder(string folderwatch)
 		{
-         	List<string> foldersIn = new List<string>();
+		 	List<string> foldersIn = new List<string>();
 			//List<string> revFoldersIn = new List<string>();
 
-            if (!Directory.Exists(folderwatch))
-                return foldersIn;
+			if (!Directory.Exists(folderwatch))
+				return foldersIn;
 
 			System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch);
 			try
@@ -564,22 +539,22 @@ namespace TV_Show_Renamer_Server
 		{
 			//TVShowSettings newShow = new TVShowSettings(showFolderName, showFolderName);
 
-            OnlineShowInfo newTVDBID = theXEM.findTitle(newShow.SearchName);
+			OnlineShowInfo newTVDBID = theXEM.findTitle(newShow.SearchName);
 
 			if (newTVDBID.ShowID != -1)
 			{
 				newShow.TVDBSeriesID = newTVDBID.ShowID;
 				newShow.TVDBShowName = newTVDBID.ShowName;
-                newShow.SeriesEnded = newTVDBID.ShowEnded;
+				newShow.SeriesEnded = newTVDBID.ShowEnded;
 				
 			}
-            OnlineShowInfo newTMDbID = TMDbClient.findTitle(newShow.SearchName);
-            if (newTMDbID.ShowID != -1)
+			OnlineShowInfo newTMDbID = TMDbClient.findTitle(newShow.SearchName);
+			if (newTMDbID.ShowID != -1)
 			{
-                newShow.TMDbSeriesID = newTMDbID.ShowID;
-                newShow.TMDbShowName = newTMDbID.ShowName;
+				newShow.TMDbSeriesID = newTMDbID.ShowID;
+				newShow.TMDbShowName = newTMDbID.ShowName;
 
-                newShow.SeriesEnded = newTVDBID.ShowEnded;
+				newShow.SeriesEnded = newTVDBID.ShowEnded;
 			}
 
 			return newShow;
@@ -655,126 +630,105 @@ namespace TV_Show_Renamer_Server
 		
 		}
 
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            if (backgroundWorker1.WorkerSupportsCancellation == true)
-            {
-                // Cancel the asynchronous operation.
-                backgroundWorker1.CancelAsync();
-                // Close the AlertForm
-                alert.Close();
-            }
-        }
+		private void buttonCancel_Click(object sender, EventArgs e)
+		{
+			if (backgroundWorker1.WorkerSupportsCancellation == true)
+			{
+				// Cancel the asynchronous operation.
+				backgroundWorker1.CancelAsync();
+				// Close the AlertForm
+				alert.Close();
+			}
+		}
 
-        // This event handler is where the time-consuming work is done.
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
+		// This event handler is where the time-consuming work is done.
+		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+		{
+			BackgroundWorker worker = sender as BackgroundWorker;
 
-            //for (int i = 1; i <= 10; i++)
-            //{
-            //    if (worker.CancellationPending == true)
-            //    {
-            //        e.Cancel = true;
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        // Perform a time consuming operation and report progress.
-            //        worker.ReportProgress(i * 10);
-            //        System.Threading.Thread.Sleep(500);
-            //    }
-            //}
+			List<string> newitems = folderFinder(folderTextBox.Text);
+			int index = 0;
+			foreach (string folderName in newitems)
+			{
+				if (worker.CancellationPending == true)
+				{
+					e.Cancel = true;
+					break;
+				}
 
-            //_TVShowList.Clear();
-            List<string> newitems = folderFinder(folderTextBox.Text);
-            int index = 0;
-            foreach (string folderName in newitems)
-            {
-                if (worker.CancellationPending == true)
-                {
-                    e.Cancel = true;
-                    break;
-                }
+				bool HD = false;
+				string newTVShow = folderName;
+				if (newTVShow.EndsWith("HD"))
+				{
+					newTVShow = newTVShow.Replace("HD", "").TrimEnd(' ');
+					HD = true;
+				}
 
-                bool HD = false;
-                string newTVShow = folderName;
-                if (newTVShow.EndsWith("HD"))
-                {
-                    newTVShow = newTVShow.Replace("HD", "").TrimEnd(' ');
-                    HD = true;
-                }
-
-                bool showFound = false;
-                int showIndex = -1;
-                for (int i = 0; i < _TVShowList.Count(); i++)
-                {
-                    if (_TVShowList[i].SearchName.CompareTo(newTVShow) == 0)
-                    {
-                        showIndex = i;
-                        break;
-                    }
-                }
-                if (showIndex==-1)
-                {
-                    if(HD)
-                        _TVShowList.Add(getTVShowSettings(new TVShowSettings(newTVShow, folderName,true)));
-                    else
-                        _TVShowList.Add(getTVShowSettings(new TVShowSettings(newTVShow, folderName)));
-                }
-                else 
-                {
-                    if (HD)
-                    {
-                        _TVShowList[showIndex].ShowFolderHD = folderName;
-                        _TVShowList[showIndex].GetHD = true;
-                    }
-                    else
-                    {
-                        _TVShowList[showIndex].ShowFolder = folderName;
-                    }
-                }
-                index++;
-                int percentage = (int)(((double)index / (double)newitems.Count()) * 100.0);
-                worker.ReportProgress(percentage);
-            }
+				bool showFound = false;
+				int showIndex = -1;
+				for (int i = 0; i < _TVShowList.Count(); i++)
+				{
+					if (_TVShowList[i].SearchName.CompareTo(newTVShow) == 0)
+					{
+						showIndex = i;
+						break;
+					}
+				}
+				if (showIndex==-1)
+				{
+					if(HD)
+						_TVShowList.Add(getTVShowSettings(new TVShowSettings(newTVShow, folderName,true)));
+					else
+						_TVShowList.Add(getTVShowSettings(new TVShowSettings(newTVShow, folderName)));
+				}
+				else 
+				{
+					if (HD)
+					{
+						_TVShowList[showIndex].ShowFolderHD = folderName;
+						_TVShowList[showIndex].GetHD = true;
+					}
+					else
+					{
+						_TVShowList[showIndex].ShowFolder = folderName;
+					}
+				}
+				index++;
+				int percentage = (int)(((double)index / (double)newitems.Count()) * 100.0);
+				worker.ReportProgress(percentage);
+			}
 
 
-           // TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
-        }
+			// TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
+		}
 
-        // This event handler updates the progress.
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            // Show the progress in main form (GUI)
-           // labelResult.Text = (e.ProgressPercentage.ToString() + "%");
-            // Pass the progress to AlertForm label and progressbar
-            alert.Message = "In progress, please wait... " + e.ProgressPercentage.ToString() + "%";
-            alert.ProgressValue = e.ProgressPercentage;
-        }
+		// This event handler updates the progress.
+		private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+		{
+			// Pass the progress to AlertForm label and progressbar
+			alert.Message = "In progress, please wait... " + e.ProgressPercentage.ToString() + "%";
+			alert.ProgressValue = e.ProgressPercentage;
+		}
 
-        // This event handler deals with the results of the background operation.
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Cancelled == true)
-            {
-                //labelResult.Text = "Canceled!";
-                listBoxLog.Log("TV Search Canceled!");
-            }
-            else if (e.Error != null)
-            {
-               // labelResult.Text = "Error: " + e.Error.Message;
-                listBoxLog.Log("TV Search Error: " + e.Error.Message);
-            }
-            else
-            {
-                TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
-                listBoxLog.Log("TV Search Done!");
-               // labelResult.Text = "Done!";
-            }
-            // Close the AlertForm
-            alert.Close();
-        }
+		// This event handler deals with the results of the background operation.
+		private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			if (e.Cancelled == true)
+			{
+				listBoxLog.Log("TV Search Canceled!");
+			}
+			else if (e.Error != null)
+			{
+				listBoxLog.Log("TV Search Error: " + e.Error.Message);
+			}
+			else
+			{
+				TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
+				listBoxLog.Log("TV Search Done!");
+			}
+			// Close the AlertForm
+			alert.Close();
+		}
 
 	}
 }
