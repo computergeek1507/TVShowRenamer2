@@ -195,14 +195,17 @@ namespace TV_Show_Renamer_Server
 	{
 		string _SearchName;
 		string _ShowFolder ;
+        string _ShowFolderHD;
 		string _TVDBShowName ;
-		string _TVRageShowName ;
+		string _TMDbShowName ;
 
 		int _TVDBSeriesID = -1;//TVDB id number
-		int _TVRageSeriesID = -1;
+        int _TMDbSeriesID = -1;
 
-		bool _UseTVDBNumbering = false;
+		//bool _UseTVDBNumbering = false;
 		bool _SeriesEnded = false;
+
+        bool _getHD = false;
 
 		//public TVShowSettings(string searchName, string showFolder, string tVDBShowName, int tVDBSeriesID, string tVRageShowName, int tVRageSeriesID)
 		//{
@@ -219,6 +222,19 @@ namespace TV_Show_Renamer_Server
 			_ShowFolder = showFolder;
 		}
 
+        public TVShowSettings(string searchName, string showFolder, string showFolderHD)
+        {
+            _SearchName = searchName;
+            _ShowFolder = showFolder;
+            _ShowFolderHD = showFolderHD;
+        }
+        public TVShowSettings(string searchName, string showFolderHD,bool HDEnable)
+        {
+            _SearchName = searchName;
+            _ShowFolderHD = showFolderHD;
+            _getHD = HDEnable;
+        }
+
 		public TVShowSettings()
 		{}
 
@@ -232,36 +248,48 @@ namespace TV_Show_Renamer_Server
 			get { return _ShowFolder; }
 			set { _ShowFolder = value; }
 		}
+        public string ShowFolderHD
+        {
+            get { return _ShowFolderHD; }
+            set { _ShowFolderHD = value; }
+        }
+
 		public string TVDBShowName
 		{
 			get { return _TVDBShowName; }
 			set { _TVDBShowName = value; }
 		}
-		public string TVRageShowName
+        public string TMDbShowName
 		{
-			get { return _TVRageShowName; }
-			set { _TVRageShowName = value; }
+            get { return _TMDbShowName; }
+            set { _TMDbShowName = value; }
 		}
 		public int TVDBSeriesID
 		{
 			get { return _TVDBSeriesID; }
 			set { _TVDBSeriesID = value; }
 		}
-		public int TVRageSeriesID
+        public int TMDbSeriesID
 		{
-			get { return _TVRageSeriesID; }
-			set { _TVRageSeriesID = value; }
+            get { return _TMDbSeriesID; }
+            set { _TMDbSeriesID = value; }
 		}
-		public bool UseTVDBNumbering
-		{
-			get { return _UseTVDBNumbering; }
-			set { _UseTVDBNumbering = value; }
-		}
+        //public bool UseTVDBNumbering
+        //{
+        //    get { return _UseTVDBNumbering; }
+        //    set { _UseTVDBNumbering = value; }
+        //}
 		public bool SeriesEnded
 		{
 			get { return _SeriesEnded; }
 			set { _SeriesEnded = value; }
 		}
+        public bool GetHD
+        {
+            get { return _getHD; }
+            set { _getHD = value; }
+        }
+
 	}//end of class
 
 	public class SearchInfo
@@ -315,14 +343,14 @@ namespace TV_Show_Renamer_Server
 		//string _newTitle = "";
 		int _ShowID;
 		string _StartYear;
-		string _ShowStatus;
+		bool _ShowEnded = true;
 
-		public OnlineShowInfo(string showName, int showID,string startYear,string showStatus)
+		public OnlineShowInfo(string showName, int showID,string startYear,bool showEnded)
 		{
 			_ShowName = showName;
 			_ShowID = showID;
 			_StartYear = startYear;
-			_ShowStatus = showStatus;
+			_ShowEnded = showEnded;
 		}
 
 		public OnlineShowInfo(string showName, int showID)
@@ -332,11 +360,19 @@ namespace TV_Show_Renamer_Server
 			_StartYear = "";
 		}
 
+        public OnlineShowInfo(string showName, int showID, string startYear)
+        {
+            _ShowName = showName;
+            _ShowID = showID;
+            _StartYear = startYear;
+        }
+
 		public OnlineShowInfo()
 		{
 			_ShowName = "";
 			_ShowID = -1;
 			_StartYear = "";
+            _ShowEnded = true;
 		}
 
 		public string ShowName
@@ -357,10 +393,10 @@ namespace TV_Show_Renamer_Server
 			set { _StartYear = value; }
 		}
 
-		public string ShowStatus
+        public bool ShowEnded
 		{
-			get { return _ShowStatus; }
-			set { _ShowStatus = value; }
+            get { return _ShowEnded; }
+            set { _ShowEnded = value; }
 		}
 	}
 
