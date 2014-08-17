@@ -15,8 +15,8 @@ namespace TV_Show_Renamer_Server
 
 		List<TVShowSettings> _MainTVShowList;
 		string _RootDir;
-        thexem TVDB;
-        TMDb TMDbClient;
+		thexem TVDB;
+		TMDb TMDbClient;
 		//int oldIndex = -1;
 
 
@@ -28,8 +28,8 @@ namespace TV_Show_Renamer_Server
 
 			_MainTVShowList = tvShowList;
 			_RootDir = rootDir;
-            TVDB = new thexem(commonAppData);
-            TMDbClient = new TMDb(commonAppData);
+			TVDB = new thexem(commonAppData);
+			TMDbClient = new TMDb(commonAppData);
 			listBoxTVShowList.DataSource = _MainTVShowList;
 			listBoxTVShowList.DisplayMember = "SearchName";
 			//foreach (TVShowSettings item in tvShowList)
@@ -49,18 +49,18 @@ namespace TV_Show_Renamer_Server
 		private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			int index = listBoxTVShowList.SelectedIndex;
-            if (index == -1)
-                return;
+			if (index == -1)
+				return;
 
 			showNameTextBox.Text = _MainTVShowList[index].SearchName;
 			TVShowFolderTextBox.Text = _MainTVShowList[index].ShowFolder;
-            TVShowFolderHDTextBox.Text = _MainTVShowList[index].ShowFolderHD;
+			TVShowFolderHDTextBox.Text = _MainTVShowList[index].ShowFolderHD;
 
 			TVDBNameTextBox.Text = _MainTVShowList[index].TVDBShowName;
 			TVDBIDTextBox.Text = _MainTVShowList[index].TVDBSeriesID.ToString();
-            TMDbTextBox.Text = _MainTVShowList[index].TMDbShowName;
-            TMDbIDTextBox.Text = _MainTVShowList[index].TMDbSeriesID.ToString();
-            checkBoxHD.Checked = _MainTVShowList[index].GetHD;
+			TMDbTextBox.Text = _MainTVShowList[index].TMDbShowName;
+			TMDbIDTextBox.Text = _MainTVShowList[index].TMDbSeriesID.ToString();
+			checkBoxHD.Checked = _MainTVShowList[index].GetHD;
 			//checkBox1.Checked = _MainTVShowList[index].UseTVDBNumbering;
 			checkBox2.Checked = _MainTVShowList[index].SeriesEnded;
 			//MessageBox.Show(listBox1.SelectedItem.ToString());
@@ -70,17 +70,17 @@ namespace TV_Show_Renamer_Server
 		{
 			int index = listBoxTVShowList.SelectedIndex;
 
-            if (index == -1)
-                return;
+			if (index == -1)
+				return;
 
-			_MainTVShowList[index].SearchName	   = showNameTextBox.Text;
-			_MainTVShowList[index].ShowFolder	   = TVShowFolderTextBox.Text;
-            _MainTVShowList[index].ShowFolderHD    = TVShowFolderHDTextBox.Text;
+			_MainTVShowList[index].SearchName		= showNameTextBox.Text;
+			_MainTVShowList[index].ShowFolder		= TVShowFolderTextBox.Text;
+			_MainTVShowList[index].ShowFolderHD	= TVShowFolderHDTextBox.Text;
 			_MainTVShowList[index].TVDBShowName	 = TVDBNameTextBox.Text;
 			_MainTVShowList[index].TVDBSeriesID	 = Int32.Parse(TVDBIDTextBox.Text);
-            _MainTVShowList[index].TMDbShowName = TMDbTextBox.Text;
-            _MainTVShowList[index].TMDbSeriesID = Int32.Parse(TMDbIDTextBox.Text);
-            _MainTVShowList[index].GetHD        = checkBoxHD.Checked;
+			_MainTVShowList[index].TMDbShowName = TMDbTextBox.Text;
+			_MainTVShowList[index].TMDbSeriesID = Int32.Parse(TMDbIDTextBox.Text);
+			_MainTVShowList[index].GetHD		= checkBoxHD.Checked;
 			//_MainTVShowList[index].UseTVDBNumbering = checkBox1.Checked;
 			_MainTVShowList[index].SeriesEnded	  = checkBox2.Checked;
 		}
@@ -113,78 +113,78 @@ namespace TV_Show_Renamer_Server
 		{
 			int index = listBoxTVShowList.SelectedIndex;
 
-            if (index == -1)
-                return;
+			if (index == -1)
+				return;
 
-            OnlineShowInfo newTVDBID = TVDB.findTitle(showNameTextBox.Text, true);
+			OnlineShowInfo newTVDBID = TVDB.findTitle(showNameTextBox.Text, true);
 			if (newTVDBID.ShowID != -1)
 			{
 				TVDBNameTextBox.Text = newTVDBID.ShowName;
 				TVDBIDTextBox.Text = newTVDBID.ShowID.ToString();
-                checkBox2.Checked = newTVDBID.ShowEnded;
+				checkBox2.Checked = newTVDBID.ShowEnded;
 			}
 			
 		}
 
 		private void button2_Click_1(object sender, EventArgs e)
 		{
-            OnlineShowInfo newTMDbID = TMDbClient.findTitle(showNameTextBox.Text, true);
-            if (newTMDbID.ShowID != -1)
+			OnlineShowInfo newTMDbID = TMDbClient.findTitle(showNameTextBox.Text, true);
+			if (newTMDbID.ShowID != -1)
 			{
-                TMDbTextBox.Text = newTMDbID.ShowName;
-                TMDbIDTextBox.Text = newTMDbID.ShowID.ToString();
-                checkBox2.Checked = newTMDbID.ShowEnded;
+				TMDbTextBox.Text = newTMDbID.ShowName;
+				TMDbIDTextBox.Text = newTMDbID.ShowID.ToString();
+				checkBox2.Checked = newTMDbID.ShowEnded;
 			}
 
 		}
 
-        private void buttonAddShow_Click(object sender, EventArgs e)
-        {
+		private void buttonAddShow_Click(object sender, EventArgs e)
+		{
 
-        }
+		}
 
-        private void buttonRemoveShow_Click(object sender, EventArgs e)
-        {
-            int index = listBoxTVShowList.SelectedIndex;
+		private void buttonRemoveShow_Click(object sender, EventArgs e)
+		{
+			int index = listBoxTVShowList.SelectedIndex;
 
-            if (index == -1)
-                return;
+			if (index == -1)
+				return;
 
-            if (MessageBox.Show("Remove "+_MainTVShowList[index].SearchName+" from database?", "Remove TV Show", MessageBoxButtons.YesNo) == DialogResult.Yes)
+			if (MessageBox.Show("Remove "+_MainTVShowList[index].SearchName+" from database?", "Remove TV Show", MessageBoxButtons.YesNo) == DialogResult.Yes)
 			{
-                 _MainTVShowList.RemoveAt(index);
-                 listBoxTVShowList.ClearSelected();
-                 //listBoxTVShowList.DataSource = _MainTVShowList;
-                 listBoxTVShowList.DisplayMember = "";
-                 listBoxTVShowList.DisplayMember = "SearchName";
-                 listBoxTVShowList.Refresh();
-            }
-        }
+				 _MainTVShowList.RemoveAt(index);
+				 listBoxTVShowList.ClearSelected();
+				 //listBoxTVShowList.DataSource = _MainTVShowList;
+				 listBoxTVShowList.DisplayMember = "";
+				 listBoxTVShowList.DisplayMember = "SearchName";
+				 listBoxTVShowList.Refresh();
+			}
+		}
 
-        private void folderHDButton_Click(object sender, EventArgs e)
-        {
-            string[] subdirectoryEntries = Directory.GetDirectories(_RootDir);
-            new List<string>(subdirectoryEntries);
+		private void folderHDButton_Click(object sender, EventArgs e)
+		{
+			string[] subdirectoryEntries = Directory.GetDirectories(_RootDir);
+			new List<string>(subdirectoryEntries);
 
-            SelectMenu SelectMain = new SelectMenu(new List<string>(subdirectoryEntries), showNameTextBox.Text, "Select TV Show Folder");
-            if (SelectMain.ShowDialog() == DialogResult.OK)
-            {
-                int selectedid = SelectMain.selected;
-                if (selectedid == -1) return;
-                TVShowFolderHDTextBox.Text = subdirectoryEntries[selectedid].Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
-                SelectMain.Close();
-            }
-        }
+			SelectMenu SelectMain = new SelectMenu(new List<string>(subdirectoryEntries), showNameTextBox.Text, "Select TV Show Folder");
+			if (SelectMain.ShowDialog() == DialogResult.OK)
+			{
+				int selectedid = SelectMain.selected;
+				if (selectedid == -1) return;
+				TVShowFolderHDTextBox.Text = subdirectoryEntries[selectedid].Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
+				SelectMain.Close();
+			}
+		}
 
-        private void buttonGetEpisodes_Click(object sender, EventArgs e)
-        {
+		private void buttonGetEpisodes_Click(object sender, EventArgs e)
+		{
 
-        }
+		}
 
-        private void buttonSearchFolder_Click(object sender, EventArgs e)
-        {
+		private void buttonSearchFolder_Click(object sender, EventArgs e)
+		{
 
-        }
+		}
 
 	}
 }

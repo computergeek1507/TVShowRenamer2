@@ -99,7 +99,7 @@ namespace TV_Show_Renamer_Server
 		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			intSelected = dataGridView1.CurrentRow.Index;
-			if (intSelected != -1)		   
+			if (intSelected != -1)			
 				this.DialogResult = System.Windows.Forms.DialogResult.OK;			
 			else			
 				this.DialogResult = System.Windows.Forms.DialogResult.Cancel;

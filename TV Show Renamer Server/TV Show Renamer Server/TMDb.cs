@@ -13,22 +13,22 @@ using TMDbLib.Objects.Discover;
 
 namespace TV_Show_Renamer_Server
 {
-    class TMDb
+	class TMDb
 	{
-        TMDbClient tmdbClient = null;
+		TMDbClient tmdbClient = null;
 
-        string folder = null;
+		string folder = null;
 
-        public TMDb(string newFolder)
+		public TMDb(string newFolder)
 		{
 			folder = newFolder;
-            tmdbClient = new TMDbClient("18923bd69f2010d75cf0939d617be0f6");
+			tmdbClient = new TMDbClient("18923bd69f2010d75cf0939d617be0f6");
 		}
 
 		public OnlineShowInfo findTitle(string ShowName, bool showAll = false)
 		{
 			List<OnlineShowInfo> selectionList = new List<OnlineShowInfo>();
-            
+			
 			OnlineShowInfo TVShowID = new OnlineShowInfo();
 			if (ShowName == null)
 				return TVShowID;
@@ -37,14 +37,14 @@ namespace TV_Show_Renamer_Server
 			List<OnlineShowInfo> FinalList = new List<OnlineShowInfo>();
 			try
 			{
-                SearchContainer<TvShowBase> results = tmdbClient.SearchTvShow(ShowName);
+				SearchContainer<TvShowBase> results = tmdbClient.SearchTvShow(ShowName);
 
-                // Let's iterate the first few hits
-                foreach (TvShowBase result in results.Results.Take(10))
-                {
-                    FinalList.Add(new OnlineShowInfo(result.Name, result.Id, result.FirstAirDate.Value.Year.ToString()));
+				// Let's iterate the first few hits
+				foreach (TvShowBase result in results.Results.Take(10))
+				{
+					FinalList.Add(new OnlineShowInfo(result.Name, result.Id, result.FirstAirDate.Value.Year.ToString()));
 
-                }				
+				}
 			}
 			catch (Exception e) { }
 
@@ -83,17 +83,17 @@ namespace TV_Show_Renamer_Server
 
 
 				if (selectedShow.ShowID == -1) 
-					return TVShowID;   //return if nothing is found
+					return TVShowID;	//return if nothing is found
 				TVShowID = selectedShow;
 			}
 
 
-            try
-            {
-               TvShow result = tmdbClient.GetTvShow(TVShowID.ShowID);
-               TVShowID.ShowEnded = !result.InProduction;
-            }
-            catch (Exception e) { }
+			try
+			{
+				TvShow result = tmdbClient.GetTvShow(TVShowID.ShowID);
+				TVShowID.ShowEnded = !result.InProduction;
+			}
+			catch (Exception e) { }
 
 
 			TVShowID.ShowName = TVShowID.ShowName.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
@@ -106,9 +106,9 @@ namespace TV_Show_Renamer_Server
 
 			try
 			{
-               TvEpisode results = tmdbClient.GetTvEpisode(seriesID, season, episode);
+				TvEpisode results = tmdbClient.GetTvEpisode(seriesID, season, episode);
 
-               newTitle = results.Name;
+				newTitle = results.Name;
 				
 				//newTitle = ;
 			}
