@@ -55,6 +55,7 @@ namespace TV_Show_Renamer_Server
 		const int HowDeepToScan = 4;
 		List<FileSystemWatcher> myWatcher1 = new List<FileSystemWatcher>();
 
+        AlertForm alert;
 
 		//get working directory
 
@@ -66,15 +67,17 @@ namespace TV_Show_Renamer_Server
 		List<CategoryInfo> CategoryList = new List<CategoryInfo>();
 		List<TVShowSettings> _TVShowList = new List<TVShowSettings>();
 		public static ListBoxLog listBoxLog;
-		NewTVDB TVDB;
+		//NewTVDB TVDB;
 		thexem theXEM;
+        TMDb TMDbClient;
 		
 		public MainForm()
 		{
 			InitializeComponent();
 			listBoxLog = new ListBoxLog(listBox1);
-			TVDB = new NewTVDB(commonAppData);
+			//TVDB = new NewTVDB(commonAppData);
 			theXEM = new thexem(commonAppData);
+            TMDbClient = new TMDb(commonAppData);
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -293,27 +296,39 @@ namespace TV_Show_Renamer_Server
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			//_TVShowList.Clear();
-			List<string> newitems = folderFinder(folderTextBox.Text);
-			foreach (string newTVShow in newitems) 
-			{
-			 bool showFound = false;
-			 for (int i = 0; i < _TVShowList.Count(); i++) 
-			 {
-				if(_TVShowList[i].ShowFolder.CompareTo(newTVShow)==0)
-				{
-					 showFound = true;
-					 break;
-				}				
-			 }
-			 if (!showFound)
-			 {
-				_TVShowList.Add(getTVShowSettings(new TVShowSettings(newTVShow, newTVShow)));
-			 }
-			}
+            if (backgroundWorker1.IsBusy != true)
+            {
+                // create a new instance of the alert form
+                alert = new AlertForm();
+                // event handler for the Cancel button in AlertForm
+                alert.Canceled += new EventHandler<EventArgs>(buttonCancel_Click);
+                alert.Show();
+                // Start the asynchronous operation.
+                backgroundWorker1.RunWorkerAsync();
+            }
 
 
-			TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
+            ////_TVShowList.Clear();
+            //List<string> newitems = folderFinder(folderTextBox.Text);
+            //foreach (string newTVShow in newitems) 
+            //{
+            // bool showFound = false;
+            // for (int i = 0; i < _TVShowList.Count(); i++) 
+            // {
+            //    if(_TVShowList[i].ShowFolder.CompareTo(newTVShow)==0)
+            //    {
+            //         showFound = true;
+            //         break;
+            //    }				
+            // }
+            // if (!showFound)
+            // {
+            //    _TVShowList.Add(getTVShowSettings(new TVShowSettings(newTVShow, newTVShow)));
+            // }
+            //}
+
+
+            //TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
 			//main.Show();
 
 		}
@@ -490,8 +505,11 @@ namespace TV_Show_Renamer_Server
 		//get list of folders
 		private List<string> folderFinder(string folderwatch)
 		{
-			List<string> foldersIn = new List<string>();
+         	List<string> foldersIn = new List<string>();
 			//List<string> revFoldersIn = new List<string>();
+
+            if (!Directory.Exists(folderwatch))
+                return foldersIn;
 
 			System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(folderwatch);
 			try
@@ -511,50 +529,6 @@ namespace TV_Show_Renamer_Server
 			//for (int y = foldersIn.Count(); y > 0; y--)
 			//	 revFoldersIn.Add(foldersIn[y - 1]);
 			//return revFoldersIn;
-		}
-
-		private void button5_Click(object sender, EventArgs e)
-		{
-			//http://192.168.5.148:8081/api/5ae981cf1517ca6fef6e1a61256fc0cd/?cmd=shows
-
-			WebClient client = new WebClient();
-			Stream stream = client.OpenRead("http://192.168.5.148:8081/api/5ae981cf1517ca6fef6e1a61256fc0cd/?cmd=shows");
-			StreamReader reader = new StreamReader(stream);
-
-			//Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JObject.Parse(reader.ReadLine());
-
-			// instead of WriteLine, 2 or 3 lines of code here using WebClient to download the file
-			//Console.WriteLine((string)jObject["albums"][0]["cover_image_url"]);
-
-			var results = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(reader.ReadToEnd());
-			var alldata = results["data"];
-			//var name = alldata[0];
-
-			//dynamic parsedObject = Newtonsoft.Json.JsonConvert.DeserializeObject(alldata);
-			foreach (dynamic entry in alldata)
-			{
-				string TVDB = entry.Name; // "test"
-				dynamic value = entry.Value; // { inner: "text-value" }
-				string ShowName = (string)value["show_name"];
-				for (int i = 0; i < _TVShowList.Count;i++ )
-				{
-					if (ShowName.CompareTo(_TVShowList[i].SearchName) == 0)
-					{
-						_TVShowList[i].TVDBShowName = ShowName;
-						_TVShowList[i].TVDBSeriesID = Int32.Parse(TVDB);
-						_TVShowList[i].TVRageShowName = (string)value["tvrage_name"];
-						_TVShowList[i].TVRageSeriesID = Int32.Parse((string)value["tvrage_id"]);
-					 if (((string)value["status"]) == "Ended")
-					 {
-						_TVShowList[i].SeriesEnded = true;
-						Debug.WriteLine(ShowName + "" + _TVShowList[i].SeriesEnded.ToString());
-					 }
-						break;
-					}
-				}
-			}
-
-			stream.Close();
 		}
 
 		private void button6_Click(object sender, EventArgs e)
@@ -590,19 +564,22 @@ namespace TV_Show_Renamer_Server
 		{
 			//TVShowSettings newShow = new TVShowSettings(showFolderName, showFolderName);
 
-			OnlineShowInfo newTVDBID = TVDB.findTitle(newShow.SearchName);
+            OnlineShowInfo newTVDBID = theXEM.findTitle(newShow.SearchName);
 
 			if (newTVDBID.ShowID != -1)
 			{
 				newShow.TVDBSeriesID = newTVDBID.ShowID;
 				newShow.TVDBShowName = newTVDBID.ShowName;
+                newShow.SeriesEnded = newTVDBID.ShowEnded;
 				
 			}
-			OnlineShowInfo newRageID = TVRage.findTitle(newShow.SearchName);
-			if (newRageID.ShowID != -1)
+            OnlineShowInfo newTMDbID = TMDbClient.findTitle(newShow.SearchName);
+            if (newTMDbID.ShowID != -1)
 			{
-				newShow.TVRageSeriesID = newRageID.ShowID;
-				newShow.TVRageShowName = newRageID.ShowName;
+                newShow.TMDbSeriesID = newTMDbID.ShowID;
+                newShow.TMDbShowName = newTMDbID.ShowName;
+
+                newShow.SeriesEnded = newTVDBID.ShowEnded;
 			}
 
 			return newShow;
@@ -677,5 +654,127 @@ namespace TV_Show_Renamer_Server
 			}
 		
 		}
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            if (backgroundWorker1.WorkerSupportsCancellation == true)
+            {
+                // Cancel the asynchronous operation.
+                backgroundWorker1.CancelAsync();
+                // Close the AlertForm
+                alert.Close();
+            }
+        }
+
+        // This event handler is where the time-consuming work is done.
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            //for (int i = 1; i <= 10; i++)
+            //{
+            //    if (worker.CancellationPending == true)
+            //    {
+            //        e.Cancel = true;
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        // Perform a time consuming operation and report progress.
+            //        worker.ReportProgress(i * 10);
+            //        System.Threading.Thread.Sleep(500);
+            //    }
+            //}
+
+            //_TVShowList.Clear();
+            List<string> newitems = folderFinder(folderTextBox.Text);
+            int index = 0;
+            foreach (string folderName in newitems)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+
+                bool HD = false;
+                string newTVShow = folderName;
+                if (newTVShow.EndsWith("HD"))
+                {
+                    newTVShow = newTVShow.Replace("HD", "").TrimEnd(' ');
+                    HD = true;
+                }
+
+                bool showFound = false;
+                int showIndex = -1;
+                for (int i = 0; i < _TVShowList.Count(); i++)
+                {
+                    if (_TVShowList[i].SearchName.CompareTo(newTVShow) == 0)
+                    {
+                        showIndex = i;
+                        break;
+                    }
+                }
+                if (showIndex==-1)
+                {
+                    if(HD)
+                        _TVShowList.Add(getTVShowSettings(new TVShowSettings(newTVShow, folderName,true)));
+                    else
+                        _TVShowList.Add(getTVShowSettings(new TVShowSettings(newTVShow, folderName)));
+                }
+                else 
+                {
+                    if (HD)
+                    {
+                        _TVShowList[showIndex].ShowFolderHD = folderName;
+                        _TVShowList[showIndex].GetHD = true;
+                    }
+                    else
+                    {
+                        _TVShowList[showIndex].ShowFolder = folderName;
+                    }
+                }
+                index++;
+                int percentage = (int)(((double)index / (double)newitems.Count()) * 100.0);
+                worker.ReportProgress(percentage);
+            }
+
+
+           // TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
+        }
+
+        // This event handler updates the progress.
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            // Show the progress in main form (GUI)
+           // labelResult.Text = (e.ProgressPercentage.ToString() + "%");
+            // Pass the progress to AlertForm label and progressbar
+            alert.Message = "In progress, please wait... " + e.ProgressPercentage.ToString() + "%";
+            alert.ProgressValue = e.ProgressPercentage;
+        }
+
+        // This event handler deals with the results of the background operation.
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                //labelResult.Text = "Canceled!";
+                listBoxLog.Log("TV Search Canceled!");
+            }
+            else if (e.Error != null)
+            {
+               // labelResult.Text = "Error: " + e.Error.Message;
+                listBoxLog.Log("TV Search Error: " + e.Error.Message);
+            }
+            else
+            {
+                TVShowOptions main = new TVShowOptions(_TVShowList, folderTextBox.Text, commonAppData);
+                listBoxLog.Log("TV Search Done!");
+               // labelResult.Text = "Done!";
+            }
+            // Close the AlertForm
+            alert.Close();
+        }
+
 	}
 }

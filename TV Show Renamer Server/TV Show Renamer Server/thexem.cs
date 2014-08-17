@@ -10,6 +10,11 @@ using TvdbLib.Data;
 using System.IO;
 using TvdbLib.Cache;
 using System.Net;
+using Newtonsoft.Json;
+using Microsoft.CSharp;
+using System.Collections;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace TV_Show_Renamer_Server
 {
@@ -17,165 +22,236 @@ namespace TV_Show_Renamer_Server
 	{
 		ICacheProvider m_cacheProvider = null;
 		TvdbHandler m_tvdbHandler = null;
-		List<SearchInfo> selectionList = new List<SearchInfo>();
+		//List<SearchInfo> selectionList = new List<SearchInfo>();
 
 		string folder = null;
 
 		public thexem(string newFolder)
 		{
-			folder = newFolder + Path.DirectorySeparatorChar + "Temp";
-			m_cacheProvider = new XmlCacheProvider(folder);
+			folder = newFolder;
+            m_cacheProvider = new XmlCacheProvider(folder + Path.DirectorySeparatorChar + "Temp");
 			m_tvdbHandler = new TvdbHandler(m_cacheProvider, "BC08025A4C3F3D10");
 			m_tvdbHandler.InitCache();
 		}
 
-		public SearchInfo findTitle(string ShowName)
+        public OnlineShowInfo findTitle(string ShowName, bool showAll = false)
 		{
-			SearchInfo TVShowID = new SearchInfo();
-			if (ShowName == null)
-				return TVShowID;
-			ShowName = ShowName.Replace("Gold Rush Alaska", "Gold Rush");
-			ShowName = ShowName.Replace("Tosh 0", "Tosh.0");
-			//ICacheProvider m_cacheProvider = null;
-			//TvdbHandler m_tvdbHandler = null;
-			List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(ShowName);
-			if (list != null && list.Count > 0)
-			{
-				List<int> seriesId = new List<int>();
-				List<string> seriesName = new List<string>();
-				for (int i = 0; i < list.Count(); i++)
-				{
-					if (list[i].Id != 0)
-					{
-						seriesId.Add(list[i].Id);
-						seriesName.Add(list[i].SeriesName);
-					}
-				}
-				if (seriesId.Count() == 0) return TVShowID;  //return if nothing found
-				int selectedSeriesId = -1;
-				string selectedTitle = "";
-				if (seriesId.Count() == 1)
-				{
-					selectedSeriesId = seriesId[0];
-					selectedTitle = seriesName[0];
-				}
-				else
-				{
-					if (selectionList.Count() == 0)
-					{
-						SelectMenu SelectMain = new SelectMenu(seriesName, ShowName);
-						if (SelectMain.ShowDialog() == DialogResult.OK)
-						{
-							int selectedid = SelectMain.selected;
-							if (selectedid == -1) return TVShowID;
-							selectionList.Add(new SearchInfo(ShowName, selectedid));
-							selectedSeriesId = seriesId[selectedid];
-							selectedTitle = seriesName[selectedid];
-							SelectMain.Close();
-						}
-					}
-					else
-					{
-						int idNumber = -1;
-						foreach (SearchInfo testIdem in selectionList)
-						{
-							if (testIdem.Title == ShowName)
-							{
-								idNumber = testIdem.SelectedValue;
-								break;
-							}
-						}
-						if (idNumber == -1)
-						{
-							SelectMenu SelectMain2 = new SelectMenu(seriesName, ShowName);
-							if (SelectMain2.ShowDialog() == DialogResult.OK)
-							{
-								int selectedid = SelectMain2.selected;
-								if (selectedid == -1) return TVShowID;
-								selectionList.Add(new SearchInfo(ShowName, selectedid));
-								selectedSeriesId = seriesId[selectedid];
-								selectedTitle = seriesName[selectedid];
-								SelectMain2.Close();
-							}
-						}
-						else
-						{
-							selectedSeriesId = seriesId[idNumber];
-						}
-					}
-				}
+            if (ShowName == null)
+                return new OnlineShowInfo();
 
-				if (selectedSeriesId == -1) return TVShowID;   //return if nothing is found
-				TVShowID.SelectedValue = selectedSeriesId;
-				TVShowID.Title = selectedTitle;
-			}
-			TVShowID.Title = TVShowID.Title.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
-			return TVShowID;
+            List<OnlineShowInfo> FinalList = new List<OnlineShowInfo>();
+
+            try
+			{
+
+            List<TvdbSearchResult> list = m_tvdbHandler.SearchSeries(ShowName);
+            if (list != null && list.Count > 0)
+            {
+                for (int i = 0; i < list.Count(); i++)
+                {
+                    if (list[i].Id != 0)
+                    {
+                        bool ended = (getStatus(list[i].Id) == "Ended") ? true : false;
+                        FinalList.Add(new OnlineShowInfo(list[i].SeriesName, list[i].Id, list[i].FirstAired.ToString("yyyy"), ended));
+
+                        bool m = Regex.IsMatch(list[i].SeriesName, @"\(\d{1,4}\)", RegexOptions.IgnoreCase);
+                        if (m)
+                            showAll = true;
+
+                    }
+                }
+            }
+            else
+                return new OnlineShowInfo();
+
+            if (FinalList != null && FinalList.Count > 0)
+            {
+                if (FinalList.Count() == 0) return new OnlineShowInfo();  //return if nothing found
+
+                if (FinalList.Count() == 1)
+                {
+                    return FinalList[0];
+                }
+                else
+                {
+                    if (FinalList.Count() != 0)
+                    {
+                        int indexofTVshow = -1;
+                        int difference = Math.Abs(removeSymbols(FinalList[0].ShowName).Length - removeSymbols(ShowName).Length);
+                        indexofTVshow = removeSymbols(FinalList[0].ShowName).IndexOf(removeSymbols(ShowName), StringComparison.InvariantCultureIgnoreCase);
+                        if (indexofTVshow != -1 && difference < 3 && !showAll)
+                        {
+                            return FinalList[0];
+                            //selectedTitle = FinalList[0].ShowName;
+                        }
+                        else
+                        {
+                            SelectMenu SelectMain = new SelectMenu(FinalList, ShowName, "Select Correct TVDB Show");
+                            if (SelectMain.ShowDialog() == DialogResult.OK)
+                            {
+                                int selectedid = SelectMain.selected;
+                                if (selectedid == -1) return new OnlineShowInfo();
+                                //selectedShow = FinalList[selectedid];
+                                //selectedTitle = FinalList[selectedid].Title;
+                                SelectMain.Close();
+                                return FinalList[selectedid];
+                            }
+                        }
+                    }
+                }
+            }
+
+            }
+            catch (Exception e)
+            {
+               // MessageBox.Show(e.Message.ToString());
+            }
+
+            return new OnlineShowInfo();
 		}
 	 
 		public string getTitle(int seriesID, int season, int episode)
 		{
-			string newTitle = null;
+			string newTitle = "";
 
 			try
 			{
-				if (!(File.Exists(folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml")))//see if file exists
+				if (season > 100)
 				{
-					WebClient client = new WebClient();
-					client.DownloadFile("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml", folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml");
-					
+					TvdbEpisode e = m_tvdbHandler.GetEpisode(seriesID, new DateTime(episode, season / 100, season % 100), TvdbLanguage.DefaultLanguage);
+					newTitle = e.EpisodeName;
 				}
-				//WebClient client = new WebClient();
-				//Stream stream = client.OpenRead("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml");
-				//StreamReader reader = new StreamReader(stream);
-				//string content = reader.ReadToEnd();
-				//File.WriteAllText("f://test.xml", content);
-				//MessageBox.Show(content);
-
-				//http://thexem.de/proxy/tvdb/scene/api/1D62F2F90030C444/series/\1/all/$INFO[language].xml
-				//http://thexem.de/proxy/tvdb/scene/api/{1}/series/{2}/all/{3}.xml
-
-				//get individual epidose data
-				//http://www.thetvdb.com/api/BC08025A4C3F3D10/episodes/1053651/en.xml
-
-					//XDocument EpisodeList = XDocument.Load("http://thexem.de/proxy/tvdb/scene/api/BC08025A4C3F3D10/series/" + seriesID.ToString() + "/all/en.xml");
-					XDocument EpisodeList = XDocument.Load(folder + Path.DirectorySeparatorChar + seriesID.ToString()+".xml");
-
-					//EpisodeList.Save("f://test.xml");
-					var Categorys = from Episode in EpisodeList.Descendants("Episode")
-									select new
-									{
-										ID = Episode.Element("id").Value,
-										CombinEpisode = Episode.Element("Combined_episodenumber").Value,
-										CombinSeason = Episode.Element("Combined_season").Value,
-										EpisodeName = Episode.Element("EpisodeName").Value,
-										EpisodeNumber = Episode.Element("EpisodeNumber").Value,
-										SeasonNumber = Episode.Element("SeasonNumber").Value,
-										AbsoluteNumber = Episode.Element("absolute_number").Value
-									};
-
-					foreach (var wd in Categorys)
+				else
+				{
+					int seasonScale = season;
+					int episodeScale = episode;
+					using (var client = new WebClient())
 					{
+						var json = client.DownloadString(String.Format("http://thexem.de/map/all?id={0}&origin=tvdb", seriesID));
 
-						int XMLSeason = Int32.Parse(wd.SeasonNumber);
-						int XMLEpisode = Int32.Parse(wd.EpisodeNumber);
-						if (XMLSeason == season && XMLEpisode == episode)
+						RootObject m = JsonConvert.DeserializeObject<RootObject>(json);
+
+						foreach (Datum showData in m.data)
 						{
-							newTitle = wd.EpisodeName;
+							if (showData.scene.episode == episode && showData.scene.season == season)
+							{
+								seasonScale = showData.tvdb.season;
+								episodeScale = showData.tvdb.episode;
+								break;
+							}
+						}
+					}
+					//if (seasonScale == 0 && episodeScale == 0)
+					//	return "";
+
+					TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+					foreach (TvdbEpisode esp in s.Episodes)
+					{
+						if (seasonScale == esp.SeasonNumber && episodeScale == esp.EpisodeNumber)
+						{
+							newTitle = esp.EpisodeName;
 							break;
 						}
 					}
-				//newTitle = ;
+				}
 			}
 			catch (Exception e ) 
 			{
-				MessageBox.Show(e.Message.ToString());			
+				MessageBox.Show(e.Message.ToString());
 			}
 
-			if (newTitle == null)
-				return "";
 			newTitle = newTitle.Replace(":", "").Replace("?", "").Replace("/", "").Replace("<", "").Replace(">", "").Replace("\\", "").Replace("*", "").Replace("|", "").Replace("\"", "");
 			return newTitle;
 		}
+
+        public string getStatus(int seriesID)
+        {
+            try
+            {
+                TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+                return s.Status;
+            }
+            catch (Exception) { }
+
+            return "";
+        }
+
+        string removeSymbols(string word)
+        {
+            char[] arr = word.ToCharArray();
+
+            arr = Array.FindAll<char>(arr, (c => (char.IsLetterOrDigit(c)
+                                              || char.IsWhiteSpace(c)
+                                              )));
+            return new string(arr);
+
+        }
+	}
+
+	public class Scene
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Tvdb
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Tvdb2
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Rage
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Trakt
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Trakt2
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Anidb
+	{
+		public int season { get; set; }
+		public int episode { get; set; }
+		public int absolute { get; set; }
+	}
+
+	public class Datum
+	{
+		public Scene scene { get; set; }
+		public Tvdb tvdb { get; set; }
+		public Tvdb2 tvdb_2 { get; set; }
+		public Rage rage { get; set; }
+		public Trakt trakt { get; set; }
+		public Trakt2 trakt_2 { get; set; }
+		public Anidb anidb { get; set; }
+	}
+
+	public class RootObject
+	{
+		public string result { get; set; }
+		public List<Datum> data { get; set; }
+		public string message { get; set; }
 	}
 }
