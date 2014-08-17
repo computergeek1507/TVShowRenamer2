@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace TV_Show_Renamer
+namespace TV_Show_Renamer_Server
 {
 	public class InputBox
 	{

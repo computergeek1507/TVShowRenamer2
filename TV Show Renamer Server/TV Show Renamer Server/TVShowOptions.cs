@@ -140,7 +140,39 @@ namespace TV_Show_Renamer_Server
 
 		private void buttonAddShow_Click(object sender, EventArgs e)
 		{
+			string tvShowName = string.Empty;
+			if (InputBox.Show("Edit Episode Title", "Episode Title:", ref tvShowName) == DialogResult.OK)
+			{
 
+				string[] subdirectoryEntries = Directory.GetDirectories(_RootDir);
+				new List<string>(subdirectoryEntries);
+
+				SelectMenu SelectMain = new SelectMenu(new List<string>(subdirectoryEntries), showNameTextBox.Text, "Select TV Show Folder");
+				if (SelectMain.ShowDialog() == DialogResult.OK)
+				{
+					int selectedid = SelectMain.selected;
+					if (selectedid == -1) return;
+					string tvShowFolder = subdirectoryEntries[selectedid].Replace(_RootDir, "").Replace(Path.DirectorySeparatorChar.ToString(), "");
+					SelectMain.Close();
+					TVShowSettings newTvShow = new TVShowSettings(tvShowName, tvShowFolder);
+					OnlineShowInfo newTVDBID = TVDB.findTitle(tvShowName, true);
+					if (newTVDBID.ShowID != -1)
+					{
+						newTvShow.TVDBShowName = newTVDBID.ShowName;
+						newTvShow.TVDBSeriesID = newTVDBID.ShowID;
+						newTvShow.SeriesEnded = newTVDBID.ShowEnded;
+					}
+
+					OnlineShowInfo newTMDbID = TMDbClient.findTitle(tvShowName, true);
+					if (newTMDbID.ShowID != -1)
+					{
+						newTvShow.TMDbShowName = newTMDbID.ShowName;
+						newTvShow.TMDbSeriesID = newTMDbID.ShowID;
+						newTvShow.SeriesEnded = newTMDbID.ShowEnded;
+					}
+					_MainTVShowList.Add(newTvShow);
+				}
+			}
 		}
 
 		private void buttonRemoveShow_Click(object sender, EventArgs e)
