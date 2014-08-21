@@ -176,6 +176,72 @@ namespace TV_Show_Renamer_Server
 			return "";
 		}
 
+
+		public SeriesData GetAllSeasonData(int seriesID)
+		{
+			SeriesData data = new SeriesData();
+			try
+			{
+				TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+				foreach (TvdbEpisode esp in s.Episodes)
+				{
+					if (!data.ContainsSeason(esp.SeasonNumber))
+					{
+						SeasonData newSeason = new SeasonData(esp.SeasonNumber);
+						newSeason.EpisodeList.Add(new EpisodeData(esp.EpisodeName, esp.SeasonNumber, esp.EpisodeNumber));
+						data.SeasonList.Add(newSeason);
+					}
+					else
+					{
+						SeasonData newSeason = data.GetSeason(esp.SeasonNumber);
+						if (newSeason.ContainsEpisode(esp.EpisodeNumber))
+							continue;
+						newSeason.EpisodeList.Add(new EpisodeData(esp.EpisodeName, esp.SeasonNumber, esp.EpisodeNumber));
+					}
+				}
+			}
+			catch (Exception) { }
+			return data;
+		}
+
+		public SeasonData GetSeasonData(int seriesID, int season)
+		{
+			SeasonData data = new SeasonData();
+			try
+			{
+				TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+				foreach (TvdbEpisode esp in s.Episodes)
+				{
+					if (season == esp.SeasonNumber)
+					{
+						if (data.ContainsEpisode(esp.EpisodeNumber))
+							continue;
+						data.EpisodeList.Add(new EpisodeData(esp.EpisodeName, esp.SeasonNumber, esp.EpisodeNumber));
+					}
+				}
+			}
+			catch (Exception) { }
+			return data;
+		}
+
+		public EpisodeData GetEpisodeData(int seriesID, int season, int episode)
+		{
+			//EpisodeData data = new EpisodeData();
+			try
+			{
+				TvdbSeries s = m_tvdbHandler.GetSeries(seriesID, TvdbLanguage.DefaultLanguage, true, false, false);
+				foreach (TvdbEpisode esp in s.Episodes)
+				{
+					if (season == esp.SeasonNumber && episode == esp.EpisodeNumber)
+					{
+						return new EpisodeData(esp.EpisodeName, esp.SeasonNumber, esp.EpisodeNumber);
+					}
+				}
+			}
+			catch (Exception) { }
+			return new EpisodeData();
+		}
+
 		string removeSymbols(string word)
 		{
 			char[] arr = word.ToCharArray();

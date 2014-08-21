@@ -207,6 +207,10 @@ namespace TV_Show_Renamer_Server
 
 		bool _getHD = false;
 
+		bool _skip = false;
+
+		SeriesData _seriesEpisodes = new SeriesData();
+
 		//public TVShowSettings(string searchName, string showFolder, string tVDBShowName, int tVDBSeriesID, string tVRageShowName, int tVRageSeriesID)
 		//{
 		//	_SearchName = searchName;
@@ -289,6 +293,17 @@ namespace TV_Show_Renamer_Server
 			get { return _getHD; }
 			set { _getHD = value; }
 		}
+		public bool SkipShow
+		{
+			get { return _skip; }
+			set { _skip = value; }
+		}
+		public SeriesData SeriesEpisodes
+		{
+			get { return _seriesEpisodes; }
+			set { _seriesEpisodes = value; }
+		}
+
 
 	}//end of class
 
@@ -422,6 +437,129 @@ namespace TV_Show_Renamer_Server
 		public string tvrage_name;
 
 	
+	}
+
+	public class SeriesData
+	{
+		public SeriesData() { }
+		//public override String ToString()
+		//{
+		//	return SeasonNumber.ToString();
+		//}
+		
+		List<SeasonData> _seasonList = new List<SeasonData>();
+
+		public bool ContainsSeason(int season)
+		{
+			return _seasonList.Any(item => item.SeasonNumber == season);
+		}
+		public bool ContainsEpisode(int season, int episode)
+		{
+			SeasonData seasonTemp = _seasonList.FirstOrDefault(item => item.SeasonNumber == season);
+
+			if (seasonTemp == null)
+				return false;
+
+			return seasonTemp.ContainsEpisode(episode);
+		}
+
+		public List<SeasonData> SeasonList
+		{
+			get { return _seasonList; }
+			set { _seasonList = value; }
+		}
+
+		public SeasonData GetSeason(int season)
+		{
+			return _seasonList.FirstOrDefault(item => item.SeasonNumber == season);
+		}
+
+		public int SeasonCount()
+		{
+			return _seasonList.Count();
+		}
+
+		//public override String ToString()
+		//{
+		//	return SeasonNumber.ToString();
+		//}
+	}
+
+	public class SeasonData
+	{
+		public SeasonData() { }
+
+		public SeasonData(int seasonNum) 
+		{
+			SeasonNumber = seasonNum;
+		}
+
+		public override String ToString()
+		{
+			return SeasonNumber.ToString() ;
+		}
+		//public string Name { get; set; }
+		public int SeasonNumber { get; set; }
+		public string SeasonName
+		{
+			get { return "Season_" + SeasonNumber.ToString(); }
+		}
+		List<EpisodeData> _epidsodeList = new List<EpisodeData>();
+		public int EpisodeCount() { return _epidsodeList.Count; }
+
+		public bool ContainsEpisode(int episode)
+		{
+			return _epidsodeList.Any(item => item.EpisodeNumber == episode);
+		}
+
+		public EpisodeData GetEpisode(int episode)
+		{
+			return _epidsodeList.FirstOrDefault(item => item.EpisodeNumber == episode);
+		}
+
+		public List<EpisodeData> EpisodeList
+		{
+			get { return _epidsodeList; }
+			set { _epidsodeList = value; }
+		}
+	}
+
+	public class EpisodeData
+	{
+		public EpisodeData()
+		{
+		}
+
+		public EpisodeData(string episodeTile, int seasonNum, int episodeNum)
+		{
+			EpisodeTitle = episodeTile;
+			SeasonNumber = seasonNum;
+			EpisodeNumber = episodeNum;
+			Status = EpisodeStatus.Skip;
+			FileName = string.Empty;
+		}
+
+		public string EpisodeTitle { get; set; }
+		public int SeasonNumber { get; set; }
+		public int EpisodeNumber { get; set; }
+		public EpisodeStatus Status { get; set; }
+		
+		public string FileName { get; set; }
+
+		//public string FileFolder { get; set; }
+
+		public override String ToString()
+		{
+			return SeasonNumber + "x" + EpisodeNumber + (EpisodeTitle != null ? " " + EpisodeTitle : "");
+		}
+	}
+
+	public enum EpisodeStatus
+	{
+		Skip,
+		Wanted,
+		Snached,
+		Downloaded
 	}
 
 	public class EPGuigeReturnObject
