@@ -59,13 +59,15 @@
 			this.folderHDButton = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
 			this.TVShowFolderHDTextBox = new System.Windows.Forms.TextBox();
+			this.buttonSkip = new System.Windows.Forms.Button();
+			this.checkBoxSkip = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// listBoxTVShowList
 			// 
 			this.listBoxTVShowList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left)));
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.listBoxTVShowList.FormattingEnabled = true;
 			this.listBoxTVShowList.Location = new System.Drawing.Point(12, 12);
 			this.listBoxTVShowList.Name = "listBoxTVShowList";
@@ -75,10 +77,10 @@
 			// showNameTextBox
 			// 
 			this.showNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.showNameTextBox.Location = new System.Drawing.Point(318, 9);
 			this.showNameTextBox.Name = "showNameTextBox";
-			this.showNameTextBox.Size = new System.Drawing.Size(809, 20);
+			this.showNameTextBox.Size = new System.Drawing.Size(757, 20);
 			this.showNameTextBox.TabIndex = 1;
 			// 
 			// TVDBNameTextBox
@@ -92,7 +94,7 @@
 			// TVShowFolderTextBox
 			// 
 			this.TVShowFolderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TVShowFolderTextBox.Location = new System.Drawing.Point(319, 35);
 			this.TVShowFolderTextBox.Name = "TVShowFolderTextBox";
 			this.TVShowFolderTextBox.Size = new System.Drawing.Size(314, 20);
@@ -231,28 +233,29 @@
 			// dataGridView1
 			// 
 			this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Location = new System.Drawing.Point(373, 142);
 			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(754, 519);
+			this.dataGridView1.Size = new System.Drawing.Size(754, 524);
 			this.dataGridView1.TabIndex = 21;
 			// 
 			// listBoxSeasons
 			// 
 			this.listBoxSeasons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left)));
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.listBoxSeasons.FormattingEnabled = true;
 			this.listBoxSeasons.Location = new System.Drawing.Point(230, 142);
 			this.listBoxSeasons.Name = "listBoxSeasons";
-			this.listBoxSeasons.Size = new System.Drawing.Size(137, 511);
+			this.listBoxSeasons.Size = new System.Drawing.Size(137, 524);
 			this.listBoxSeasons.TabIndex = 22;
+			this.listBoxSeasons.SelectedIndexChanged += new System.EventHandler(this.listBoxSeasons_SelectedIndexChanged);
 			// 
 			// comboBoxEpisodeSelect
 			// 
 			this.comboBoxEpisodeSelect.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.comboBoxEpisodeSelect.FormattingEnabled = true;
 			this.comboBoxEpisodeSelect.Location = new System.Drawing.Point(832, 115);
 			this.comboBoxEpisodeSelect.Name = "comboBoxEpisodeSelect";
@@ -274,20 +277,20 @@
 			this.buttonAddShow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.buttonAddShow.Location = new System.Drawing.Point(12, 677);
 			this.buttonAddShow.Name = "buttonAddShow";
-			this.buttonAddShow.Size = new System.Drawing.Size(90, 23);
+			this.buttonAddShow.Size = new System.Drawing.Size(69, 23);
 			this.buttonAddShow.TabIndex = 25;
-			this.buttonAddShow.Text = "Add TV Show...";
+			this.buttonAddShow.Text = "Add...";
 			this.buttonAddShow.UseVisualStyleBackColor = true;
 			this.buttonAddShow.Click += new System.EventHandler(this.buttonAddShow_Click);
 			// 
 			// buttonRemoveShow
 			// 
 			this.buttonRemoveShow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonRemoveShow.Location = new System.Drawing.Point(108, 677);
+			this.buttonRemoveShow.Location = new System.Drawing.Point(87, 677);
 			this.buttonRemoveShow.Name = "buttonRemoveShow";
-			this.buttonRemoveShow.Size = new System.Drawing.Size(113, 23);
+			this.buttonRemoveShow.Size = new System.Drawing.Size(68, 23);
 			this.buttonRemoveShow.TabIndex = 26;
-			this.buttonRemoveShow.Text = "Remove TV Show...";
+			this.buttonRemoveShow.Text = "Remove...";
 			this.buttonRemoveShow.UseVisualStyleBackColor = true;
 			this.buttonRemoveShow.Click += new System.EventHandler(this.buttonRemoveShow_Click);
 			// 
@@ -344,17 +347,41 @@
 			// TVShowFolderHDTextBox
 			// 
 			this.TVShowFolderHDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TVShowFolderHDTextBox.Location = new System.Drawing.Point(788, 35);
 			this.TVShowFolderHDTextBox.Name = "TVShowFolderHDTextBox";
 			this.TVShowFolderHDTextBox.Size = new System.Drawing.Size(309, 20);
 			this.TVShowFolderHDTextBox.TabIndex = 30;
+			// 
+			// buttonSkip
+			// 
+			this.buttonSkip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.buttonSkip.Location = new System.Drawing.Point(161, 677);
+			this.buttonSkip.Name = "buttonSkip";
+			this.buttonSkip.Size = new System.Drawing.Size(60, 23);
+			this.buttonSkip.TabIndex = 33;
+			this.buttonSkip.Text = "Skip";
+			this.buttonSkip.UseVisualStyleBackColor = true;
+			this.buttonSkip.Click += new System.EventHandler(this.buttonSkip_Click);
+			// 
+			// checkBoxSkip
+			// 
+			this.checkBoxSkip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.checkBoxSkip.AutoSize = true;
+			this.checkBoxSkip.Location = new System.Drawing.Point(1081, 11);
+			this.checkBoxSkip.Name = "checkBoxSkip";
+			this.checkBoxSkip.Size = new System.Drawing.Size(47, 17);
+			this.checkBoxSkip.TabIndex = 34;
+			this.checkBoxSkip.Text = "Skip";
+			this.checkBoxSkip.UseVisualStyleBackColor = true;
 			// 
 			// TVShowOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1140, 712);
+			this.Controls.Add(this.checkBoxSkip);
+			this.Controls.Add(this.buttonSkip);
 			this.Controls.Add(this.folderHDButton);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.TVShowFolderHDTextBox);
@@ -427,6 +454,8 @@
 		private System.Windows.Forms.Button folderHDButton;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.TextBox TVShowFolderHDTextBox;
+		private System.Windows.Forms.Button buttonSkip;
+		private System.Windows.Forms.CheckBox checkBoxSkip;
 
 
 	}

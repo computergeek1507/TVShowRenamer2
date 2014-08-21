@@ -63,6 +63,7 @@ namespace TV_Show_Renamer_Server
 			checkBoxHD.Checked = _MainTVShowList[index].GetHD;
 			//checkBox1.Checked = _MainTVShowList[index].UseTVDBNumbering;
 			checkBox2.Checked = _MainTVShowList[index].SeriesEnded;
+			checkBoxSkip.Checked = _MainTVShowList[index].SkipShow;
 			//MessageBox.Show(listBox1.SelectedItem.ToString());
 		}
 
@@ -83,6 +84,7 @@ namespace TV_Show_Renamer_Server
 			_MainTVShowList[index].GetHD		= checkBoxHD.Checked;
 			//_MainTVShowList[index].UseTVDBNumbering = checkBox1.Checked;
 			_MainTVShowList[index].SeriesEnded	  = checkBox2.Checked;
+			_MainTVShowList[index].SkipShow = checkBoxSkip.Checked;
 		}
 
 		private void folderButton_Click(object sender, EventArgs e)
@@ -210,12 +212,39 @@ namespace TV_Show_Renamer_Server
 
 		private void buttonGetEpisodes_Click(object sender, EventArgs e)
 		{
+			int index = listBoxTVShowList.SelectedIndex;
+			if (index == -1)
+				return;
 
+			//SeriesData test = TVDB.GetAllSeasonData(Int32.Parse(TVDBIDTextBox.Text));
+			//int testvalue = test.SeasonCount();
+
+			_MainTVShowList[index].SeriesEpisodes = TVDB.GetAllSeasonData(Int32.Parse(TVDBIDTextBox.Text));
+
+			listBoxSeasons.DataSource = _MainTVShowList[index].SeriesEpisodes.SeasonList;
+			listBoxSeasons.DisplayMember = "SeasonName";
 		}
 
 		private void buttonSearchFolder_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void buttonSkip_Click(object sender, EventArgs e)
+		{
+			int index = listBoxTVShowList.SelectedIndex;
+
+			if (index == -1)
+				return;
+
+			_MainTVShowList[index].SkipShow = !_MainTVShowList[index].SkipShow;
+			checkBoxSkip.Checked = _MainTVShowList[index].SkipShow;
+
+		}
+
+		private void listBoxSeasons_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			//to do populate grid
 		}
 
 	}
