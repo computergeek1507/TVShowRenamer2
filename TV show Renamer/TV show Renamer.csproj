@@ -15,7 +15,7 @@
     <ManifestCertificateThumbprint>09ACF9756AC48AC40CA13E7DADE788A77997F470</ManifestCertificateThumbprint>
     <ManifestKeyFile>TV show Renamer_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>TVcustom.ico</ApplicationIcon>
     <SignAssembly>false</SignAssembly>
@@ -75,21 +75,25 @@
     <StartupObject>TV_Show_Renamer.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CrashReporter.NET">
-      <HintPath>packages\CrashReporterdotNet.1.3\lib\CrashReporter.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    <Reference Include="CrashReporter.NET, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\CrashReporterdotNet.1.5\lib\net20\CrashReporter.NET.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\NLog.4.1.2\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp">
       <HintPath>packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="SharpCompress, Version=0.10.2.0, Culture=neutral, PublicKeyToken=beaf6f427e128133, processorArchitecture=MSIL">
-      <HintPath>packages\sharpcompress.0.10.2\lib\net40\SharpCompress.dll</HintPath>
+    <Reference Include="SharpCompress, Version=0.10.3.0, Culture=neutral, PublicKeyToken=beaf6f427e128133, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\sharpcompress.0.11.1\lib\net40\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -178,7 +182,6 @@
       <DependentUpon>Junk Words.cs</DependentUpon>
     </Compile>
     <Compile Include="LinkFinder.cs" />
-    <Compile Include="LogWrite.cs" />
     <Compile Include="MainSettings.cs" />
     <Compile Include="NewTVDB.cs" />
     <Compile Include="password.cs">
@@ -276,6 +279,12 @@
       <DependentUpon>XBMC.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

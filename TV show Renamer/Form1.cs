@@ -16,6 +16,7 @@ using SharpCompress.Common;
 using SharpCompress.Archive;
 using System.Collections;
 using System.Text.RegularExpressions;
+using NLog;
 
 namespace TV_Show_Renamer
 {
@@ -82,7 +83,7 @@ namespace TV_Show_Renamer
 		//create other forms
 		static junk_words userJunk = new junk_words();
 		static Text_Converter textConvert = new Text_Converter();
-		public LogWrite Log = new LogWrite();//log object
+		Logger _logger = LogManager.GetCurrentClassLogger();
 		public MainSettings newMainSettings = new MainSettings();//new settings object
 		public class ThreadAdd { public string AddType; public object ObjectToAdd;};
 
@@ -245,15 +246,17 @@ namespace TV_Show_Renamer
 						fileList[y].FileName = fileList[y].NewFileName;
 						fileList[y].FileTitle = "";
 						dataGridView1.Rows[y].Cells[0].Value = fileList[y].FileName;
-						Log.WriteLog(fileList[y].FileName, fileList[y].NewFileName);
+						_logger.Debug(string.Format("[{0}] Saved as [{1}]",fileList[y].FileName,fileList[y].NewFileName));
 					}
-					catch (FileNotFoundException)
+					catch (FileNotFoundException ex)
 					{
+						_logger.Error(ex);
 						MessageBox.Show("File have been changed or moved \n" + (fileList[y].FullFileName) + "\n" + (fileList[y].NewFullFileName));
 						continue;
 					}
-					catch (IOException)
+					catch (IOException ex )
 					{
+						_logger.Error(ex);
 						MessageBox.Show("File already exists or is in use\n" + (fileList[y].FullFileName) + "\n" + (fileList[y].NewFullFileName));
 						continue;
 					}
@@ -388,19 +391,21 @@ namespace TV_Show_Renamer
 						if (fileList[y].FileName == fileList[y].NewFileName) continue;
 						//FileSystem.MoveFile((fileList[y].FullFileName), (fileList[y].NewFullFileName), true);
 						System.IO.File.Move((fileList[y].FullFileName), (fileList[y].NewFullFileName));
-						Log.WriteLog(fileList[y].FileName, fileList[y].NewFileName);
+						_logger.Debug(string.Format("[{0}] Saved as [{1}]", fileList[y].FileName, fileList[y].NewFileName));
 						fileList[y].FileName = fileList[y].NewFileName;
 						fileList[y].FileTitle = "";
 						dataGridView1.Rows[y].Cells[0].Value = fileList[y].FileName;
 
 					}
-					catch (FileNotFoundException)
+					catch (FileNotFoundException ex)
 					{
+						_logger.Error(ex);
 						MessageBox.Show("File have been changed or moved \n" + (fileList[y].FullFileName) + "\n" + (fileList[y].NewFullFileName));
 						continue;
 					}
-					catch (IOException)
+					catch (IOException ex)
 					{
+						_logger.Error(ex);
 						MessageBox.Show("File already exists or is in use\n" + (fileList[y].FullFileName) + "\n" + (fileList[y].NewFullFileName));
 						continue;
 					}
@@ -663,7 +668,7 @@ namespace TV_Show_Renamer
 			}
 		}
 
-		//check to see if website is avilible
+		//check to see if website is available
 		bool websiteExists()
 		{
 			try
@@ -672,8 +677,9 @@ namespace TV_Show_Renamer
 				clnt.Close();
 				return true;
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				_logger.Error(ex);
 				return false;
 			}
 		}//end of ConnectionExists class
@@ -691,9 +697,10 @@ namespace TV_Show_Renamer
 						request.Method = "HEAD";
 						WebResponse response = request.GetResponse();
 					}
-					catch (Exception)
+					catch (Exception ex)
 					{
-						Log.WriteLog("webversion.xml file doownload failed");
+						_logger.Error(ex);
+						_logger.Error("webversion.xml file download failed");
 						MessageBox.Show("Problem with Server\nPlease Contact Admin");
 						return;
 					}
@@ -703,14 +710,14 @@ namespace TV_Show_Renamer
 				}
 				else
 				{
-					Log.WriteLog("Server is unavalible Please try again later");
-					MessageBox.Show("Server is unavalible\nPlease try again later");
+					_logger.Error("Server is unavailable Please try again later");
+					MessageBox.Show("Server is unavailable\nPlease try again later");
 				}
 			}
 			else
 			{
-				Log.WriteLog("No Internet Connection Avalible Please check connection");
-				MessageBox.Show("No Internet Connection Avalible\nPlease Check Connection");
+				_logger.Error("No Internet Connection Available Please check connection");
+				MessageBox.Show("No Internet Connection Available\nPlease Check Connection");
 			}
 		}//check for update method
 
@@ -775,9 +782,10 @@ namespace TV_Show_Renamer
 						request.Method = "HEAD";
 						WebResponse response = request.GetResponse();
 					}
-					catch (Exception)
+					catch (Exception ex)
 					{
-						Log.WriteLog("webversion.xml file doownload failed");
+						_logger.Error(ex);
+						_logger.Error("webversion.xml file download failed");
 						return;
 					}
 					WebClient webClient = new WebClient();
@@ -785,10 +793,10 @@ namespace TV_Show_Renamer
 					webClient.DownloadFileAsync(new Uri("http://update.scottnation.com/TV_Show_Renamer/webversion.xml"), newMainSettings.DataFolder + Path.DirectorySeparatorChar + "webversion.xml");
 				}
 				else
-					Log.WriteLog("Server is unavalible Please try again later");
+					_logger.Error("Server is unavailable Please try again later");
 			}
 			else
-				Log.WriteLog("No Internet Connection Avalible Please check connection");
+				_logger.Error("No Internet Connection Available Please check connection");
 		}//end of checkForUpdateSilent method
 
 		//runs when xml file is done downloading
@@ -824,7 +832,7 @@ namespace TV_Show_Renamer
 			}
 			else if (Convert.ToInt32(webInfo[1]) > Convert.ToInt32(localInfo[1]))
 			{   //libaray update crap
-				if (MessageBox.Show("There is a libaray update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
+				if (MessageBox.Show("There is a library update available, Would you like to update?\nNOTE: This will just replace certain files", "Update Available", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				{
 					MethodInvoker action6 = delegate
 					{
@@ -864,8 +872,9 @@ namespace TV_Show_Renamer
 			{
 				System.IO.File.Delete(newMainSettings.DataFolder + Path.DirectorySeparatorChar + "webversion.xml");
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				_logger.Error(ex);
 				//MessageBox.Show("not working");
 			}
 			return data;
@@ -910,15 +919,15 @@ namespace TV_Show_Renamer
 			}
 			else
 			{
-				Log.WriteLog("No internet connection avalible Please check connection");
-				MessageBox.Show("No internet connection avalible\nPlease check connection");
+				_logger.Error("No internet connection available Please check connection");
+				MessageBox.Show("No internet connection available\nPlease check connection");
 			}
 		}
 
 		//finish for library 
 		private void Completed2(object sender, AsyncCompletedEventArgs e)
 		{
-			Log.WriteLog("Libary Update completed");
+			_logger.Debug("Libary Update completed");
 			MessageBox.Show("Update completed!");
 			junkRemover();
 		}
@@ -969,12 +978,6 @@ namespace TV_Show_Renamer
 			ThreadAdd FolderToAdd = new ThreadAdd();
 			FolderToAdd.AddType = "convertNoTitle";
 			addFilesToThread(FolderToAdd);
-		}
-
-		//write log called by download form
-		public void writeLog(string error)
-		{
-			Log.WriteLog(error);
 		}
 
 		//change bool openZIPs
@@ -1503,8 +1506,9 @@ namespace TV_Show_Renamer
 				foreach (System.IO.DirectoryInfo fi in di.GetDirectories())
 					foldersIn.Add(fi.Name);
 			}
-			catch (IOException)
+			catch (IOException ex)
 			{
+				_logger.Error(ex);
 				return revFoldersIn;
 			}
 
@@ -1551,7 +1555,7 @@ namespace TV_Show_Renamer
 			for (int index = 0; index < EditFileList.Count(); index++)
 			{
 
-				//TVRenamer.renameFile(EditFileList[index]);
+				TVRenamer.renameFile(EditFileList[index]);
 
 				bool addSeasonFormat = true;
 
@@ -1694,12 +1698,12 @@ namespace TV_Show_Renamer
 
 				#region Regular Format
 				//loop for seasons
-				for (int i = 1; i < 41; i++)
+				for (int i = 1; i < 51; i++)
 				{
 					//varable for break command later
 					bool end = false;
 
-					if (i == 40) i = 0;
+					if (i == 50) i = 0;
 
 					//loop for episodes
 					for (int j = 0; j < 150; j++)
@@ -2586,9 +2590,9 @@ namespace TV_Show_Renamer
 				fileRenamer(fileList, false);
 				//autoConvert();
 			}
-			catch (Exception e)
+			catch (Exception ex)
 			{
-				Log.WriteLog(e.Message.ToString());
+				_logger.Error(ex);
 				MessageBox.Show("error");
 				return;
 			}
@@ -2643,17 +2647,19 @@ namespace TV_Show_Renamer
 						{
 							//FileSystem.MoveFile((fileList[u].FullFileName), (fileList[u].NewFullFileName), true);
 							System.IO.File.Move((fileList[u].FullFileName), (fileList[u].NewFullFileName));
-							Log.WriteLog(fileList[u].FullFileName, fileList[u].NewFullFileName);
+							_logger.Debug(string.Format("[{0}] Saved as [{1}]", fileList[u].FullFileName, fileList[u].NewFullFileName));
 							fileList[u].FileName = fileList[u].NewFileName;
 							fileList[u].FileTitle = "";
 							dataGridView1.Rows[u].Cells[0].Value = fileList[u].FileName;
 						}
-						catch (FileNotFoundException)
+						catch (FileNotFoundException ex)
 						{
+							_logger.Error(ex);
 							MessageBox.Show("File have been changed or moved \n" + (fileList[u].FullFileName) + "\n" + (fileList[u].NewFullFileName));
 						}
-						catch (IOException)
+						catch (IOException ex)
 						{
+							_logger.Error(ex);
 							MessageBox.Show("File already exists or is in use\n" + (fileList[u].FullFileName) + "\n" + (fileList[u].NewFullFileName));
 						}
 					}
@@ -2776,7 +2782,6 @@ namespace TV_Show_Renamer
 		{
 			if (!(System.IO.Directory.Exists(newMainSettings.DataFolder)))
 				System.IO.Directory.CreateDirectory(newMainSettings.DataFolder);
-			Log.startLog(newMainSettings.DataFolder);
 			newMainSettings.Start(this);
 
 			this.junkRemover();
@@ -2824,19 +2829,23 @@ namespace TV_Show_Renamer
 			newMainSettings.MoveFolder = menuidemlist;
 			newMainSettings.saveStettings();
 
+			_logger.Debug("Program Closed :(");
 			if (newMainSettings.ClosedForUpdates)
 			{
-				Log.closeLog();
 				return;
 			}
-			//write log
-			Log.closeLog();
 		}
 
 		//check for linux
 		public static bool IsRunningOnMono()
 		{
 			return Type.GetType("Mono.Runtime") != null;
+		}
+
+		private void Form1_Shown(object sender, EventArgs e)
+		{
+			_logger.Debug("Program started :)");
+			_logger.Debug(string.Format("Version: {0}", appVersion));
 		}
 
 	}//end of form1 partial class	
