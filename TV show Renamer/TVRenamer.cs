@@ -43,7 +43,7 @@ namespace TV_Show_Renamer
 					fileInfo.SeasonNum = Int32.Parse(Season);
 					fileInfo.EpisodeNum = Int32.Parse(Episode);
 					fileInfo.EpisodeNum2 = Int32.Parse(Episode2);
-					fileInfo.FileTitle = extra;
+					//fileInfo.FileTitle = extra;
 					break;
 				}
 				else if (!string.IsNullOrEmpty(Showname) && !string.IsNullOrEmpty(Season) && !string.IsNullOrEmpty(Episode))
@@ -51,7 +51,7 @@ namespace TV_Show_Renamer
 					fileInfo.TVShowName = Showname;
 					fileInfo.SeasonNum = Int32.Parse(Season);
 					fileInfo.EpisodeNum = Int32.Parse(Episode);
-					fileInfo.FileTitle = extra;
+					//fileInfo.FileTitle = extra;
 					break;
 				}
 				

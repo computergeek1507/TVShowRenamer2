@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Linq;
+using NLog;
 
 namespace TV_Show_Renamer
 {
@@ -47,6 +48,8 @@ namespace TV_Show_Renamer
 		string _dataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Path.DirectorySeparatorChar + "TV Show Renamer";
 
 		Form1 _main;
+
+		Logger _logger = LogManager.GetCurrentClassLogger();
 
 		List<string> _moveFolder = new List<string>();//TV Show folders
 		#endregion	 
@@ -174,7 +177,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("newpreferences.seh Write Falure \n" + e.ToString());
+				_logger.Error("newpreferences.seh Write Falure \n" + e.ToString());
 				returnValue = false;
 			}
 			finally
@@ -192,7 +195,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("Folders.seh Falure \n" + e.ToString());
+				_logger.Error("Folders.seh Falure \n" + e.ToString());
 				returnValue = false;
 			}
 			finally
@@ -206,7 +209,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("TVShowInfo.xml Write Falure \n" + e.ToString());
+				_logger.Error("TVShowInfo.xml Write Falure \n" + e.ToString());
 				returnValue = false;
 			}
 			finally
@@ -289,7 +292,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("newpreferences.seh Read Error \n" + e.ToString());
+				_logger.Error("newpreferences.seh Read Error \n" + e.ToString());
 				returnValue = false;
 			}
 			finally
@@ -317,7 +320,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("TVFolder.seh Read Error \n" + e.ToString());
+				_logger.Error("TVFolder.seh Read Error \n" + e.ToString());
 				returnValue = false;
 			}
 			finally
@@ -348,7 +351,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("OtherFolders.seh Read Error \n" + e.ToString());
+				_logger.Error("OtherFolders.seh Read Error \n" + e.ToString());
 				returnValue = false;
 			}
 			finally
@@ -373,7 +376,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("Folders.seh Read Error \n" + e.ToString());
+				_logger.Error("Folders.seh Read Error \n" + e.ToString());
 				returnValue = false;
 			}
 			finally
@@ -400,7 +403,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("TVShowID.seh Read Error \n" + e.ToString());
+				_logger.Error("TVShowID.seh Read Error \n" + e.ToString());
 				returnValue = false;
 			}
 			finally
@@ -418,7 +421,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("TVShowInfo.xml Read Error \n" + e.ToString());
+				_logger.Error("TVShowInfo.xml Read Error \n" + e.ToString());
 				returnValue = false;
 			}
 			//delete temp folder daily
@@ -438,7 +441,7 @@ namespace TV_Show_Renamer
 			}
 			catch (Exception e)
 			{
-				_main.Log.WriteLog("Can't Delete Temp Folder\n" + e.ToString());
+				_logger.Error("Can't Delete Temp Folder\n" + e.ToString());
 				returnValue = false;
 			}
 

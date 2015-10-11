@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
+using NLog;
 
 namespace TV_Show_Renamer
 {
@@ -16,6 +17,9 @@ namespace TV_Show_Renamer
 	{
 		string commonAppData = null;
 		Form1 window;
+
+		Logger _logger = LogManager.GetCurrentClassLogger();
+
 		public download(string location,Form1 window)
 		{
 			this.window = window;
@@ -50,36 +54,40 @@ namespace TV_Show_Renamer
 				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "library.seh"))
 					File.Delete(commonAppData + Path.DirectorySeparatorChar + "library.seh");
 			}
-			catch (Exception q)
+			catch (Exception ex)
 			{
-				window.writeLog("Error when deleting library.seh before update" + q.ToString());
+				_logger.Error(ex);
+				_logger.Error("Error when deleting library.seh before update");
 			}
 			try
 			{
 				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "version.xml"))
 					File.Delete(commonAppData + Path.DirectorySeparatorChar + "version.xml");
 			}
-			catch (Exception q)
+			catch (Exception ex)
 			{
-				window.writeLog("Error when deleting version.xml before update" + q.ToString());
+				_logger.Error(ex);
+				_logger.Error("Error when deleting version.xml before update");
 			}
 			try
 			{
 				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "webversion.xml"))
 					File.Delete(commonAppData + Path.DirectorySeparatorChar + "webversion.xml");
 			}
-			catch (Exception q)
+			catch (Exception ex)
 			{
-				window.writeLog("Error when deleting webversion.xml before update" + q.ToString());
+				_logger.Error(ex);
+				_logger.Error("Error when deleting webversion.xml before update");
 			}
 			try
 			{
 				if (File.Exists(commonAppData + Path.DirectorySeparatorChar + "preferences.seh"))
 					File.Delete(commonAppData + Path.DirectorySeparatorChar + "preferences.seh");
 			}
-			catch (Exception q)
+			catch (Exception ex)
 			{
-				window.writeLog("Error when deleting preferences.seh before update" + q.ToString());
+				_logger.Error(ex);
+				_logger.Error("Error when deleting preferences.seh before update");
 			}
 
 			ProcessStartInfo startInfo2 = new ProcessStartInfo(label1.Text);
