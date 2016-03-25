@@ -54,6 +54,14 @@ namespace TV_Show_Renamer
 					//fileInfo.FileTitle = extra;
 					break;
 				}
+				else if (!string.IsNullOrEmpty(Showname) && !string.IsNullOrEmpty(Season))
+				{
+					fileInfo.TVShowName = Showname;
+					fileInfo.SeasonNum = Int32.Parse(Season);
+					//fileInfo.EpisodeNum = Int32.Parse(Episode);
+					//fileInfo.FileTitle = extra;
+					break;
+				}
 				
 			}
             return fileInfo;
