@@ -69,7 +69,7 @@ namespace TV_Show_Renamer
 
 		#region Initiate Stuff
 		//initiate varibles  
-		const int appVersion = 286;//2.8 Beta
+		const int appVersion = 287;//2.8 Beta
 		const int HowDeepToScan = 4;
 
 		static public BindingList<TVClass> fileList = new BindingList<TVClass>();//TV Show list	   
@@ -1627,7 +1627,7 @@ namespace TV_Show_Renamer
 			for (int index = 0; index < EditFileList.Count(); index++)
 			{
 
-				TVRenamer.renameFile(EditFileList[index]);
+				EditFileList[index] = TVRenamer.renameFile(EditFileList[index]);
 
 				bool addSeasonFormat = true;
 
@@ -1902,7 +1902,7 @@ namespace TV_Show_Renamer
 					//stop loop when name is change
 					if (end)
 						break;
-					if (i == 0) i = 40;
+					if (i == 0) i = 50;
 				}//end of season loop 
 				#endregion
 

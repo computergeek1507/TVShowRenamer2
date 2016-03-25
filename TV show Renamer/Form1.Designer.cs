@@ -516,9 +516,9 @@
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(332, 432);
+			this.button1.Location = new System.Drawing.Point(300, 432);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(108, 23);
+			this.button1.Size = new System.Drawing.Size(127, 23);
 			this.button1.TabIndex = 4;
 			this.button1.Text = "Move To Folder";
 			this.button1.UseVisualStyleBackColor = true;
@@ -527,9 +527,9 @@
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(446, 432);
+			this.button2.Location = new System.Drawing.Point(433, 432);
 			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(106, 23);
+			this.button2.Size = new System.Drawing.Size(119, 23);
 			this.button2.TabIndex = 5;
 			this.button2.Text = "Copy To Folder";
 			this.button2.UseVisualStyleBackColor = true;
@@ -919,7 +919,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.progressBar1.Location = new System.Drawing.Point(120, 432);
 			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(206, 23);
+			this.progressBar1.Size = new System.Drawing.Size(174, 23);
 			this.progressBar1.TabIndex = 32;
 			this.progressBar1.Visible = false;
 			// 
